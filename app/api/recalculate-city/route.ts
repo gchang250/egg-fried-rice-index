@@ -3,6 +3,14 @@ import { supabase } from '@/lib/supabase'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
+    const password = searchParams.get('password')
+
+  if (password !== process.env.ADMIN_PASSWORD) {
+    return NextResponse.json(
+      { success: false, error: 'Unauthorized' },
+      { status: 401 }
+    )
+  }
   const city = searchParams.get('city')
 
   if (!city) {

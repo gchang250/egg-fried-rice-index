@@ -24,6 +24,7 @@ const inputStyle: React.CSSProperties = {
 }
 
 export default function AdminPage() {
+  const [adminPassword, setAdminPassword] = useState('')
   const [restaurants, setRestaurants] = useState<any[]>([])
   const [cityOptions, setCityOptions] = useState<string[]>([])
   const [city, setCity] = useState('Toronto')
@@ -84,12 +85,13 @@ export default function AdminPage() {
 
     const params = new URLSearchParams({
       city,
-      name,
+     name,
       tier,
       price,
       source,
       confidence,
       approved: 'true',
+      password: adminPassword,
     })
 
     const response = await fetch(`/api/add-restaurant?${params.toString()}`)
@@ -103,7 +105,7 @@ export default function AdminPage() {
     setMessage(`Added ${name}. Recalculating ${city}...`)
 
     const recalcResponse = await fetch(
-      `/api/recalculate-city?city=${encodeURIComponent(city)}`
+    `/api/recalculate-city?city=${encodeURIComponent(city)}&password=${encodeURIComponent(adminPassword)}`
     )
 
     const recalcResult = await recalcResponse.json()
@@ -183,6 +185,14 @@ export default function AdminPage() {
         <input
           value={confidence}
           onChange={(e) => setConfidence(e.target.value)}
+          style={inputStyle}
+        />
+
+        <label style={labelStyle}>Admin password</label>
+        <input
+          type="password"
+          value={adminPassword}
+          onChange={(e) => setAdminPassword(e.target.value)}
           style={inputStyle}
         />
 

@@ -5,7 +5,19 @@ const validTiers = ['low_tier', 'mid_tier', 'high_end', 'fine_dining']
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
+  const password = searchParams.get('password')
 
+  if (password !== process.env.ADMIN_PASSWORD) {
+
+    return NextResponse.json(
+
+      { success: false, error: 'Unauthorized' },
+
+      { status: 401 }
+
+    )
+
+  }
   const city = searchParams.get('city')
   const restaurantName = searchParams.get('name')
   const tier = searchParams.get('tier')
