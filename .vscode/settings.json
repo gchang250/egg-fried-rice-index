@@ -1,0 +1,23 @@
+{
+  "files.watcherExclude": {
+    "**/.next/**": true,
+    "**/node_modules/**": true,
+    "**/.git/**": true,
+    "**/.vercel/**": true,
+    "**/coverage/**": true,
+    "**/.turbo/**": true
+  },
+  "search.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.vercel": true,
+    "**/coverage": true,
+    "**/.turbo": true
+  },
+  "files.exclude": {
+    "**/.next": true,
+    "**/.vercel": true
+  },
+  "typescript.tsserver.maxTsServerMemory": 4096
+}
