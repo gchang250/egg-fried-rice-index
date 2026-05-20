@@ -141,6 +141,16 @@ const formatDate = (dateString: string | null | undefined) => {
   const [expanded, setExpanded] = useState(false)
   const [dbCities, setDbCities] = useState<Record<string, any>>({})
   const [dbLoading, setDbLoading] = useState(true)  
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+  const checkMobile = () => setIsMobile(window.innerWidth < 768)
+
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+
+  return () => window.removeEventListener('resize', checkMobile)
+}, [])
 
   useEffect(() => {
   const fetchCities = async () => {
@@ -225,18 +235,22 @@ const displayCities: City[] = cities.map(city => {
           .attr('class', 'city-dot')
           .attr('cx', x).attr('cy', y).attr('r', 6)
           .attr('fill', '#C25E1E').attr('stroke', '#fff').attr('stroke-width', 2)
-        cityG.append('text')
-          .attr('class', 'city-label')
-          .attr('x', x + 9).attr('y', y + 4)
-          .attr('font-size', 9).attr('fill', '#4a4a44')
-          .attr('font-family', 'sans-serif')
-          .attr('pointer-events', 'none')
-          .attr('opacity', 0)
-          .text(city.name)
+        if (!isMobile) {
+          cityG.append('text')
+            .attr('class', 'city-label')
+            .attr('x', x + 9)
+            .attr('y', y + 4)
+            .attr('font-size', 9)
+            .attr('fill', '#4a4a44')
+            .attr('font-family', 'sans-serif')
+            .attr('pointer-events', 'none')
+            .attr('opacity', 0)
+            .text(city.name)
+        }
         cityG.on('click', () => handleSelectCity(city))
       })
     })
-  }, [expanded, dbCities])
+   }, [expanded, dbCities, isMobile])
 
   const resetZoom = () => {
     if (!svgRef.current || !zoomRef.current) return
@@ -262,11 +276,19 @@ const displayCities: City[] = cities.map(city => {
 
       {/* Sidebar */}
       <div style={{
-        position: 'fixed', top: 0, right: selectedCity ? 0 : -420,
-        width: 380, height: '100vh', background: '#fff',
-        borderLeft: '0.5px solid #e5e3da', zIndex: 100,
-        overflowY: 'auto', transition: 'right 0.35s cubic-bezier(0.4,0,0.2,1)',
-        padding: '2rem',
+        position: 'fixed',
+        top: 0,
+        right: selectedCity ? 0 : isMobile ? '-100vw' : -420,
+        width: isMobile ? '100vw' : 380,
+        maxWidth: '100vw',
+        height: '100vh',
+        background: '#fff',
+        borderLeft: isMobile ? 'none' : '0.5px solid #e5e3da',
+        zIndex: 100,
+        overflowY: 'auto',
+        transition: 'right 0.35s cubic-bezier(0.4,0,0.2,1)',
+        padding: isMobile ? '1.25rem' : '2rem',
+        boxSizing: 'border-box',
       }}>
         {selectedCity && (
           <>
@@ -338,11 +360,23 @@ const displayCities: City[] = cities.map(city => {
       </div>
 
       {/* Nav */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 2.5rem', borderBottom: '0.5px solid #e5e3da' }}>
+      <nav style={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        justifyContent: 'space-between',
+        alignItems: isMobile ? 'flex-start' : 'center',
+        gap: isMobile ? '0.9rem' : 0,
+        padding: isMobile ? '1rem 1.25rem' : '1.25rem 2.5rem',
+        borderBottom: '0.5px solid #e5e3da',
+      }}>
         <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18 }}>
           egg fried rice <span style={{ color: '#C25E1E' }}>index</span>
         </div>
-        <div style={{ display: 'flex', gap: '2rem' }}>
+        <div style={{
+          display: 'flex',
+          gap: isMobile ? '1rem' : '2rem',
+          flexWrap: 'wrap',
+        }}>
           {['cities', 'about', 'methodology'].map(link => (
             <a key={link} href="#" style={{ fontSize: 13, color: '#6b6b64', textDecoration: 'none' }}>{link}</a>
           ))}
@@ -350,18 +384,39 @@ const displayCities: City[] = cities.map(city => {
       </nav>
 
       {/* Hero */}
-      <div style={{ padding: '4rem 2.5rem 2.5rem', maxWidth: 640 }}>
+            <div style={{
+        padding: isMobile ? '2.25rem 1.25rem 1.5rem' : '4rem 2.5rem 2.5rem',
+        maxWidth: 640,
+      }}>
         <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#C25E1E', marginBottom: '1rem' }}>Cost of living, simplified</p>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 46, lineHeight: 1.05, letterSpacing: -1.5, color: '#1a1a18', marginBottom: '1rem' }}>
+                <h1 style={{
+          fontFamily: 'DM Serif Display, serif',
+          fontSize: isMobile ? 34 : 46,
+          lineHeight: 1.05,
+          letterSpacing: isMobile ? -0.8 : -1.5,
+          color: '#1a1a18',
+          marginBottom: '1rem',
+        }}>
           What does a bowl cost <em style={{ color: '#C25E1E' }}>where you&apos;re moving?</em>
         </h1>
-        <p style={{ fontSize: 15, fontWeight: 300, color: '#6b6b64', lineHeight: 1.6 }}>
+        <p style={{
+          fontSize: isMobile ? 14 : 15,
+          fontWeight: 300,
+          color: '#6b6b64',
+          lineHeight: 1.6,
+        }}>
           We track the price of egg fried rice at restaurants across the world&apos;s biggest cities — in your currency.
         </p>
       </div>
 
       {/* Main content */}
-      <div style={{ padding: '0 2.5rem 3rem', display: 'grid', gridTemplateColumns: expanded ? '0fr 1fr' : '1fr 1.4fr', gap: '1.5rem', transition: 'grid-template-columns 0.3s' }}>
+          <div style={{
+        padding: isMobile ? '0 1.25rem 2rem' : '0 2.5rem 3rem',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : expanded ? '0fr 1fr' : '1fr 1.4fr',
+        gap: isMobile ? '1rem' : '1.5rem',
+        transition: 'grid-template-columns 0.3s',
+      }}>
 
         {/* City list */}
         <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1.5rem', overflow: 'hidden', opacity: expanded ? 0 : 1, transition: 'opacity 0.2s' }}>
@@ -395,16 +450,53 @@ const displayCities: City[] = cities.map(city => {
               <div
                 key={city.name}
                 onClick={() => handleSelectCity(city)}
-                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.6rem 0.85rem', borderRadius: 10, background: selectedCity?.name === city.name ? '#FEF5EF' : '#FAFAF8', border: `0.5px solid ${selectedCity?.name === city.name ? '#C25E1E' : 'transparent'}`, cursor: 'pointer' }}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.6rem 0.85rem',
+                  borderRadius: 10,
+                  background: selectedCity?.name === city.name ? '#FEF5EF' : '#FAFAF8',
+                  border: `0.5px solid ${selectedCity?.name === city.name ? '#C25E1E' : 'transparent'}`,
+                  cursor: 'pointer',
+                  minWidth: 0,
+                }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 9,
+                  minWidth: 0,
+                }}>
                   <span style={{ fontSize: 16 }}>{city.flag}</span>
-                  <div>
-                    <div style={{ fontSize: 13 }}>{city.name}</div>
+                  <div style={{ minWidth: 0 }}>
+                                       <div style={{
+
+                      fontSize: 13,
+
+                      whiteSpace: 'nowrap',
+
+                      overflow: 'hidden',
+
+                      textOverflow: 'ellipsis',
+
+                      maxWidth: isMobile ? 140 : 180,
+
+                    }}>
+
+                      {city.name}
+
+                    </div>
                     <div style={{ fontSize: 11, color: '#9b9b90' }}>{city.country}</div>
                   </div>
                 </div>
-                <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 15 }}>
+                <div style={{
+                  fontFamily: 'DM Serif Display, serif',
+                  fontSize: isMobile ? 14 : 15,
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
+                }}>
                   {getPrice(city.priceCAD)}
                 </div>
               </div>
@@ -414,9 +506,16 @@ const displayCities: City[] = cities.map(city => {
 
         {/* Map panel */}
         <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.1rem' }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            justifyContent: 'space-between',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            gap: isMobile ? '0.75rem' : 0,
+            marginBottom: '1.1rem',
+          }}>
             <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#9b9b90', margin: 0 }}>Map</p>
-            <div style={{ display: 'flex', gap: 8 }}>
+                        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <button onClick={resetZoom} style={{ background: 'none', border: '0.5px solid #e5e3da', borderRadius: 8, padding: '5px 10px', cursor: 'pointer', fontSize: 12, color: '#6b6b64', fontFamily: 'DM Sans, sans-serif' }}>
                 Reset zoom
               </button>
