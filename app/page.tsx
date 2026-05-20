@@ -587,17 +587,21 @@ export default function Home() {
                 flexWrap: 'wrap',
               }}
             >
-              {['cities', 'about', 'methodology'].map((link) => (
+              {[
+                { label: 'cities', href: '/cities' },
+                { label: 'about', href: '/about' },
+                { label: 'methodology', href: '/methodology' },
+              ].map((link) => (
                 <a
-                  key={link}
-                  href="#"
+                  key={link.label}
+                  href={link.href}
                   style={{
                     fontSize: 13,
                     color: '#6b6b64',
                     textDecoration: 'none',
                   }}
                 >
-                  {link}
+                  {link.label}
                 </a>
               ))}
             </div>
