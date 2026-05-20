@@ -212,7 +212,7 @@ const displayCities: City[] = cities.map(city => {
             const cy = parseFloat(d3.select(this.parentNode as SVGGElement).select('circle').attr('cy'))
             return cy + 4 / event.transform.k
           })
-          .attr('opacity', event.transform.k > 3 ? 1 : 0)
+          .attr('opacity', isMobile || event.transform.k > 1.5 ? 1 : 0)
       })
 
     zoomRef.current = zoom
@@ -235,18 +235,16 @@ const displayCities: City[] = cities.map(city => {
           .attr('class', 'city-dot')
           .attr('cx', x).attr('cy', y).attr('r', 6)
           .attr('fill', '#C25E1E').attr('stroke', '#fff').attr('stroke-width', 2)
-        if (!isMobile) {
-          cityG.append('text')
-            .attr('class', 'city-label')
-            .attr('x', x + 9)
-            .attr('y', y + 4)
-            .attr('font-size', 9)
-            .attr('fill', '#4a4a44')
-            .attr('font-family', 'sans-serif')
-            .attr('pointer-events', 'none')
-            .attr('opacity', 0)
-            .text(city.name)
-        }
+        cityG.append('text')
+          .attr('class', 'city-label')
+          .attr('x', x + 9)
+          .attr('y', y + 4)
+          .attr('font-size', isMobile ? 8 : 9)
+          .attr('fill', '#4a4a44')
+          .attr('font-family', 'sans-serif')
+          .attr('pointer-events', 'none')
+          .attr('opacity', isMobile ? 1 : 0)
+          .text(city.name)
         cityG.on('click', () => handleSelectCity(city))
       })
     })
@@ -411,15 +409,28 @@ const displayCities: City[] = cities.map(city => {
 
       {/* Main content */}
           <div style={{
-        padding: isMobile ? '0 1.25rem 2rem' : '0 2.5rem 3rem',
-        display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : expanded ? '0fr 1fr' : '1fr 1.4fr',
-        gap: isMobile ? '1rem' : '1.5rem',
-        transition: 'grid-template-columns 0.3s',
-      }}>
+            padding: expanded && isMobile
+              ? '0'
+              : isMobile
+                ? '0 1.25rem 2rem'
+                : '0 2.5rem 3rem',
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : expanded ? '0fr 1fr' : '1fr 1.4fr',
+            gap: expanded && isMobile ? 0 : isMobile ? '1rem' : '1.5rem',
+            transition: 'grid-template-columns 0.3s',
+          }}>
 
         {/* City list */}
-        <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1.5rem', overflow: 'hidden', opacity: expanded ? 0 : 1, transition: 'opacity 0.2s' }}>
+        <div style={{
+            display: expanded && isMobile ? 'none' : 'block',
+            background: '#fff',
+            border: '0.5px solid #e5e3da',
+            borderRadius: 16,
+            padding: isMobile ? '1rem' : '1.5rem',
+            overflow: 'hidden',
+            opacity: expanded && !isMobile ? 0 : 1,
+            transition: 'opacity 0.2s',
+          }}>
           <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#9b9b90', marginBottom: '1.1rem' }}>City prices</p>
           <select
             value={currency}
@@ -505,7 +516,13 @@ const displayCities: City[] = cities.map(city => {
         </div>
 
         {/* Map panel */}
-        <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1.5rem' }}>
+        <div style={{
+          background: '#fff',
+          border: expanded && isMobile ? 'none' : '0.5px solid #e5e3da',
+          borderRadius: expanded && isMobile ? 0 : 16,
+          padding: expanded && isMobile ? '1rem' : isMobile ? '1rem' : '1.5rem',
+          minHeight: expanded && isMobile ? 'calc(100vh - 120px)' : 'auto',
+        }}>
           <div style={{
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
@@ -525,7 +542,15 @@ const displayCities: City[] = cities.map(city => {
             </div>
           </div>
           <div style={{ borderRadius: 10, overflow: 'hidden', background: '#E4E8DC', cursor: 'grab' }}>
-            <svg ref={svgRef} viewBox="0 0 700 380" style={{ width: '100%', display: 'block' }}>
+            <svg
+              ref={svgRef}
+              viewBox="0 0 700 380"
+              style={{
+                width: '100%',
+                height: expanded && isMobile ? 'calc(100vh - 220px)' : 'auto',
+                display: 'block',
+              }}
+>
               <g ref={gRef} />
             </svg>
           </div>
