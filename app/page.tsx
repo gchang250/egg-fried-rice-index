@@ -182,6 +182,27 @@ const symbols: Record<string, string> = {
   AED: 'د.إ',
 }
 
+const currencyOptions = [
+  ['CAD', 'CA$ CAD'],
+  ['USD', 'US$ USD'],
+  ['EUR', '€ EUR'],
+  ['CHF', 'Fr CHF'],
+  ['GBP', '£ GBP'],
+  ['JPY', '¥ JPY'],
+  ['CNY', '¥ CNY'],
+  ['AUD', 'AU$ AUD'],
+  ['HKD', 'HK$ HKD'],
+  ['SGD', 'S$ SGD'],
+  ['SAR', '﷼ SAR'],
+  ['PHP', '₱ PHP'],
+  ['MYR', 'RM MYR'],
+  ['MXN', 'MX$ MXN'],
+  ['ARS', 'AR$ ARS'],
+  ['KRW', '₩ KRW'],
+  ['INR', '₹ INR'],
+  ['AED', 'د.إ AED'],
+]
+
 type BaseCity = (typeof cities)[number]
 
 type City = BaseCity & {
@@ -234,7 +255,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const fetchCities = async () => {
+    async function fetchCities() {
       const { data, error } = await supabase.from('cities').select('*')
 
       if (error) {
@@ -242,15 +263,13 @@ export default function Home() {
         return
       }
 
-      if (data) {
-        const mapped: Record<string, any> = {}
+      const mapped: Record<string, any> = {}
 
-        data.forEach((row: any) => {
-          mapped[row.city] = row
-        })
+      ;(data ?? []).forEach((row: any) => {
+        mapped[row.city] = row
+      })
 
-        setDbCities(mapped)
-      }
+      setDbCities(mapped)
     }
 
     fetchCities()
@@ -548,33 +567,11 @@ export default function Home() {
             <div style={divider} />
 
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <a
-                href="/cities"
-                style={{
-                  padding: '0.55rem 0.8rem',
-                  borderRadius: 10,
-                  border: '0.5px solid #e5e3da',
-                  color: '#1a1a18',
-                  textDecoration: 'none',
-                  fontSize: 13,
-                  background: '#FAFAF8',
-                }}
-              >
+              <a href="/cities" style={drawerButtonStyle}>
                 View all cities
               </a>
 
-              <a
-                href="/methodology"
-                style={{
-                  padding: '0.55rem 0.8rem',
-                  borderRadius: 10,
-                  border: '0.5px solid #e5e3da',
-                  color: '#1a1a18',
-                  textDecoration: 'none',
-                  fontSize: 13,
-                  background: '#FAFAF8',
-                }}
-              >
+              <a href="/methodology" style={drawerButtonStyle}>
                 Methodology
               </a>
             </div>
@@ -739,36 +736,33 @@ export default function Home() {
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <button
-                onClick={resetZoom}
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+              <select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
                 style={{
-                  background: 'none',
+                  padding: '5px 10px',
                   border: '0.5px solid #e5e3da',
                   borderRadius: 8,
-                  padding: '5px 10px',
-                  cursor: 'pointer',
+                  background: '#FAFAF8',
+                  fontFamily: 'DM Sans, sans-serif',
                   fontSize: 12,
                   color: '#6b6b64',
-                  fontFamily: 'DM Sans, sans-serif',
+                  cursor: 'pointer',
                 }}
               >
+                {currencyOptions.map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+
+              <button onClick={resetZoom} style={mapButtonStyle}>
                 Reset zoom
               </button>
 
-              <button
-                onClick={() => setExpanded(!expanded)}
-                style={{
-                  background: 'none',
-                  border: '0.5px solid #e5e3da',
-                  borderRadius: 8,
-                  padding: '5px 10px',
-                  cursor: 'pointer',
-                  fontSize: 12,
-                  color: '#6b6b64',
-                  fontFamily: 'DM Sans, sans-serif',
-                }}
-              >
+              <button onClick={() => setExpanded(!expanded)} style={mapButtonStyle}>
                 {expanded ? 'Collapse' : 'Expand'}
               </button>
             </div>
@@ -808,33 +802,11 @@ export default function Home() {
               marginTop: '1rem',
             }}
           >
-            <a
-              href="/cities"
-              style={{
-                padding: '0.6rem 0.9rem',
-                borderRadius: 10,
-                border: '0.5px solid #e5e3da',
-                color: '#1a1a18',
-                textDecoration: 'none',
-                fontSize: 13,
-                background: '#FAFAF8',
-              }}
-            >
+            <a href="/cities" style={panelButtonStyle}>
               View all cities
             </a>
 
-            <a
-              href="/methodology"
-              style={{
-                padding: '0.6rem 0.9rem',
-                borderRadius: 10,
-                border: '0.5px solid #e5e3da',
-                color: '#1a1a18',
-                textDecoration: 'none',
-                fontSize: 13,
-                background: '#FAFAF8',
-              }}
-            >
+            <a href="/methodology" style={panelButtonStyle}>
               Read methodology
             </a>
           </div>
@@ -842,4 +814,35 @@ export default function Home() {
       </div>
     </main>
   )
+}
+
+const mapButtonStyle: React.CSSProperties = {
+  background: 'none',
+  border: '0.5px solid #e5e3da',
+  borderRadius: 8,
+  padding: '5px 10px',
+  cursor: 'pointer',
+  fontSize: 12,
+  color: '#6b6b64',
+  fontFamily: 'DM Sans, sans-serif',
+}
+
+const drawerButtonStyle: React.CSSProperties = {
+  padding: '0.55rem 0.8rem',
+  borderRadius: 10,
+  border: '0.5px solid #e5e3da',
+  color: '#1a1a18',
+  textDecoration: 'none',
+  fontSize: 13,
+  background: '#FAFAF8',
+}
+
+const panelButtonStyle: React.CSSProperties = {
+  padding: '0.6rem 0.9rem',
+  borderRadius: 10,
+  border: '0.5px solid #e5e3da',
+  color: '#1a1a18',
+  textDecoration: 'none',
+  fontSize: 13,
+  background: '#FAFAF8',
 }
