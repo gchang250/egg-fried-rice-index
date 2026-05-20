@@ -244,9 +244,11 @@ export default function Home() {
 
       if (data) {
         const mapped: Record<string, any> = {}
+
         data.forEach((row: any) => {
           mapped[row.city] = row
         })
+
         setDbCities(mapped)
       }
     }
@@ -319,6 +321,7 @@ export default function Home() {
 
     zoomRef.current = zoom
     svg.call(zoom)
+
     g.append('rect').attr('width', W).attr('height', H).attr('fill', '#E4E8DC')
 
     d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
@@ -490,24 +493,6 @@ export default function Home() {
             <div style={divider} />
 
             <div style={{ marginBottom: '1rem' }}>
-              <p style={sectionLabel}>Population</p>
-              <p style={{ fontSize: 14, color: '#1a1a18', lineHeight: 1.5 }}>
-                {selectedCity.population}
-              </p>
-            </div>
-
-            <div style={divider} />
-
-            <div style={{ marginBottom: '1rem' }}>
-              <p style={sectionLabel}>Climate</p>
-              <p style={{ fontSize: 14, color: '#1a1a18', lineHeight: 1.5 }}>
-                {selectedCity.climate}
-              </p>
-            </div>
-
-            <div style={divider} />
-
-            <div style={{ marginBottom: '1rem' }}>
               <p style={sectionLabel}>Price of a large bowl</p>
 
               <p
@@ -522,7 +507,7 @@ export default function Home() {
               </p>
 
               <p style={{ fontSize: 11, color: '#9b9b90', marginTop: 4 }}>
-                Average across 5 restaurant tiers
+                Average from approved restaurant entries
               </p>
 
               <div
@@ -534,10 +519,6 @@ export default function Home() {
                 }}
               >
                 <p style={{ margin: 0 }}>
-                  <strong>Source:</strong> {selectedCity.priceSource ?? 'Not available'}
-                </p>
-
-                <p style={{ margin: 0 }}>
                   <strong>Updated:</strong> {formatDate(selectedCity.priceUpdatedAt)}
                 </p>
 
@@ -548,16 +529,54 @@ export default function Home() {
                     ? `${Math.round(selectedCity.confidenceScore * 100)}%`
                     : 'Not available'}
                 </p>
+
+                <p style={{ margin: 0 }}>
+                  <strong>Source:</strong> {selectedCity.priceSource ?? 'Not available'}
+                </p>
               </div>
             </div>
 
             <div style={divider} />
 
-            <div>
-              <p style={sectionLabel}>History & significance</p>
+            <div style={{ marginBottom: '1rem' }}>
+              <p style={sectionLabel}>City context</p>
               <p style={{ fontSize: 14, color: '#3a3a34', lineHeight: 1.7 }}>
                 {selectedCity.blurb}
               </p>
+            </div>
+
+            <div style={divider} />
+
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <a
+                href="/cities"
+                style={{
+                  padding: '0.55rem 0.8rem',
+                  borderRadius: 10,
+                  border: '0.5px solid #e5e3da',
+                  color: '#1a1a18',
+                  textDecoration: 'none',
+                  fontSize: 13,
+                  background: '#FAFAF8',
+                }}
+              >
+                View all cities
+              </a>
+
+              <a
+                href="/methodology"
+                style={{
+                  padding: '0.55rem 0.8rem',
+                  borderRadius: 10,
+                  border: '0.5px solid #e5e3da',
+                  color: '#1a1a18',
+                  textDecoration: 'none',
+                  fontSize: 13,
+                  background: '#FAFAF8',
+                }}
+              >
+                Methodology
+              </a>
             </div>
           </>
         )}
@@ -576,9 +595,17 @@ export default function Home() {
               borderBottom: '0.5px solid #e5e3da',
             }}
           >
-            <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18 }}>
+            <a
+              href="/"
+              style={{
+                fontFamily: 'DM Serif Display, serif',
+                fontSize: 18,
+                color: '#1a1a18',
+                textDecoration: 'none',
+              }}
+            >
               egg fried rice <span style={{ color: '#C25E1E' }}>index</span>
-            </div>
+            </a>
 
             <div
               style={{
@@ -610,7 +637,7 @@ export default function Home() {
           <div
             style={{
               padding: isMobile ? '2.25rem 1.25rem 1.5rem' : '4rem 2.5rem 2.5rem',
-              maxWidth: 640,
+              maxWidth: 680,
             }}
           >
             <p
@@ -648,8 +675,8 @@ export default function Home() {
                 lineHeight: 1.6,
               }}
             >
-              We track the price of egg fried rice at restaurants across the world&apos;s
-              biggest cities — in your currency.
+              We track the price of egg fried rice at restaurants across major cities
+              and convert each city price into your currency.
             </p>
           </div>
         </>
@@ -663,136 +690,9 @@ export default function Home() {
               : isMobile
                 ? '0 1.25rem 2rem'
                 : '0 2.5rem 3rem',
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : expanded ? '0fr 1fr' : '1fr 1.4fr',
-          gap: expanded && isMobile ? 0 : isMobile ? '1rem' : '1.5rem',
-          transition: 'grid-template-columns 0.3s',
+          display: 'block',
         }}
       >
-        <div
-          style={{
-            display: expanded && isMobile ? 'none' : 'block',
-            background: '#fff',
-            border: '0.5px solid #e5e3da',
-            borderRadius: 16,
-            padding: isMobile ? '1rem' : '1.5rem',
-            overflow: 'hidden',
-            opacity: expanded && !isMobile ? 0 : 1,
-            transition: 'opacity 0.2s',
-          }}
-        >
-          <p
-            style={{
-              fontSize: 11,
-              fontWeight: 500,
-              letterSpacing: '1.2px',
-              textTransform: 'uppercase',
-              color: '#9b9b90',
-              marginBottom: '1.1rem',
-            }}
-          >
-            City prices
-          </p>
-
-          <select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '0.6rem 1rem',
-              border: '0.5px solid #e5e3da',
-              borderRadius: 10,
-              background: '#FAFAF8',
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: 13,
-              color: '#1a1a18',
-              marginBottom: '1.1rem',
-            }}
-          >
-            <option value="CAD">Canadian Dollar (CA$)</option>
-            <option value="USD">US Dollar (US$)</option>
-            <option value="EUR">Euro (€)</option>
-            <option value="CHF">Swiss Franc (Fr)</option>
-            <option value="GBP">British Pound (£)</option>
-            <option value="JPY">Japanese Yen (¥)</option>
-            <option value="CNY">Chinese Yuan (¥)</option>
-            <option value="AUD">Australian Dollar (AU$)</option>
-            <option value="HKD">Hong Kong Dollar (HK$)</option>
-            <option value="SGD">Singapore Dollar (S$)</option>
-            <option value="SAR">Saudi Riyal (﷼)</option>
-            <option value="PHP">Philippine Peso (₱)</option>
-            <option value="MYR">Malaysian Ringgit (RM)</option>
-            <option value="MXN">Mexican Peso (MX$)</option>
-            <option value="ARS">Argentine Peso (AR$)</option>
-            <option value="KRW">Korean Won (₩)</option>
-            <option value="INR">Indian Rupee (₹)</option>
-            <option value="AED">UAE Dirham (د.إ)</option>
-          </select>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-            {displayCities.map((city) => (
-              <div
-                key={city.name}
-                onClick={() => handleSelectCity(city)}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.6rem 0.85rem',
-                  borderRadius: 10,
-                  background: selectedCity?.name === city.name ? '#FEF5EF' : '#FAFAF8',
-                  border: `0.5px solid ${
-                    selectedCity?.name === city.name ? '#C25E1E' : 'transparent'
-                  }`,
-                  cursor: 'pointer',
-                  minWidth: 0,
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 9,
-                    minWidth: 0,
-                  }}
-                >
-                  <span style={{ fontSize: 16 }}>{city.flag}</span>
-
-                  <div style={{ minWidth: 0 }}>
-                    <div
-                      style={{
-                        fontSize: 13,
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        maxWidth: isMobile ? 140 : 180,
-                      }}
-                    >
-                      {city.name}
-                    </div>
-
-                    <div style={{ fontSize: 11, color: '#9b9b90' }}>
-                      {city.country}
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    fontFamily: 'DM Serif Display, serif',
-                    fontSize: isMobile ? 14 : 15,
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0,
-                  }}
-                >
-                  {getPrice(city.priceCAD)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div
           style={{
             background: '#fff',
@@ -800,6 +700,8 @@ export default function Home() {
             borderRadius: expanded && isMobile ? 0 : 16,
             padding: expanded && isMobile ? '1rem' : isMobile ? '1rem' : '1.5rem',
             minHeight: expanded && isMobile ? '100vh' : 'auto',
+            maxWidth: expanded ? 'none' : 1180,
+            margin: expanded ? 0 : '0 auto',
           }}
         >
           <div
@@ -812,18 +714,30 @@ export default function Home() {
               marginBottom: '1.1rem',
             }}
           >
-            <p
-              style={{
-                fontSize: 11,
-                fontWeight: 500,
-                letterSpacing: '1.2px',
-                textTransform: 'uppercase',
-                color: '#9b9b90',
-                margin: 0,
-              }}
-            >
-              Map
-            </p>
+            <div>
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 500,
+                  letterSpacing: '1.2px',
+                  textTransform: 'uppercase',
+                  color: '#9b9b90',
+                  margin: 0,
+                }}
+              >
+                Interactive city map
+              </p>
+
+              <p
+                style={{
+                  fontSize: 13,
+                  color: '#6b6b64',
+                  margin: '0.35rem 0 0',
+                }}
+              >
+                Click a city dot to view price, confidence, and context.
+              </p>
+            </div>
 
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <button
@@ -882,8 +796,48 @@ export default function Home() {
           </div>
 
           <p style={{ fontSize: 11, color: '#9b9b90', marginTop: 8 }}>
-            Scroll to zoom · drag to pan · click a city for details
+            Scroll to zoom · drag to pan · click a city for details · city names appear
+            after 3x zoom
           </p>
+
+          <div
+            style={{
+              display: 'flex',
+              gap: '0.75rem',
+              flexWrap: 'wrap',
+              marginTop: '1rem',
+            }}
+          >
+            <a
+              href="/cities"
+              style={{
+                padding: '0.6rem 0.9rem',
+                borderRadius: 10,
+                border: '0.5px solid #e5e3da',
+                color: '#1a1a18',
+                textDecoration: 'none',
+                fontSize: 13,
+                background: '#FAFAF8',
+              }}
+            >
+              View all cities
+            </a>
+
+            <a
+              href="/methodology"
+              style={{
+                padding: '0.6rem 0.9rem',
+                borderRadius: 10,
+                border: '0.5px solid #e5e3da',
+                color: '#1a1a18',
+                textDecoration: 'none',
+                fontSize: 13,
+                background: '#FAFAF8',
+              }}
+            >
+              Read methodology
+            </a>
+          </div>
         </div>
       </div>
     </main>
