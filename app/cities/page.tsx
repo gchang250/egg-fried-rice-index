@@ -213,7 +213,7 @@ export default function CitiesPage() {
             margin: '0 0 1.25rem',
           }}
         >
-          Compare egg fried rice prices by city.
+          Ranked egg fried rice prices.
         </h1>
 
         <p
@@ -304,15 +304,15 @@ export default function CitiesPage() {
           <p style={{ color: '#6b6b64' }}>Loading cities...</p>
         ) : (
           <>
-            {!isMobile && (
-              <div
-                style={{
-                  background: '#fff',
-                  border: '0.5px solid #e5e3da',
-                  borderRadius: 16,
-                  overflow: 'hidden',
-                }}
-              >
+            <div
+              style={{
+                background: '#fff',
+                border: '0.5px solid #e5e3da',
+                borderRadius: 16,
+                overflow: 'hidden',
+              }}
+            >
+              {!isMobile && (
                 <div
                   style={{
                     display: 'grid',
@@ -332,8 +332,96 @@ export default function CitiesPage() {
                   <div>Confidence</div>
                   <div>Updated</div>
                 </div>
+              )}
 
-                {cleanCities.map((city, index) => (
+              {cleanCities.map((city, index) =>
+                isMobile ? (
+                  <div
+                    key={city.city}
+                    style={{
+                      padding: '1rem',
+                      borderBottom:
+                        index === cleanCities.length - 1
+                          ? 'none'
+                          : '0.5px solid #f0ede6',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        gap: '1rem',
+                        alignItems: 'flex-start',
+                      }}
+                    >
+                      <div>
+                        <p
+                          style={{
+                            fontSize: 12,
+                            color: '#9b9b90',
+                            margin: '0 0 0.25rem',
+                          }}
+                        >
+                          #{index + 1}
+                        </p>
+
+                        <h2
+                          style={{
+                            fontFamily: 'DM Serif Display, serif',
+                            fontSize: 24,
+                            margin: 0,
+                          }}
+                        >
+                          {city.city}
+                        </h2>
+
+                        <p
+                          style={{
+                            fontSize: 12,
+                            color: '#9b9b90',
+                            margin: '0.2rem 0 0',
+                          }}
+                        >
+                          {city.population
+                            ? `Population ${city.population}`
+                            : 'Population not available'}
+                        </p>
+                      </div>
+
+                      <div
+                        style={{
+                          fontFamily: 'DM Serif Display, serif',
+                          fontSize: 24,
+                          color: '#C25E1E',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {formatPrice(city.price_cad)}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: '1rem',
+                        flexWrap: 'wrap',
+                        marginTop: '0.85rem',
+                        fontSize: 12,
+                        color: '#6b6b64',
+                      }}
+                    >
+                      <span>
+                        Confidence:{' '}
+                        {city.confidence_score !== null &&
+                        city.confidence_score !== undefined
+                          ? `${Math.round(Number(city.confidence_score) * 100)}%`
+                          : 'Not available'}
+                      </span>
+
+                      <span>Updated: {formatDate(city.price_updated_at)}</span>
+                    </div>
+                  </div>
+                ) : (
                   <div
                     key={city.city}
                     style={{
@@ -395,99 +483,8 @@ export default function CitiesPage() {
                       {formatDate(city.price_updated_at)}
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '1rem',
-                marginTop: isMobile ? 0 : '1.5rem',
-              }}
-            >
-              {cleanCities.map((city, index) => (
-                <div
-                  key={`${city.city}-card`}
-                  style={{
-                    background: '#fff',
-                    border: '0.5px solid #e5e3da',
-                    borderRadius: 16,
-                    padding: '1.35rem',
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: 11,
-                      textTransform: 'uppercase',
-                      letterSpacing: '1.2px',
-                      color: '#9b9b90',
-                      margin: '0 0 0.5rem',
-                    }}
-                  >
-                    #{index + 1} city profile
-                  </p>
-
-                  <h2
-                    style={{
-                      fontFamily: 'DM Serif Display, serif',
-                      fontSize: 28,
-                      margin: '0 0 0.75rem',
-                    }}
-                  >
-                    {city.city}
-                  </h2>
-
-                  <p
-                    style={{
-                      fontFamily: 'DM Serif Display, serif',
-                      fontSize: 32,
-                      color: '#C25E1E',
-                      margin: '0 0 0.75rem',
-                    }}
-                  >
-                    {formatPrice(city.price_cad)}
-                  </p>
-
-                  <p
-                    style={{
-                      fontSize: 13,
-                      color: '#6b6b64',
-                      lineHeight: 1.6,
-                      margin: '0 0 1rem',
-                    }}
-                  >
-                    {city.blurb ?? 'City description coming soon.'}
-                  </p>
-
-                  <div
-                    style={{
-                      borderTop: '0.5px solid #f0ede6',
-                      paddingTop: '0.85rem',
-                      fontSize: 12,
-                      color: '#6b6b64',
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    <p style={{ margin: 0 }}>
-                      <strong>Updated:</strong> {formatDate(city.price_updated_at)}
-                    </p>
-
-                    <p style={{ margin: 0 }}>
-                      <strong>Confidence:</strong>{' '}
-                      {city.confidence_score !== null &&
-                      city.confidence_score !== undefined
-                        ? `${Math.round(Number(city.confidence_score) * 100)}%`
-                        : 'Not available'}
-                    </p>
-
-                    <p style={{ margin: 0 }}>
-                      <strong>Source:</strong> {city.price_source ?? 'Not available'}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
 
             {pendingCities.length > 0 && (
