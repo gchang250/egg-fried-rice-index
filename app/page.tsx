@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
+import { Analytics } from "@vercel/analytics/next"
 
 const cities = [
   {

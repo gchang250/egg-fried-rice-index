@@ -100,7 +100,7 @@ export default function MethodologyPage() {
         <div style={cardStyle}>
           <h2 style={sectionTitleStyle}>2. Restaurant sample</h2>
           <p style={bodyStyle}>
-            Each city aims to use five restaurant entries across different price
+            Each city aims to use at least five restaurant entries across different price
             tiers:
           </p>
 

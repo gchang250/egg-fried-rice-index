@@ -1,5 +1,6 @@
 'use client'
 
+import type { CSSProperties, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
@@ -14,12 +15,12 @@ type PendingRequest = {
   restaurant_name: string | null
   dish_name: string | null
   tier: string | null
-  price_cad: number | null
+  price_cad: number | string | null
   source: string | null
   source_url: string | null
   population: string | null
   population_source: string | null
-  confidence_score: number | null
+  confidence_score: number | string | null
   notes: string | null
   created_at: string
 }
@@ -35,6 +36,7 @@ export default function AdminPage() {
   const [cities, setCities] = useState<CityRow[]>([])
   const [pendingRequests, setPendingRequests] = useState<PendingRequest[]>([])
   const [loadingPending, setLoadingPending] = useState(false)
+  const [reviewingRequestId, setReviewingRequestId] = useState<string | null>(null)
 
   const [city, setCity] = useState('')
   const [restaurantName, setRestaurantName] = useState('')
@@ -45,33 +47,37 @@ export default function AdminPage() {
   const [sourceUrl, setSourceUrl] = useState('')
   const [confidenceScore, setConfidenceScore] = useState('0.7')
   const [approved, setApproved] = useState(true)
+  const [savingManual, setSavingManual] = useState(false)
+
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    async function fetchCities() {
-      const { data, error } = await supabase
-        .from('cities')
-        .select('city')
-        .order('city', { ascending: true })
-
-      if (error) {
-        console.error(error)
-        return
-      }
-
-      setCities(data ?? [])
-
-      if (data && data.length > 0) {
-        setCity(data[0].city)
-      }
-    }
-
     fetchCities()
   }, [])
 
-  async function handleLogin(event: React.FormEvent) {
+  async function fetchCities() {
+    const { data, error } = await supabase
+      .from('cities')
+      .select('city')
+      .order('city', { ascending: true })
+
+    if (error) {
+      console.error(error)
+      setMessage(error.message)
+      return
+    }
+
+    setCities(data ?? [])
+
+    if (data && data.length > 0 && !city) {
+      setCity(data[0].city)
+    }
+  }
+
+  async function handleLogin(event: FormEvent) {
     event.preventDefault()
     setLoginError('')
+    setMessage('')
 
     const response = await fetch('/api/admin-login', {
       method: 'POST',
@@ -119,6 +125,7 @@ export default function AdminPage() {
 
   async function reviewRequest(requestId: string, decision: 'approved' | 'denied') {
     setMessage('')
+    setReviewingRequestId(requestId)
 
     const response = await fetch('/api/review-request', {
       method: 'POST',
@@ -128,62 +135,109 @@ export default function AdminPage() {
 
     const result = await response.json()
 
+    setReviewingRequestId(null)
+
     if (!response.ok) {
       setMessage(result.error ?? 'Review failed')
       return
     }
 
-    setMessage(`Request ${decision}.`)
+    if (decision === 'approved' && result.request_type === 'restaurant') {
+      setMessage(
+        `Approved. ${result.city} updated to ${formatCadPrice(
+          result.average_price_cad
+        )} with ${formatConfidence(result.average_confidence)} confidence.`
+      )
+    } else {
+      setMessage(`Request ${decision}.`)
+    }
+
     await loadPendingRequests()
   }
 
-  async function handleManualSubmit(event: React.FormEvent) {
+  async function handleManualSubmit(event: FormEvent) {
     event.preventDefault()
     setMessage('')
+    setSavingManual(true)
 
-    const addResponse = await fetch(`/api/add-restaurant?password=${encodeURIComponent(password)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        city,
-        restaurant_name: restaurantName,
-        dish_name: dishName,
-        tier,
-        price_cad: Number(priceCad),
-        source,
-        source_url: sourceUrl,
-        confidence_score: Number(confidenceScore),
-        approved,
-        active: true,
-      }),
-    })
+    const parsedPrice = Number(priceCad)
+    const parsedConfidence = Number(confidenceScore)
+
+    if (!Number.isFinite(parsedPrice) || parsedPrice <= 0) {
+      setMessage('Enter a valid CAD price.')
+      setSavingManual(false)
+      return
+    }
+
+    if (
+      !Number.isFinite(parsedConfidence) ||
+      parsedConfidence < 0 ||
+      parsedConfidence > 1
+    ) {
+      setMessage('Confidence score must be between 0 and 1.')
+      setSavingManual(false)
+      return
+    }
+
+    const addResponse = await fetch(
+      `/api/add-restaurant?password=${encodeURIComponent(password)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          city,
+          restaurant_name: restaurantName,
+          dish_name: dishName || 'Egg Fried Rice',
+          tier,
+          price_cad: parsedPrice,
+          source,
+          source_url: sourceUrl || null,
+          confidence_score: parsedConfidence,
+          approved,
+          active: true,
+        }),
+      }
+    )
 
     const addResult = await addResponse.json()
 
     if (!addResponse.ok) {
       setMessage(addResult.error ?? 'Could not add restaurant')
+      setSavingManual(false)
       return
     }
 
     if (approved) {
-      const recalculateResponse = await fetch(
-        `/api/recalculate-city?password=${encodeURIComponent(password)}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ city }),
-        }
-      )
+      const recalculateResponse = await fetch('/api/recalculate-city', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          city,
+          password,
+        }),
+      })
 
       const recalculateResult = await recalculateResponse.json()
 
       if (!recalculateResponse.ok) {
-        setMessage(recalculateResult.error ?? 'Added restaurant, but recalculation failed')
+        setMessage(
+          recalculateResult.error ?? 'Added restaurant, but recalculation failed'
+        )
+        setSavingManual(false)
         return
       }
+
+      setMessage(
+        `Manual entry saved. ${city} updated to ${formatCadPrice(
+          recalculateResult.average_price_cad
+        )} with ${formatConfidence(
+          recalculateResult.average_confidence
+        )} confidence.`
+      )
+    } else {
+      setMessage('Manual entry saved as unapproved.')
     }
 
-    setMessage('Manual entry saved.')
     setRestaurantName('')
     setDishName('')
     setPriceCad('')
@@ -191,6 +245,7 @@ export default function AdminPage() {
     setSourceUrl('')
     setConfidenceScore('0.7')
     setApproved(true)
+    setSavingManual(false)
   }
 
   if (!loggedIn) {
@@ -213,6 +268,7 @@ export default function AdminPage() {
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 style={inputStyle}
+                autoComplete="username"
               />
             </label>
 
@@ -223,6 +279,7 @@ export default function AdminPage() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 style={inputStyle}
+                autoComplete="current-password"
               />
             </label>
 
@@ -254,6 +311,8 @@ export default function AdminPage() {
             setLoggedIn(false)
             setPassword('')
             setView('dashboard')
+            setMessage('')
+            setPendingRequests([])
           }}
           style={secondaryButtonStyle}
         >
@@ -268,6 +327,8 @@ export default function AdminPage() {
 
             <h1 style={titleStyle}>What do you want to do?</h1>
 
+            {message && <p style={messageStyle}>{message}</p>}
+
             <div style={dashboardGridStyle}>
               <button onClick={openPending} style={dashboardCardStyle}>
                 <span style={dashboardTitleStyle}>View pending requests</span>
@@ -276,7 +337,13 @@ export default function AdminPage() {
                 </span>
               </button>
 
-              <button onClick={() => setView('manual')} style={dashboardCardStyle}>
+              <button
+                onClick={() => {
+                  setView('manual')
+                  setMessage('')
+                }}
+                style={dashboardCardStyle}
+              >
                 <span style={dashboardTitleStyle}>Enter manual entry</span>
                 <span style={dashboardTextStyle}>
                   Add a restaurant entry manually and recalculate the city average.
@@ -288,7 +355,13 @@ export default function AdminPage() {
 
         {view === 'pending' && (
           <>
-            <button onClick={() => setView('dashboard')} style={secondaryButtonStyle}>
+            <button
+              onClick={() => {
+                setView('dashboard')
+                setMessage('')
+              }}
+              style={secondaryButtonStyle}
+            >
               Back
             </button>
 
@@ -297,6 +370,12 @@ export default function AdminPage() {
             <h1 style={titleStyle}>Review scraper proposals.</h1>
 
             {message && <p style={messageStyle}>{message}</p>}
+
+            <div style={{ marginBottom: '1rem' }}>
+              <button onClick={loadPendingRequests} style={secondaryButtonStyle}>
+                Refresh pending requests
+              </button>
+            </div>
 
             {loadingPending ? (
               <p style={{ color: '#6b6b64' }}>Loading...</p>
@@ -317,36 +396,80 @@ export default function AdminPage() {
 
                       {request.request_type === 'restaurant' ? (
                         <div style={detailGridStyle}>
-                          <p><strong>Restaurant:</strong> {request.restaurant_name}</p>
-                          <p><strong>Dish:</strong> {request.dish_name}</p>
-                          <p><strong>Tier:</strong> {request.tier}</p>
-                          <p><strong>Price:</strong> CA${Number(request.price_cad).toFixed(2)}</p>
-                          <p><strong>Confidence:</strong> {request.confidence_score}</p>
-                          <p><strong>Source:</strong> {request.source}</p>
+                          <p>
+                            <strong>Restaurant:</strong>{' '}
+                            {request.restaurant_name || 'Unknown restaurant'}
+                          </p>
+                          <p>
+                            <strong>Dish:</strong>{' '}
+                            {request.dish_name || 'Egg Fried Rice'}
+                          </p>
+                          <p>
+                            <strong>Tier:</strong> {request.tier || 'mid_tier'}
+                          </p>
+                          <p>
+                            <strong>Price:</strong>{' '}
+                            {formatCadPrice(request.price_cad)}
+                          </p>
+                          <p>
+                            <strong>Confidence:</strong>{' '}
+                            {formatConfidence(request.confidence_score)}
+                          </p>
+                          <p>
+                            <strong>Source:</strong>{' '}
+                            {request.source || 'No source text'}
+                          </p>
                           {request.source_url && (
                             <p>
                               <strong>URL:</strong>{' '}
-                              <a href={request.source_url} target="_blank" style={linkStyle}>
+                              <a
+                                href={request.source_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={linkStyle}
+                              >
                                 Open source
                               </a>
                             </p>
                           )}
-                          {request.notes && <p><strong>Notes:</strong> {request.notes}</p>}
+                          {request.notes && (
+                            <p>
+                              <strong>Notes:</strong> {request.notes}
+                            </p>
+                          )}
                         </div>
                       ) : (
                         <div style={detailGridStyle}>
-                          <p><strong>Population:</strong> {request.population}</p>
-                          <p><strong>Source:</strong> {request.population_source}</p>
-                          <p><strong>Confidence:</strong> {request.confidence_score}</p>
+                          <p>
+                            <strong>Population:</strong>{' '}
+                            {request.population || 'Missing population'}
+                          </p>
+                          <p>
+                            <strong>Source:</strong>{' '}
+                            {request.population_source || 'No source text'}
+                          </p>
+                          <p>
+                            <strong>Confidence:</strong>{' '}
+                            {formatConfidence(request.confidence_score)}
+                          </p>
                           {request.source_url && (
                             <p>
                               <strong>URL:</strong>{' '}
-                              <a href={request.source_url} target="_blank" style={linkStyle}>
+                              <a
+                                href={request.source_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={linkStyle}
+                              >
                                 Open source
                               </a>
                             </p>
                           )}
-                          {request.notes && <p><strong>Notes:</strong> {request.notes}</p>}
+                          {request.notes && (
+                            <p>
+                              <strong>Notes:</strong> {request.notes}
+                            </p>
+                          )}
                         </div>
                       )}
                     </div>
@@ -355,13 +478,15 @@ export default function AdminPage() {
                       <button
                         onClick={() => reviewRequest(request.id, 'approved')}
                         style={primaryButtonStyle}
+                        disabled={reviewingRequestId === request.id}
                       >
-                        Approve
+                        {reviewingRequestId === request.id ? 'Working...' : 'Approve'}
                       </button>
 
                       <button
                         onClick={() => reviewRequest(request.id, 'denied')}
                         style={dangerButtonStyle}
+                        disabled={reviewingRequestId === request.id}
                       >
                         Deny
                       </button>
@@ -375,7 +500,13 @@ export default function AdminPage() {
 
         {view === 'manual' && (
           <>
-            <button onClick={() => setView('dashboard')} style={secondaryButtonStyle}>
+            <button
+              onClick={() => {
+                setView('dashboard')
+                setMessage('')
+              }}
+              style={secondaryButtonStyle}
+            >
               Back
             </button>
 
@@ -388,7 +519,11 @@ export default function AdminPage() {
             <form onSubmit={handleManualSubmit} style={formGridStyle}>
               <label style={labelStyle}>
                 City
-                <select value={city} onChange={(event) => setCity(event.target.value)} style={inputStyle}>
+                <select
+                  value={city}
+                  onChange={(event) => setCity(event.target.value)}
+                  style={inputStyle}
+                >
                   {cities.map((cityRow) => (
                     <option key={cityRow.city} value={cityRow.city}>
                       {cityRow.city}
@@ -419,7 +554,11 @@ export default function AdminPage() {
 
               <label style={labelStyle}>
                 Tier
-                <select value={tier} onChange={(event) => setTier(event.target.value)} style={inputStyle}>
+                <select
+                  value={tier}
+                  onChange={(event) => setTier(event.target.value)}
+                  style={inputStyle}
+                >
                   <option value="low_tier">low_tier</option>
                   <option value="mid_tier">mid_tier</option>
                   <option value="high_end">high_end</option>
@@ -488,8 +627,12 @@ export default function AdminPage() {
                 Approve immediately
               </label>
 
-              <button type="submit" style={primaryButtonStyle}>
-                Save manual entry
+              <button
+                type="submit"
+                style={primaryButtonStyle}
+                disabled={savingManual}
+              >
+                {savingManual ? 'Saving...' : 'Save manual entry'}
               </button>
             </form>
           </>
@@ -499,14 +642,38 @@ export default function AdminPage() {
   )
 }
 
-const pageStyle: React.CSSProperties = {
+function formatCadPrice(value: number | string | null) {
+  const number = Number(value)
+
+  if (!Number.isFinite(number) || number <= 0) {
+    return 'Price missing'
+  }
+
+  return `CA$${number.toFixed(2)}`
+}
+
+function formatConfidence(value: number | string | null) {
+  const number = Number(value)
+
+  if (!Number.isFinite(number) || number < 0) {
+    return 'Missing'
+  }
+
+  if (number <= 1) {
+    return `${Math.round(number * 100)}%`
+  }
+
+  return `${Math.round(number)}%`
+}
+
+const pageStyle: CSSProperties = {
   fontFamily: 'DM Sans, sans-serif',
   background: '#FAFAF8',
   minHeight: '100vh',
   color: '#1a1a18',
 }
 
-const navStyle: React.CSSProperties = {
+const navStyle: CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -514,14 +681,14 @@ const navStyle: React.CSSProperties = {
   borderBottom: '0.5px solid #e5e3da',
 }
 
-const brandStyle: React.CSSProperties = {
+const brandStyle: CSSProperties = {
   fontFamily: 'DM Serif Display, serif',
   fontSize: 18,
   color: '#1a1a18',
   textDecoration: 'none',
 }
 
-const loginCardStyle: React.CSSProperties = {
+const loginCardStyle: CSSProperties = {
   width: 'min(420px, calc(100vw - 2rem))',
   margin: '12vh auto 0',
   background: '#fff',
@@ -530,7 +697,7 @@ const loginCardStyle: React.CSSProperties = {
   padding: '2rem',
 }
 
-const eyebrowStyle: React.CSSProperties = {
+const eyebrowStyle: CSSProperties = {
   fontSize: 11,
   fontWeight: 500,
   letterSpacing: '1.5px',
@@ -539,7 +706,7 @@ const eyebrowStyle: React.CSSProperties = {
   marginBottom: '1rem',
 }
 
-const titleStyle: React.CSSProperties = {
+const titleStyle: CSSProperties = {
   fontFamily: 'DM Serif Display, serif',
   fontSize: 42,
   lineHeight: 1.05,
@@ -547,14 +714,14 @@ const titleStyle: React.CSSProperties = {
   margin: '0 0 1.5rem',
 }
 
-const labelStyle: React.CSSProperties = {
+const labelStyle: CSSProperties = {
   display: 'grid',
   gap: '0.4rem',
   fontSize: 13,
   color: '#6b6b64',
 }
 
-const inputStyle: React.CSSProperties = {
+const inputStyle: CSSProperties = {
   width: '100%',
   boxSizing: 'border-box',
   padding: '0.75rem 0.9rem',
@@ -566,7 +733,7 @@ const inputStyle: React.CSSProperties = {
   color: '#1a1a18',
 }
 
-const primaryButtonStyle: React.CSSProperties = {
+const primaryButtonStyle: CSSProperties = {
   border: 'none',
   borderRadius: 10,
   padding: '0.75rem 1rem',
@@ -577,7 +744,7 @@ const primaryButtonStyle: React.CSSProperties = {
   cursor: 'pointer',
 }
 
-const secondaryButtonStyle: React.CSSProperties = {
+const secondaryButtonStyle: CSSProperties = {
   border: '0.5px solid #e5e3da',
   borderRadius: 10,
   padding: '0.65rem 0.9rem',
@@ -588,7 +755,7 @@ const secondaryButtonStyle: React.CSSProperties = {
   cursor: 'pointer',
 }
 
-const dangerButtonStyle: React.CSSProperties = {
+const dangerButtonStyle: CSSProperties = {
   border: '0.5px solid #e5e3da',
   borderRadius: 10,
   padding: '0.75rem 1rem',
@@ -599,13 +766,13 @@ const dangerButtonStyle: React.CSSProperties = {
   cursor: 'pointer',
 }
 
-const errorStyle: React.CSSProperties = {
+const errorStyle: CSSProperties = {
   margin: 0,
   color: '#9b2c2c',
   fontSize: 13,
 }
 
-const messageStyle: React.CSSProperties = {
+const messageStyle: CSSProperties = {
   background: '#fff',
   border: '0.5px solid #e5e3da',
   borderRadius: 12,
@@ -615,13 +782,13 @@ const messageStyle: React.CSSProperties = {
   marginBottom: '1rem',
 }
 
-const dashboardGridStyle: React.CSSProperties = {
+const dashboardGridStyle: CSSProperties = {
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
   gap: '1rem',
 }
 
-const dashboardCardStyle: React.CSSProperties = {
+const dashboardCardStyle: CSSProperties = {
   display: 'grid',
   gap: '0.75rem',
   textAlign: 'left',
@@ -633,19 +800,19 @@ const dashboardCardStyle: React.CSSProperties = {
   fontFamily: 'DM Sans, sans-serif',
 }
 
-const dashboardTitleStyle: React.CSSProperties = {
+const dashboardTitleStyle: CSSProperties = {
   fontFamily: 'DM Serif Display, serif',
   fontSize: 28,
   color: '#1a1a18',
 }
 
-const dashboardTextStyle: React.CSSProperties = {
+const dashboardTextStyle: CSSProperties = {
   fontSize: 14,
   lineHeight: 1.6,
   color: '#6b6b64',
 }
 
-const requestCardStyle: React.CSSProperties = {
+const requestCardStyle: CSSProperties = {
   background: '#fff',
   border: '0.5px solid #e5e3da',
   borderRadius: 18,
@@ -654,7 +821,7 @@ const requestCardStyle: React.CSSProperties = {
   gap: '1.25rem',
 }
 
-const requestTypeStyle: React.CSSProperties = {
+const requestTypeStyle: CSSProperties = {
   fontSize: 11,
   textTransform: 'uppercase',
   letterSpacing: '1.2px',
@@ -662,24 +829,24 @@ const requestTypeStyle: React.CSSProperties = {
   margin: '0 0 0.5rem',
 }
 
-const requestTitleStyle: React.CSSProperties = {
+const requestTitleStyle: CSSProperties = {
   fontFamily: 'DM Serif Display, serif',
   fontSize: 28,
   margin: '0 0 1rem',
 }
 
-const detailGridStyle: React.CSSProperties = {
+const detailGridStyle: CSSProperties = {
   display: 'grid',
   gap: '0.35rem',
   fontSize: 14,
   color: '#3a3a34',
 }
 
-const linkStyle: React.CSSProperties = {
+const linkStyle: CSSProperties = {
   color: '#C25E1E',
 }
 
-const emptyStyle: React.CSSProperties = {
+const emptyStyle: CSSProperties = {
   background: '#fff',
   border: '0.5px solid #e5e3da',
   borderRadius: 16,
@@ -687,7 +854,7 @@ const emptyStyle: React.CSSProperties = {
   color: '#6b6b64',
 }
 
-const formGridStyle: React.CSSProperties = {
+const formGridStyle: CSSProperties = {
   background: '#fff',
   border: '0.5px solid #e5e3da',
   borderRadius: 18,
