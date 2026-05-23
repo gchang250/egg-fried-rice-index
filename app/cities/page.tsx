@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
-const rates: Record<string, number> = {
+const FALLBACK_RATES: Record<string, number> = {
   CAD: 1,
   USD: 0.73,
   EUR: 0.68,
@@ -45,7 +45,7 @@ const symbols: Record<string, string> = {
   AED: 'د.إ',
 }
 
-const currencyOptions = Object.keys(rates).map((code) => [
+const currencyOptions = Object.keys(FALLBACK_RATES).map((code) => [
   code,
   `${symbols[code]} ${code}`,
 ])
@@ -78,6 +78,14 @@ export default function CitiesPage() {
   const [loading, setLoading] = useState(true)
   const [currency, setCurrency] = useState('CAD')
   const [isMobile, setIsMobile] = useState(false)
+  const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES)
+
+  useEffect(() => {
+    fetch('/api/exchange-rates')
+      .then((r) => r.json())
+      .then((data) => { if (data && data.CAD) setRates(data) })
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
