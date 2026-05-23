@@ -147,11 +147,31 @@ function glCodeForCountry(country: string): string {
   return 'us'
 }
 
-// Domains to skip
+// Domains to skip entirely
 const BLOCKED_DOMAINS = [
   'facebook.com', 'instagram.com', 'tiktok.com', 'youtube.com',
   'reddit.com', 'twitter.com', 'x.com', 'pinterest.com',
+  'tripadvisor.com', 'google.com/maps',
 ]
+
+// Roundup / list / review sites — their snippets have no prices and their
+// titles ("38 best fried rice spots") would be mistaken for restaurant names
+const ROUNDUP_DOMAINS = [
+  'eater.com', 'timeout.com', 'thrillist.com', 'narcity.com',
+  'blogto.com', 'infatuation.com', 'zagat.com', 'tasteatlas.com',
+  'lonelyplanet.com', 'theculturetrip.com', 'foodnetwork.com',
+  'bonappetit.com', 'seriouseats.com', 'chowhound.com', 'listed.city',
+  'zomato.com', 'opentable.com', 'resy.com', 'quora.com',
+]
+
+function isRoundupPage(title: string, url: string): boolean {
+  const t = title.toLowerCase()
+  const u = url.toLowerCase()
+  if (ROUNDUP_DOMAINS.some((d) => u.includes(d))) return true
+  // Title patterns: "38 best fried rice", "Top 10 restaurants", "guide to", etc.
+  if (/\b\d+\s+(best|top|great|amazing|must.try)\b|\bbest\b.{0,30}\b(rice|restaurant|spot|place)\b|guide to|where to eat|must.try|ranked/i.test(t)) return true
+  return false
+}
 
 // JS SPAs — their snippets are useful but fetching them returns empty HTML
 const SPA_DOMAINS = [
@@ -163,7 +183,7 @@ const SPA_DOMAINS = [
 // Static sites worth fetching
 const HIGH_VALUE_DOMAINS = [
   'menupix.com', 'allmenus.com', 'menuism.com',
-  'toasttab.com', 'chownow.com', 'olo.com',
+  'toasttab.com', 'chownow.com', 'olo.com', 'fantuanorder.com',
 ]
 
 // ---------------------------------------------------------------------------
@@ -271,12 +291,20 @@ function isValidFriedRiceDish(name: string): boolean {
   return true
 }
 
-// Restaurant name must be a real, specific name — not a scraper fallback
+// Restaurant name must be a real, specific establishment name
 function isValidRestaurantName(name: string): boolean {
   if (!name || name.trim().length < 3) return false
+  // Anything over 70 chars is almost certainly a sentence or article title
+  if (name.length > 70) return false
   const n = name.toLowerCase().trim()
-  const invalid = ['unknown restaurant', 'various restaurants', 'unknown', 'restaurant', 'n/a', 'na', 'google search snippet']
+  const invalid = [
+    'unknown restaurant', 'various restaurants', 'unknown', 'restaurant',
+    'n/a', 'na', 'google search snippet', 'various',
+  ]
   if (invalid.includes(n)) return false
+  // Reject list/roundup titles: "38 best fried rice", "Top 5 spots", etc.
+  if (/\b\d+\s+(best|top|great|must)\b|\bbest\b.{0,20}\b(restaurant|rice|spot)\b|guide to|where to eat/i.test(n)) return false
+  // Must contain at least one letter
   if (!/[a-z]/i.test(name)) return false
   return true
 }
@@ -345,13 +373,19 @@ async function searchMenuUrls(city: string, country: string, region?: string): P
   const regionHint = region ? ` ${region}` : ''
   const gl = glCodeForCountry(country)
 
-  // Diverse queries: different cuisines and platforms to maximise restaurant variety
+  // Each query targets a different segment to surface different restaurants.
+  // Roundup sites excluded with -site: operators on the broadest queries.
   const queries = [
-    `"fried rice" price menu ${city}${regionHint} restaurant`,
-    `${city}${regionHint} chinese restaurant fried rice price`,
-    `${city}${regionHint} thai restaurant fried rice price menu`,
-    `${city}${regionHint} fried rice restaurant menu price`,
-    `site:menupix.com OR site:allmenus.com OR site:menuism.com fried rice ${city}${regionHint}`,
+    // Chinese & East-Asian restaurants — biggest fried rice category
+    `${city}${regionHint} chinese restaurant "fried rice" menu price -site:tripadvisor.com -site:yelp.com`,
+    // Delivery platforms: UberEats/DoorDash snippets already contain prices
+    `"fried rice" ${city}${regionHint} site:ubereats.com OR site:doordash.com OR site:skipthedishes.com OR site:fantuanorder.com`,
+    // Menu aggregator sites — static, high-quality price data
+    `fried rice ${city}${regionHint} site:menupix.com OR site:allmenus.com OR site:menuism.com`,
+    // Thai, Vietnamese, Indian, Malaysian cuisines (hit different restaurants)
+    `${city}${regionHint} thai OR vietnamese OR indian OR malaysian restaurant "fried rice" menu price`,
+    // Korean, Japanese, Filipino, Indonesian cuisine (hit yet more different restaurants)
+    `${city}${regionHint} korean OR japanese OR filipino OR indonesian restaurant "fried rice" menu price`,
   ]
 
   const seen = new Set<string>()
@@ -363,7 +397,7 @@ async function searchMenuUrls(city: string, country: string, region?: string): P
         engine: 'google',
         q,
         api_key: apiKey,
-        num: '8',
+        num: '10',
         hl: 'en',
         gl,
         location,
@@ -377,13 +411,11 @@ async function searchMenuUrls(city: string, country: string, region?: string): P
 
       for (const item of organic) {
         const url = item.link
+        const title = item.title ?? ''
         if (!url || seen.has(url) || isBlockedUrl(url)) continue
+        if (isRoundupPage(title, url)) continue
         seen.add(url)
-        results.push({
-          title: item.title ?? '',
-          url,
-          snippet: item.snippet ?? '',
-        })
+        results.push({ title, url, snippet: item.snippet ?? '' })
       }
     } catch {
       // skip failed query
@@ -715,64 +747,64 @@ export async function scrapeCity(city: string, country: string, region?: string)
 
   const searchResults = await searchMenuUrls(city, country, region)
 
-  // --- Pass 1: extract from search snippets (Google already rendered the JS) ---
-  const snippetText = searchResults
-    .filter((r) => r.snippet.length > 30)
-    .map((r) => `[${r.title}]\n${r.snippet}`)
-    .join('\n\n')
+  // --- Pass 1: extract from search snippets in labelled batches ---
+  // Only include snippets that have a price signal and aren't from roundup pages.
+  // Process in batches of 5 with explicit per-source labels so the LLM never
+  // confuses an article headline with a restaurant name.
+  const SNIPPET_BATCH = 5
+  const priceSignal = /\$|£|€|¥|₩|₹|price|menu|\d+\.\d{2}/i
 
-  if (snippetText.trim()) {
+  const snippetSources = searchResults.filter(
+    (r) => r.snippet.length > 30 && priceSignal.test(r.snippet)
+  )
+
+  for (let i = 0; i < snippetSources.length; i += SNIPPET_BATCH) {
+    const batch = snippetSources.slice(i, i + SNIPPET_BATCH)
+
+    // Build labelled text: each entry knows exactly which restaurant it belongs to
+    const batchText = batch.map((r) => {
+      let domain = ''
+      try { domain = new URL(r.url).hostname.replace(/^www\./, '') } catch { domain = '' }
+      const name = restaurantNameFromTitle(r.title, r.url)
+      return `RESTAURANT: "${name}" (${domain})\nSNIPPET: ${r.snippet}`
+    }).join('\n\n---\n\n')
+
     try {
-      const snippetDishes = await extractWithGemini({
-        text: snippetText,
-        restaurantName: 'Various restaurants',
-        city,
-        country,
-        region,
-        currency,
+      const batchDishes = await extractWithGemini({
+        text: batchText,
+        restaurantName: '',
+        city, country, region, currency,
       })
-      if (snippetDishes.length > 0) {
-        dishesFound += snippetDishes.length
-        for (const dish of snippetDishes) {
-          // Use restaurant name from LLM output first; fall back to title heuristics
-          let restaurantName = dish.restaurant_name ?? ''
-          let matchUrl = ''
-          let matchTitle = ''
 
-          if (!restaurantName) {
-            const match = searchResults.find((r) =>
-              r.title.toLowerCase().includes(dish.dish_name.toLowerCase().split(' ')[0])
-            ) ?? searchResults[0]
-            restaurantName = match ? restaurantNameFromTitle(match.title, match.url) : ''
-            matchUrl = match?.url ?? ''
-            matchTitle = match?.title ?? ''
-          } else {
-            // Try to find the source URL by matching restaurant name to search titles
-            const match = searchResults.find((r) =>
-              r.title.toLowerCase().includes(restaurantName.toLowerCase().split(' ')[0])
-            )
-            matchUrl = match?.url ?? ''
-            matchTitle = match?.title ?? restaurantName
-          }
-
+      if (batchDishes.length > 0) {
+        dishesFound += batchDishes.length
+        for (const dish of batchDishes) {
+          const restaurantName = dish.restaurant_name ?? ''
           if (!isValidRestaurantName(restaurantName)) continue
+
+          // Find the source this dish came from
+          const match = batch.find((r) => {
+            const n = restaurantNameFromTitle(r.title, r.url).toLowerCase()
+            const d = restaurantName.toLowerCase()
+            return n.includes(d.split(' ')[0]) || d.includes(n.split(' ')[0])
+          }) ?? batch[0]
 
           const candidates = buildCandidates([dish], {
             city, country, restaurantName, currency,
-            sourceUrl: matchUrl,
-            sourceTitle: matchTitle || restaurantName,
+            sourceUrl: match.url,
+            sourceTitle: match.title || restaurantName,
             rates,
           })
           allCandidates.push(...candidates)
         }
       }
     } catch {
-      // snippet extraction failed — continue to page fetch
+      // batch extraction failed — continue
     }
   }
 
   // --- Pass 2: fetch static-friendly pages ---
-  for (const result of searchResults.filter((r) => !isSpaDomain(r.url)).slice(0, 5)) {
+  for (const result of searchResults.filter((r) => !isSpaDomain(r.url) && !isRoundupPage(r.title, r.url)).slice(0, 5)) {
     try {
       const page = await fetchCleanText(result.url)
       if (!page) continue
