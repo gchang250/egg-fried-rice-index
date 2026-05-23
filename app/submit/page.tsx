@@ -40,6 +40,46 @@ const currencies = [
   'AED',
 ]
 
+const cadRates: Record<string, number> = {
+
+  CAD: 1,
+
+  USD: 1.37,
+
+  EUR: 1.48,
+
+  GBP: 1.73,
+
+  CHF: 1.52,
+
+  JPY: 0.0093,
+
+  CNY: 0.19,
+
+  AUD: 0.91,
+
+  HKD: 0.18,
+
+  SGD: 1.01,
+
+  SAR: 0.37,
+
+  PHP: 0.024,
+
+  MYR: 0.31,
+
+  MXN: 0.08,
+
+  ARS: 0.0014,
+
+  KRW: 0.001,
+
+  INR: 0.016,
+
+  AED: 0.37,
+
+}
+
 export default function SubmitPage() {
   const [cities, setCities] = useState<CityRow[]>([])
   const [city, setCity] = useState('')
@@ -84,6 +124,8 @@ export default function SubmitPage() {
     setSaving(true)
 
     const parsedLocalPrice = Number(localPrice)
+    const exchangeRateUsed = cadRates[localCurrency] ?? 1
+    const priceCad = Number((parsedLocalPrice * exchangeRateUsed).toFixed(2))
 
     if (!city || !restaurantName.trim() || !dishName.trim() || !sourceUrl.trim()) {
       setMessage('City, restaurant, dish name, and source URL are required.')
@@ -107,7 +149,8 @@ export default function SubmitPage() {
       included_in_baseline: includedInBaseline(),
       local_price: parsedLocalPrice,
       local_currency: localCurrency,
-      price_cad: null,
+      exchange_rate_used: exchangeRateUsed,
+      price_cad: priceCad,
       source: 'Public submission',
       source_type: 'public_submission',
       source_url: sourceUrl.trim(),
