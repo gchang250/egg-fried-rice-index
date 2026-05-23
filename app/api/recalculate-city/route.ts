@@ -107,10 +107,6 @@ async function recalculateCity(city: string) {
 
   const rows = (restaurants ?? []) as RestaurantRow[]
 
-  if (rows.length === 0) {
-    throw new Error(`No approved active restaurant rows found for ${city}.`)
-  }
-
   const baselineRows = rows.filter((row) => row.included_in_baseline === true)
   const premiumRows = rows.filter(isPremiumEntry)
 
@@ -122,8 +118,46 @@ async function recalculateCity(city: string) {
     .map((row) => validPrice(row.price_cad))
     .filter((price): price is number => price !== null)
 
-  if (baselinePrices.length === 0) {
-    throw new Error(`No valid baseline prices found for ${city}.`)
+  // No data — zero out all stats
+  if (rows.length === 0 || baselinePrices.length === 0) {
+    const now = new Date().toISOString()
+    await supabase
+      .from('cities')
+      .update({
+        price_cad: null,
+        baseline_median_cad: null,
+        market_average_cad: null,
+        market_min_cad: null,
+        market_max_cad: null,
+        market_entry_count: 0,
+        baseline_entry_count: 0,
+        premium_entry_count: 0,
+        data_quality_label: 'No baseline data',
+        price_source: null,
+        price_updated_at: now,
+        confidence_score: null,
+      })
+      .eq('city', city)
+    return {
+      city,
+      restaurant_count: 0,
+      market_entry_count: 0,
+      baseline_entry_count: 0,
+      premium_entry_count: 0,
+      median_price_cad: null,
+      baseline_median_cad: null,
+      baseline_average_cad: null,
+      baseline_min_cad: null,
+      baseline_max_cad: null,
+      standard_deviation: null,
+      market_average_cad: null,
+      market_min_cad: null,
+      market_max_cad: null,
+      average_confidence: null,
+      market_average_confidence: null,
+      data_quality_label: 'No baseline data',
+      updated_city: [],
+    }
   }
 
   const baselineConfidenceScores = baselineRows
@@ -226,10 +260,30 @@ export async function GET(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Missing city. Use /api/recalculate-city?city=Toronto',
+          error: 'Missing city. Use /api/recalculate-city?city=Toronto or ?city=all',
         },
         { status: 400 }
       )
+    }
+
+    if (city === 'all') {
+      const { data: cityRows, error: cityError } = await supabase
+        .from('cities')
+        .select('city')
+        .order('city')
+      if (cityError) {
+        return NextResponse.json({ success: false, error: cityError.message }, { status: 500 })
+      }
+      const results = []
+      for (const row of cityRows ?? []) {
+        try {
+          const result = await recalculateCity(row.city)
+          results.push({ city: row.city, ok: true, baseline_entry_count: result.baseline_entry_count })
+        } catch (err) {
+          results.push({ city: row.city, ok: false, error: err instanceof Error ? err.message : String(err) })
+        }
+      }
+      return NextResponse.json({ success: true, results })
     }
 
     const result = await recalculateCity(city)
