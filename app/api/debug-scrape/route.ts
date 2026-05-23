@@ -46,7 +46,7 @@ export async function GET(request: Request) {
   let geminiParsed: unknown = null
   try {
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
     const prompt = `Extract fried rice dish prices from these search snippets for ${city}, ${country}.
 Return a JSON array. Each object: { "dish_name": string, "local_price": number, "dish_category": string }
 If no prices found, return [].
