@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-admin'
 import { scrapeCity } from '@/app/api/scrape-city/route'
 
 // Vercel Cron Jobs call this route as a GET request.

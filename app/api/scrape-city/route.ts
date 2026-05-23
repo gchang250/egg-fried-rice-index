@@ -1,7 +1,9 @@
+// curl -H "Authorization: Bearer ps20123139" https://efr-index.vercel.app/api/cron/scrape-all-cities
+
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-admin'
 
 // ---------------------------------------------------------------------------
 // Types

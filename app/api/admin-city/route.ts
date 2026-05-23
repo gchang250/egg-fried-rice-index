@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-admin'
 
 function str(value: unknown): string | null {
   if (value === undefined || value === null || value === '') return null

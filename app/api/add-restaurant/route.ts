@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-admin'
 
 const validTiers = ['low_tier', 'mid_tier', 'high_end', 'premium', 'fine_dining']
 
