@@ -129,13 +129,17 @@ const BLOCKED_DOMAINS = [
   'reddit.com', 'twitter.com', 'x.com', 'pinterest.com',
 ]
 
-// Domains that reliably carry menu prices
-const HIGH_VALUE_DOMAINS = [
+// JS SPAs — their snippets are useful but fetching them returns empty HTML
+const SPA_DOMAINS = [
   'ubereats.com', 'doordash.com', 'skipthedishes.com',
   'grubhub.com', 'seamless.com', 'deliveroo.com', 'foodpanda.com',
+  'yelp.com',
+]
+
+// Static sites worth fetching
+const HIGH_VALUE_DOMAINS = [
   'menupix.com', 'allmenus.com', 'menuism.com',
   'toasttab.com', 'chownow.com', 'olo.com',
-  'opentable.com',
 ]
 
 // ---------------------------------------------------------------------------
@@ -201,6 +205,10 @@ function confidenceFromSource(url: string): number {
 
 function isBlockedUrl(url: string): boolean {
   return BLOCKED_DOMAINS.some((d) => url.toLowerCase().includes(d))
+}
+
+function isSpaDomain(url: string): boolean {
+  return SPA_DOMAINS.some((d) => url.toLowerCase().includes(d))
 }
 
 function restaurantNameFromTitle(title: string, url: string): string {
@@ -269,11 +277,11 @@ async function searchMenuUrls(city: string, country: string): Promise<SearchResu
   const location = `${city}, ${country}`
 
   const queries = [
-    `"fried rice" restaurant menu price ${city}`,
-    `egg fried rice vegetable fried rice menu ${city}`,
-    `site:ubereats.com fried rice ${city}`,
-    `site:doordash.com fried rice ${city}`,
+    `"fried rice" price menu ${city} restaurant`,
+    `${city} chinese restaurant "egg fried rice" OR "fried rice" price`,
     `site:menupix.com fried rice ${city}`,
+    `site:allmenus.com fried rice ${city}`,
+    `site:menuism.com fried rice ${city}`,
   ]
 
   const seen = new Set<string>()
@@ -586,7 +594,45 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
 
   const searchResults = await searchMenuUrls(city, country)
 
-  for (const result of searchResults.slice(0, 15)) {
+  // --- Pass 1: extract from search snippets (Google already rendered the JS) ---
+  const snippetText = searchResults
+    .filter((r) => r.snippet.length > 30)
+    .map((r) => `[${r.title}]\n${r.snippet}`)
+    .join('\n\n')
+
+  if (snippetText.trim()) {
+    try {
+      const snippetDishes = await extractWithGemini({
+        text: snippetText,
+        restaurantName: 'Various restaurants',
+        city,
+        country,
+        currency,
+      })
+      if (snippetDishes.length > 0) {
+        dishesFound += snippetDishes.length
+        // Assign each dish to the search result whose title best matches
+        for (const dish of snippetDishes) {
+          const match = searchResults.find((r) =>
+            r.title.toLowerCase().includes(dish.dish_name.toLowerCase().split(' ')[0])
+          ) ?? searchResults[0]
+          const restaurantName = match ? restaurantNameFromTitle(match.title, match.url) : 'Unknown restaurant'
+          const candidates = buildCandidates([dish], {
+            city, country, restaurantName, currency,
+            sourceUrl: match?.url ?? '',
+            sourceTitle: match?.title ?? 'Google search snippet',
+            rates,
+          })
+          allCandidates.push(...candidates)
+        }
+      }
+    } catch {
+      // snippet extraction failed — continue to page fetch
+    }
+  }
+
+  // --- Pass 2: fetch static-friendly pages ---
+  for (const result of searchResults.filter((r) => !isSpaDomain(r.url)).slice(0, 10)) {
     try {
       const page = await fetchCleanText(result.url)
       if (!page) continue
@@ -621,7 +667,6 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
       errors.push(`${result.url}: ${err instanceof Error ? err.message : String(err)}`)
     }
 
-    // Avoid hammering Claude / external pages
     await new Promise((r) => setTimeout(r, 300))
   }
 
