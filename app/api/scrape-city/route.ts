@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
@@ -335,7 +335,7 @@ async function fetchCleanText(url: string): Promise<{ text: string; title: strin
 // Claude extraction
 // ---------------------------------------------------------------------------
 
-async function extractWithClaude(params: {
+async function extractWithGemini(params: {
   text: string
   restaurantName: string
   city: string
@@ -383,17 +383,12 @@ Only include prices between ${floor} and ${ceil} ${currency.code}.
 If no fried rice dishes found, return [].`
 
   try {
-    const client = new Anthropic()
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
-    const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
-      messages: [{ role: 'user', content: prompt }],
-    })
+    const result = await model.generateContent(prompt)
+    const raw = result.response.text()
 
-    const raw = message.content[0]?.type === 'text' ? message.content[0].text : ''
-
-    // Pull out the JSON array from the response
     const jsonMatch = raw.match(/\[[\s\S]*\]/)
     if (!jsonMatch) return []
 
@@ -565,7 +560,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
       pagesScraped++
       const restaurantName = restaurantNameFromTitle(page.title || result.title, result.url)
 
-      const dishes = await extractWithClaude({
+      const dishes = await extractWithGemini({
         text: page.text,
         restaurantName,
         city,
@@ -647,8 +642,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'city and country are required' }, { status: 400 })
     }
 
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return NextResponse.json({ error: 'ANTHROPIC_API_KEY is not configured' }, { status: 500 })
+    if (!process.env.GOOGLE_AI_API_KEY) {
+      return NextResponse.json({ error: 'GOOGLE_AI_API_KEY is not configured' }, { status: 500 })
     }
 
     const result = await scrapeCity(city, country)
