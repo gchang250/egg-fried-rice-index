@@ -12,6 +12,7 @@ export const maxDuration = 300 // 5-minute cap — upgrade to Pro for longer
 type CityRecord = {
   city: string
   country: string | null
+  region: string | null
 }
 
 export async function GET(request: Request) {
@@ -26,14 +27,14 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  if (!process.env.GOOGLE_AI_API_KEY) {
-    return NextResponse.json({ error: 'GOOGLE_AI_API_KEY is not configured' }, { status: 500 })
+  if (!process.env.GROQ_API_KEY) {
+    return NextResponse.json({ error: 'GROQ_API_KEY is not configured' }, { status: 500 })
   }
 
   // Fetch all cities that have a known country
   const { data: cities, error } = await supabase
     .from('cities')
-    .select('city, country')
+    .select('city, country, region')
     .not('country', 'is', null)
     .order('city')
 
@@ -50,11 +51,11 @@ export async function GET(request: Request) {
     error?: string
   }> = []
 
-  for (const { city, country } of cityList) {
+  for (const { city, country, region } of cityList) {
     if (!country) continue
 
     try {
-      const result = await scrapeCity(city, country)
+      const result = await scrapeCity(city, country, region ?? undefined)
       results.push({
         city,
         proposals_inserted: result.proposals_inserted,

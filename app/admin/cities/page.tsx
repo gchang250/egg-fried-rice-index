@@ -87,7 +87,7 @@ export default function AdminCitiesPage() {
       const res = await fetch('/api/scrape-city', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: 'gchang', password, city: cityRow.city, country: cityRow.country }),
+        body: JSON.stringify({ username: 'gchang', password, city: cityRow.city, country: cityRow.country, region: cityRow.region ?? undefined }),
       })
       const result = await res.json()
       setCityScrapedResult((prev) => ({
@@ -117,7 +117,7 @@ export default function AdminCitiesPage() {
         const res = await fetch('/api/scrape-city', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: 'gchang', password, city: cityRow.city, country: cityRow.country }),
+          body: JSON.stringify({ username: 'gchang', password, city: cityRow.city, country: cityRow.country, region: cityRow.region ?? undefined }),
         })
         const result = await res.json()
         setScrapeLog((prev) => prev.map((e) =>

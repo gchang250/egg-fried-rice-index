@@ -142,6 +142,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid review request' }, { status: 400 })
     }
 
+    // Treat price_update as restaurant for approval purposes (handled separately below)
+
     const { data: pendingRequest, error: fetchError } = await supabase
       .from('pending_requests')
       .select('*')
@@ -167,6 +169,88 @@ export async function POST(request: Request) {
       }
 
       return NextResponse.json({ success: true, decision: 'denied' })
+    }
+
+    if (pendingRequest.request_type === 'price_update') {
+      const resolvedPriceCad = overridePriceCad !== null && Number.isFinite(overridePriceCad) && overridePriceCad > 0
+        ? overridePriceCad
+        : Number(pendingRequest.price_cad)
+
+      if (!isValidNumber(resolvedPriceCad) || resolvedPriceCad <= 0) {
+        return NextResponse.json({ error: 'Cannot approve: price_cad is missing or invalid.' }, { status: 400 })
+      }
+
+      // Try to find and update the existing restaurant entry
+      const { data: existing } = await supabase
+        .from('restaurants')
+        .select('id')
+        .eq('city', pendingRequest.city)
+        .eq('restaurant_name', pendingRequest.restaurant_name)
+        .eq('dish_name', pendingRequest.dish_name)
+        .eq('active', true)
+        .maybeSingle()
+
+      if (existing?.id) {
+        const { error: updateErr } = await supabase
+          .from('restaurants')
+          .update({
+            price_cad: resolvedPriceCad,
+            local_price: isValidNumber(pendingRequest.local_price) ? Number(pendingRequest.local_price) : resolvedPriceCad,
+            exchange_rate_used: isValidNumber(pendingRequest.exchange_rate_used) ? Number(pendingRequest.exchange_rate_used) : 1,
+            date_accessed: new Date().toISOString(),
+            notes: pendingRequest.notes ?? null,
+          })
+          .eq('id', existing.id)
+
+        if (updateErr) return NextResponse.json({ error: updateErr.message }, { status: 500 })
+      } else {
+        // No existing entry found — fall through to insert as new restaurant
+        const { error: insertErr } = await supabase.from('restaurants').insert({
+          city: pendingRequest.city,
+          country: pendingRequest.country || null,
+          restaurant_name: pendingRequest.restaurant_name || 'Unknown restaurant',
+          dish_name: pendingRequest.dish_name || 'Fried Rice',
+          dish_category: defaultDishCategory(pendingRequest.dish_category),
+          included_in_baseline: defaultBaselineInclusion(pendingRequest.included_in_baseline, defaultDishCategory(pendingRequest.dish_category)),
+          tier: pendingRequest.tier || 'mid_tier',
+          local_price: isValidNumber(pendingRequest.local_price) ? Number(pendingRequest.local_price) : resolvedPriceCad,
+          local_currency: pendingRequest.local_currency || 'CAD',
+          exchange_rate_used: isValidNumber(pendingRequest.exchange_rate_used) ? Number(pendingRequest.exchange_rate_used) : 1,
+          price_cad: resolvedPriceCad,
+          source: pendingRequest.source || 'Scraper price update',
+          source_type: pendingRequest.source_type || 'scraper_result',
+          source_url: pendingRequest.source_url || null,
+          confidence_score: isValidNumber(pendingRequest.confidence_score) ? Number(pendingRequest.confidence_score) : 0.5,
+          approved: true,
+          approved_at: new Date().toISOString(),
+          active: true,
+          scraped_at: pendingRequest.created_at,
+          date_accessed: new Date().toISOString(),
+          notes: pendingRequest.notes || null,
+        })
+        if (insertErr) return NextResponse.json({ error: insertErr.message }, { status: 500 })
+      }
+
+      const dishCategory = defaultDishCategory(pendingRequest.dish_category)
+      const includedInBaseline = defaultBaselineInclusion(pendingRequest.included_in_baseline, dishCategory)
+      let recalculated = {}
+      if (includedInBaseline) {
+        recalculated = await recalculateCity(pendingRequest.city)
+      }
+
+      await supabase
+        .from('pending_requests')
+        .update({ status: 'approved', reviewed_at: new Date().toISOString(), reviewed_by: username })
+        .eq('id', requestId)
+
+      return NextResponse.json({
+        success: true,
+        decision: 'approved',
+        request_type: 'price_update',
+        city: pendingRequest.city,
+        updated_existing: !!existing?.id,
+        ...recalculated,
+      })
     }
 
     if (pendingRequest.request_type === 'restaurant') {

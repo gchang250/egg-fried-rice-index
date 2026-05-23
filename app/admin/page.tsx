@@ -11,7 +11,7 @@ type CityRow = {
 
 type PendingRequest = {
   id: string
-  request_type: 'restaurant' | 'population'
+  request_type: 'restaurant' | 'population' | 'price_update'
   city: string
   country: string | null
   restaurant_name: string | null
@@ -593,9 +593,12 @@ export default function AdminPage() {
                   return (
                   <div key={request.id} style={requestCardStyle}>
                     <div>
-                      <p style={requestTypeStyle}>
-                        {request.request_type === 'restaurant'
-                          ? 'Restaurant entry'
+                      <p style={{
+                        ...requestTypeStyle,
+                        color: request.request_type === 'price_update' ? '#2563eb' : '#C25E1E',
+                      }}>
+                        {request.request_type === 'restaurant' ? 'New restaurant entry'
+                          : request.request_type === 'price_update' ? '↑ Price update'
                           : 'Population update'}
                       </p>
 

@@ -335,20 +335,23 @@ function checkDuplicate(
 // Search
 // ---------------------------------------------------------------------------
 
-async function searchMenuUrls(city: string, country: string): Promise<SearchResult[]> {
+async function searchMenuUrls(city: string, country: string, region?: string): Promise<SearchResult[]> {
   const apiKey = process.env.SERPAPI_API_KEY
   if (!apiKey) throw new Error('Missing SERPAPI_API_KEY')
 
-  const location = `${city}, ${country}`
+  // Include region in SerpAPI location to disambiguate e.g. Vancouver BC vs Vancouver WA
+  const location = region ? `${city}, ${region}, ${country}` : `${city}, ${country}`
+  // Short region hint for queries (e.g. "BC", "NY") — use first word or abbreviation
+  const regionHint = region ? ` ${region}` : ''
   const gl = glCodeForCountry(country)
 
   // Diverse queries: different cuisines and platforms to maximise restaurant variety
   const queries = [
-    `"fried rice" price menu ${city} restaurant`,
-    `${city} chinese restaurant fried rice price`,
-    `${city} thai restaurant fried rice price menu`,
-    `${city} fried rice restaurant menu price`,
-    `site:menupix.com OR site:allmenus.com OR site:menuism.com fried rice ${city}`,
+    `"fried rice" price menu ${city}${regionHint} restaurant`,
+    `${city}${regionHint} chinese restaurant fried rice price`,
+    `${city}${regionHint} thai restaurant fried rice price menu`,
+    `${city}${regionHint} fried rice restaurant menu price`,
+    `site:menupix.com OR site:allmenus.com OR site:menuism.com fried rice ${city}${regionHint}`,
   ]
 
   const seen = new Set<string>()
@@ -467,9 +470,11 @@ async function extractWithGemini(params: {
   restaurantName: string
   city: string
   country: string
+  region?: string
   currency: Currency
 }): Promise<ExtractedDish[]> {
-  const { text, restaurantName, city, country, currency } = params
+  const { text, restaurantName, city, country, region, currency } = params
+  const cityLabel = region ? `${city}, ${region}, ${country}` : `${city}, ${country}`
 
   const floor = PRICE_FLOOR_LOCAL[currency.code] ?? 3
   const ceil = PRICE_CEIL_LOCAL[currency.code] ?? 90
@@ -477,7 +482,7 @@ async function extractWithGemini(params: {
     ? `${Math.round(PRICE_CEIL_LOCAL[currency.code] * 0.6)} ${currency.code}`
     : `30 ${currency.code}`
 
-  const prompt = `You are extracting fried rice dish data from restaurant menu text for ${city}, ${country}.
+  const prompt = `You are extracting fried rice dish data from restaurant menu text for ${cityLabel}.
 
 Currency: ${currency.code} (symbol: ${currency.symbol})
 Valid price range: ${floor}–${ceil} ${currency.code}
@@ -497,7 +502,7 @@ Return ONLY a valid JSON array (no prose, no markdown fences). Each object:
 STRICT RULES — violating these means the entry must be omitted:
 1. dish_name MUST contain the words "fried rice" — do NOT include fried noodles, rice noodles, chow mein, lo mein, pad thai, bibimbap, sweet potato fries, or any dish that is not a fried rice dish
 2. restaurant_name MUST be a real, specific restaurant name found in the text — not "Unknown", "Various", or a delivery platform name
-3. The restaurant MUST appear to be located in ${city}, ${country} — skip any restaurant that is clearly in a different city or country
+3. The restaurant MUST appear to be located in ${cityLabel} — skip any restaurant that is clearly in a different city${region ? ` (e.g. do not include restaurants in a different region or state with the same city name)` : ''} or country
 4. local_price must be a number between ${floor} and ${ceil}
 
 Category rules:
@@ -627,7 +632,7 @@ async function deduplicateAndInsert(candidates: Candidate[], city: string): Prom
   if (newCandidates.length === 0) return 0
 
   const rows = newCandidates.map((c) => ({
-    request_type: 'restaurant',
+    request_type: c.priceUpdateFrom !== undefined ? 'price_update' : 'restaurant',
     city: c.city,
     country: c.country,
     restaurant_name: c.restaurant_name,
@@ -690,6 +695,7 @@ async function logRunFinish(
 export type ScrapeResult = {
   city: string
   country: string
+  region?: string
   urls_checked: number
   pages_scraped: number
   dishes_found: number
@@ -697,7 +703,7 @@ export type ScrapeResult = {
   errors: string[]
 }
 
-export async function scrapeCity(city: string, country: string): Promise<ScrapeResult> {
+export async function scrapeCity(city: string, country: string, region?: string): Promise<ScrapeResult> {
   const currency = currencyForCountry(country)
   const rates = await fetchLiveRates()
   const errors: string[] = []
@@ -707,7 +713,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
   const runId = await logRunStart(city)
   const allCandidates: Candidate[] = []
 
-  const searchResults = await searchMenuUrls(city, country)
+  const searchResults = await searchMenuUrls(city, country, region)
 
   // --- Pass 1: extract from search snippets (Google already rendered the JS) ---
   const snippetText = searchResults
@@ -722,6 +728,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
         restaurantName: 'Various restaurants',
         city,
         country,
+        region,
         currency,
       })
       if (snippetDishes.length > 0) {
@@ -780,6 +787,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
         restaurantName,
         city,
         country,
+        region,
         currency,
       })
 
@@ -851,6 +859,7 @@ export async function POST(request: Request) {
     const password = String(body.password ?? '')
     const city = String(body.city ?? '').trim()
     const country = String(body.country ?? '').trim()
+    const region = body.region ? String(body.region).trim() : undefined
 
     if (username !== process.env.ADMIN_USERNAME || password !== process.env.ADMIN_PASSWORD) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -864,7 +873,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'GROQ_API_KEY is not configured' }, { status: 500 })
     }
 
-    const result = await scrapeCity(city, country)
+    const result = await scrapeCity(city, country, region)
 
     return NextResponse.json({ success: true, ...result })
   } catch (error) {
