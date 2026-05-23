@@ -85,6 +85,20 @@ export default function AdminPage() {
   const [view, setView] = useState<'dashboard' | 'pending' | 'manual'>('dashboard')
   const [confirmedPrices, setConfirmedPrices] = useState<Record<string, string>>({})
 
+  const [editingRequestId, setEditingRequestId] = useState<string | null>(null)
+  const [editDraft, setEditDraft] = useState<{
+    restaurant_name: string
+    dish_name: string
+    dish_category: string
+    tier: string
+    included_in_baseline: boolean
+    local_price: string
+    local_currency: string
+    price_cad: string
+    notes: string
+  } | null>(null)
+  const [savingEditId, setSavingEditId] = useState<string | null>(null)
+
   const [cities, setCities] = useState<CityRow[]>([])
   const [pendingRequests, setPendingRequests] = useState<PendingRequest[]>([])
   const [loadingPending, setLoadingPending] = useState(false)
@@ -230,6 +244,58 @@ export default function AdminPage() {
       setMessage(`Request ${decision}.`)
     }
 
+    await loadPendingRequests()
+  }
+
+  function startEditRequest(req: PendingRequest) {
+    setEditingRequestId(req.id)
+    setEditDraft({
+      restaurant_name: req.restaurant_name ?? '',
+      dish_name: req.dish_name ?? '',
+      dish_category: req.dish_category ?? 'basic',
+      tier: req.tier ?? 'mid_tier',
+      included_in_baseline: req.included_in_baseline ?? false,
+      local_price: String(req.local_price ?? ''),
+      local_currency: req.local_currency ?? 'CAD',
+      price_cad: String(req.price_cad ?? ''),
+      notes: req.notes ?? '',
+    })
+  }
+
+  async function saveEditRequest(id: string) {
+    if (!editDraft) return
+    setSavingEditId(id)
+    setMessage('')
+
+    const res = await fetch('/api/update-pending-request', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        password,
+        id,
+        restaurant_name: editDraft.restaurant_name.trim() || null,
+        dish_name: editDraft.dish_name.trim() || null,
+        dish_category: editDraft.dish_category,
+        tier: editDraft.tier,
+        included_in_baseline: editDraft.included_in_baseline,
+        local_price: editDraft.local_price ? Number(editDraft.local_price) : null,
+        local_currency: editDraft.local_currency,
+        price_cad: editDraft.price_cad ? Number(editDraft.price_cad) : null,
+        notes: editDraft.notes.trim() || null,
+      }),
+    })
+
+    const result = await res.json()
+    setSavingEditId(null)
+
+    if (!result.success) {
+      setMessage(result.error ?? 'Save failed')
+      return
+    }
+
+    setEditingRequestId(null)
+    setEditDraft(null)
+    setMessage('Changes saved.')
     await loadPendingRequests()
   }
 
@@ -519,7 +585,12 @@ export default function AdminPage() {
               <div style={emptyStyle}>No pending requests.</div>
             ) : (
               <div style={{ display: 'grid', gap: '1rem' }}>
-                {pendingRequests.map((request) => (
+                {pendingRequests.map((request) => {
+                  const isEditing = editingRequestId === request.id
+                  const isSavingEdit = savingEditId === request.id
+                  const draft = isEditing ? editDraft! : null
+
+                  return (
                   <div key={request.id} style={requestCardStyle}>
                     <div>
                       <p style={requestTypeStyle}>
@@ -534,43 +605,69 @@ export default function AdminPage() {
                         <div style={detailGridStyle}>
                           <p>
                             <strong>Restaurant:</strong>{' '}
-                            {request.restaurant_name || 'Unknown restaurant'}
+                            {isEditing ? (
+                              <input value={draft!.restaurant_name} onChange={(e) => setEditDraft({ ...draft!, restaurant_name: e.target.value })} style={inlineInputStyle} />
+                            ) : (request.restaurant_name || 'Unknown restaurant')}
                           </p>
                           <p>
-                            <strong>Dish:</strong> {request.dish_name || 'Missing dish'}
+                            <strong>Dish:</strong>{' '}
+                            {isEditing ? (
+                              <input value={draft!.dish_name} onChange={(e) => setEditDraft({ ...draft!, dish_name: e.target.value })} style={inlineInputStyle} />
+                            ) : (request.dish_name || 'Missing dish')}
                           </p>
                           <p>
                             <strong>Category:</strong>{' '}
-                            {request.dish_category || 'unknown'}
+                            {isEditing ? (
+                              <select value={draft!.dish_category} onChange={(e) => setEditDraft({ ...draft!, dish_category: e.target.value })} style={inlineInputStyle}>
+                                {dishCategories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                              </select>
+                            ) : (request.dish_category || 'unknown')}
+                          </p>
+                          <p>
+                            <strong>Tier:</strong>{' '}
+                            {isEditing ? (
+                              <select value={draft!.tier} onChange={(e) => setEditDraft({ ...draft!, tier: e.target.value })} style={inlineInputStyle}>
+                                <option value="low_tier">low_tier</option>
+                                <option value="mid_tier">mid_tier</option>
+                                <option value="high_end">high_end</option>
+                                <option value="premium">premium</option>
+                              </select>
+                            ) : (request.tier || 'mid_tier')}
                           </p>
                           <p>
                             <strong>Included in baseline:</strong>{' '}
-                            {request.included_in_baseline ? 'Yes' : 'No'}
-                          </p>
-                          <p>
-                            <strong>Tier:</strong> {request.tier || 'mid_tier'}
+                            {isEditing ? (
+                              <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                                <input type="checkbox" checked={draft!.included_in_baseline} onChange={(e) => setEditDraft({ ...draft!, included_in_baseline: e.target.checked })} />
+                                Yes
+                              </label>
+                            ) : (request.included_in_baseline ? 'Yes' : 'No')}
                           </p>
                           <p>
                             <strong>Local price:</strong>{' '}
-                            {request.local_price
-                              ? `${request.local_currency ?? ''} ${request.local_price}`
-                              : 'Missing'}
+                            {isEditing ? (
+                              <>
+                                <input type="number" step="0.01" value={draft!.local_price} onChange={(e) => setEditDraft({ ...draft!, local_price: e.target.value })} style={{ ...inlineInputStyle, width: 90 }} />
+                                {' '}
+                                <select value={draft!.local_currency} onChange={(e) => setEditDraft({ ...draft!, local_currency: e.target.value })} style={inlineInputStyle}>
+                                  {currencies.map((c) => <option key={c} value={c}>{c}</option>)}
+                                </select>
+                              </>
+                            ) : (request.local_price ? `${request.local_currency ?? ''} ${request.local_price}` : 'Missing')}
                           </p>
                           <p>
                             <strong>Exchange rate used:</strong>{' '}
                             {request.exchange_rate_used || 'Missing'}
                           </p>
-                          <p>
-                            <strong>Auto-calculated CAD:</strong>{' '}
-                            {formatCadPrice(request.price_cad)}
-                          </p>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <strong style={{ fontSize: 14 }}>Confirmed CAD:</strong>
+                            <strong style={{ fontSize: 14 }}>CAD price:</strong>
                             <input
                               type="number"
                               step="0.01"
-                              value={confirmedPrices[request.id] ?? String(request.price_cad ?? '')}
-                              onChange={(e) => setConfirmedPrices((prev) => ({ ...prev, [request.id]: e.target.value }))}
+                              value={isEditing ? draft!.price_cad : (confirmedPrices[request.id] ?? String(request.price_cad ?? ''))}
+                              onChange={(e) => isEditing
+                                ? setEditDraft({ ...draft!, price_cad: e.target.value })
+                                : setConfirmedPrices((prev) => ({ ...prev, [request.id]: e.target.value }))}
                               style={{ padding: '0.35rem 0.5rem', border: '0.5px solid #e5e3da', borderRadius: 8, fontFamily: 'DM Sans, sans-serif', fontSize: 14, width: 100 }}
                             />
                           </div>
@@ -589,12 +686,7 @@ export default function AdminPage() {
                           {request.source_url && (
                             <p>
                               <strong>URL:</strong>{' '}
-                              <a
-                                href={request.source_url}
-                                target="_blank"
-                                rel="noreferrer"
-                                style={linkStyle}
-                              >
+                              <a href={request.source_url} target="_blank" rel="noreferrer" style={linkStyle}>
                                 Open source
                               </a>
                             </p>
@@ -603,11 +695,12 @@ export default function AdminPage() {
                             <strong>Date accessed:</strong>{' '}
                             {formatDate(request.date_accessed)}
                           </p>
-                          {request.notes && (
-                            <p>
-                              <strong>Notes:</strong> {request.notes}
-                            </p>
-                          )}
+                          <p>
+                            <strong>Notes:</strong>{' '}
+                            {isEditing ? (
+                              <textarea value={draft!.notes} onChange={(e) => setEditDraft({ ...draft!, notes: e.target.value })} style={{ ...inlineInputStyle, display: 'block', width: '100%', minHeight: 60, resize: 'vertical', marginTop: '0.25rem' }} />
+                            ) : (request.notes || '—')}
+                          </p>
                         </div>
                       ) : (
                         <div style={detailGridStyle}>
@@ -626,12 +719,7 @@ export default function AdminPage() {
                           {request.source_url && (
                             <p>
                               <strong>URL:</strong>{' '}
-                              <a
-                                href={request.source_url}
-                                target="_blank"
-                                rel="noreferrer"
-                                style={linkStyle}
-                              >
+                              <a href={request.source_url} target="_blank" rel="noreferrer" style={linkStyle}>
                                 Open source
                               </a>
                             </p>
@@ -646,24 +734,56 @@ export default function AdminPage() {
                     </div>
 
                     <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                      <button
-                        onClick={() => reviewRequest(request.id, 'approved')}
-                        style={primaryButtonStyle}
-                        disabled={reviewingRequestId === request.id}
-                      >
-                        {reviewingRequestId === request.id ? 'Working...' : 'Approve'}
-                      </button>
+                      {isEditing ? (
+                        <>
+                          <button
+                            onClick={() => saveEditRequest(request.id)}
+                            style={primaryButtonStyle}
+                            disabled={isSavingEdit}
+                          >
+                            {isSavingEdit ? 'Saving...' : 'Save changes'}
+                          </button>
+                          <button
+                            onClick={() => { setEditingRequestId(null); setEditDraft(null) }}
+                            style={secondaryButtonStyle}
+                            disabled={isSavingEdit}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => reviewRequest(request.id, 'approved')}
+                            style={primaryButtonStyle}
+                            disabled={reviewingRequestId === request.id}
+                          >
+                            {reviewingRequestId === request.id ? 'Working...' : 'Approve'}
+                          </button>
 
-                      <button
-                        onClick={() => reviewRequest(request.id, 'denied')}
-                        style={dangerButtonStyle}
-                        disabled={reviewingRequestId === request.id}
-                      >
-                        Deny
-                      </button>
+                          {request.request_type === 'restaurant' && (
+                            <button
+                              onClick={() => startEditRequest(request)}
+                              style={secondaryButtonStyle}
+                              disabled={reviewingRequestId === request.id}
+                            >
+                              Edit
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => reviewRequest(request.id, 'denied')}
+                            style={dangerButtonStyle}
+                            disabled={reviewingRequestId === request.id}
+                          >
+                            Deny
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </>
@@ -1134,6 +1254,17 @@ const emptyStyle: CSSProperties = {
   borderRadius: 16,
   padding: '1.5rem',
   color: '#6b6b64',
+}
+
+const inlineInputStyle: CSSProperties = {
+  padding: '0.25rem 0.5rem',
+  border: '0.5px solid #e5e3da',
+  borderRadius: 6,
+  fontFamily: 'DM Sans, sans-serif',
+  fontSize: 14,
+  color: '#1a1a18',
+  background: '#fff',
+  boxSizing: 'border-box',
 }
 
 const formGridStyle: CSSProperties = {

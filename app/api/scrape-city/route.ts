@@ -17,6 +17,7 @@ type ExtractedDish = {
   dish_name: string
   local_price: number
   dish_category: 'basic' | 'vegetable' | 'meat_based' | 'seafood' | 'house_special' | 'premium'
+  restaurant_name?: string
 }
 
 type Candidate = {
@@ -121,6 +122,29 @@ const PRICE_CEIL_LOCAL: Record<string, number> = {
   SGD: 60, HKD: 300, JPY: 5000, CNY: 200, TWD: 800, KRW: 50000,
   INR: 1500, MYR: 80, PHP: 1000, IDR: 200000, THB: 800, VND: 400000,
   MXN: 400, BRL: 80, ARS: 8000, AED: 80, SAR: 80,
+}
+
+// Google country codes for localised search results
+const GL_BY_COUNTRY: Record<string, string> = {
+  canada: 'ca', 'united states': 'us', usa: 'us', us: 'us',
+  'united kingdom': 'gb', uk: 'gb', england: 'gb', scotland: 'gb', wales: 'gb',
+  australia: 'au', singapore: 'sg', 'hong kong': 'hk',
+  japan: 'jp', china: 'cn', taiwan: 'tw', 'south korea': 'kr', korea: 'kr',
+  india: 'in', malaysia: 'my', philippines: 'ph', indonesia: 'id',
+  thailand: 'th', vietnam: 'vn', france: 'fr', germany: 'de',
+  italy: 'it', spain: 'es', netherlands: 'nl', switzerland: 'ch',
+  mexico: 'mx', brazil: 'br', argentina: 'ar',
+  'uae': 'ae', 'united arab emirates': 'ae', 'saudi arabia': 'sa',
+  'new zealand': 'nz',
+}
+
+function glCodeForCountry(country: string): string {
+  const key = country.toLowerCase().trim()
+  if (GL_BY_COUNTRY[key]) return GL_BY_COUNTRY[key]
+  for (const [k, v] of Object.entries(GL_BY_COUNTRY)) {
+    if (key.includes(k) || k.includes(key)) return v
+  }
+  return 'us'
 }
 
 // Domains to skip
@@ -238,6 +262,47 @@ function normalizeForDupe(value: string | null | undefined): string {
   return String(value ?? '').toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 }
 
+// Strict dish name filter — must be an actual fried rice dish, not noodles or fries
+function isValidFriedRiceDish(name: string): boolean {
+  const d = name.toLowerCase()
+  if (!d.includes('fried rice')) return false
+  // Reject noodle/vermicelli variants that sound like fried rice
+  if (/fried rice noodle|noodle.{0,10}fried rice|rice noodle|vermicelli/.test(d)) return false
+  return true
+}
+
+// Restaurant name must be a real, specific name — not a scraper fallback
+function isValidRestaurantName(name: string): boolean {
+  if (!name || name.trim().length < 3) return false
+  const n = name.toLowerCase().trim()
+  const invalid = ['unknown restaurant', 'various restaurants', 'unknown', 'restaurant', 'n/a', 'na', 'google search snippet']
+  if (invalid.includes(n)) return false
+  if (!/[a-z]/i.test(name)) return false
+  return true
+}
+
+// After building per-city candidates, keep only the cheapest and most expensive dish
+// per restaurant to avoid over-sampling the same source
+function keepMinMaxPerRestaurant(candidates: Candidate[]): Candidate[] {
+  const byKey = new Map<string, Candidate[]>()
+  for (const c of candidates) {
+    const key = normalizeForDupe(c.source_url) || normalizeForDupe(c.restaurant_name)
+    if (!byKey.has(key)) byKey.set(key, [])
+    byKey.get(key)!.push(c)
+  }
+
+  const result: Candidate[] = []
+  for (const group of byKey.values()) {
+    if (group.length === 0) continue
+    const sorted = [...group].sort((a, b) => a.price_cad - b.price_cad)
+    result.push(sorted[0]) // cheapest
+    if (sorted.length > 1 && sorted[sorted.length - 1].price_cad > sorted[0].price_cad * 1.05) {
+      result.push(sorted[sorted.length - 1]) // most expensive if meaningfully different
+    }
+  }
+  return result
+}
+
 function checkDuplicate(
   candidate: { city: string; restaurant_name: string; dish_name: string; source_url: string; price_cad: number },
   existing: Array<{ city?: string | null; restaurant_name?: string | null; dish_name?: string | null; source_url?: string | null; price_cad?: number | null }>
@@ -275,13 +340,15 @@ async function searchMenuUrls(city: string, country: string): Promise<SearchResu
   if (!apiKey) throw new Error('Missing SERPAPI_API_KEY')
 
   const location = `${city}, ${country}`
+  const gl = glCodeForCountry(country)
 
+  // Diverse queries: different cuisines and platforms to maximise restaurant variety
   const queries = [
     `"fried rice" price menu ${city} restaurant`,
-    `${city} chinese restaurant "egg fried rice" OR "fried rice" price`,
-    `site:menupix.com fried rice ${city}`,
-    `site:allmenus.com fried rice ${city}`,
-    `site:menuism.com fried rice ${city}`,
+    `${city} chinese restaurant fried rice price`,
+    `${city} thai restaurant fried rice price menu`,
+    `${city} fried rice restaurant menu price`,
+    `site:menupix.com OR site:allmenus.com OR site:menuism.com fried rice ${city}`,
   ]
 
   const seen = new Set<string>()
@@ -295,7 +362,7 @@ async function searchMenuUrls(city: string, country: string): Promise<SearchResu
         api_key: apiKey,
         num: '8',
         hl: 'en',
-        gl: 'ca',
+        gl,
         location,
       })
 
@@ -410,37 +477,38 @@ async function extractWithGemini(params: {
     ? `${Math.round(PRICE_CEIL_LOCAL[currency.code] * 0.6)} ${currency.code}`
     : `30 ${currency.code}`
 
-  const prompt = `You are extracting fried rice dish data from a restaurant menu page.
+  const prompt = `You are extracting fried rice dish data from restaurant menu text for ${city}, ${country}.
 
-Restaurant: ${restaurantName}
-Location: ${city}, ${country}
 Currency: ${currency.code} (symbol: ${currency.symbol})
 Valid price range: ${floor}–${ceil} ${currency.code}
 
---- PAGE TEXT ---
+--- TEXT ---
 ${text.slice(0, 4000)}
 --- END ---
 
-Extract every fried rice dish you can find. Return ONLY a valid JSON array with no other text.
-
-Each object must have exactly:
+Return ONLY a valid JSON array (no prose, no markdown fences). Each object:
 {
-  "dish_name": "exact name from the menu",
-  "local_price": number (e.g. 14.99 or 1400 — numeric only, no currency symbols),
+  "restaurant_name": "exact restaurant name from the text",
+  "dish_name": "exact dish name from the menu",
+  "local_price": number (numeric only, e.g. 14.99),
   "dish_category": "basic" | "vegetable" | "meat_based" | "seafood" | "house_special" | "premium"
 }
 
-Category rules:
-- basic: plain egg fried rice, plain fried rice with egg, no specific protein listed
-- vegetable: vegetable fried rice, veggie fried rice, garden fried rice
-- meat_based: chicken, beef, pork, ham, bacon, duck, char siu / bbq pork fried rice
-- seafood: shrimp, prawn, lobster, crab, scallop, squid, fish fried rice
-- house_special: combination, special, yang chow, yangzhou, mixed protein fried rice
-- premium: wagyu, truffle, gold leaf, luxury ingredients, or price over ${premiumHint}
+STRICT RULES — violating these means the entry must be omitted:
+1. dish_name MUST contain the words "fried rice" — do NOT include fried noodles, rice noodles, chow mein, lo mein, pad thai, bibimbap, sweet potato fries, or any dish that is not a fried rice dish
+2. restaurant_name MUST be a real, specific restaurant name found in the text — not "Unknown", "Various", or a delivery platform name
+3. The restaurant MUST appear to be located in ${city}, ${country} — skip any restaurant that is clearly in a different city or country
+4. local_price must be a number between ${floor} and ${ceil}
 
-Only include dishes that contain "fried rice" or are unmistakably a fried rice dish.
-Only include prices between ${floor} and ${ceil} ${currency.code}.
-If no fried rice dishes found, return [].`
+Category rules:
+- basic: plain egg fried rice, plain fried rice, no specific protein
+- vegetable: vegetable/veggie/garden fried rice
+- meat_based: chicken, beef, pork, ham, duck, char siu, bbq pork
+- seafood: shrimp, prawn, lobster, crab, scallop, squid, fish
+- house_special: combination, special, yang chow, yangzhou, mixed protein, deluxe
+- premium: wagyu, truffle, gold leaf, luxury, or price above ${premiumHint}
+
+If no qualifying fried rice dishes are found, return [].`
 
   const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
@@ -462,17 +530,20 @@ If no fried rice dishes found, return [].`
 
       return parsed
         .filter(
-          (item: { dish_name?: unknown; local_price?: unknown; dish_category?: unknown }) =>
+          (item: { dish_name?: unknown; local_price?: unknown; dish_category?: unknown; restaurant_name?: unknown }) =>
             typeof item.dish_name === 'string' &&
+            isValidFriedRiceDish(item.dish_name) &&
             typeof item.local_price === 'number' &&
             Number.isFinite(item.local_price) &&
             item.local_price >= floor &&
             item.local_price <= ceil
         )
-        .map((item: { dish_name: string; local_price: number; dish_category?: unknown }) => ({
+        .map((item: { dish_name: string; local_price: number; dish_category?: unknown; restaurant_name?: unknown }) => ({
           dish_name: item.dish_name,
           local_price: item.local_price,
           dish_category: normalizeCategory(String(item.dish_category ?? ''), item.dish_name),
+          restaurant_name: typeof item.restaurant_name === 'string' && isValidRestaurantName(item.restaurant_name)
+            ? item.restaurant_name : undefined,
         }))
     } catch (err) {
       const msg = String(err)
@@ -655,16 +726,34 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
       })
       if (snippetDishes.length > 0) {
         dishesFound += snippetDishes.length
-        // Assign each dish to the search result whose title best matches
         for (const dish of snippetDishes) {
-          const match = searchResults.find((r) =>
-            r.title.toLowerCase().includes(dish.dish_name.toLowerCase().split(' ')[0])
-          ) ?? searchResults[0]
-          const restaurantName = match ? restaurantNameFromTitle(match.title, match.url) : 'Unknown restaurant'
+          // Use restaurant name from LLM output first; fall back to title heuristics
+          let restaurantName = dish.restaurant_name ?? ''
+          let matchUrl = ''
+          let matchTitle = ''
+
+          if (!restaurantName) {
+            const match = searchResults.find((r) =>
+              r.title.toLowerCase().includes(dish.dish_name.toLowerCase().split(' ')[0])
+            ) ?? searchResults[0]
+            restaurantName = match ? restaurantNameFromTitle(match.title, match.url) : ''
+            matchUrl = match?.url ?? ''
+            matchTitle = match?.title ?? ''
+          } else {
+            // Try to find the source URL by matching restaurant name to search titles
+            const match = searchResults.find((r) =>
+              r.title.toLowerCase().includes(restaurantName.toLowerCase().split(' ')[0])
+            )
+            matchUrl = match?.url ?? ''
+            matchTitle = match?.title ?? restaurantName
+          }
+
+          if (!isValidRestaurantName(restaurantName)) continue
+
           const candidates = buildCandidates([dish], {
             city, country, restaurantName, currency,
-            sourceUrl: match?.url ?? '',
-            sourceTitle: match?.title ?? 'Google search snippet',
+            sourceUrl: matchUrl,
+            sourceTitle: matchTitle || restaurantName,
             rates,
           })
           allCandidates.push(...candidates)
@@ -683,6 +772,8 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
 
       pagesScraped++
       const restaurantName = restaurantNameFromTitle(page.title || result.title, result.url)
+
+      if (!isValidRestaurantName(restaurantName)) continue
 
       const dishes = await extractWithGemini({
         text: page.text,
@@ -714,9 +805,12 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
     await new Promise((r) => setTimeout(r, 5000))
   }
 
+  // Keep only cheapest + most expensive dish per restaurant to maximise source diversity
+  const cappedCandidates = keepMinMaxPerRestaurant(allCandidates)
+
   // Deduplicate across candidates from different pages
   const seenKey = new Set<string>()
-  const uniqueCandidates = allCandidates.filter((c) => {
+  const uniqueCandidates = cappedCandidates.filter((c) => {
     const key = `${normalizeForDupe(c.restaurant_name)}:${normalizeForDupe(c.dish_name)}`
     if (seenKey.has(key)) return false
     seenKey.add(key)

@@ -77,6 +77,31 @@ export default function AdminCitiesPage() {
 
   const [scraping, setScraping] = useState(false)
   const [scrapeLog, setScrapeLog] = useState<Array<{ city: string; status: 'running' | 'done' | 'error'; proposals?: number; error?: string }>>([])
+  const [scrapingCity, setScrapingCity] = useState<string | null>(null)
+  const [cityScrapedResult, setCityScrapedResult] = useState<Record<string, { proposals?: number; error?: string }>>({})
+
+  async function scrapeOneCity(cityRow: CityRow) {
+    if (!cityRow.country) { setMessage('City has no country set.'); return }
+    setScrapingCity(cityRow.city)
+    try {
+      const res = await fetch('/api/scrape-city', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: 'gchang', password, city: cityRow.city, country: cityRow.country }),
+      })
+      const result = await res.json()
+      setCityScrapedResult((prev) => ({
+        ...prev,
+        [cityRow.city]: result.error ? { error: result.error } : { proposals: result.proposals_inserted },
+      }))
+    } catch (err) {
+      setCityScrapedResult((prev) => ({
+        ...prev,
+        [cityRow.city]: { error: err instanceof Error ? err.message : 'Network error' },
+      }))
+    }
+    setScrapingCity(null)
+  }
 
   async function scrapeAllCities() {
     const citiesToScrape = cities.filter((c) => c.country)
@@ -404,10 +429,26 @@ export default function AdminCitiesPage() {
                     <td style={tdStyle}>{row.data_quality_label ?? '—'}</td>
                     <td style={tdStyle}>{row.baseline_entry_count ?? '—'}</td>
                     <td style={tdStyle}>{row.market_entry_count ?? '—'}</td>
-                    <td style={tdStyle}>
+                    <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>
                       <button onClick={() => startEdit(row)} style={{ ...secondaryButtonStyle, padding: '0.35rem 0.65rem', fontSize: 12 }}>
                         Edit
                       </button>
+                      {row.country && (
+                        <button
+                          onClick={() => scrapeOneCity(row)}
+                          disabled={scrapingCity === row.city || scraping}
+                          style={{ ...secondaryButtonStyle, padding: '0.35rem 0.65rem', fontSize: 12, marginLeft: '0.4rem' }}
+                        >
+                          {scrapingCity === row.city ? '…' : 'Scrape'}
+                        </button>
+                      )}
+                      {cityScrapedResult[row.city] && (
+                        <span style={{ fontSize: 11, marginLeft: '0.5rem', color: cityScrapedResult[row.city].error ? '#9b2c2c' : '#2c7a4b' }}>
+                          {cityScrapedResult[row.city].error
+                            ? `✗ ${cityScrapedResult[row.city].error}`
+                            : `✓ ${cityScrapedResult[row.city].proposals ?? 0} proposals`}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
