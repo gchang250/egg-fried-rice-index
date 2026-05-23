@@ -1,6 +1,6 @@
 // curl -H "Authorization: Bearer ps20123139" https://efr-index.vercel.app/api/cron/scrape-all-cities
 
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import Groq from 'groq-sdk'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase-admin'
@@ -416,13 +416,17 @@ Only include dishes that contain "fried rice" or are unmistakably a fried rice d
 Only include prices between ${floor} and ${ceil} ${currency.code}.
 If no fried rice dishes found, return [].`
 
-  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' })
+  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const result = await model.generateContent(prompt)
-      const raw = result.response.text()
+      const completion = await groq.chat.completions.create({
+        model: 'llama-3.1-8b-instant',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.1,
+        max_tokens: 1024,
+      })
+      const raw = completion.choices[0]?.message?.content ?? ''
 
       const jsonMatch = raw.match(/\[[\s\S]*\]/)
       if (!jsonMatch) return []
@@ -440,9 +444,8 @@ If no fried rice dishes found, return [].`
       )
     } catch (err) {
       const msg = String(err)
-      if (msg.includes('429') || msg.includes('quota') || msg.includes('rate')) {
-        // Back off and retry: 15s, then 30s
-        await new Promise((r) => setTimeout(r, (attempt + 1) * 15000))
+      if (msg.includes('429') || msg.includes('rate')) {
+        await new Promise((r) => setTimeout(r, (attempt + 1) * 10000))
         continue
       }
       return []
