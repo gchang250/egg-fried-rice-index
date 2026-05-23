@@ -206,6 +206,9 @@ export default function CitiesPage() {
           <a href="/cities" style={navLinkStyle}>
             cities
           </a>
+          <a href="/submit" style={navLinkStyle}>
+            submit
+          </a>
           <a href="/about" style={navLinkStyle}>
             about
           </a>
