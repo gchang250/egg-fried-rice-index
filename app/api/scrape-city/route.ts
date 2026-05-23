@@ -366,8 +366,34 @@ async function fetchCleanText(url: string): Promise<{ text: string; title: strin
 }
 
 // ---------------------------------------------------------------------------
-// Claude extraction
+// LLM extraction
 // ---------------------------------------------------------------------------
+
+const VALID_CATEGORIES = new Set(['basic', 'vegetable', 'meat_based', 'seafood', 'house_special', 'premium'])
+
+function normalizeCategory(raw: string, dishName: string): ExtractedDish['dish_category'] {
+  const r = raw.toLowerCase().trim()
+  if (VALID_CATEGORIES.has(r)) return r as ExtractedDish['dish_category']
+
+  const d = dishName.toLowerCase()
+  if (/shrimp|prawn|lobster|crab|scallop|squid|fish/.test(d)) return 'seafood'
+  if (/chicken|beef|pork|ham|bacon|duck|char siu|bbq pork/.test(d)) return 'meat_based'
+  if (/veg|vegetable|veggie|garden|schezwan|szechuan/.test(d)) return 'vegetable'
+  if (/special|combination|combo|mixed|yang.?chow|yangzhou|deluxe/.test(d)) return 'house_special'
+  if (/truffle|wagyu|gold|lobster/.test(d)) return 'premium'
+  return 'basic'
+}
+
+function cleanLlmJson(raw: string): string {
+  let s = raw.replace(/```(?:json)?\s*/gi, '').replace(/```/g, '')
+  // Single-quoted property names: 'key': → "key":
+  s = s.replace(/'([^']+)'(\s*:)/g, '"$1"$2')
+  // Single-quoted string values: : 'value' → : "value"
+  s = s.replace(/:\s*'([^']*)'/g, ': "$1"')
+  // Trailing commas before } or ]
+  s = s.replace(/,(\s*[}\]])/g, '$1')
+  return s.trim()
+}
 
 async function extractWithGemini(params: {
   text: string
@@ -431,17 +457,23 @@ If no fried rice dishes found, return [].`
       const jsonMatch = raw.match(/\[[\s\S]*\]/)
       if (!jsonMatch) return []
 
-      const parsed = JSON.parse(jsonMatch[0])
+      const parsed = JSON.parse(cleanLlmJson(jsonMatch[0]))
       if (!Array.isArray(parsed)) return []
 
-      return parsed.filter(
-        (item): item is ExtractedDish =>
-          typeof item.dish_name === 'string' &&
-          typeof item.local_price === 'number' &&
-          item.local_price >= floor &&
-          item.local_price <= ceil &&
-          typeof item.dish_category === 'string'
-      )
+      return parsed
+        .filter(
+          (item: { dish_name?: unknown; local_price?: unknown; dish_category?: unknown }) =>
+            typeof item.dish_name === 'string' &&
+            typeof item.local_price === 'number' &&
+            Number.isFinite(item.local_price) &&
+            item.local_price >= floor &&
+            item.local_price <= ceil
+        )
+        .map((item: { dish_name: string; local_price: number; dish_category?: unknown }) => ({
+          dish_name: item.dish_name,
+          local_price: item.local_price,
+          dish_category: normalizeCategory(String(item.dish_category ?? ''), item.dish_name),
+        }))
     } catch (err) {
       const msg = String(err)
       if (msg.includes('429') || msg.includes('rate')) {
@@ -734,8 +766,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'city and country are required' }, { status: 400 })
     }
 
-    if (!process.env.GOOGLE_AI_API_KEY) {
-      return NextResponse.json({ error: 'GOOGLE_AI_API_KEY is not configured' }, { status: 500 })
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json({ error: 'GROQ_API_KEY is not configured' }, { status: 500 })
     }
 
     const result = await scrapeCity(city, country)

@@ -57,7 +57,14 @@ ${snippetText.slice(0, 3000)}`
     })
     groqResult = completion.choices[0]?.message?.content ?? ''
     const match = groqResult.match(/\[[\s\S]*\]/)
-    if (match) groqParsed = JSON.parse(match[0])
+    if (match) {
+      let cleaned = match[0]
+      cleaned = cleaned.replace(/```(?:json)?\s*/gi, '').replace(/```/g, '')
+      cleaned = cleaned.replace(/'([^']+)'(\s*:)/g, '"$1"$2')
+      cleaned = cleaned.replace(/:\s*'([^']*)'/g, ': "$1"')
+      cleaned = cleaned.replace(/,(\s*[}\]])/g, '$1')
+      groqParsed = JSON.parse(cleaned)
+    }
   } catch (e) {
     groqResult = String(e)
   }
