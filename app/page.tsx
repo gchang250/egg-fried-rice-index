@@ -454,21 +454,29 @@ export default function Home() {
               </p>
             </div>
 
-            <div style={divider} />
-
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <a href="/cities" style={drawerButtonStyle}>
-                View all cities
-              </a>
+            <a
+              href={`/cities/${selectedCity.city
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '')}`}
+              style={drawerPrimaryButtonStyle}
+            >
+              View full city profile
+            </a>
 
-              <a href="/submit" style={drawerButtonStyle}>
-                Submit data
-              </a>
+            <a href="/cities" style={drawerButtonStyle}>
+              View all cities
+            </a>
 
-              <a href="/methodology" style={drawerButtonStyle}>
-                Methodology
-              </a>
-            </div>
+            <a href="/submit" style={drawerButtonStyle}>
+              Submit data
+            </a>
+
+            <a href="/methodology" style={drawerButtonStyle}>
+              Methodology
+            </a>
+          </div>
           </>
         )}
       </div>
@@ -739,6 +747,16 @@ export default function Home() {
       </div>
     </main>
   )
+}
+
+const drawerPrimaryButtonStyle: React.CSSProperties = {
+  padding: '0.55rem 0.8rem',
+  borderRadius: 10,
+  border: '0.5px solid #C25E1E',
+  color: '#fff',
+  textDecoration: 'none',
+  fontSize: 13,
+  background: '#C25E1E',
 }
 
 const mapButtonStyle: React.CSSProperties = {
