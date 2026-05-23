@@ -75,6 +75,41 @@ export default function AdminCitiesPage() {
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
 
+  const [scraping, setScraping] = useState(false)
+  const [scrapeLog, setScrapeLog] = useState<Array<{ city: string; status: 'running' | 'done' | 'error'; proposals?: number; error?: string }>>([])
+
+  async function scrapeAllCities() {
+    const citiesToScrape = cities.filter((c) => c.country)
+    if (citiesToScrape.length === 0) {
+      setMessage('No cities with a country set.')
+      return
+    }
+    setScraping(true)
+    setScrapeLog([])
+    for (const cityRow of citiesToScrape) {
+      setScrapeLog((prev) => [...prev, { city: cityRow.city, status: 'running' }])
+      try {
+        const res = await fetch('/api/scrape-city', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: 'gchang', password, city: cityRow.city, country: cityRow.country }),
+        })
+        const result = await res.json()
+        setScrapeLog((prev) => prev.map((e) =>
+          e.city === cityRow.city
+            ? { ...e, status: result.error ? 'error' : 'done', proposals: result.proposals_inserted, error: result.error }
+            : e
+        ))
+      } catch (err) {
+        setScrapeLog((prev) => prev.map((e) =>
+          e.city === cityRow.city ? { ...e, status: 'error', error: err instanceof Error ? err.message : 'Network error' } : e
+        ))
+      }
+      await new Promise((r) => setTimeout(r, 500))
+    }
+    setScraping(false)
+  }
+
   useEffect(() => {
     const stored = sessionStorage.getItem('admin_password')
     if (stored) setPassword(stored)
@@ -303,9 +338,36 @@ export default function AdminCitiesPage() {
 
         {message && <p style={messageStyle}>{message}</p>}
 
+        {scrapeLog.length > 0 && (
+          <div style={panelStyle}>
+            <h2 style={{ ...panelTitleStyle, fontSize: 20, marginBottom: '0.75rem' }}>
+              {scraping ? 'Scraping cities…' : 'Scrape complete'}
+            </h2>
+            <div style={{ display: 'grid', gap: '0.4rem' }}>
+              {scrapeLog.map((entry) => (
+                <div key={entry.city} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: 13 }}>
+                  <span style={{ width: 16, textAlign: 'center' }}>
+                    {entry.status === 'running' ? '⋯' : entry.status === 'done' ? '✓' : '✗'}
+                  </span>
+                  <span style={{ minWidth: 140 }}>{entry.city}</span>
+                  {entry.status === 'done' && (
+                    <span style={{ color: '#6b6b64' }}>{entry.proposals ?? 0} new proposals</span>
+                  )}
+                  {entry.status === 'error' && (
+                    <span style={{ color: '#9b2c2c' }}>{entry.error}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {formPanel}
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginBottom: '1rem' }}>
+          <button onClick={scrapeAllCities} style={secondaryButtonStyle} disabled={scraping || loading}>
+            {scraping ? 'Scraping…' : 'Scrape all cities'}
+          </button>
           <button onClick={startCreate} style={primaryButtonStyle} disabled={isCreating}>
             + Add city
           </button>
