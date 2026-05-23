@@ -52,6 +52,13 @@ const currencyOptions = Object.keys(rates).map((code) => [
   `${symbols[code]} ${code}`,
 ])
 
+const navLinks = [
+  { label: 'cities', href: '/cities' },
+  { label: 'submit', href: '/submit' },
+  { label: 'about', href: '/about' },
+  { label: 'methodology', href: '/methodology' },
+]
+
 type City = {
   city: string
   country: string | null
@@ -107,9 +114,7 @@ export default function Home() {
 
   const formatConfidence = (value: number | null) => {
     if (value === null || value === undefined) return 'Not available'
-
     if (value <= 1) return `${Math.round(value * 100)}%`
-
     return `${Math.round(value)}%`
   }
 
@@ -355,6 +360,7 @@ export default function Home() {
                 <div style={{ fontSize: 28, marginBottom: 4 }}>
                   {selectedCity.flag ?? '🌍'}
                 </div>
+
                 <h2
                   style={{
                     fontFamily: 'DM Serif Display, serif',
@@ -412,7 +418,7 @@ export default function Home() {
               </p>
 
               <p style={{ fontSize: 11, color: '#9b9b90', marginTop: 4 }}>
-                Median or approved baseline estimate, depending on available data
+                Median or approved baseline estimate, depending on available data.
               </p>
 
               <div
@@ -455,6 +461,10 @@ export default function Home() {
                 View all cities
               </a>
 
+              <a href="/submit" style={drawerButtonStyle}>
+                Submit data
+              </a>
+
               <a href="/methodology" style={drawerButtonStyle}>
                 Methodology
               </a>
@@ -495,13 +505,9 @@ export default function Home() {
                 flexWrap: 'wrap',
               }}
             >
-              {[
-                { label: 'cities', href: '/cities' },
-                { label: 'about', href: '/about' },
-                { label: 'methodology', href: '/methodology' },
-              ].map((link) => (
+              {navLinks.map((link) => (
                 <a
-                  key={link.label}
+                  key={link.href}
                   href={link.href}
                   style={{
                     fontSize: 13,
@@ -554,12 +560,30 @@ export default function Home() {
                 fontWeight: 300,
                 color: '#6b6b64',
                 lineHeight: 1.6,
+                maxWidth: 680,
               }}
             >
               The Fried Rice Index tracks fried rice prices across cities and studies
               what they reveal about baseline affordability, price variation, dish
               variety, and premiumization in local restaurant markets.
             </p>
+
+            <div
+              style={{
+                display: 'flex',
+                gap: '0.75rem',
+                flexWrap: 'wrap',
+                marginTop: '1.35rem',
+              }}
+            >
+              <a href="/submit" style={primaryHeroButtonStyle}>
+                Submit a price
+              </a>
+
+              <a href="/cities" style={secondaryHeroButtonStyle}>
+                View cities
+              </a>
+            </div>
           </div>
         </>
       )}
@@ -703,6 +727,10 @@ export default function Home() {
               View all cities
             </a>
 
+            <a href="/submit" style={panelButtonStyle}>
+              Submit a price
+            </a>
+
             <a href="/methodology" style={panelButtonStyle}>
               Read methodology
             </a>
@@ -742,4 +770,24 @@ const panelButtonStyle: React.CSSProperties = {
   textDecoration: 'none',
   fontSize: 13,
   background: '#FAFAF8',
+}
+
+const primaryHeroButtonStyle: React.CSSProperties = {
+  padding: '0.7rem 1rem',
+  borderRadius: 10,
+  border: '0.5px solid #C25E1E',
+  color: '#fff',
+  textDecoration: 'none',
+  fontSize: 13,
+  background: '#C25E1E',
+}
+
+const secondaryHeroButtonStyle: React.CSSProperties = {
+  padding: '0.7rem 1rem',
+  borderRadius: 10,
+  border: '0.5px solid #e5e3da',
+  color: '#1a1a18',
+  textDecoration: 'none',
+  fontSize: 13,
+  background: '#fff',
 }
