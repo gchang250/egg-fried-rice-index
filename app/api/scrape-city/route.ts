@@ -214,13 +214,13 @@ function normalizeForDupe(value: string | null | undefined): string {
   return String(value ?? '').toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 }
 
-function isDuplicate(
-  candidate: { city: string; restaurant_name: string; dish_name: string; source_url: string },
-  existing: Array<{ city?: string | null; restaurant_name?: string | null; dish_name?: string | null; source_url?: string | null }>
-): boolean {
-  return existing.some((row) => {
+function checkDuplicate(
+  candidate: { city: string; restaurant_name: string; dish_name: string; source_url: string; price_cad: number },
+  existing: Array<{ city?: string | null; restaurant_name?: string | null; dish_name?: string | null; source_url?: string | null; price_cad?: number | null }>
+): { isDupe: boolean; oldPrice?: number } {
+  for (const row of existing) {
     const sameCity = normalizeForDupe(row.city) === normalizeForDupe(candidate.city)
-    if (!sameCity) return false
+    if (!sameCity) continue
 
     const sameUrl =
       normalizeForDupe(candidate.source_url) !== '' &&
@@ -230,8 +230,16 @@ function isDuplicate(
       normalizeForDupe(row.restaurant_name) === normalizeForDupe(candidate.restaurant_name) &&
       normalizeForDupe(row.dish_name) === normalizeForDupe(candidate.dish_name)
 
-    return sameUrl || samePair
-  })
+    if (sameUrl || samePair) {
+      const oldPrice = Number(row.price_cad)
+      if (Number.isFinite(oldPrice) && oldPrice > 0) {
+        const pctChange = Math.abs(candidate.price_cad - oldPrice) / oldPrice
+        if (pctChange > 0.10) return { isDupe: false, oldPrice }
+      }
+      return { isDupe: true }
+    }
+  }
+  return { isDupe: false }
 }
 
 // ---------------------------------------------------------------------------
@@ -459,19 +467,23 @@ async function deduplicateAndInsert(candidates: Candidate[], city: string): Prom
   const [{ data: existingPending }, { data: existingRestaurants }] = await Promise.all([
     supabase
       .from('pending_requests')
-      .select('city, restaurant_name, dish_name, source_url')
+      .select('city, restaurant_name, dish_name, source_url, price_cad')
       .eq('city', city)
       .eq('request_type', 'restaurant')
       .in('status', ['pending', 'approved']),
     supabase
       .from('restaurants')
-      .select('city, restaurant_name, dish_name, source_url')
+      .select('city, restaurant_name, dish_name, source_url, price_cad')
       .eq('city', city),
   ])
 
   const existingRows = [...(existingPending ?? []), ...(existingRestaurants ?? [])]
 
-  const newCandidates = candidates.filter((c) => !isDuplicate(c, existingRows))
+  const newCandidates: Array<Candidate & { priceUpdateFrom?: number }> = []
+  for (const c of candidates) {
+    const { isDupe, oldPrice } = checkDuplicate(c, existingRows)
+    if (!isDupe) newCandidates.push({ ...c, priceUpdateFrom: oldPrice })
+  }
   if (newCandidates.length === 0) return 0
 
   const rows = newCandidates.map((c) => ({
@@ -492,7 +504,9 @@ async function deduplicateAndInsert(candidates: Candidate[], city: string): Prom
     source_url: c.source_url,
     confidence_score: c.confidence_score,
     date_accessed: new Date().toISOString(),
-    notes: c.notes,
+    notes: c.priceUpdateFrom !== undefined
+      ? `Price update: was CA$${c.priceUpdateFrom.toFixed(2)}, now CA$${c.price_cad.toFixed(2)}. ${c.notes}`
+      : c.notes,
     status: 'pending',
   }))
 
