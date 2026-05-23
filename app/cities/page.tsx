@@ -60,6 +60,10 @@ type CityRow = {
   price_source: string | null
   price_updated_at: string | null
   confidence_score: number | null
+  baseline_entry_count: number | null
+  market_entry_count: number | null
+  premium_entry_count: number | null
+  data_quality_label: string | null
 }
 
 function slugifyCity(city: string) {
@@ -100,7 +104,11 @@ export default function CitiesPage() {
           blurb,
           price_source,
           price_updated_at,
-          confidence_score
+          confidence_score,
+          baseline_entry_count,
+          market_entry_count,
+          premium_entry_count,
+          data_quality_label
         `
         )
         .order('price_cad', { ascending: true, nullsFirst: false })
@@ -345,8 +353,8 @@ export default function CitiesPage() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '70px 1.4fr 1fr 1fr 1fr',
-                    gap: '1rem',
+                    gridTemplateColumns: '60px 1.5fr 1fr 0.8fr 0.7fr 0.7fr 1.1fr 0.8fr 0.9fr',
+                    gap: '0.75rem',
                     padding: '0.9rem 1rem',
                     borderBottom: '0.5px solid #f0ede6',
                     fontSize: 11,
@@ -358,6 +366,10 @@ export default function CitiesPage() {
                   <div>Rank</div>
                   <div>City</div>
                   <div>Baseline price</div>
+                  <div>Baseline</div>
+                  <div>Market</div>
+                  <div>Premium</div>
+                  <div>Data quality</div>
                   <div>Confidence</div>
                   <div>Updated</div>
                 </div>
@@ -466,6 +478,15 @@ export default function CitiesPage() {
                         color: '#6b6b64',
                       }}
                     >
+                      {city.baseline_entry_count !== null && (
+                        <span>{city.baseline_entry_count} baseline</span>
+                      )}
+                      {city.market_entry_count !== null && (
+                        <span>{city.market_entry_count} market</span>
+                      )}
+                      {city.data_quality_label && (
+                        <span>{city.data_quality_label}</span>
+                      )}
                       <span>Confidence: {formatConfidence(city.confidence_score)}</span>
                       <span>Updated: {formatDate(city.price_updated_at)}</span>
                     </div>
@@ -476,8 +497,8 @@ export default function CitiesPage() {
                     href={cityHref}
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: '70px 1.4fr 1fr 1fr 1fr',
-                      gap: '1rem',
+                      gridTemplateColumns: '60px 1.5fr 1fr 0.8fr 0.7fr 0.7fr 1.1fr 0.8fr 0.9fr',
+                      gap: '0.75rem',
                       padding: '1rem',
                       borderBottom:
                         index === cleanCities.length - 1
@@ -494,7 +515,7 @@ export default function CitiesPage() {
                       <h2
                         style={{
                           fontFamily: 'DM Serif Display, serif',
-                          fontSize: 24,
+                          fontSize: 22,
                           margin: 0,
                         }}
                       >
@@ -515,41 +536,45 @@ export default function CitiesPage() {
                       <p
                         style={{
                           fontSize: 12,
-                          color: '#9b9b90',
-                          margin: '0.2rem 0 0',
-                        }}
-                      >
-                        {city.population
-                          ? `Population ${city.population}`
-                          : 'Population not available'}
-                      </p>
-
-                      <p
-                        style={{
-                          fontSize: 12,
                           color: '#C25E1E',
-                          margin: '0.45rem 0 0',
+                          margin: '0.3rem 0 0',
                         }}
                       >
-                        View city profile →
+                        View →
                       </p>
                     </div>
 
                     <div
                       style={{
                         fontFamily: 'DM Serif Display, serif',
-                        fontSize: 24,
+                        fontSize: 22,
                         color: '#C25E1E',
                       }}
                     >
                       {formatPrice(city.price_cad)}
                     </div>
 
-                    <div style={{ fontSize: 14, color: '#3a3a34' }}>
+                    <div style={{ fontSize: 13, color: '#3a3a34' }}>
+                      {city.baseline_entry_count ?? '—'}
+                    </div>
+
+                    <div style={{ fontSize: 13, color: '#3a3a34' }}>
+                      {city.market_entry_count ?? '—'}
+                    </div>
+
+                    <div style={{ fontSize: 13, color: '#3a3a34' }}>
+                      {city.premium_entry_count ?? '—'}
+                    </div>
+
+                    <div style={{ fontSize: 13, color: '#3a3a34' }}>
+                      {city.data_quality_label ?? '—'}
+                    </div>
+
+                    <div style={{ fontSize: 13, color: '#3a3a34' }}>
                       {formatConfidence(city.confidence_score)}
                     </div>
 
-                    <div style={{ fontSize: 13, color: '#6b6b64' }}>
+                    <div style={{ fontSize: 12, color: '#6b6b64' }}>
                       {formatDate(city.price_updated_at)}
                     </div>
                   </a>

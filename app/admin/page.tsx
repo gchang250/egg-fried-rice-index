@@ -83,6 +83,7 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState('')
 
   const [view, setView] = useState<'dashboard' | 'pending' | 'manual'>('dashboard')
+  const [confirmedPrices, setConfirmedPrices] = useState<Record<string, string>>({})
 
   const [cities, setCities] = useState<CityRow[]>([])
   const [pendingRequests, setPendingRequests] = useState<PendingRequest[]>([])
@@ -164,6 +165,7 @@ export default function AdminPage() {
 
     setLoggedIn(true)
     setView('dashboard')
+    sessionStorage.setItem('admin_password', password)
   }
 
   async function loadPendingRequests() {
@@ -197,10 +199,16 @@ export default function AdminPage() {
     setMessage('')
     setReviewingRequestId(requestId)
 
+    const overridePriceCad = confirmedPrices[requestId]
+    const body: Record<string, unknown> = { username, password, requestId, decision }
+    if (decision === 'approved' && overridePriceCad && Number(overridePriceCad) > 0) {
+      body.override_price_cad = Number(overridePriceCad)
+    }
+
     const response = await fetch('/api/review-request', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, requestId, decision }),
+      body: JSON.stringify(body),
     })
 
     const result = await response.json()
@@ -444,7 +452,7 @@ export default function AdminPage() {
 
             <div style={dashboardGridStyle}>
               <button onClick={openPending} style={dashboardCardStyle}>
-                <span style={dashboardTitleStyle}>View pending requests</span>
+                <span style={dashboardTitleStyle}>Pending requests</span>
                 <span style={dashboardTextStyle}>
                   Review scraper proposals, public submissions, restaurant entries,
                   and population updates.
@@ -458,11 +466,25 @@ export default function AdminPage() {
                 }}
                 style={dashboardCardStyle}
               >
-                <span style={dashboardTitleStyle}>Enter manual entry</span>
+                <span style={dashboardTitleStyle}>Manual entry</span>
                 <span style={dashboardTextStyle}>
                   Add a classified fried rice entry and recalculate the city baseline.
                 </span>
               </button>
+
+              <a href="/admin/restaurants" style={dashboardCardStyle}>
+                <span style={dashboardTitleStyle}>Restaurants</span>
+                <span style={dashboardTextStyle}>
+                  View approved restaurants, edit prices and categories, mark inactive, and recalculate cities.
+                </span>
+              </a>
+
+              <a href="/admin/cities" style={dashboardCardStyle}>
+                <span style={dashboardTitleStyle}>Cities</span>
+                <span style={dashboardTextStyle}>
+                  Add or edit cities — name, country, region, flag, population, coordinates, climate, and blurb.
+                </span>
+              </a>
             </div>
           </>
         )}
@@ -539,9 +561,19 @@ export default function AdminPage() {
                             {request.exchange_rate_used || 'Missing'}
                           </p>
                           <p>
-                            <strong>CAD price:</strong>{' '}
+                            <strong>Auto-calculated CAD:</strong>{' '}
                             {formatCadPrice(request.price_cad)}
                           </p>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <strong style={{ fontSize: 14 }}>Confirmed CAD:</strong>
+                            <input
+                              type="number"
+                              step="0.01"
+                              value={confirmedPrices[request.id] ?? String(request.price_cad ?? '')}
+                              onChange={(e) => setConfirmedPrices((prev) => ({ ...prev, [request.id]: e.target.value }))}
+                              style={{ padding: '0.35rem 0.5rem', border: '0.5px solid #e5e3da', borderRadius: 8, fontFamily: 'DM Sans, sans-serif', fontSize: 14, width: 100 }}
+                            />
+                          </div>
                           <p>
                             <strong>Confidence:</strong>{' '}
                             {formatConfidence(request.confidence_score)}
@@ -1046,6 +1078,8 @@ const dashboardCardStyle: CSSProperties = {
   padding: '1.5rem',
   cursor: 'pointer',
   fontFamily: 'DM Sans, sans-serif',
+  textDecoration: 'none',
+  color: 'inherit',
 }
 
 const dashboardTitleStyle: CSSProperties = {

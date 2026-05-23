@@ -127,6 +127,9 @@ export async function POST(request: Request) {
     const password = String(body.password ?? '')
     const requestId = String(body.requestId ?? '')
     const decision = String(body.decision ?? '')
+    const overridePriceCad = body.override_price_cad !== undefined
+      ? Number(body.override_price_cad)
+      : null
 
     if (
       username !== process.env.ADMIN_USERNAME ||
@@ -167,14 +170,18 @@ export async function POST(request: Request) {
     }
 
     if (pendingRequest.request_type === 'restaurant') {
-      if (!isValidNumber(pendingRequest.price_cad)) {
+      const resolvedPriceCad = overridePriceCad !== null && Number.isFinite(overridePriceCad) && overridePriceCad > 0
+        ? overridePriceCad
+        : Number(pendingRequest.price_cad)
+
+      if (!isValidNumber(resolvedPriceCad) || resolvedPriceCad <= 0) {
         return NextResponse.json(
           { error: 'Cannot approve restaurant request because price_cad is missing or invalid.' },
           { status: 400 }
         )
       }
 
-      const priceCad = Number(pendingRequest.price_cad)
+      const priceCad = resolvedPriceCad
       const dishCategory = defaultDishCategory(pendingRequest.dish_category)
       const includedInBaseline = defaultBaselineInclusion(
         pendingRequest.included_in_baseline,

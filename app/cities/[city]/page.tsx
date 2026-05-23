@@ -478,6 +478,8 @@ function RestaurantTable({
             <th style={thStyle}>CAD price</th>
             <th style={thStyle}>Baseline</th>
             <th style={thStyle}>Confidence</th>
+            <th style={thStyle}>Source type</th>
+            <th style={thStyle}>Date accessed</th>
             <th style={thStyle}>Source</th>
           </tr>
         </thead>
@@ -497,6 +499,8 @@ function RestaurantTable({
               <td style={tdStyle}>{formatPrice(row.price_cad)}</td>
               <td style={tdStyle}>{row.included_in_baseline ? 'Yes' : 'No'}</td>
               <td style={tdStyle}>{formatConfidence(row.confidence_score)}</td>
+              <td style={tdStyle}>{row.source_type ?? '—'}</td>
+              <td style={tdStyle}>{formatDate(row.date_accessed)}</td>
               <td style={tdStyle}>
                 {row.source_url ? (
                   <a
@@ -658,7 +662,7 @@ const tableWrapperStyle: React.CSSProperties = {
 const tableStyle: React.CSSProperties = {
   width: '100%',
   borderCollapse: 'collapse',
-  minWidth: 980,
+  minWidth: 1200,
 }
 
 const thStyle: React.CSSProperties = {
