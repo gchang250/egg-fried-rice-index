@@ -11,13 +11,18 @@ type SearchResult = {
 
 type RestaurantCandidate = {
   city: string
+  country: string | null
   restaurant_name: string
   dish_name: string
+  dish_category: string
+  included_in_baseline: boolean
   tier: string
   price_cad: number
   local_price: number
   local_currency: string
+  exchange_rate_used: number
   source: string
+  source_type: string
   source_url: string
   confidence_score: number
   notes: string
@@ -33,54 +38,6 @@ const CAD_RATES: Record<string, number> = {
   AUD: 0.91,
   JPY: 0.0093,
 }
-
-const ACCEPT_TERMS = [
-  'egg fried rice',
-  'plain egg fried rice',
-  'classic egg fried rice',
-  'fried rice with egg',
-  'fried rice w egg',
-  'egg and soy sauce fried rice',
-  'egg soy sauce fried rice',
-  'vegetable and egg fried rice',
-  'veggie egg fried rice',
-  'seasonal greens and egg fried rice',
-]
-
-const SOFT_ACCEPT_TERMS = [
-  'egg fried',
-  'fried rice egg',
-  'eggs fried rice',
-]
-
-const REJECT_TERMS = [
-  'lobster',
-  'crab',
-  'scallop',
-  'scallops',
-  'shrimp',
-  'prawn',
-  'prawns',
-  'seafood',
-  'xo sauce',
-  'xo fried rice',
-  'truffle',
-  'wagyu',
-  'duck',
-  'combo',
-  'combination',
-  'deluxe',
-  'house special',
-  'special fried rice',
-  'yang chow',
-  'yangzhou',
-  'bbq pork',
-  'beef',
-  'chicken',
-  'pork',
-  'ham',
-  'bacon',
-]
 
 const BAD_DOMAINS = [
   'facebook.com',
@@ -106,6 +63,23 @@ const MENU_HINT_DOMAINS = [
   'restaurant',
 ]
 
+const FRIED_RICE_TERMS = [
+  'fried rice',
+  'egg fried rice',
+  'vegetable fried rice',
+  'veggie fried rice',
+  'chicken fried rice',
+  'beef fried rice',
+  'pork fried rice',
+  'shrimp fried rice',
+  'seafood fried rice',
+  'house fried rice',
+  'special fried rice',
+  'combination fried rice',
+  'yang chow fried rice',
+  'yangzhou fried rice',
+]
+
 function authorized(username: string, password: string) {
   return (
     username === process.env.ADMIN_USERNAME &&
@@ -125,46 +99,35 @@ function containsAny(text: string, terms: string[]) {
 function currencyForCountry(country: string) {
   const normalized = country.toLowerCase().trim()
 
-  if (!normalized) {
-    throw new Error('Country is required so scraper prices can be converted to CAD.')
-  }
-
+  if (!normalized) throw new Error('Country is required.')
   if (normalized.includes('canada')) return 'CAD'
-
   if (
     normalized.includes('united states') ||
     normalized === 'us' ||
-    normalized === 'usa' ||
-    normalized.includes('u.s.')
-  ) {
-    return 'USD'
-  }
-
+    normalized === 'usa'
+  ) return 'USD'
   if (
     normalized.includes('united kingdom') ||
     normalized === 'uk' ||
     normalized.includes('england') ||
     normalized.includes('scotland') ||
     normalized.includes('wales')
-  ) {
-    return 'GBP'
-  }
-
+  ) return 'GBP'
   if (normalized.includes('singapore')) return 'SGD'
   if (normalized.includes('hong kong')) return 'HKD'
   if (normalized.includes('australia')) return 'AUD'
   if (normalized.includes('japan')) return 'JPY'
-  if (normalized.includes('eurozone')) return 'EUR'
-  if (normalized.includes('france')) return 'EUR'
-  if (normalized.includes('germany')) return 'EUR'
-  if (normalized.includes('italy')) return 'EUR'
-  if (normalized.includes('spain')) return 'EUR'
-  if (normalized.includes('netherlands')) return 'EUR'
-  if (normalized.includes('ireland')) return 'EUR'
+  if (
+    normalized.includes('france') ||
+    normalized.includes('germany') ||
+    normalized.includes('italy') ||
+    normalized.includes('spain') ||
+    normalized.includes('netherlands') ||
+    normalized.includes('ireland') ||
+    normalized.includes('eurozone')
+  ) return 'EUR'
 
-  throw new Error(
-    `Unsupported country/currency for scraper conversion: "${country}". Add this country to currencyForCountry() before scraping.`
-  )
+  throw new Error(`Unsupported country/currency: "${country}".`)
 }
 
 function convertToCad(localPrice: number, localCurrency: string) {
@@ -172,31 +135,50 @@ function convertToCad(localPrice: number, localCurrency: string) {
   return Number((localPrice * rate).toFixed(2))
 }
 
-function looksLikeGoodDish(text: string) {
-  const lower = text.toLowerCase()
+function classifyDish(dishName: string) {
+  const lower = dishName.toLowerCase()
 
-  const hasAccept =
-    containsAny(lower, ACCEPT_TERMS) || containsAny(lower, SOFT_ACCEPT_TERMS)
+  if (containsAny(lower, ['lobster', 'crab', 'scallop', 'truffle', 'wagyu'])) {
+    return { dish_category: 'premium', included_in_baseline: false }
+  }
 
-  if (!hasAccept) return false
-  if (containsAny(lower, REJECT_TERMS)) return false
+  if (containsAny(lower, ['shrimp', 'prawn', 'seafood', 'xo sauce', 'xo fried rice'])) {
+    return { dish_category: 'seafood', included_in_baseline: false }
+  }
 
-  return true
+  if (containsAny(lower, ['chicken', 'beef', 'pork', 'ham', 'bacon', 'bbq pork', 'duck'])) {
+    return { dish_category: 'meat_based', included_in_baseline: false }
+  }
+
+  if (containsAny(lower, ['house', 'special', 'combo', 'combination', 'yang chow', 'yangzhou'])) {
+    return { dish_category: 'house_special', included_in_baseline: false }
+  }
+
+  if (containsAny(lower, ['vegetable', 'veggie', 'greens'])) {
+    return { dish_category: 'vegetable', included_in_baseline: true }
+  }
+
+  if (containsAny(lower, ['egg fried rice', 'plain fried rice', 'fried rice with egg'])) {
+    return { dish_category: 'basic', included_in_baseline: true }
+  }
+
+  return { dish_category: 'unknown', included_in_baseline: false }
+}
+
+function looksLikeFriedRice(text: string) {
+  return containsAny(text, FRIED_RICE_TERMS)
 }
 
 function extractPrice(text: string) {
   const matches = text.match(/\$ ?([0-9]{1,3}(?:\.[0-9]{2})?)/g)
-
-  if (!matches || matches.length === 0) return null
+  if (!matches) return null
 
   const prices = matches
     .map((match) => Number(match.replace('$', '').trim()))
     .filter((price) => Number.isFinite(price))
-    .filter((price) => price >= 5 && price <= 40)
+    .filter((price) => price >= 5 && price <= 80)
 
-  if (prices.length === 0) return null
-
-  return prices[0]
+  return prices[0] ?? null
 }
 
 function guessTier(priceCad: number) {
@@ -208,45 +190,50 @@ function guessTier(priceCad: number) {
 
 function confidenceFromUrl(url: string, line: string) {
   const lowerUrl = url.toLowerCase()
-  const lowerLine = line.toLowerCase()
-
   let score = 0.55
 
-  if (containsAny(lowerUrl, ['skipthedishes', 'ubereats', 'doordash'])) {
-    score = 0.6
-  }
-
-  if (containsAny(lowerUrl, ['menupix'])) {
-    score = 0.7
-  }
+  if (containsAny(lowerUrl, ['skipthedishes', 'ubereats', 'doordash'])) score = 0.6
+  if (containsAny(lowerUrl, ['menupix'])) score = 0.7
 
   if (
     !containsAny(lowerUrl, ['skipthedishes', 'ubereats', 'doordash', 'menupix']) &&
     containsAny(lowerUrl, ['menu', 'restaurant', 'order'])
-  ) {
-    score = 0.75
-  }
+  ) score = 0.75
 
-  if (containsAny(lowerLine, ACCEPT_TERMS)) {
-    score += 0.05
-  }
+  if (looksLikeFriedRice(line)) score += 0.05
 
   return Math.min(Number(score.toFixed(2)), 0.85)
+}
+
+function sourceTypeFromUrl(url: string) {
+  const lower = url.toLowerCase()
+
+  if (containsAny(lower, ['ubereats', 'doordash', 'skipthedishes'])) {
+    return 'delivery_app'
+  }
+
+  if (containsAny(lower, ['menupix'])) {
+    return 'third_party_menu'
+  }
+
+  if (containsAny(lower, ['toasttab', 'chownow', 'ritual'])) {
+    return 'official_ordering_page'
+  }
+
+  if (containsAny(lower, ['menu', 'restaurant', 'order'])) {
+    return 'official_menu'
+  }
+
+  return 'scraper_result'
 }
 
 function guessRestaurantName(title: string | undefined, url: string) {
   if (title) {
     const menuOfMatch = title.match(/Menu of (.*?) in /i)
-
-    if (menuOfMatch?.[1]) {
-      return menuOfMatch[1].trim().slice(0, 90)
-    }
+    if (menuOfMatch?.[1]) return menuOfMatch[1].trim().slice(0, 90)
 
     const orderFromMatch = title.match(/Order (.*?) Menu/i)
-
-    if (orderFromMatch?.[1]) {
-      return orderFromMatch[1].trim().slice(0, 90)
-    }
+    if (orderFromMatch?.[1]) return orderFromMatch[1].trim().slice(0, 90)
 
     const cleaned = title
       .replace(/\|.*$/g, '')
@@ -255,12 +242,9 @@ function guessRestaurantName(title: string | undefined, url: string) {
       .replace(/\border\b/gi, '')
       .replace(/\bonline\b/gi, '')
       .replace(/\bdelivery\b/gi, '')
-      .replace(/\brestaurant\b/gi, 'Restaurant')
       .trim()
 
-    if (cleaned.length > 0) {
-      return cleaned.slice(0, 90)
-    }
+    if (cleaned.length > 0) return cleaned.slice(0, 90)
   }
 
   try {
@@ -272,8 +256,7 @@ function guessRestaurantName(title: string | undefined, url: string) {
 }
 
 function isBadUrl(url: string) {
-  const lower = url.toLowerCase()
-  return BAD_DOMAINS.some((domain) => lower.includes(domain))
+  return BAD_DOMAINS.some((domain) => url.toLowerCase().includes(domain))
 }
 
 function isDuplicateCandidate(
@@ -282,18 +265,14 @@ function isDuplicateCandidate(
 ) {
   return existing.some(
     (item) =>
-      item.restaurant_name.toLowerCase() ===
-        candidate.restaurant_name.toLowerCase() &&
+      item.restaurant_name.toLowerCase() === candidate.restaurant_name.toLowerCase() &&
       item.dish_name.toLowerCase() === candidate.dish_name.toLowerCase()
   )
 }
 
 async function serpSearch(query: string, location?: string): Promise<SearchResult[]> {
   const apiKey = process.env.SERPAPI_API_KEY
-
-  if (!apiKey) {
-    throw new Error('Missing SERPAPI_API_KEY')
-  }
+  if (!apiKey) throw new Error('Missing SERPAPI_API_KEY')
 
   const params = new URLSearchParams({
     engine: 'google',
@@ -304,23 +283,17 @@ async function serpSearch(query: string, location?: string): Promise<SearchResul
     gl: 'ca',
   })
 
-  if (location) {
-    params.set('location', location)
-  }
+  if (location) params.set('location', location)
 
-  const response = await fetch(
-    `https://serpapi.com/search.json?${params.toString()}`,
-    {
-      cache: 'no-store',
-    }
-  )
+  const response = await fetch(`https://serpapi.com/search.json?${params.toString()}`, {
+    cache: 'no-store',
+  })
 
   if (!response.ok) {
     throw new Error(`SerpAPI request failed with status ${response.status}`)
   }
 
   const json = await response.json()
-
   return json.organic_results ?? []
 }
 
@@ -333,25 +306,14 @@ async function fetchPageText(url: string) {
       signal: controller.signal,
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (compatible; EggFriedRiceIndexBot/1.0; +https://efr-index.vercel.app)',
+          'Mozilla/5.0 (compatible; FriedRiceIndexBot/1.0; +https://efr-index.vercel.app)',
       },
       cache: 'no-store',
     })
 
     if (!response.ok) return null
 
-    const contentType = response.headers.get('content-type') ?? ''
-
-    if (
-      !contentType.includes('text/html') &&
-      !contentType.includes('text/plain') &&
-      !contentType.includes('application/pdf')
-    ) {
-      return null
-    }
-
     const raw = await response.text()
-
     if (!raw) return null
 
     const $ = cheerio.load(raw)
@@ -365,6 +327,15 @@ async function fetchPageText(url: string) {
   }
 }
 
+function extractDishName(chunk: string) {
+  const match =
+    chunk.match(
+      /([A-Za-z '&().-]*(?:fried rice)[A-Za-z '&().-]*)/i
+    )?.[1] ?? 'Fried Rice'
+
+  return normalizeText(match).slice(0, 90)
+}
+
 function extractCandidatesFromText(params: {
   city: string
   country: string
@@ -375,56 +346,46 @@ function extractCandidatesFromText(params: {
   const { city, country, pageText, sourceUrl, searchTitle } = params
 
   const localCurrency = currencyForCountry(country)
+  const exchangeRateUsed = CAD_RATES[localCurrency] ?? 1
   const candidates: RestaurantCandidate[] = []
 
   const chunks = pageText
-    .split(/(?<=\$[0-9]{1,3}(?:\.[0-9]{2})?)|(?=[A-Z][A-Za-z '&().-]{3,80}\s+\$)/g)
+    .split(/\.|•|\n|\r|\||\t|(?<=\$[0-9]{1,3}(?:\.[0-9]{2})?)/g)
     .map(normalizeText)
     .filter(Boolean)
 
-  const fallbackChunks = pageText
-    .split(/\.|•|\n|\r|\||\t/g)
-    .map(normalizeText)
-    .filter(Boolean)
-
-  const allChunks = [...chunks, ...fallbackChunks]
-
-  for (const chunk of allChunks) {
-    if (!looksLikeGoodDish(chunk)) continue
+  for (const chunk of chunks) {
+    if (!looksLikeFriedRice(chunk)) continue
 
     const localPrice = extractPrice(chunk)
     if (localPrice === null) continue
 
+    const dishName = extractDishName(chunk)
+    const classification = classifyDish(dishName)
     const priceCad = convertToCad(localPrice, localCurrency)
-
-    const dishMatch =
-      chunk.match(
-        /([A-Za-z '&().-]*(?:egg fried rice|fried rice with egg|fried rice w egg|egg and soy sauce fried rice|egg soy sauce fried rice|vegetable and egg fried rice|veggie egg fried rice|seasonal greens and egg fried rice)[A-Za-z '&().-]*)/i
-      )?.[1] ?? 'Egg Fried Rice'
-
-    const dishName = normalizeText(dishMatch).slice(0, 90)
 
     const candidate: RestaurantCandidate = {
       city,
+      country,
       restaurant_name: guessRestaurantName(searchTitle, sourceUrl),
       dish_name: dishName,
+      dish_category: classification.dish_category,
+      included_in_baseline: classification.included_in_baseline,
       tier: guessTier(priceCad),
       price_cad: priceCad,
       local_price: localPrice,
       local_currency: localCurrency,
+      exchange_rate_used: exchangeRateUsed,
       source: searchTitle ?? 'Scraped menu page',
+      source_type: sourceTypeFromUrl(sourceUrl),
       source_url: sourceUrl,
       confidence_score: confidenceFromUrl(sourceUrl, chunk),
-      notes: `Autonomous scraper candidate. Local price: ${localCurrency} ${localPrice.toFixed(
+      notes: `Autonomous scraper candidate. Category: ${classification.dish_category}. Baseline included: ${classification.included_in_baseline ? 'yes' : 'no'}. Local price: ${localCurrency} ${localPrice.toFixed(
         2
-      )}. Converted to CAD using static MVP exchange rate (${localCurrency}→CAD = ${
-        CAD_RATES[localCurrency] ?? 1
-      }). Extracted from text: "${chunk.slice(0, 220)}"`,
+      )}. CAD rate used: ${exchangeRateUsed}. Extracted text: "${chunk.slice(0, 220)}"`,
     }
 
-    if (!isDuplicateCandidate(candidate, candidates)) {
-      candidates.push(candidate)
-    }
+    if (!isDuplicateCandidate(candidate, candidates)) candidates.push(candidate)
   }
 
   return candidates
@@ -441,9 +402,7 @@ async function createScraperRun(city: string) {
     .select('id')
     .single()
 
-  if (error) {
-    throw new Error(error.message)
-  }
+  if (error) throw new Error(error.message)
 
   return data.id as string
 }
@@ -472,17 +431,20 @@ function normalizeForDuplicateCheck(value: string | null | undefined) {
     .trim()
 }
 
-function sameScraperEntry(a: {
-  city?: string | null
-  restaurant_name?: string | null
-  dish_name?: string | null
-  source_url?: string | null
-}, b: {
-  city?: string | null
-  restaurant_name?: string | null
-  dish_name?: string | null
-  source_url?: string | null
-}) {
+function sameScraperEntry(
+  a: {
+    city?: string | null
+    restaurant_name?: string | null
+    dish_name?: string | null
+    source_url?: string | null
+  },
+  b: {
+    city?: string | null
+    restaurant_name?: string | null
+    dish_name?: string | null
+    source_url?: string | null
+  }
+) {
   const sameCity =
     normalizeForDuplicateCheck(a.city) === normalizeForDuplicateCheck(b.city)
 
@@ -491,13 +453,11 @@ function sameScraperEntry(a: {
     normalizeForDuplicateCheck(b.restaurant_name)
 
   const sameDish =
-    normalizeForDuplicateCheck(a.dish_name) ===
-    normalizeForDuplicateCheck(b.dish_name)
+    normalizeForDuplicateCheck(a.dish_name) === normalizeForDuplicateCheck(b.dish_name)
 
   const sameSourceUrl =
     normalizeForDuplicateCheck(a.source_url) !== '' &&
-    normalizeForDuplicateCheck(a.source_url) ===
-      normalizeForDuplicateCheck(b.source_url)
+    normalizeForDuplicateCheck(a.source_url) === normalizeForDuplicateCheck(b.source_url)
 
   return sameCity && ((sameRestaurant && sameDish) || sameSourceUrl)
 }
@@ -514,28 +474,19 @@ async function insertRestaurantProposals(candidates: RestaurantCandidate[]) {
     .eq('request_type', 'restaurant')
     .in('status', ['pending', 'approved'])
 
-  if (pendingError) {
-    throw new Error(pendingError.message)
-  }
+  if (pendingError) throw new Error(pendingError.message)
 
   const { data: existingRestaurants, error: restaurantError } = await supabase
     .from('restaurants')
     .select('city, restaurant_name, dish_name, source_url')
     .eq('city', city)
 
-  if (restaurantError) {
-    throw new Error(restaurantError.message)
-  }
+  if (restaurantError) throw new Error(restaurantError.message)
 
-  const existingRows = [
-    ...(existingPending ?? []),
-    ...(existingRestaurants ?? []),
-  ]
+  const existingRows = [...(existingPending ?? []), ...(existingRestaurants ?? [])]
 
   const newCandidates = candidates.filter((candidate) => {
-    return !existingRows.some((existing) =>
-      sameScraperEntry(candidate, existing)
-    )
+    return !existingRows.some((existing) => sameScraperEntry(candidate, existing))
   })
 
   if (newCandidates.length === 0) return 0
@@ -543,22 +494,27 @@ async function insertRestaurantProposals(candidates: RestaurantCandidate[]) {
   const rows = newCandidates.map((candidate) => ({
     request_type: 'restaurant',
     city: candidate.city,
+    country: candidate.country,
     restaurant_name: candidate.restaurant_name,
     dish_name: candidate.dish_name,
+    dish_category: candidate.dish_category,
+    included_in_baseline: candidate.included_in_baseline,
     tier: candidate.tier,
+    local_price: candidate.local_price,
+    local_currency: candidate.local_currency,
+    exchange_rate_used: candidate.exchange_rate_used,
     price_cad: candidate.price_cad,
     source: candidate.source,
+    source_type: candidate.source_type,
     source_url: candidate.source_url,
     confidence_score: candidate.confidence_score,
+    date_accessed: new Date().toISOString(),
     notes: candidate.notes,
     status: 'pending',
   }))
 
   const { error } = await supabase.from('pending_requests').insert(rows)
-
-  if (error) {
-    throw new Error(error.message)
-  }
+  if (error) throw new Error(error.message)
 
   return rows.length
 }
@@ -570,9 +526,7 @@ function extractPopulationFromSnippet(text: string) {
     normalized.match(/population[^0-9]{0,40}([0-9][0-9,]{4,})/i) ??
     normalized.match(/([0-9][0-9,]{4,})\s+(?:people|residents)/i)
 
-  if (!populationMatch) return null
-
-  return populationMatch[1]
+  return populationMatch?.[1] ?? null
 }
 
 async function insertPopulationProposal(city: string, country?: string) {
@@ -601,21 +555,16 @@ async function insertPopulationProposal(city: string, country?: string) {
 
     if (!population) continue
 
-const { data: existingPopulationRequests, error: existingPopulationError } =
-  await supabase
-    .from('pending_requests')
-    .select('id')
-    .eq('city', city)
-    .eq('request_type', 'population')
-    .in('status', ['pending', 'approved'])
+    const { data: existingPopulationRequests, error: existingPopulationError } =
+      await supabase
+        .from('pending_requests')
+        .select('id')
+        .eq('city', city)
+        .eq('request_type', 'population')
+        .in('status', ['pending', 'approved'])
 
-if (existingPopulationError) {
-  throw new Error(existingPopulationError.message)
-}
-
-if (existingPopulationRequests && existingPopulationRequests.length > 0) {
-  return 0
-}
+    if (existingPopulationError) throw new Error(existingPopulationError.message)
+    if (existingPopulationRequests && existingPopulationRequests.length > 0) return 0
 
     const { error } = await supabase.from('pending_requests').insert({
       request_type: 'population',
@@ -628,14 +577,11 @@ if (existingPopulationRequests && existingPopulationRequests.length > 0) {
       )
         ? 0.85
         : 0.65,
-      notes:
-        'Autonomous scraper population proposal. Verify source before approval.',
+      notes: 'Autonomous scraper population proposal. Verify source before approval.',
       status: 'pending',
     })
 
-    if (error) {
-      throw new Error(error.message)
-    }
+    if (error) throw new Error(error.message)
 
     return 1
   }
@@ -662,17 +608,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'City is required' }, { status: 400 })
     }
 
+    if (!country) {
+      return NextResponse.json({ error: 'Country is required' }, { status: 400 })
+    }
+
     runId = await createScraperRun(city)
 
-    const queryCity = country ? `${city}, ${country}` : city
+    const queryCity = `${city}, ${country}`
 
     const queries = [
+      `"fried rice" "${queryCity}" menu price`,
       `"egg fried rice" "${queryCity}" menu price`,
-      `"plain egg fried rice" "${queryCity}" restaurant`,
-      `"fried rice with egg" "${queryCity}" menu`,
-      `site:menupix.com "egg fried rice" "${city}"`,
-      `site:skipthedishes.com "egg fried rice" "${city}"`,
-      `site:ubereats.com "egg fried rice" "${city}"`,
+      `"vegetable fried rice" "${queryCity}" menu`,
+      `"chicken fried rice" "${queryCity}" menu`,
+      `"shrimp fried rice" "${queryCity}" menu`,
+      `site:menupix.com "fried rice" "${city}"`,
+      `site:skipthedishes.com "fried rice" "${city}"`,
+      `site:ubereats.com "fried rice" "${city}"`,
     ]
 
     const searchResults: SearchResult[] = []
@@ -702,15 +654,9 @@ export async function POST(request: Request) {
 
       const resultText = `${result.title ?? ''} ${result.snippet ?? ''}`
 
-      if (
-        !domainHint &&
-        !/egg fried rice|fried rice with egg|menu|price/i.test(resultText)
-      ) {
-        continue
-      }
+      if (!domainHint && !/fried rice|menu|price/i.test(resultText)) continue
 
       const pageText = await fetchPageText(result.link)
-
       if (!pageText) continue
 
       const extracted = extractCandidatesFromText({
@@ -722,17 +668,15 @@ export async function POST(request: Request) {
       })
 
       for (const candidate of extracted) {
-        if (!isDuplicateCandidate(candidate, candidates)) {
-          candidates.push(candidate)
-        }
+        if (!isDuplicateCandidate(candidate, candidates)) candidates.push(candidate)
       }
 
-      if (candidates.length >= 8) break
+      if (candidates.length >= 10) break
     }
 
     const finalCandidates = candidates
       .sort((a, b) => b.confidence_score - a.confidence_score)
-      .slice(0, 8)
+      .slice(0, 10)
 
     const restaurantCount = await insertRestaurantProposals(finalCandidates)
     const populationCount = await insertPopulationProposal(city, country)
@@ -753,7 +697,6 @@ export async function POST(request: Request) {
       population_proposals: populationCount,
       candidates: finalCandidates,
     })
-    
   } catch (error) {
     if (runId) {
       await finishScraperRun(

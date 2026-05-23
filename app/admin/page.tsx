@@ -6,24 +6,75 @@ import { supabase } from '@/lib/supabase'
 
 type CityRow = {
   city: string
+  country: string | null
 }
 
 type PendingRequest = {
   id: string
   request_type: 'restaurant' | 'population'
   city: string
+  country: string | null
   restaurant_name: string | null
   dish_name: string | null
+  dish_category: string | null
+  included_in_baseline: boolean | null
   tier: string | null
   price_cad: number | string | null
+  local_price: number | string | null
+  local_currency: string | null
+  exchange_rate_used: number | string | null
   source: string | null
+  source_type: string | null
   source_url: string | null
   population: string | null
   population_source: string | null
   confidence_score: number | string | null
   notes: string | null
+  date_accessed: string | null
   created_at: string
 }
+
+const dishCategories = [
+  { value: 'basic', label: 'Basic' },
+  { value: 'vegetable', label: 'Vegetable' },
+  { value: 'meat_based', label: 'Meat-based' },
+  { value: 'seafood', label: 'Seafood' },
+  { value: 'house_special', label: 'House special / combination' },
+  { value: 'premium', label: 'Premium / luxury' },
+  { value: 'unknown', label: 'Unknown' },
+]
+
+const sourceTypes = [
+  { value: 'official_menu', label: 'Official restaurant menu' },
+  { value: 'official_ordering_page', label: 'Official ordering page' },
+  { value: 'menu_photo', label: 'Recent menu photo' },
+  { value: 'third_party_menu', label: 'Third-party menu site' },
+  { value: 'delivery_app', label: 'Delivery app' },
+  { value: 'scraper_result', label: 'Unclear scraper result' },
+  { value: 'public_submission', label: 'Public submission' },
+  { value: 'manual_review', label: 'Manual review' },
+]
+
+const currencies = [
+  'CAD',
+  'USD',
+  'EUR',
+  'GBP',
+  'CHF',
+  'JPY',
+  'CNY',
+  'AUD',
+  'HKD',
+  'SGD',
+  'SAR',
+  'PHP',
+  'MYR',
+  'MXN',
+  'ARS',
+  'KRW',
+  'INR',
+  'AED',
+]
 
 export default function AdminPage() {
   const [username, setUsername] = useState('')
@@ -41,11 +92,18 @@ export default function AdminPage() {
   const [city, setCity] = useState('')
   const [restaurantName, setRestaurantName] = useState('')
   const [dishName, setDishName] = useState('')
+  const [dishCategory, setDishCategory] = useState('basic')
+  const [includedInBaseline, setIncludedInBaseline] = useState(true)
   const [tier, setTier] = useState('mid_tier')
+  const [localPrice, setLocalPrice] = useState('')
+  const [localCurrency, setLocalCurrency] = useState('CAD')
+  const [exchangeRateUsed, setExchangeRateUsed] = useState('1')
   const [priceCad, setPriceCad] = useState('')
   const [source, setSource] = useState('')
+  const [sourceType, setSourceType] = useState('manual_review')
   const [sourceUrl, setSourceUrl] = useState('')
   const [confidenceScore, setConfidenceScore] = useState('0.7')
+  const [notes, setNotes] = useState('')
   const [approved, setApproved] = useState(true)
   const [savingManual, setSavingManual] = useState(false)
 
@@ -55,10 +113,18 @@ export default function AdminPage() {
     fetchCities()
   }, [])
 
+  useEffect(() => {
+    if (dishCategory === 'basic' || dishCategory === 'vegetable') {
+      setIncludedInBaseline(true)
+    } else {
+      setIncludedInBaseline(false)
+    }
+  }, [dishCategory])
+
   async function fetchCities() {
     const { data, error } = await supabase
       .from('cities')
-      .select('city')
+      .select('city, country')
       .order('city', { ascending: true })
 
     if (error) {
@@ -67,11 +133,15 @@ export default function AdminPage() {
       return
     }
 
-    setCities(data ?? [])
+    setCities((data ?? []) as CityRow[])
 
     if (data && data.length > 0 && !city) {
       setCity(data[0].city)
     }
+  }
+
+  function selectedCountry() {
+    return cities.find((cityRow) => cityRow.city === city)?.country ?? null
   }
 
   async function handleLogin(event: FormEvent) {
@@ -160,11 +230,37 @@ export default function AdminPage() {
     setMessage('')
     setSavingManual(true)
 
-    const parsedPrice = Number(priceCad)
+    const parsedCadPrice = Number(priceCad)
+    const parsedLocalPrice = Number(localPrice)
+    const parsedExchangeRate = Number(exchangeRateUsed)
     const parsedConfidence = Number(confidenceScore)
 
-    if (!Number.isFinite(parsedPrice) || parsedPrice <= 0) {
+    if (!restaurantName.trim()) {
+      setMessage('Restaurant name is required.')
+      setSavingManual(false)
+      return
+    }
+
+    if (!dishName.trim()) {
+      setMessage('Dish name is required.')
+      setSavingManual(false)
+      return
+    }
+
+    if (!Number.isFinite(parsedCadPrice) || parsedCadPrice <= 0) {
       setMessage('Enter a valid CAD price.')
+      setSavingManual(false)
+      return
+    }
+
+    if (!Number.isFinite(parsedLocalPrice) || parsedLocalPrice <= 0) {
+      setMessage('Enter a valid local price.')
+      setSavingManual(false)
+      return
+    }
+
+    if (!Number.isFinite(parsedExchangeRate) || parsedExchangeRate <= 0) {
+      setMessage('Enter a valid exchange rate.')
       setSavingManual(false)
       return
     }
@@ -186,13 +282,22 @@ export default function AdminPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           city,
-          restaurant_name: restaurantName,
-          dish_name: dishName || 'Egg Fried Rice',
+          country: selectedCountry(),
+          restaurant_name: restaurantName.trim(),
+          dish_name: dishName.trim(),
+          dish_category: dishCategory,
+          included_in_baseline: includedInBaseline,
           tier,
-          price_cad: parsedPrice,
-          source,
-          source_url: sourceUrl || null,
+          local_price: parsedLocalPrice,
+          local_currency: localCurrency,
+          exchange_rate_used: parsedExchangeRate,
+          price_cad: parsedCadPrice,
+          source: source.trim(),
+          source_type: sourceType,
+          source_url: sourceUrl.trim() || null,
           confidence_score: parsedConfidence,
+          notes: notes.trim() || null,
+          date_accessed: new Date().toISOString(),
           approved,
           active: true,
         }),
@@ -240,10 +345,18 @@ export default function AdminPage() {
 
     setRestaurantName('')
     setDishName('')
+    setDishCategory('basic')
+    setIncludedInBaseline(true)
+    setTier('mid_tier')
+    setLocalPrice('')
+    setLocalCurrency('CAD')
+    setExchangeRateUsed('1')
     setPriceCad('')
     setSource('')
+    setSourceType('manual_review')
     setSourceUrl('')
     setConfidenceScore('0.7')
+    setNotes('')
     setApproved(true)
     setSavingManual(false)
   }
@@ -303,7 +416,7 @@ export default function AdminPage() {
 
       <nav style={navStyle}>
         <a href="/" style={brandStyle}>
-          egg fried rice <span style={{ color: '#C25E1E' }}>index</span>
+          fried rice <span style={{ color: '#C25E1E' }}>index</span>
         </a>
 
         <button
@@ -333,7 +446,8 @@ export default function AdminPage() {
               <button onClick={openPending} style={dashboardCardStyle}>
                 <span style={dashboardTitleStyle}>View pending requests</span>
                 <span style={dashboardTextStyle}>
-                  Review scraper proposals for restaurant entries and population updates.
+                  Review scraper proposals, public submissions, restaurant entries,
+                  and population updates.
                 </span>
               </button>
 
@@ -346,7 +460,7 @@ export default function AdminPage() {
               >
                 <span style={dashboardTitleStyle}>Enter manual entry</span>
                 <span style={dashboardTextStyle}>
-                  Add a restaurant entry manually and recalculate the city average.
+                  Add a classified fried rice entry and recalculate the city baseline.
                 </span>
               </button>
             </div>
@@ -367,7 +481,7 @@ export default function AdminPage() {
 
             <p style={{ ...eyebrowStyle, marginTop: '2rem' }}>Pending requests</p>
 
-            <h1 style={titleStyle}>Review scraper proposals.</h1>
+            <h1 style={titleStyle}>Review proposals.</h1>
 
             {message && <p style={messageStyle}>{message}</p>}
 
@@ -401,19 +515,40 @@ export default function AdminPage() {
                             {request.restaurant_name || 'Unknown restaurant'}
                           </p>
                           <p>
-                            <strong>Dish:</strong>{' '}
-                            {request.dish_name || 'Egg Fried Rice'}
+                            <strong>Dish:</strong> {request.dish_name || 'Missing dish'}
+                          </p>
+                          <p>
+                            <strong>Category:</strong>{' '}
+                            {request.dish_category || 'unknown'}
+                          </p>
+                          <p>
+                            <strong>Included in baseline:</strong>{' '}
+                            {request.included_in_baseline ? 'Yes' : 'No'}
                           </p>
                           <p>
                             <strong>Tier:</strong> {request.tier || 'mid_tier'}
                           </p>
                           <p>
-                            <strong>Price:</strong>{' '}
+                            <strong>Local price:</strong>{' '}
+                            {request.local_price
+                              ? `${request.local_currency ?? ''} ${request.local_price}`
+                              : 'Missing'}
+                          </p>
+                          <p>
+                            <strong>Exchange rate used:</strong>{' '}
+                            {request.exchange_rate_used || 'Missing'}
+                          </p>
+                          <p>
+                            <strong>CAD price:</strong>{' '}
                             {formatCadPrice(request.price_cad)}
                           </p>
                           <p>
                             <strong>Confidence:</strong>{' '}
                             {formatConfidence(request.confidence_score)}
+                          </p>
+                          <p>
+                            <strong>Source type:</strong>{' '}
+                            {request.source_type || 'Missing'}
                           </p>
                           <p>
                             <strong>Source:</strong>{' '}
@@ -432,6 +567,10 @@ export default function AdminPage() {
                               </a>
                             </p>
                           )}
+                          <p>
+                            <strong>Date accessed:</strong>{' '}
+                            {formatDate(request.date_accessed)}
+                          </p>
                           {request.notes && (
                             <p>
                               <strong>Notes:</strong> {request.notes}
@@ -512,7 +651,7 @@ export default function AdminPage() {
 
             <p style={{ ...eyebrowStyle, marginTop: '2rem' }}>Manual entry</p>
 
-            <h1 style={titleStyle}>Add restaurant data.</h1>
+            <h1 style={titleStyle}>Add fried rice data.</h1>
 
             {message && <p style={messageStyle}>{message}</p>}
 
@@ -548,12 +687,28 @@ export default function AdminPage() {
                   value={dishName}
                   onChange={(event) => setDishName(event.target.value)}
                   style={inputStyle}
-                  placeholder="Egg Fried Rice"
+                  placeholder="Chicken Fried Rice"
+                  required
                 />
               </label>
 
               <label style={labelStyle}>
-                Tier
+                Dish category
+                <select
+                  value={dishCategory}
+                  onChange={(event) => setDishCategory(event.target.value)}
+                  style={inputStyle}
+                >
+                  {dishCategories.map((category) => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label style={labelStyle}>
+                Restaurant tier
                 <select
                   value={tier}
                   onChange={(event) => setTier(event.target.value)}
@@ -566,8 +721,64 @@ export default function AdminPage() {
                 </select>
               </label>
 
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  fontSize: 14,
+                  color: '#3a3a34',
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={includedInBaseline}
+                  onChange={(event) => setIncludedInBaseline(event.target.checked)}
+                />
+                Include in baseline city price
+              </label>
+
               <label style={labelStyle}>
-                Price CAD
+                Local price
+                <input
+                  type="number"
+                  step="0.01"
+                  value={localPrice}
+                  onChange={(event) => setLocalPrice(event.target.value)}
+                  style={inputStyle}
+                  required
+                />
+              </label>
+
+              <label style={labelStyle}>
+                Local currency
+                <select
+                  value={localCurrency}
+                  onChange={(event) => setLocalCurrency(event.target.value)}
+                  style={inputStyle}
+                >
+                  {currencies.map((currency) => (
+                    <option key={currency} value={currency}>
+                      {currency}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label style={labelStyle}>
+                Exchange rate used to CAD
+                <input
+                  type="number"
+                  step="0.0001"
+                  value={exchangeRateUsed}
+                  onChange={(event) => setExchangeRateUsed(event.target.value)}
+                  style={inputStyle}
+                  required
+                />
+              </label>
+
+              <label style={labelStyle}>
+                CAD price
                 <input
                   type="number"
                   step="0.01"
@@ -579,11 +790,27 @@ export default function AdminPage() {
               </label>
 
               <label style={labelStyle}>
-                Source
+                Source type
+                <select
+                  value={sourceType}
+                  onChange={(event) => setSourceType(event.target.value)}
+                  style={inputStyle}
+                >
+                  {sourceTypes.map((sourceType) => (
+                    <option key={sourceType.value} value={sourceType.value}>
+                      {sourceType.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label style={labelStyle}>
+                Source description
                 <input
                   value={source}
                   onChange={(event) => setSource(event.target.value)}
                   style={inputStyle}
+                  placeholder="Official menu, Uber Eats, MenuPix, etc."
                   required
                 />
               </label>
@@ -594,6 +821,7 @@ export default function AdminPage() {
                   value={sourceUrl}
                   onChange={(event) => setSourceUrl(event.target.value)}
                   style={inputStyle}
+                  required
                 />
               </label>
 
@@ -607,6 +835,16 @@ export default function AdminPage() {
                   value={confidenceScore}
                   onChange={(event) => setConfidenceScore(event.target.value)}
                   style={inputStyle}
+                />
+              </label>
+
+              <label style={labelStyle}>
+                Notes
+                <textarea
+                  value={notes}
+                  onChange={(event) => setNotes(event.target.value)}
+                  style={{ ...inputStyle, minHeight: 90, resize: 'vertical' }}
+                  placeholder="Optional notes about source quality, dish ambiguity, delivery markup, etc."
                 />
               </label>
 
@@ -664,6 +902,16 @@ function formatConfidence(value: number | string | null) {
   }
 
   return `${Math.round(number)}%`
+}
+
+function formatDate(value: string | null) {
+  if (!value) return 'Missing'
+
+  return new Date(value).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
 }
 
 const pageStyle: CSSProperties = {

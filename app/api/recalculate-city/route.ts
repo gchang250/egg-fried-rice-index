@@ -1,6 +1,72 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
+type RestaurantRow = {
+  price_cad: number | string | null
+  confidence_score: number | string | null
+}
+
+function median(values: number[]) {
+  if (values.length === 0) return null
+
+  const sorted = [...values].sort((a, b) => a - b)
+  const middle = Math.floor(sorted.length / 2)
+
+  if (sorted.length % 2 === 1) {
+    return sorted[middle]
+  }
+
+  return (sorted[middle - 1] + sorted[middle]) / 2
+}
+
+function average(values: number[]) {
+  if (values.length === 0) return null
+
+  return values.reduce((sum, value) => sum + value, 0) / values.length
+}
+
+function standardDeviation(values: number[]) {
+  if (values.length < 2) return 0
+
+  const mean = average(values)
+
+  if (mean === null) return null
+
+  const variance =
+    values.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) /
+    (values.length - 1)
+
+  return Math.sqrt(variance)
+}
+
+function roundMoney(value: number | null) {
+  if (value === null || !Number.isFinite(value)) return null
+
+  return Number(value.toFixed(2))
+}
+
+function roundScore(value: number | null) {
+  if (value === null || !Number.isFinite(value)) return null
+
+  return Number(value.toFixed(2))
+}
+
+function getDataQualityLabel(count: number, confidence: number | null) {
+  if (count <= 0) return 'No baseline data'
+  if (count <= 2) return 'Preliminary'
+  if (count <= 4) return 'Limited'
+
+  if (count >= 15 && confidence !== null && confidence >= 0.8) {
+    return 'High confidence'
+  }
+
+  if (count >= 10 && confidence !== null && confidence >= 0.75) {
+    return 'Strong'
+  }
+
+  return 'Moderate'
+}
+
 async function recalculateCity(city: string) {
   const { data: restaurants, error: restaurantError } = await supabase
     .from('restaurants')
@@ -8,47 +74,43 @@ async function recalculateCity(city: string) {
     .eq('city', city)
     .eq('approved', true)
     .eq('active', true)
+    .eq('included_in_baseline', true)
 
   if (restaurantError) {
     throw new Error(restaurantError.message)
   }
 
   if (!restaurants || restaurants.length === 0) {
-    throw new Error(`No approved restaurant rows found for ${city}.`)
+    throw new Error(`No approved baseline restaurant rows found for ${city}.`)
   }
 
-  const prices = restaurants
+  const prices = (restaurants as RestaurantRow[])
     .map((restaurant) => Number(restaurant.price_cad))
     .filter((price) => Number.isFinite(price) && price > 0)
 
   if (prices.length === 0) {
-    throw new Error(`No valid prices found for ${city}.`)
+    throw new Error(`No valid baseline prices found for ${city}.`)
   }
 
-  const confidenceScores = restaurants
+  const confidenceScores = (restaurants as RestaurantRow[])
     .map((restaurant) => Number(restaurant.confidence_score))
     .filter((score) => Number.isFinite(score) && score >= 0 && score <= 1)
 
-  const averagePrice =
-    prices.reduce((sum, price) => sum + price, 0) / prices.length
-
-  const averageConfidence =
-    confidenceScores.length > 0
-      ? confidenceScores.reduce((sum, score) => sum + score, 0) /
-        confidenceScores.length
-      : null
-
-  const roundedAveragePrice = Number(averagePrice.toFixed(2))
-  const roundedAverageConfidence =
-    averageConfidence === null ? null : Number(averageConfidence.toFixed(2))
+  const medianPrice = roundMoney(median(prices))
+  const averagePrice = roundMoney(average(prices))
+  const minPrice = roundMoney(Math.min(...prices))
+  const maxPrice = roundMoney(Math.max(...prices))
+  const stdDev = roundMoney(standardDeviation(prices))
+  const averageConfidence = roundScore(average(confidenceScores))
+  const dataQualityLabel = getDataQualityLabel(prices.length, averageConfidence)
 
   const { data: updatedCity, error: updateError } = await supabase
     .from('cities')
     .update({
-      price_cad: roundedAveragePrice,
-      price_source: `Restaurant average from ${prices.length} approved active entries`,
+      price_cad: medianPrice,
+      price_source: `Baseline median from ${prices.length} approved baseline fried rice entries`,
       price_updated_at: new Date().toISOString(),
-      confidence_score: roundedAverageConfidence,
+      confidence_score: averageConfidence,
     })
     .eq('city', city)
     .select()
@@ -64,8 +126,14 @@ async function recalculateCity(city: string) {
   return {
     city,
     restaurant_count: prices.length,
-    average_price_cad: roundedAveragePrice,
-    average_confidence: roundedAverageConfidence,
+    baseline_restaurant_count: prices.length,
+    median_price_cad: medianPrice,
+    average_price_cad: averagePrice,
+    min_price_cad: minPrice,
+    max_price_cad: maxPrice,
+    standard_deviation: stdDev,
+    average_confidence: averageConfidence,
+    data_quality_label: dataQualityLabel,
     updated_city: updatedCity,
   }
 }
