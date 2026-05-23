@@ -1,26 +1,34 @@
-import { NextResponse } from 'next/server'
+import Anthropic from '@anthropic-ai/sdk'
 import * as cheerio from 'cheerio'
+import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
-type SearchResult = {
-  title?: string
-  link?: string
-  snippet?: string
-  source?: string
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+type Currency = { code: string; symbol: string }
+
+type SearchResult = { title: string; url: string; snippet: string }
+
+type ExtractedDish = {
+  dish_name: string
+  local_price: number
+  dish_category: 'basic' | 'vegetable' | 'meat_based' | 'seafood' | 'house_special' | 'premium'
 }
 
-type RestaurantCandidate = {
+type Candidate = {
   city: string
-  country: string | null
+  country: string
   restaurant_name: string
   dish_name: string
   dish_category: string
   included_in_baseline: boolean
   tier: string
-  price_cad: number
   local_price: number
   local_currency: string
   exchange_rate_used: number
+  price_cad: number
   source: string
   source_type: string
   source_url: string
@@ -28,298 +36,294 @@ type RestaurantCandidate = {
   notes: string
 }
 
-const CAD_RATES: Record<string, number> = {
+// ---------------------------------------------------------------------------
+// Currency data
+// ---------------------------------------------------------------------------
+
+const CURRENCY_BY_COUNTRY: Record<string, Currency> = {
+  'canada':            { code: 'CAD', symbol: 'CA$' },
+  'united states':     { code: 'USD', symbol: '$' },
+  'usa':               { code: 'USD', symbol: '$' },
+  'us':                { code: 'USD', symbol: '$' },
+  'united kingdom':    { code: 'GBP', symbol: '£' },
+  'uk':                { code: 'GBP', symbol: '£' },
+  'england':           { code: 'GBP', symbol: '£' },
+  'scotland':          { code: 'GBP', symbol: '£' },
+  'wales':             { code: 'GBP', symbol: '£' },
+  'australia':         { code: 'AUD', symbol: 'AU$' },
+  'singapore':         { code: 'SGD', symbol: 'S$' },
+  'hong kong':         { code: 'HKD', symbol: 'HK$' },
+  'japan':             { code: 'JPY', symbol: '¥' },
+  'china':             { code: 'CNY', symbol: '¥' },
+  'taiwan':            { code: 'TWD', symbol: 'NT$' },
+  'south korea':       { code: 'KRW', symbol: '₩' },
+  'korea':             { code: 'KRW', symbol: '₩' },
+  'india':             { code: 'INR', symbol: '₹' },
+  'malaysia':          { code: 'MYR', symbol: 'RM' },
+  'philippines':       { code: 'PHP', symbol: '₱' },
+  'indonesia':         { code: 'IDR', symbol: 'Rp' },
+  'thailand':          { code: 'THB', symbol: '฿' },
+  'vietnam':           { code: 'VND', symbol: '₫' },
+  'mexico':            { code: 'MXN', symbol: 'MX$' },
+  'brazil':            { code: 'BRL', symbol: 'R$' },
+  'argentina':         { code: 'ARS', symbol: 'AR$' },
+  'uae':               { code: 'AED', symbol: 'د.إ' },
+  'united arab emirates': { code: 'AED', symbol: 'د.إ' },
+  'saudi arabia':      { code: 'SAR', symbol: '﷼' },
+  'france':            { code: 'EUR', symbol: '€' },
+  'germany':           { code: 'EUR', symbol: '€' },
+  'italy':             { code: 'EUR', symbol: '€' },
+  'spain':             { code: 'EUR', symbol: '€' },
+  'netherlands':       { code: 'EUR', symbol: '€' },
+  'belgium':           { code: 'EUR', symbol: '€' },
+  'switzerland':       { code: 'CHF', symbol: 'Fr' },
+  'new zealand':       { code: 'NZD', symbol: 'NZ$' },
+}
+
+const TO_CAD: Record<string, number> = {
   CAD: 1,
   USD: 1.37,
   GBP: 1.73,
   EUR: 1.48,
+  CHF: 1.52,
+  AUD: 0.91,
+  NZD: 0.83,
   SGD: 1.01,
   HKD: 0.18,
-  AUD: 0.91,
   JPY: 0.0093,
+  CNY: 0.19,
+  TWD: 0.042,
+  KRW: 0.001,
+  INR: 0.016,
+  MYR: 0.31,
+  PHP: 0.024,
+  IDR: 0.000087,
+  THB: 0.040,
+  VND: 0.000054,
+  MXN: 0.071,
+  BRL: 0.27,
+  ARS: 0.0014,
+  AED: 0.37,
+  SAR: 0.37,
 }
 
-const BAD_DOMAINS = [
-  'facebook.com',
-  'instagram.com',
-  'tiktok.com',
-  'youtube.com',
-  'reddit.com',
-  'tripadvisor.com',
-  'yelp.com',
+// Price sanity bounds per currency (to filter obvious non-price numbers)
+const PRICE_FLOOR_LOCAL: Record<string, number> = {
+  CAD: 3, USD: 3, GBP: 2, EUR: 2, CHF: 3, AUD: 3, NZD: 3,
+  SGD: 3, HKD: 20, JPY: 300, CNY: 10, TWD: 60, KRW: 3000,
+  INR: 80, MYR: 5, PHP: 80, IDR: 15000, THB: 60, VND: 30000,
+  MXN: 30, BRL: 8, ARS: 500, AED: 8, SAR: 8,
+}
+const PRICE_CEIL_LOCAL: Record<string, number> = {
+  CAD: 90, USD: 70, GBP: 50, EUR: 55, CHF: 60, AUD: 90, NZD: 90,
+  SGD: 60, HKD: 300, JPY: 5000, CNY: 200, TWD: 800, KRW: 50000,
+  INR: 1500, MYR: 80, PHP: 1000, IDR: 200000, THB: 800, VND: 400000,
+  MXN: 400, BRL: 80, ARS: 8000, AED: 80, SAR: 80,
+}
+
+// Domains to skip
+const BLOCKED_DOMAINS = [
+  'facebook.com', 'instagram.com', 'tiktok.com', 'youtube.com',
+  'reddit.com', 'twitter.com', 'x.com', 'pinterest.com',
 ]
 
-const MENU_HINT_DOMAINS = [
-  'menupix',
-  'skipthedishes',
-  'ubereats',
-  'doordash',
-  'ritual',
-  'toasttab',
-  'chownow',
-  'squarespace',
-  'wixsite',
-  'menu',
-  'restaurant',
+// Domains that reliably carry menu prices
+const HIGH_VALUE_DOMAINS = [
+  'ubereats.com', 'doordash.com', 'skipthedishes.com',
+  'grubhub.com', 'seamless.com', 'deliveroo.com', 'foodpanda.com',
+  'menupix.com', 'allmenus.com', 'menuism.com',
+  'toasttab.com', 'chownow.com', 'olo.com',
+  'opentable.com',
 ]
 
-const FRIED_RICE_TERMS = [
-  'fried rice',
-  'egg fried rice',
-  'vegetable fried rice',
-  'veggie fried rice',
-  'chicken fried rice',
-  'beef fried rice',
-  'pork fried rice',
-  'shrimp fried rice',
-  'seafood fried rice',
-  'house fried rice',
-  'special fried rice',
-  'combination fried rice',
-  'yang chow fried rice',
-  'yangzhou fried rice',
-]
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
 
-function authorized(username: string, password: string) {
-  return (
-    username === process.env.ADMIN_USERNAME &&
-    password === process.env.ADMIN_PASSWORD
-  )
+function currencyForCountry(country: string): Currency {
+  const key = country.toLowerCase().trim()
+  const direct = CURRENCY_BY_COUNTRY[key]
+  if (direct) return direct
+
+  for (const [k, v] of Object.entries(CURRENCY_BY_COUNTRY)) {
+    if (key.includes(k) || k.includes(key)) return v
+  }
+
+  return { code: 'USD', symbol: '$' }
 }
 
-function normalizeText(text: string) {
-  return text.replace(/\s+/g, ' ').trim()
-}
-
-function containsAny(text: string, terms: string[]) {
-  const lower = text.toLowerCase()
-  return terms.some((term) => lower.includes(term))
-}
-
-function currencyForCountry(country: string) {
-  const normalized = country.toLowerCase().trim()
-
-  if (!normalized) throw new Error('Country is required.')
-  if (normalized.includes('canada')) return 'CAD'
-  if (
-    normalized.includes('united states') ||
-    normalized === 'us' ||
-    normalized === 'usa'
-  ) return 'USD'
-  if (
-    normalized.includes('united kingdom') ||
-    normalized === 'uk' ||
-    normalized.includes('england') ||
-    normalized.includes('scotland') ||
-    normalized.includes('wales')
-  ) return 'GBP'
-  if (normalized.includes('singapore')) return 'SGD'
-  if (normalized.includes('hong kong')) return 'HKD'
-  if (normalized.includes('australia')) return 'AUD'
-  if (normalized.includes('japan')) return 'JPY'
-  if (
-    normalized.includes('france') ||
-    normalized.includes('germany') ||
-    normalized.includes('italy') ||
-    normalized.includes('spain') ||
-    normalized.includes('netherlands') ||
-    normalized.includes('ireland') ||
-    normalized.includes('eurozone')
-  ) return 'EUR'
-
-  throw new Error(`Unsupported country/currency: "${country}".`)
-}
-
-function convertToCad(localPrice: number, localCurrency: string) {
-  const rate = CAD_RATES[localCurrency] ?? 1
+function toCad(localPrice: number, currencyCode: string): number {
+  const rate = TO_CAD[currencyCode] ?? 1
   return Number((localPrice * rate).toFixed(2))
 }
 
-function classifyDish(dishName: string) {
-  const lower = dishName.toLowerCase()
-
-  if (containsAny(lower, ['lobster', 'crab', 'scallop', 'truffle', 'wagyu'])) {
-    return { dish_category: 'premium', included_in_baseline: false }
-  }
-
-  if (containsAny(lower, ['shrimp', 'prawn', 'seafood', 'xo sauce', 'xo fried rice'])) {
-    return { dish_category: 'seafood', included_in_baseline: false }
-  }
-
-  if (containsAny(lower, ['chicken', 'beef', 'pork', 'ham', 'bacon', 'bbq pork', 'duck'])) {
-    return { dish_category: 'meat_based', included_in_baseline: false }
-  }
-
-  if (containsAny(lower, ['house', 'special', 'combo', 'combination', 'yang chow', 'yangzhou'])) {
-    return { dish_category: 'house_special', included_in_baseline: false }
-  }
-
-  if (containsAny(lower, ['vegetable', 'veggie', 'greens'])) {
-    return { dish_category: 'vegetable', included_in_baseline: true }
-  }
-
-  if (containsAny(lower, ['egg fried rice', 'plain fried rice', 'fried rice with egg'])) {
-    return { dish_category: 'basic', included_in_baseline: true }
-  }
-
-  return { dish_category: 'unknown', included_in_baseline: false }
-}
-
-function looksLikeFriedRice(text: string) {
-  return containsAny(text, FRIED_RICE_TERMS)
-}
-
-function extractPrice(text: string) {
-  const matches = text.match(/\$ ?([0-9]{1,3}(?:\.[0-9]{2})?)/g)
-  if (!matches) return null
-
-  const prices = matches
-    .map((match) => Number(match.replace('$', '').trim()))
-    .filter((price) => Number.isFinite(price))
-    .filter((price) => price >= 5 && price <= 80)
-
-  return prices[0] ?? null
-}
-
-function guessTier(priceCad: number) {
-  if (priceCad <= 12.5) return 'low_tier'
-  if (priceCad <= 17.5) return 'mid_tier'
-  if (priceCad <= 23) return 'high_end'
+function guessTier(priceCad: number): string {
+  if (priceCad <= 12) return 'low_tier'
+  if (priceCad <= 17) return 'mid_tier'
+  if (priceCad <= 24) return 'high_end'
   return 'premium'
 }
 
-function confidenceFromUrl(url: string, line: string) {
-  const lowerUrl = url.toLowerCase()
-  let score = 0.55
-
-  if (containsAny(lowerUrl, ['skipthedishes', 'ubereats', 'doordash'])) score = 0.6
-  if (containsAny(lowerUrl, ['menupix'])) score = 0.7
-
-  if (
-    !containsAny(lowerUrl, ['skipthedishes', 'ubereats', 'doordash', 'menupix']) &&
-    containsAny(lowerUrl, ['menu', 'restaurant', 'order'])
-  ) score = 0.75
-
-  if (looksLikeFriedRice(line)) score += 0.05
-
-  return Math.min(Number(score.toFixed(2)), 0.85)
-}
-
-function sourceTypeFromUrl(url: string) {
+function sourceTypeFromUrl(url: string): string {
   const lower = url.toLowerCase()
-
-  if (containsAny(lower, ['ubereats', 'doordash', 'skipthedishes'])) {
-    return 'delivery_app'
-  }
-
-  if (containsAny(lower, ['menupix'])) {
-    return 'third_party_menu'
-  }
-
-  if (containsAny(lower, ['toasttab', 'chownow', 'ritual'])) {
-    return 'official_ordering_page'
-  }
-
-  if (containsAny(lower, ['menu', 'restaurant', 'order'])) {
-    return 'official_menu'
-  }
-
-  return 'scraper_result'
+  if (/ubereats|doordash|skipthedishes|grubhub|seamless|deliveroo|foodpanda/.test(lower)) return 'delivery_app'
+  if (/menupix|allmenus|menuism/.test(lower)) return 'third_party_menu'
+  if (/toasttab|chownow|olo\.com/.test(lower)) return 'official_ordering_page'
+  return 'official_menu'
 }
 
-function guessRestaurantName(title: string | undefined, url: string) {
+function confidenceFromSource(url: string): number {
+  const lower = url.toLowerCase()
+  if (/toasttab|chownow|olo\.com/.test(lower)) return 0.82
+  if (/ubereats|doordash|skipthedishes|grubhub/.test(lower)) return 0.72
+  if (/menupix|allmenus/.test(lower)) return 0.68
+  if (/deliveroo|foodpanda/.test(lower)) return 0.72
+  return 0.65
+}
+
+function isBlockedUrl(url: string): boolean {
+  return BLOCKED_DOMAINS.some((d) => url.toLowerCase().includes(d))
+}
+
+function restaurantNameFromTitle(title: string, url: string): string {
   if (title) {
-    const menuOfMatch = title.match(/Menu of (.*?) in /i)
-    if (menuOfMatch?.[1]) return menuOfMatch[1].trim().slice(0, 90)
+    // "Menu of Foo Restaurant in City" → "Foo Restaurant"
+    const m1 = title.match(/Menu of (.*?) in /i)
+    if (m1?.[1]) return m1[1].trim().slice(0, 90)
 
-    const orderFromMatch = title.match(/Order (.*?) Menu/i)
-    if (orderFromMatch?.[1]) return orderFromMatch[1].trim().slice(0, 90)
+    // "Order Foo Restaurant Menu" → "Foo Restaurant"
+    const m2 = title.match(/^Order\s+(.*?)\s+(?:Menu|Online|Delivery)/i)
+    if (m2?.[1]) return m2[1].trim().slice(0, 90)
 
-    const cleaned = title
-      .replace(/\|.*$/g, '')
-      .replace(/\s+-\s+.*$/g, '')
-      .replace(/\bmenu\b/gi, '')
-      .replace(/\border\b/gi, '')
-      .replace(/\bonline\b/gi, '')
-      .replace(/\bdelivery\b/gi, '')
-      .trim()
-
-    if (cleaned.length > 0) return cleaned.slice(0, 90)
+    // "Foo Restaurant | Uber Eats" → "Foo Restaurant"
+    const m3 = title.split(/\s*[\|–-]\s*/)[0].trim()
+    if (m3 && m3.length < 80) return m3
   }
 
   try {
-    const host = new URL(url).hostname.replace('www.', '')
+    const host = new URL(url).hostname.replace(/^www\./, '')
     return host.split('.')[0] || 'Unknown restaurant'
   } catch {
     return 'Unknown restaurant'
   }
 }
 
-function isBadUrl(url: string) {
-  return BAD_DOMAINS.some((domain) => url.toLowerCase().includes(domain))
+function normalizeForDupe(value: string | null | undefined): string {
+  return String(value ?? '').toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 }
 
-function isDuplicateCandidate(
-  candidate: RestaurantCandidate,
-  existing: RestaurantCandidate[]
-) {
-  return existing.some(
-    (item) =>
-      item.restaurant_name.toLowerCase() === candidate.restaurant_name.toLowerCase() &&
-      item.dish_name.toLowerCase() === candidate.dish_name.toLowerCase()
-  )
+function isDuplicate(
+  candidate: { city: string; restaurant_name: string; dish_name: string; source_url: string },
+  existing: Array<{ city?: string | null; restaurant_name?: string | null; dish_name?: string | null; source_url?: string | null }>
+): boolean {
+  return existing.some((row) => {
+    const sameCity = normalizeForDupe(row.city) === normalizeForDupe(candidate.city)
+    if (!sameCity) return false
+
+    const sameUrl =
+      normalizeForDupe(candidate.source_url) !== '' &&
+      normalizeForDupe(row.source_url) === normalizeForDupe(candidate.source_url)
+
+    const samePair =
+      normalizeForDupe(row.restaurant_name) === normalizeForDupe(candidate.restaurant_name) &&
+      normalizeForDupe(row.dish_name) === normalizeForDupe(candidate.dish_name)
+
+    return sameUrl || samePair
+  })
 }
 
-async function serpSearch(query: string, location?: string): Promise<SearchResult[]> {
+// ---------------------------------------------------------------------------
+// Search
+// ---------------------------------------------------------------------------
+
+async function searchMenuUrls(city: string, country: string): Promise<SearchResult[]> {
   const apiKey = process.env.SERPAPI_API_KEY
   if (!apiKey) throw new Error('Missing SERPAPI_API_KEY')
 
-  const params = new URLSearchParams({
-    engine: 'google',
-    q: query,
-    api_key: apiKey,
-    num: '10',
-    hl: 'en',
-    gl: 'ca',
-  })
+  const location = `${city}, ${country}`
 
-  if (location) params.set('location', location)
+  const queries = [
+    `"fried rice" restaurant menu price ${city}`,
+    `egg fried rice vegetable fried rice menu ${city}`,
+    `site:ubereats.com fried rice ${city}`,
+    `site:doordash.com fried rice ${city}`,
+    `site:menupix.com fried rice ${city}`,
+  ]
 
-  const response = await fetch(`https://serpapi.com/search.json?${params.toString()}`, {
-    cache: 'no-store',
-  })
+  const seen = new Set<string>()
+  const results: SearchResult[] = []
 
-  if (!response.ok) {
-    throw new Error(`SerpAPI request failed with status ${response.status}`)
+  for (const q of queries) {
+    try {
+      const params = new URLSearchParams({
+        engine: 'google',
+        q,
+        api_key: apiKey,
+        num: '8',
+        hl: 'en',
+        gl: 'ca',
+        location,
+      })
+
+      const res = await fetch(`https://serpapi.com/search.json?${params}`, { cache: 'no-store' })
+      if (!res.ok) continue
+
+      const json = await res.json()
+      const organic: Array<{ title?: string; link?: string; snippet?: string }> = json.organic_results ?? []
+
+      for (const item of organic) {
+        const url = item.link
+        if (!url || seen.has(url) || isBlockedUrl(url)) continue
+        seen.add(url)
+        results.push({
+          title: item.title ?? '',
+          url,
+          snippet: item.snippet ?? '',
+        })
+      }
+    } catch {
+      // skip failed query
+    }
   }
 
-  const json = await response.json()
-  return json.organic_results ?? []
+  // Sort: high-value domains first, then others
+  return results.sort((a, b) => {
+    const aHigh = HIGH_VALUE_DOMAINS.some((d) => a.url.includes(d)) ? 0 : 1
+    const bHigh = HIGH_VALUE_DOMAINS.some((d) => b.url.includes(d)) ? 0 : 1
+    return aHigh - bHigh
+  })
 }
 
-async function fetchPageText(url: string) {
+// ---------------------------------------------------------------------------
+// Fetch
+// ---------------------------------------------------------------------------
+
+async function fetchCleanText(url: string): Promise<{ text: string; title: string } | null> {
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 8000)
+  const timeout = setTimeout(() => controller.abort(), 9000)
 
   try {
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (compatible; FriedRiceIndexBot/1.0; +https://efr-index.vercel.app)',
+        'User-Agent': 'Mozilla/5.0 (compatible; FriedRiceIndexBot/1.0)',
+        'Accept-Language': 'en-US,en;q=0.9',
       },
       cache: 'no-store',
     })
 
-    if (!response.ok) return null
+    if (!res.ok) return null
 
-    const raw = await response.text()
-    if (!raw) return null
+    const html = await res.text()
+    if (!html) return null
 
-    const $ = cheerio.load(raw)
-    $('script, style, noscript, svg, img').remove()
+    const $ = cheerio.load(html)
+    $('script, style, noscript, svg, img, iframe, nav, footer, header').remove()
 
-    return normalizeText($('body').text() || raw)
+    const title = $('title').text().trim() || $('h1').first().text().trim()
+    const text = $('body').text().replace(/\s+/g, ' ').trim().slice(0, 8000)
+
+    return { text, title }
   } catch {
     return null
   } finally {
@@ -327,189 +331,171 @@ async function fetchPageText(url: string) {
   }
 }
 
-function extractDishName(chunk: string) {
-  const match =
-    chunk.match(
-      /([A-Za-z '&().-]*(?:fried rice)[A-Za-z '&().-]*)/i
-    )?.[1] ?? 'Fried Rice'
+// ---------------------------------------------------------------------------
+// Claude extraction
+// ---------------------------------------------------------------------------
 
-  return normalizeText(match).slice(0, 90)
-}
-
-function extractCandidatesFromText(params: {
+async function extractWithClaude(params: {
+  text: string
+  restaurantName: string
   city: string
   country: string
-  pageText: string
-  sourceUrl: string
-  searchTitle?: string
-}) {
-  const { city, country, pageText, sourceUrl, searchTitle } = params
+  currency: Currency
+}): Promise<ExtractedDish[]> {
+  const { text, restaurantName, city, country, currency } = params
 
-  const localCurrency = currencyForCountry(country)
-  const exchangeRateUsed = CAD_RATES[localCurrency] ?? 1
-  const candidates: RestaurantCandidate[] = []
+  const floor = PRICE_FLOOR_LOCAL[currency.code] ?? 3
+  const ceil = PRICE_CEIL_LOCAL[currency.code] ?? 90
+  const premiumHint = PRICE_CEIL_LOCAL[currency.code]
+    ? `${Math.round(PRICE_CEIL_LOCAL[currency.code] * 0.6)} ${currency.code}`
+    : `30 ${currency.code}`
 
-  const chunks = pageText
-    .split(/\.|•|\n|\r|\||\t|(?<=\$[0-9]{1,3}(?:\.[0-9]{2})?)/g)
-    .map(normalizeText)
-    .filter(Boolean)
+  const prompt = `You are extracting fried rice dish data from a restaurant menu page.
 
-  for (const chunk of chunks) {
-    if (!looksLikeFriedRice(chunk)) continue
+Restaurant: ${restaurantName}
+Location: ${city}, ${country}
+Currency: ${currency.code} (symbol: ${currency.symbol})
+Valid price range: ${floor}–${ceil} ${currency.code}
 
-    const localPrice = extractPrice(chunk)
-    if (localPrice === null) continue
+--- PAGE TEXT ---
+${text.slice(0, 4000)}
+--- END ---
 
-    const dishName = extractDishName(chunk)
-    const classification = classifyDish(dishName)
-    const priceCad = convertToCad(localPrice, localCurrency)
+Extract every fried rice dish you can find. Return ONLY a valid JSON array with no other text.
 
-    const candidate: RestaurantCandidate = {
+Each object must have exactly:
+{
+  "dish_name": "exact name from the menu",
+  "local_price": number (e.g. 14.99 or 1400 — numeric only, no currency symbols),
+  "dish_category": "basic" | "vegetable" | "meat_based" | "seafood" | "house_special" | "premium"
+}
+
+Category rules:
+- basic: plain egg fried rice, plain fried rice with egg, no specific protein listed
+- vegetable: vegetable fried rice, veggie fried rice, garden fried rice
+- meat_based: chicken, beef, pork, ham, bacon, duck, char siu / bbq pork fried rice
+- seafood: shrimp, prawn, lobster, crab, scallop, squid, fish fried rice
+- house_special: combination, special, yang chow, yangzhou, mixed protein fried rice
+- premium: wagyu, truffle, gold leaf, luxury ingredients, or price over ${premiumHint}
+
+Only include dishes that contain "fried rice" or are unmistakably a fried rice dish.
+Only include prices between ${floor} and ${ceil} ${currency.code}.
+If no fried rice dishes found, return [].`
+
+  try {
+    const client = new Anthropic()
+
+    const message = await client.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1024,
+      messages: [{ role: 'user', content: prompt }],
+    })
+
+    const raw = message.content[0]?.type === 'text' ? message.content[0].text : ''
+
+    // Pull out the JSON array from the response
+    const jsonMatch = raw.match(/\[[\s\S]*\]/)
+    if (!jsonMatch) return []
+
+    const parsed = JSON.parse(jsonMatch[0])
+    if (!Array.isArray(parsed)) return []
+
+    return parsed.filter(
+      (item): item is ExtractedDish =>
+        typeof item.dish_name === 'string' &&
+        typeof item.local_price === 'number' &&
+        item.local_price >= floor &&
+        item.local_price <= ceil &&
+        typeof item.dish_category === 'string'
+    )
+  } catch {
+    return []
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Build + dedup + insert
+// ---------------------------------------------------------------------------
+
+function buildCandidates(
+  dishes: ExtractedDish[],
+  meta: {
+    city: string
+    country: string
+    restaurantName: string
+    currency: Currency
+    sourceUrl: string
+    sourceTitle: string
+  }
+): Candidate[] {
+  const { city, country, restaurantName, currency, sourceUrl, sourceTitle } = meta
+  const rate = TO_CAD[currency.code] ?? 1
+
+  return dishes.map((dish) => {
+    const priceCad = toCad(dish.local_price, currency.code)
+    const includedInBaseline = dish.dish_category === 'basic' || dish.dish_category === 'vegetable'
+
+    return {
       city,
       country,
-      restaurant_name: guessRestaurantName(searchTitle, sourceUrl),
-      dish_name: dishName,
-      dish_category: classification.dish_category,
-      included_in_baseline: classification.included_in_baseline,
+      restaurant_name: restaurantName,
+      dish_name: dish.dish_name,
+      dish_category: dish.dish_category,
+      included_in_baseline: includedInBaseline,
       tier: guessTier(priceCad),
+      local_price: dish.local_price,
+      local_currency: currency.code,
+      exchange_rate_used: rate,
       price_cad: priceCad,
-      local_price: localPrice,
-      local_currency: localCurrency,
-      exchange_rate_used: exchangeRateUsed,
-      source: searchTitle ?? 'Scraped menu page',
+      source: sourceTitle || 'Scraped menu page',
       source_type: sourceTypeFromUrl(sourceUrl),
       source_url: sourceUrl,
-      confidence_score: confidenceFromUrl(sourceUrl, chunk),
-      notes: `Autonomous scraper candidate. Category: ${classification.dish_category}. Baseline included: ${classification.included_in_baseline ? 'yes' : 'no'}. Local price: ${localCurrency} ${localPrice.toFixed(
-        2
-      )}. CAD rate used: ${exchangeRateUsed}. Extracted text: "${chunk.slice(0, 220)}"`,
+      confidence_score: confidenceFromSource(sourceUrl),
+      notes: `Scraped via Claude parser. ${currency.code} ${dish.local_price} → CA$${priceCad}. Source: ${sourceUrl.slice(0, 120)}`,
     }
-
-    if (!isDuplicateCandidate(candidate, candidates)) candidates.push(candidate)
-  }
-
-  return candidates
+  })
 }
 
-async function createScraperRun(city: string) {
-  const { data, error } = await supabase
-    .from('scraper_runs')
-    .insert({
-      city,
-      run_type: 'city_auto_scrape',
-      status: 'running',
-    })
-    .select('id')
-    .single()
-
-  if (error) throw new Error(error.message)
-
-  return data.id as string
-}
-
-async function finishScraperRun(
-  runId: string,
-  status: 'completed' | 'failed',
-  resultsFound: number,
-  notes: string
-) {
-  await supabase
-    .from('scraper_runs')
-    .update({
-      status,
-      finished_at: new Date().toISOString(),
-      results_found: resultsFound,
-      notes,
-    })
-    .eq('id', runId)
-}
-
-function normalizeForDuplicateCheck(value: string | null | undefined) {
-  return String(value ?? '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-    .trim()
-}
-
-function sameScraperEntry(
-  a: {
-    city?: string | null
-    restaurant_name?: string | null
-    dish_name?: string | null
-    source_url?: string | null
-  },
-  b: {
-    city?: string | null
-    restaurant_name?: string | null
-    dish_name?: string | null
-    source_url?: string | null
-  }
-) {
-  const sameCity =
-    normalizeForDuplicateCheck(a.city) === normalizeForDuplicateCheck(b.city)
-
-  const sameRestaurant =
-    normalizeForDuplicateCheck(a.restaurant_name) ===
-    normalizeForDuplicateCheck(b.restaurant_name)
-
-  const sameDish =
-    normalizeForDuplicateCheck(a.dish_name) === normalizeForDuplicateCheck(b.dish_name)
-
-  const sameSourceUrl =
-    normalizeForDuplicateCheck(a.source_url) !== '' &&
-    normalizeForDuplicateCheck(a.source_url) === normalizeForDuplicateCheck(b.source_url)
-
-  return sameCity && ((sameRestaurant && sameDish) || sameSourceUrl)
-}
-
-async function insertRestaurantProposals(candidates: RestaurantCandidate[]) {
+async function deduplicateAndInsert(candidates: Candidate[], city: string): Promise<number> {
   if (candidates.length === 0) return 0
 
-  const city = candidates[0].city
-
-  const { data: existingPending, error: pendingError } = await supabase
-    .from('pending_requests')
-    .select('city, restaurant_name, dish_name, source_url, status')
-    .eq('city', city)
-    .eq('request_type', 'restaurant')
-    .in('status', ['pending', 'approved'])
-
-  if (pendingError) throw new Error(pendingError.message)
-
-  const { data: existingRestaurants, error: restaurantError } = await supabase
-    .from('restaurants')
-    .select('city, restaurant_name, dish_name, source_url')
-    .eq('city', city)
-
-  if (restaurantError) throw new Error(restaurantError.message)
+  const [{ data: existingPending }, { data: existingRestaurants }] = await Promise.all([
+    supabase
+      .from('pending_requests')
+      .select('city, restaurant_name, dish_name, source_url')
+      .eq('city', city)
+      .eq('request_type', 'restaurant')
+      .in('status', ['pending', 'approved']),
+    supabase
+      .from('restaurants')
+      .select('city, restaurant_name, dish_name, source_url')
+      .eq('city', city),
+  ])
 
   const existingRows = [...(existingPending ?? []), ...(existingRestaurants ?? [])]
 
-  const newCandidates = candidates.filter((candidate) => {
-    return !existingRows.some((existing) => sameScraperEntry(candidate, existing))
-  })
-
+  const newCandidates = candidates.filter((c) => !isDuplicate(c, existingRows))
   if (newCandidates.length === 0) return 0
 
-  const rows = newCandidates.map((candidate) => ({
+  const rows = newCandidates.map((c) => ({
     request_type: 'restaurant',
-    city: candidate.city,
-    country: candidate.country,
-    restaurant_name: candidate.restaurant_name,
-    dish_name: candidate.dish_name,
-    dish_category: candidate.dish_category,
-    included_in_baseline: candidate.included_in_baseline,
-    tier: candidate.tier,
-    local_price: candidate.local_price,
-    local_currency: candidate.local_currency,
-    exchange_rate_used: candidate.exchange_rate_used,
-    price_cad: candidate.price_cad,
-    source: candidate.source,
-    source_type: candidate.source_type,
-    source_url: candidate.source_url,
-    confidence_score: candidate.confidence_score,
+    city: c.city,
+    country: c.country,
+    restaurant_name: c.restaurant_name,
+    dish_name: c.dish_name,
+    dish_category: c.dish_category,
+    included_in_baseline: c.included_in_baseline,
+    tier: c.tier,
+    local_price: c.local_price,
+    local_currency: c.local_currency,
+    exchange_rate_used: c.exchange_rate_used,
+    price_cad: c.price_cad,
+    source: c.source,
+    source_type: c.source_type,
+    source_url: c.source_url,
+    confidence_score: c.confidence_score,
     date_accessed: new Date().toISOString(),
-    notes: candidate.notes,
+    notes: c.notes,
     status: 'pending',
   }))
 
@@ -519,79 +505,132 @@ async function insertRestaurantProposals(candidates: RestaurantCandidate[]) {
   return rows.length
 }
 
-function extractPopulationFromSnippet(text: string) {
-  const normalized = normalizeText(text)
+// ---------------------------------------------------------------------------
+// Scraper run logging
+// ---------------------------------------------------------------------------
 
-  const populationMatch =
-    normalized.match(/population[^0-9]{0,40}([0-9][0-9,]{4,})/i) ??
-    normalized.match(/([0-9][0-9,]{4,})\s+(?:people|residents)/i)
+async function logRunStart(city: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from('scraper_runs')
+    .insert({ city, run_type: 'city_auto_scrape', status: 'running' })
+    .select('id')
+    .single()
 
-  return populationMatch?.[1] ?? null
+  if (error) return null
+  return data?.id ?? null
 }
 
-async function insertPopulationProposal(city: string, country?: string) {
-  const queryCity = country ? `${city} ${country}` : city
+async function logRunFinish(
+  runId: string,
+  status: 'completed' | 'failed',
+  resultsFound: number,
+  notes: string
+) {
+  await supabase
+    .from('scraper_runs')
+    .update({ status, finished_at: new Date().toISOString(), results_found: resultsFound, notes })
+    .eq('id', runId)
+}
 
-  const queries = [
-    `${queryCity} population official`,
-    `${queryCity} population census`,
-    `${queryCity} population Statistics Canada`,
-    `${queryCity} metro population`,
-  ]
+// ---------------------------------------------------------------------------
+// Core scrape logic (exported for cron use)
+// ---------------------------------------------------------------------------
 
-  for (const query of queries) {
-    const results = await serpSearch(query, queryCity)
+export type ScrapeResult = {
+  city: string
+  country: string
+  urls_checked: number
+  pages_scraped: number
+  dishes_found: number
+  proposals_inserted: number
+  errors: string[]
+}
 
-    const usefulResult = results.find((result) => {
-      const text = `${result.title ?? ''} ${result.snippet ?? ''} ${result.link ?? ''}`
-      return /population|census|statistics|official|city/i.test(text)
-    })
+export async function scrapeCity(city: string, country: string): Promise<ScrapeResult> {
+  const currency = currencyForCountry(country)
+  const errors: string[] = []
+  let pagesScraped = 0
+  let dishesFound = 0
 
-    if (!usefulResult) continue
+  const runId = await logRunStart(city)
+  const allCandidates: Candidate[] = []
 
-    const population = extractPopulationFromSnippet(
-      `${usefulResult.title ?? ''} ${usefulResult.snippet ?? ''}`
-    )
+  const searchResults = await searchMenuUrls(city, country)
 
-    if (!population) continue
+  for (const result of searchResults.slice(0, 15)) {
+    try {
+      const page = await fetchCleanText(result.url)
+      if (!page) continue
 
-    const { data: existingPopulationRequests, error: existingPopulationError } =
-      await supabase
-        .from('pending_requests')
-        .select('id')
-        .eq('city', city)
-        .eq('request_type', 'population')
-        .in('status', ['pending', 'approved'])
+      pagesScraped++
+      const restaurantName = restaurantNameFromTitle(page.title || result.title, result.url)
 
-    if (existingPopulationError) throw new Error(existingPopulationError.message)
-    if (existingPopulationRequests && existingPopulationRequests.length > 0) return 0
+      const dishes = await extractWithClaude({
+        text: page.text,
+        restaurantName,
+        city,
+        country,
+        currency,
+      })
 
-    const { error } = await supabase.from('pending_requests').insert({
-      request_type: 'population',
-      city,
-      population,
-      population_source: usefulResult.title ?? 'Population search result',
-      source_url: usefulResult.link,
-      confidence_score: /statistics|census|official|statcan/i.test(
-        `${usefulResult.title ?? ''} ${usefulResult.link ?? ''}`
-      )
-        ? 0.85
-        : 0.65,
-      notes: 'Autonomous scraper population proposal. Verify source before approval.',
-      status: 'pending',
-    })
+      if (dishes.length === 0) continue
 
-    if (error) throw new Error(error.message)
+      dishesFound += dishes.length
 
-    return 1
+      const candidates = buildCandidates(dishes, {
+        city,
+        country,
+        restaurantName,
+        currency,
+        sourceUrl: result.url,
+        sourceTitle: page.title || result.title,
+      })
+
+      allCandidates.push(...candidates)
+    } catch (err) {
+      errors.push(`${result.url}: ${err instanceof Error ? err.message : String(err)}`)
+    }
+
+    // Avoid hammering Claude / external pages
+    await new Promise((r) => setTimeout(r, 300))
   }
 
-  return 0
+  // Deduplicate across candidates from different pages
+  const seenKey = new Set<string>()
+  const uniqueCandidates = allCandidates.filter((c) => {
+    const key = `${normalizeForDupe(c.restaurant_name)}:${normalizeForDupe(c.dish_name)}`
+    if (seenKey.has(key)) return false
+    seenKey.add(key)
+    return true
+  })
+
+  const proposalsInserted = await deduplicateAndInsert(uniqueCandidates, city)
+
+  if (runId) {
+    await logRunFinish(
+      runId,
+      'completed',
+      proposalsInserted,
+      `${pagesScraped} pages scraped, ${dishesFound} dishes found, ${proposalsInserted} new proposals inserted. Errors: ${errors.length}.`
+    )
+  }
+
+  return {
+    city,
+    country,
+    urls_checked: searchResults.length,
+    pages_scraped: pagesScraped,
+    dishes_found: dishesFound,
+    proposals_inserted: proposalsInserted,
+    errors,
+  }
 }
 
-export async function POST(request: Request) {
-  let runId: string | null = null
+// ---------------------------------------------------------------------------
+// Route handler
+// ---------------------------------------------------------------------------
 
+export async function POST(request: Request) {
   try {
     const body = await request.json()
 
@@ -600,113 +639,22 @@ export async function POST(request: Request) {
     const city = String(body.city ?? '').trim()
     const country = String(body.country ?? '').trim()
 
-    if (!authorized(username, password)) {
+    if (username !== process.env.ADMIN_USERNAME || password !== process.env.ADMIN_PASSWORD) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    if (!city) {
-      return NextResponse.json({ error: 'City is required' }, { status: 400 })
+    if (!city || !country) {
+      return NextResponse.json({ error: 'city and country are required' }, { status: 400 })
     }
 
-    if (!country) {
-      return NextResponse.json({ error: 'Country is required' }, { status: 400 })
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json({ error: 'ANTHROPIC_API_KEY is not configured' }, { status: 500 })
     }
 
-    runId = await createScraperRun(city)
+    const result = await scrapeCity(city, country)
 
-    const queryCity = `${city}, ${country}`
-
-    const queries = [
-      `"fried rice" "${queryCity}" menu price`,
-      `"egg fried rice" "${queryCity}" menu price`,
-      `"vegetable fried rice" "${queryCity}" menu`,
-      `"chicken fried rice" "${queryCity}" menu`,
-      `"shrimp fried rice" "${queryCity}" menu`,
-      `site:menupix.com "fried rice" "${city}"`,
-      `site:skipthedishes.com "fried rice" "${city}"`,
-      `site:ubereats.com "fried rice" "${city}"`,
-    ]
-
-    const searchResults: SearchResult[] = []
-
-    for (const query of queries) {
-      const results = await serpSearch(query, queryCity)
-      searchResults.push(...results)
-    }
-
-    const uniqueResults = Array.from(
-      new Map(
-        searchResults
-          .filter((result) => result.link)
-          .filter((result) => !isBadUrl(result.link as string))
-          .map((result) => [result.link as string, result])
-      ).values()
-    ).slice(0, 18)
-
-    const candidates: RestaurantCandidate[] = []
-
-    for (const result of uniqueResults) {
-      if (!result.link) continue
-
-      const domainHint = MENU_HINT_DOMAINS.some((hint) =>
-        result.link!.toLowerCase().includes(hint)
-      )
-
-      const resultText = `${result.title ?? ''} ${result.snippet ?? ''}`
-
-      if (!domainHint && !/fried rice|menu|price/i.test(resultText)) continue
-
-      const pageText = await fetchPageText(result.link)
-      if (!pageText) continue
-
-      const extracted = extractCandidatesFromText({
-        city,
-        country,
-        pageText,
-        sourceUrl: result.link,
-        searchTitle: result.title,
-      })
-
-      for (const candidate of extracted) {
-        if (!isDuplicateCandidate(candidate, candidates)) candidates.push(candidate)
-      }
-
-      if (candidates.length >= 10) break
-    }
-
-    const finalCandidates = candidates
-      .sort((a, b) => b.confidence_score - a.confidence_score)
-      .slice(0, 10)
-
-    const restaurantCount = await insertRestaurantProposals(finalCandidates)
-    const populationCount = await insertPopulationProposal(city, country)
-
-    await finishScraperRun(
-      runId,
-      'completed',
-      restaurantCount + populationCount,
-      `Found ${restaurantCount} restaurant proposals and ${populationCount} population proposals.`
-    )
-
-    return NextResponse.json({
-      success: true,
-      city,
-      country,
-      local_currency: currencyForCountry(country),
-      restaurant_proposals: restaurantCount,
-      population_proposals: populationCount,
-      candidates: finalCandidates,
-    })
+    return NextResponse.json({ success: true, ...result })
   } catch (error) {
-    if (runId) {
-      await finishScraperRun(
-        runId,
-        'failed',
-        0,
-        error instanceof Error ? error.message : 'Unknown error'
-      )
-    }
-
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Scrape failed' },
       { status: 500 }
