@@ -416,30 +416,39 @@ Only include dishes that contain "fried rice" or are unmistakably a fried rice d
 Only include prices between ${floor} and ${ceil} ${currency.code}.
 If no fried rice dishes found, return [].`
 
-  try {
-    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
+  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
-    const result = await model.generateContent(prompt)
-    const raw = result.response.text()
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const result = await model.generateContent(prompt)
+      const raw = result.response.text()
 
-    const jsonMatch = raw.match(/\[[\s\S]*\]/)
-    if (!jsonMatch) return []
+      const jsonMatch = raw.match(/\[[\s\S]*\]/)
+      if (!jsonMatch) return []
 
-    const parsed = JSON.parse(jsonMatch[0])
-    if (!Array.isArray(parsed)) return []
+      const parsed = JSON.parse(jsonMatch[0])
+      if (!Array.isArray(parsed)) return []
 
-    return parsed.filter(
-      (item): item is ExtractedDish =>
-        typeof item.dish_name === 'string' &&
-        typeof item.local_price === 'number' &&
-        item.local_price >= floor &&
-        item.local_price <= ceil &&
-        typeof item.dish_category === 'string'
-    )
-  } catch {
-    return []
+      return parsed.filter(
+        (item): item is ExtractedDish =>
+          typeof item.dish_name === 'string' &&
+          typeof item.local_price === 'number' &&
+          item.local_price >= floor &&
+          item.local_price <= ceil &&
+          typeof item.dish_category === 'string'
+      )
+    } catch (err) {
+      const msg = String(err)
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('rate')) {
+        // Back off and retry: 15s, then 30s
+        await new Promise((r) => setTimeout(r, (attempt + 1) * 15000))
+        continue
+      }
+      return []
+    }
   }
+  return []
 }
 
 // ---------------------------------------------------------------------------
@@ -632,7 +641,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
   }
 
   // --- Pass 2: fetch static-friendly pages ---
-  for (const result of searchResults.filter((r) => !isSpaDomain(r.url)).slice(0, 10)) {
+  for (const result of searchResults.filter((r) => !isSpaDomain(r.url)).slice(0, 5)) {
     try {
       const page = await fetchCleanText(result.url)
       if (!page) continue
@@ -667,7 +676,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
       errors.push(`${result.url}: ${err instanceof Error ? err.message : String(err)}`)
     }
 
-    await new Promise((r) => setTimeout(r, 300))
+    await new Promise((r) => setTimeout(r, 5000))
   }
 
   // Deduplicate across candidates from different pages
