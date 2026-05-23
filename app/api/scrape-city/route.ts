@@ -154,8 +154,24 @@ function currencyForCountry(country: string): Currency {
   return { code: 'USD', symbol: '$' }
 }
 
-function toCad(localPrice: number, currencyCode: string): number {
-  const rate = TO_CAD[currencyCode] ?? 1
+async function fetchLiveRates(): Promise<Record<string, number>> {
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/CAD', { cache: 'no-store' })
+    if (!res.ok) return TO_CAD
+    const json = await res.json()
+    if (json.result !== 'success' || !json.rates) return TO_CAD
+    const live: Record<string, number> = { CAD: 1 }
+    for (const [code, rate] of Object.entries(json.rates as Record<string, number>)) {
+      if (rate > 0) live[code] = Number((1 / rate).toFixed(8))
+    }
+    return live
+  } catch {
+    return TO_CAD
+  }
+}
+
+function toCad(localPrice: number, currencyCode: string, rates: Record<string, number> = TO_CAD): number {
+  const rate = rates[currencyCode] ?? TO_CAD[currencyCode] ?? 1
   return Number((localPrice * rate).toFixed(2))
 }
 
@@ -431,13 +447,14 @@ function buildCandidates(
     currency: Currency
     sourceUrl: string
     sourceTitle: string
+    rates: Record<string, number>
   }
 ): Candidate[] {
-  const { city, country, restaurantName, currency, sourceUrl, sourceTitle } = meta
-  const rate = TO_CAD[currency.code] ?? 1
+  const { city, country, restaurantName, currency, sourceUrl, sourceTitle, rates } = meta
+  const rate = rates[currency.code] ?? TO_CAD[currency.code] ?? 1
 
   return dishes.map((dish) => {
-    const priceCad = toCad(dish.local_price, currency.code)
+    const priceCad = toCad(dish.local_price, currency.code, rates)
     const includedInBaseline = dish.dish_category === 'basic' || dish.dish_category === 'vegetable'
 
     return {
@@ -559,6 +576,7 @@ export type ScrapeResult = {
 
 export async function scrapeCity(city: string, country: string): Promise<ScrapeResult> {
   const currency = currencyForCountry(country)
+  const rates = await fetchLiveRates()
   const errors: string[] = []
   let pagesScraped = 0
   let dishesFound = 0
@@ -595,6 +613,7 @@ export async function scrapeCity(city: string, country: string): Promise<ScrapeR
         currency,
         sourceUrl: result.url,
         sourceTitle: page.title || result.title,
+        rates,
       })
 
       allCandidates.push(...candidates)
