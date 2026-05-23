@@ -62,6 +62,13 @@ type CityRow = {
   confidence_score: number | null
 }
 
+function slugifyCity(city: string) {
+  return city
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
+
 export default function CitiesPage() {
   const [cities, setCities] = useState<CityRow[]>([])
   const [loading, setLoading] = useState(true)
@@ -356,16 +363,22 @@ export default function CitiesPage() {
                 </div>
               )}
 
-              {cleanCities.map((city, index) =>
-                isMobile ? (
-                  <div
+              {cleanCities.map((city, index) => {
+                const cityHref = `/cities/${slugifyCity(city.city)}`
+
+                return isMobile ? (
+                  <a
                     key={city.city}
+                    href={cityHref}
                     style={{
+                      display: 'block',
                       padding: '1rem',
                       borderBottom:
                         index === cleanCities.length - 1
                           ? 'none'
                           : '0.5px solid #f0ede6',
+                      textDecoration: 'none',
+                      color: 'inherit',
                     }}
                   >
                     <div
@@ -419,6 +432,16 @@ export default function CitiesPage() {
                             ? `Population ${city.population}`
                             : 'Population not available'}
                         </p>
+
+                        <p
+                          style={{
+                            fontSize: 12,
+                            color: '#C25E1E',
+                            margin: '0.45rem 0 0',
+                          }}
+                        >
+                          View city profile →
+                        </p>
                       </div>
 
                       <div
@@ -446,10 +469,11 @@ export default function CitiesPage() {
                       <span>Confidence: {formatConfidence(city.confidence_score)}</span>
                       <span>Updated: {formatDate(city.price_updated_at)}</span>
                     </div>
-                  </div>
+                  </a>
                 ) : (
-                  <div
+                  <a
                     key={city.city}
+                    href={cityHref}
                     style={{
                       display: 'grid',
                       gridTemplateColumns: '70px 1.4fr 1fr 1fr 1fr',
@@ -460,6 +484,8 @@ export default function CitiesPage() {
                           ? 'none'
                           : '0.5px solid #f0ede6',
                       alignItems: 'center',
+                      textDecoration: 'none',
+                      color: 'inherit',
                     }}
                   >
                     <div style={{ fontSize: 13, color: '#9b9b90' }}>#{index + 1}</div>
@@ -497,6 +523,16 @@ export default function CitiesPage() {
                           ? `Population ${city.population}`
                           : 'Population not available'}
                       </p>
+
+                      <p
+                        style={{
+                          fontSize: 12,
+                          color: '#C25E1E',
+                          margin: '0.45rem 0 0',
+                        }}
+                      >
+                        View city profile →
+                      </p>
                     </div>
 
                     <div
@@ -516,9 +552,9 @@ export default function CitiesPage() {
                     <div style={{ fontSize: 13, color: '#6b6b64' }}>
                       {formatDate(city.price_updated_at)}
                     </div>
-                  </div>
+                  </a>
                 )
-              )}
+              })}
 
               {cleanCities.length === 0 && (
                 <div style={{ padding: '1.25rem', color: '#6b6b64', fontSize: 14 }}>
@@ -562,8 +598,9 @@ export default function CitiesPage() {
                   }}
                 >
                   {pendingCities.map((city) => (
-                    <span
+                    <a
                       key={city.city}
+                      href={`/cities/${slugifyCity(city.city)}`}
                       style={{
                         background: '#FAFAF8',
                         border: '0.5px solid #e5e3da',
@@ -571,10 +608,11 @@ export default function CitiesPage() {
                         padding: '0.45rem 0.7rem',
                         fontSize: 13,
                         color: '#6b6b64',
+                        textDecoration: 'none',
                       }}
                     >
                       {city.city}
-                    </span>
+                    </a>
                   ))}
                 </div>
               </div>
