@@ -2,6 +2,8 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 type PageProps = {
   params: Promise<{
     city: string
@@ -20,6 +22,14 @@ type CityRow = {
   price_source: string | null
   price_updated_at: string | null
   confidence_score: number | null
+  baseline_median_cad: number | null
+  market_average_cad: number | null
+  market_min_cad: number | null
+  market_max_cad: number | null
+  market_entry_count: number | null
+  baseline_entry_count: number | null
+  premium_entry_count: number | null
+  data_quality_label: string | null
 }
 
 type RestaurantRow = {
@@ -82,6 +92,11 @@ function formatConfidence(value: number | null | undefined) {
   if (value === null || value === undefined) return 'Not available'
   if (value <= 1) return `${Math.round(value * 100)}%`
   return `${Math.round(value)}%`
+}
+
+function formatCount(value: number | null | undefined) {
+  if (value === null || value === undefined) return '0'
+  return String(value)
 }
 
 function formatCategory(value: string | null | undefined) {
@@ -150,7 +165,15 @@ export default async function CityDetailPage({ params }: PageProps) {
       price_cad,
       price_source,
       price_updated_at,
-      confidence_score
+      confidence_score,
+      baseline_median_cad,
+      market_average_cad,
+      market_min_cad,
+      market_max_cad,
+      market_entry_count,
+      baseline_entry_count,
+      premium_entry_count,
+      data_quality_label
     `
     )
 
@@ -220,10 +243,21 @@ export default async function CityDetailPage({ params }: PageProps) {
     .map((entry) => entry.price_cad)
     .filter((price): price is number => typeof price === 'number')
 
-  const baselineMedian = median(baselinePrices)
-  const marketAverage = average(allPrices)
-  const minPrice = allPrices.length > 0 ? Math.min(...allPrices) : null
-  const maxPrice = allPrices.length > 0 ? Math.max(...allPrices) : null
+  const fallbackBaselineMedian = median(baselinePrices)
+  const fallbackMarketAverage = average(allPrices)
+  const fallbackMinPrice = allPrices.length > 0 ? Math.min(...allPrices) : null
+  const fallbackMaxPrice = allPrices.length > 0 ? Math.max(...allPrices) : null
+
+  const baselineMedian =
+    city.baseline_median_cad ?? city.price_cad ?? fallbackBaselineMedian
+
+  const marketAverage = city.market_average_cad ?? fallbackMarketAverage
+  const marketMin = city.market_min_cad ?? fallbackMinPrice
+  const marketMax = city.market_max_cad ?? fallbackMaxPrice
+
+  const baselineEntryCount = city.baseline_entry_count ?? baselineEntries.length
+  const marketEntryCount = city.market_entry_count ?? restaurants.length
+  const premiumEntryCount = city.premium_entry_count ?? premiumEntries.length
 
   return (
     <main style={pageStyle}>
@@ -276,34 +310,46 @@ export default async function CityDetailPage({ params }: PageProps) {
         <div style={statGridStyle}>
           <StatCard
             label="Baseline median"
-            value={formatPrice(baselineMedian ?? city.price_cad)}
-            note={`${baselineEntries.length} baseline entr${
-              baselineEntries.length === 1 ? 'y' : 'ies'
+            value={formatPrice(baselineMedian)}
+            note={`${baselineEntryCount} baseline entr${
+              baselineEntryCount === 1 ? 'y' : 'ies'
             }`}
           />
 
           <StatCard
             label="Market average"
             value={formatPrice(marketAverage)}
-            note={`${restaurants.length} total approved entr${
-              restaurants.length === 1 ? 'y' : 'ies'
+            note={`${marketEntryCount} total approved entr${
+              marketEntryCount === 1 ? 'y' : 'ies'
             }`}
           />
 
           <StatCard
-            label="Price range"
+            label="Market range"
             value={
-              minPrice !== null && maxPrice !== null
-                ? `${formatPrice(minPrice)}–${formatPrice(maxPrice)}`
+              marketMin !== null && marketMax !== null
+                ? `${formatPrice(marketMin)}–${formatPrice(marketMax)}`
                 : 'Pending'
             }
             note="Approved fried rice entries"
           />
 
           <StatCard
+            label="Premium entries"
+            value={formatCount(premiumEntryCount)}
+            note="Tracked as market-profile signals"
+          />
+
+          <StatCard
+            label="Data quality"
+            value={city.data_quality_label ?? 'Not available'}
+            note={`Updated ${formatDate(city.price_updated_at)}`}
+          />
+
+          <StatCard
             label="Confidence"
             value={formatConfidence(city.confidence_score)}
-            note={`Updated ${formatDate(city.price_updated_at)}`}
+            note="Baseline-price confidence"
           />
         </div>
       </section>
@@ -332,7 +378,10 @@ export default async function CityDetailPage({ params }: PageProps) {
           description="Higher-end entries are tracked as market signals but are not treated as baseline affordability data."
         />
 
-        <RestaurantTable rows={premiumEntries.length > 0 ? premiumEntries : marketEntries} emptyText="No premium or non-baseline entries yet." />
+        <RestaurantTable
+          rows={premiumEntries.length > 0 ? premiumEntries : marketEntries}
+          emptyText="No premium or non-baseline entries yet."
+        />
       </section>
 
       <section style={sectionStyle}>
@@ -352,6 +401,13 @@ export default async function CityDetailPage({ params }: PageProps) {
 
           <p style={noteTextStyle}>
             <strong>Climate:</strong> {city.climate ?? 'Not available'}
+          </p>
+
+          <p style={noteTextStyle}>
+            <strong>Stored market summary:</strong>{' '}
+            {city.market_entry_count !== null && city.market_entry_count !== undefined
+              ? `${city.market_entry_count} approved market entries, ${city.baseline_entry_count ?? 0} baseline entries, and ${city.premium_entry_count ?? 0} premium entries.`
+              : 'Not available yet. Recalculate this city to generate stored market statistics.'}
           </p>
 
           <p style={noteTextStyle}>
@@ -443,7 +499,12 @@ function RestaurantTable({
               <td style={tdStyle}>{formatConfidence(row.confidence_score)}</td>
               <td style={tdStyle}>
                 {row.source_url ? (
-                  <a href={row.source_url} target="_blank" rel="noreferrer" style={sourceLinkStyle}>
+                  <a
+                    href={row.source_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={sourceLinkStyle}
+                  >
                     Open source
                   </a>
                 ) : (
