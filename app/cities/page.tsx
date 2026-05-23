@@ -45,29 +45,15 @@ const symbols: Record<string, string> = {
   AED: 'د.إ',
 }
 
-const currencyOptions = [
-  ['CAD', 'Canadian Dollar (CA$)'],
-  ['USD', 'US Dollar (US$)'],
-  ['EUR', 'Euro (€)'],
-  ['CHF', 'Swiss Franc (Fr)'],
-  ['GBP', 'British Pound (£)'],
-  ['JPY', 'Japanese Yen (¥)'],
-  ['CNY', 'Chinese Yuan (¥)'],
-  ['AUD', 'Australian Dollar (AU$)'],
-  ['HKD', 'Hong Kong Dollar (HK$)'],
-  ['SGD', 'Singapore Dollar (S$)'],
-  ['SAR', 'Saudi Riyal (﷼)'],
-  ['PHP', 'Philippine Peso (₱)'],
-  ['MYR', 'Malaysian Ringgit (RM)'],
-  ['MXN', 'Mexican Peso (MX$)'],
-  ['ARS', 'Argentine Peso (AR$)'],
-  ['KRW', 'Korean Won (₩)'],
-  ['INR', 'Indian Rupee (₹)'],
-  ['AED', 'UAE Dirham (د.إ)'],
-]
+const currencyOptions = Object.keys(rates).map((code) => [
+  code,
+  `${symbols[code]} ${code}`,
+])
 
 type CityRow = {
   city: string
+  country: string | null
+  region: string | null
   population: string | null
   price_cad: number | null
   blurb: string | null
@@ -93,12 +79,24 @@ export default function CitiesPage() {
 
   useEffect(() => {
     async function fetchCities() {
+      setLoading(true)
+
       const { data, error } = await supabase
         .from('cities')
         .select(
-          'city, population, price_cad, blurb, price_source, price_updated_at, confidence_score'
+          `
+          city,
+          country,
+          region,
+          population,
+          price_cad,
+          blurb,
+          price_source,
+          price_updated_at,
+          confidence_score
+        `
         )
-        .order('price_cad', { ascending: true })
+        .order('price_cad', { ascending: true, nullsFirst: false })
 
       if (error) {
         console.error('Error loading cities:', error)
@@ -106,7 +104,7 @@ export default function CitiesPage() {
         return
       }
 
-      setCities(data ?? [])
+      setCities((data ?? []) as CityRow[])
       setLoading(false)
     }
 
@@ -124,7 +122,9 @@ export default function CitiesPage() {
   }
 
   const formatPrice = (priceCAD: number | null) => {
-    if (priceCAD === null || priceCAD === undefined) return 'Not available'
+    if (priceCAD === null || priceCAD === undefined || Number(priceCAD) <= 0) {
+      return 'Pending'
+    }
 
     const rate = rates[currency] ?? 1
     const symbol = symbols[currency] ?? 'CA$'
@@ -136,13 +136,33 @@ export default function CitiesPage() {
     })}`
   }
 
+  const formatConfidence = (value: number | null) => {
+    if (value === null || value === undefined) return 'Not available'
+
+    const number = Number(value)
+
+    if (!Number.isFinite(number)) return 'Not available'
+    if (number <= 1) return `${Math.round(number * 100)}%`
+
+    return `${Math.round(number)}%`
+  }
+
   const cleanCities = cities.filter(
-    (city) => city.price_cad !== null && city.price_cad !== undefined
+    (city) =>
+      city.price_cad !== null &&
+      city.price_cad !== undefined &&
+      Number(city.price_cad) > 0
   )
 
   const pendingCities = cities.filter(
-    (city) => city.price_cad === null || city.price_cad === undefined
+    (city) =>
+      city.price_cad === null ||
+      city.price_cad === undefined ||
+      Number(city.price_cad) <= 0
   )
+
+  const cheapestCity = cleanCities[0]
+  const mostExpensiveCity = cleanCities[cleanCities.length - 1]
 
   return (
     <main
@@ -179,7 +199,7 @@ export default function CitiesPage() {
             textDecoration: 'none',
           }}
         >
-          egg fried rice <span style={{ color: '#C25E1E' }}>index</span>
+          fried rice <span style={{ color: '#C25E1E' }}>index</span>
         </a>
 
         <div style={{ display: 'flex', gap: isMobile ? '1rem' : '2rem', flexWrap: 'wrap' }}>
@@ -213,7 +233,7 @@ export default function CitiesPage() {
             margin: '0 0 1.25rem',
           }}
         >
-          Ranked egg fried rice prices.
+          Fried rice prices by city.
         </h1>
 
         <p
@@ -221,13 +241,14 @@ export default function CitiesPage() {
             fontSize: isMobile ? 14 : 16,
             color: '#6b6b64',
             lineHeight: 1.7,
-            maxWidth: 720,
+            maxWidth: 760,
             marginBottom: '1.5rem',
           }}
         >
-          Cities are ranked by the average price of qualifying egg fried rice entries.
-          Prices are based on approved restaurant sources and should be treated as
-          restaurant-price signals, not full cost-of-living estimates.
+          Cities are ranked by their current baseline fried rice price. The broader
+          dataset tracks multiple fried rice categories so future analysis can compare
+          affordability, price spread, variety, and premiumization across urban
+          restaurant markets.
         </p>
 
         <div
@@ -286,16 +307,14 @@ export default function CitiesPage() {
           </div>
 
           <div style={statCardStyle}>
-            <p style={statLabelStyle}>Cheapest city</p>
-            <p style={statValueStyle}>
-              {cleanCities.length > 0 ? cleanCities[0].city : '—'}
-            </p>
+            <p style={statLabelStyle}>Lowest current baseline</p>
+            <p style={statValueStyle}>{cheapestCity ? cheapestCity.city : '—'}</p>
           </div>
 
           <div style={statCardStyle}>
-            <p style={statLabelStyle}>Most expensive city</p>
+            <p style={statLabelStyle}>Highest current baseline</p>
             <p style={statValueStyle}>
-              {cleanCities.length > 0 ? cleanCities[cleanCities.length - 1].city : '—'}
+              {mostExpensiveCity ? mostExpensiveCity.city : '—'}
             </p>
           </div>
         </div>
@@ -328,7 +347,7 @@ export default function CitiesPage() {
                 >
                   <div>Rank</div>
                   <div>City</div>
-                  <div>Price</div>
+                  <div>Baseline price</div>
                   <div>Confidence</div>
                   <div>Updated</div>
                 </div>
@@ -382,6 +401,17 @@ export default function CitiesPage() {
                             margin: '0.2rem 0 0',
                           }}
                         >
+                          {[city.region, city.country].filter(Boolean).join(', ') ||
+                            'Location not available'}
+                        </p>
+
+                        <p
+                          style={{
+                            fontSize: 12,
+                            color: '#9b9b90',
+                            margin: '0.2rem 0 0',
+                          }}
+                        >
                           {city.population
                             ? `Population ${city.population}`
                             : 'Population not available'}
@@ -410,14 +440,7 @@ export default function CitiesPage() {
                         color: '#6b6b64',
                       }}
                     >
-                      <span>
-                        Confidence:{' '}
-                        {city.confidence_score !== null &&
-                        city.confidence_score !== undefined
-                          ? `${Math.round(Number(city.confidence_score) * 100)}%`
-                          : 'Not available'}
-                      </span>
-
+                      <span>Confidence: {formatConfidence(city.confidence_score)}</span>
                       <span>Updated: {formatDate(city.price_updated_at)}</span>
                     </div>
                   </div>
@@ -456,6 +479,17 @@ export default function CitiesPage() {
                           margin: '0.2rem 0 0',
                         }}
                       >
+                        {[city.region, city.country].filter(Boolean).join(', ') ||
+                          'Location not available'}
+                      </p>
+
+                      <p
+                        style={{
+                          fontSize: 12,
+                          color: '#9b9b90',
+                          margin: '0.2rem 0 0',
+                        }}
+                      >
                         {city.population
                           ? `Population ${city.population}`
                           : 'Population not available'}
@@ -473,10 +507,7 @@ export default function CitiesPage() {
                     </div>
 
                     <div style={{ fontSize: 14, color: '#3a3a34' }}>
-                      {city.confidence_score !== null &&
-                      city.confidence_score !== undefined
-                        ? `${Math.round(Number(city.confidence_score) * 100)}%`
-                        : 'Not available'}
+                      {formatConfidence(city.confidence_score)}
                     </div>
 
                     <div style={{ fontSize: 13, color: '#6b6b64' }}>
@@ -484,6 +515,12 @@ export default function CitiesPage() {
                     </div>
                   </div>
                 )
+              )}
+
+              {cleanCities.length === 0 && (
+                <div style={{ padding: '1.25rem', color: '#6b6b64', fontSize: 14 }}>
+                  No indexed cities are available yet.
+                </div>
               )}
             </div>
 
@@ -508,7 +545,9 @@ export default function CitiesPage() {
                 </h2>
 
                 <p style={{ fontSize: 14, color: '#6b6b64', lineHeight: 1.6 }}>
-                  These cities are in the database but do not yet have a verified price.
+                  These cities are in the database but do not yet have a verified
+                  baseline price. They can still be used for future restaurant
+                  submissions and data collection.
                 </p>
 
                 <div
