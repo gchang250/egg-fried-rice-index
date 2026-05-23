@@ -1,19 +1,4 @@
 export default function AboutPage() {
-  const navStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1.25rem 2.5rem',
-    borderBottom: '0.5px solid #e5e3da',
-  }
-
-  const brandStyle = {
-    fontFamily: 'DM Serif Display, serif',
-    fontSize: 18,
-    color: '#1a1a18',
-    textDecoration: 'none',
-  }
-
   const navLinkStyle = {
     fontSize: 13,
     color: '#6b6b64',
@@ -26,6 +11,19 @@ export default function AboutPage() {
     borderRadius: 16,
     padding: '1.5rem',
     marginBottom: '1.25rem',
+  }
+
+  const paragraphStyle = {
+    fontSize: 15,
+    color: '#3a3a34',
+    lineHeight: 1.7,
+    margin: '0 0 0.85rem',
+  }
+
+  const h2Style = {
+    fontFamily: 'DM Serif Display, serif',
+    fontSize: 26,
+    margin: '0 0 0.75rem',
   }
 
   return (
@@ -42,9 +40,25 @@ export default function AboutPage() {
         rel="stylesheet"
       />
 
-      <nav style={navStyle}>
-        <a href="/" style={brandStyle}>
-          egg fried rice <span style={{ color: '#C25E1E' }}>index</span>
+      <nav
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '1.25rem 2.5rem',
+          borderBottom: '0.5px solid #e5e3da',
+        }}
+      >
+        <a
+          href="/"
+          style={{
+            fontFamily: 'DM Serif Display, serif',
+            fontSize: 18,
+            color: '#1a1a18',
+            textDecoration: 'none',
+          }}
+        >
+          fried rice <span style={{ color: '#C25E1E' }}>index</span>
         </a>
 
         <div style={{ display: 'flex', gap: '2rem' }}>
@@ -60,13 +74,7 @@ export default function AboutPage() {
         </div>
       </nav>
 
-      <section
-        style={{
-          maxWidth: 860,
-          margin: '0 auto',
-          padding: '4rem 1.5rem',
-        }}
-      >
+      <section style={{ maxWidth: 860, margin: '0 auto', padding: '4rem 1.5rem' }}>
         <p
           style={{
             fontSize: 11,
@@ -89,7 +97,7 @@ export default function AboutPage() {
             margin: '0 0 1.25rem',
           }}
         >
-          A simple food-based signal for comparing cities.
+          A simple dish, a sharper way to compare cities.
         </h1>
 
         <p
@@ -97,62 +105,69 @@ export default function AboutPage() {
             fontSize: 16,
             color: '#6b6b64',
             lineHeight: 1.7,
-            maxWidth: 680,
+            maxWidth: 700,
             marginBottom: '3rem',
           }}
         >
-          The Egg Fried Rice Index tracks the price of a large bowl of egg fried rice
-          across major cities and converts that price into the user’s selected currency.
+          The Fried Rice Index is a food-based affordability project that tracks
+          fried rice prices across cities. It uses restaurant menu data to study
+          baseline affordability, price variation, dish variety, and premiumization
+          in urban restaurant markets.
         </p>
 
         <div style={cardStyle}>
-          <h2
-            style={{
-              fontFamily: 'DM Serif Display, serif',
-              fontSize: 26,
-              margin: '0 0 0.75rem',
-            }}
-          >
-            Why egg fried rice?
-          </h2>
-          <p style={{ fontSize: 15, color: '#3a3a34', lineHeight: 1.7, margin: 0 }}>
-            Egg fried rice is familiar, widely available, relatively inexpensive, and built
-            from basic inputs: rice, egg, oil, heat, labour, rent, and local restaurant costs.
-            That makes it a useful everyday reference point for comparing cities.
+          <h2 style={h2Style}>Why this exists</h2>
+          <p style={paragraphStyle}>
+            Cost of living is usually described through broad statistics: CPI, rent,
+            wages, exchange rates, and purchasing power parity. Those measures matter,
+            but they can feel abstract.
+          </p>
+          <p style={paragraphStyle}>
+            The Fried Rice Index starts with something concrete: the price of a
+            familiar restaurant dish. By comparing fried rice prices across cities,
+            the project creates a simple way to see how everyday affordability changes
+            from place to place.
           </p>
         </div>
 
         <div style={cardStyle}>
-          <h2
-            style={{
-              fontFamily: 'DM Serif Display, serif',
-              fontSize: 26,
-              margin: '0 0 0.75rem',
-            }}
-          >
-            Who it is for
-          </h2>
-          <p style={{ fontSize: 15, color: '#3a3a34', lineHeight: 1.7, margin: 0 }}>
-            The index is designed for immigrants, students, workers, and families comparing
-            where to live. GDP per capita and formal purchasing-power measures can be hard
-            to interpret. A restaurant food price is easier to understand.
+          <h2 style={h2Style}>What the index does</h2>
+          <p style={paragraphStyle}>
+            The index collects restaurant-level fried rice prices, preserves the
+            original local price and currency, converts prices into Canadian dollars,
+            assigns source confidence scores, and summarizes city-level patterns.
+          </p>
+          <p style={paragraphStyle}>
+            It does not treat every fried rice dish as identical. Basic, vegetable,
+            meat-based, seafood, house special, and premium fried rice dishes are
+            categorized separately so the data can be analyzed more carefully.
           </p>
         </div>
 
         <div style={cardStyle}>
-          <h2
-            style={{
-              fontFamily: 'DM Serif Display, serif',
-              fontSize: 26,
-              margin: '0 0 0.75rem',
-            }}
-          >
-            What it is not
-          </h2>
-          <p style={{ fontSize: 15, color: '#3a3a34', lineHeight: 1.7, margin: 0 }}>
-            This is not a full cost-of-living calculator. It does not replace rent, wages,
-            taxes, healthcare, transport, or household budgets. It is a simple proxy: one
-            familiar dish, measured consistently across cities.
+          <h2 style={h2Style}>What the index is not</h2>
+          <p style={paragraphStyle}>
+            The Fried Rice Index is not a complete cost-of-living model. It does not
+            replace official inflation data, rent data, wage data, CPI, or PPP.
+          </p>
+          <p style={paragraphStyle}>
+            It is a transparent restaurant-price signal: narrow, imperfect, but
+            concrete. Its value comes from making affordability easier to see,
+            question, and compare.
+          </p>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={h2Style}>Where the project is going</h2>
+          <p style={paragraphStyle}>
+            The project is being expanded with a stronger methodology, public restaurant
+            submissions, downloadable datasets, twice-yearly insights, and weekly
+            writing on economic affairs.
+          </p>
+          <p style={paragraphStyle}>
+            The goal is to build a public dataset that can support real statistical
+            analysis while remaining readable to people who simply want to understand
+            how cities compare.
           </p>
         </div>
       </section>

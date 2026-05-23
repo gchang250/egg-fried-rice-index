@@ -4,32 +4,34 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Egg Fried Rice Index',
-    template: '%s | Egg Fried Rice Index',
+    default: 'The Fried Rice Index',
+    template: '%s | The Fried Rice Index',
   },
   description:
-    'A purchasing power comparison index using the price of egg fried rice across cities.',
+    'A food-based affordability index comparing fried rice prices, variety, and restaurant market patterns across cities.',
   keywords: [
-    'Egg Fried Rice Index',
-    'PPP rice index',
+    'Fried Rice Index',
     'food price index',
     'cost of living',
-    'purchasing power parity',
+    'urban affordability',
+    'purchasing power',
     'restaurant prices',
+    'macroeconomics',
+    'food economics',
   ],
   openGraph: {
-    title: 'Egg Fried Rice Index',
+    title: 'The Fried Rice Index',
     description:
-      'Compare the price of egg fried rice across cities as a simple purchasing power index.',
+      'Compare fried rice prices across cities and explore what restaurant pricing reveals about affordability, variety, and urban economies.',
     url: 'https://efr-index.vercel.app',
-    siteName: 'Egg Fried Rice Index',
+    siteName: 'The Fried Rice Index',
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'Egg Fried Rice Index',
+    title: 'The Fried Rice Index',
     description:
-      'Compare the price of egg fried rice across cities as a simple purchasing power index.',
+      'Compare fried rice prices across cities and explore what restaurant pricing reveals about affordability, variety, and urban economies.',
   },
 }
 

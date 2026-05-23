@@ -5,141 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
 
-const cities = [
-  {
-    name: 'Vancouver',
-    country: 'Canada',
-    region: 'British Columbia',
-    flag: '🇨🇦',
-    priceCAD: 16.5,
-    coord: [-123.12, 49.28],
-    population: '675,000',
-    climate: 'Oceanic — mild rainy winters, warm dry summers',
-    blurb:
-      "Nestled between the Pacific Ocean and the Coast Mountains, Vancouver is one of Canada's most culturally diverse cities. A major gateway for Asian immigration, it has one of the largest Chinese-Canadian communities in the country and a thriving tech and film industry.",
-  },
-  {
-    name: 'Toronto',
-    country: 'Canada',
-    region: 'Ontario',
-    flag: '🇨🇦',
-    priceCAD: 14.0,
-    coord: [-79.38, 43.65],
-    population: '2,930,000',
-    climate: 'Humid continental — cold winters, hot humid summers',
-    blurb:
-      "Canada's largest city and financial capital, Toronto is one of the most multicultural cities in the world. Over half its residents were born outside Canada. It is the top destination for new immigrants to Canada, with major communities from South Asia, China, the Philippines, and the Caribbean.",
-  },
-  {
-    name: 'Montreal',
-    country: 'Canada',
-    region: 'Quebec',
-    flag: '🇨🇦',
-    priceCAD: 13.5,
-    coord: [-73.57, 45.5],
-    population: '1,780,000',
-    climate: 'Humid continental — cold snowy winters, warm summers',
-    blurb:
-      'The cultural capital of French Canada, Montreal blends European character with North American energy. It is known for its vibrant arts scene, world-class restaurants, and low cost of living relative to other major Canadian cities. A growing tech hub attracting immigrants from francophone Africa and Haiti.',
-  },
-  {
-    name: 'Calgary',
-    country: 'Canada',
-    region: 'Alberta',
-    flag: '🇨🇦',
-    priceCAD: 13.0,
-    coord: [-114.07, 51.04],
-    population: '1,340,000',
-    climate: 'Semi-arid — cold winters, warm summers, frequent chinooks',
-    blurb:
-      'Built on oil wealth, Calgary has diversified into tech and finance. It has one of the youngest and fastest-growing populations of any major Canadian city, with a booming South Asian immigrant community. The city offers high wages and relatively affordable housing compared to Vancouver and Toronto.',
-  },
-  {
-    name: 'Edmonton',
-    country: 'Canada',
-    region: 'Alberta',
-    flag: '🇨🇦',
-    priceCAD: 12.5,
-    coord: [-113.49, 53.55],
-    population: '1,010,000',
-    climate: 'Humid continental/subarctic — long cold winters, short warm summers',
-    blurb:
-      "Alberta's capital and the northernmost major city in Canada. Edmonton serves as the gateway to the oil sands and has a large Filipino community, one of the largest in Canada. It offers strong employment opportunities and a lower cost of living than most major Canadian cities.",
-  },
-  {
-    name: 'New York',
-    country: 'USA',
-    region: 'New York State',
-    flag: '🇺🇸',
-    priceCAD: 19.0,
-    coord: [-74.01, 40.71],
-    population: '8,330,000',
-    climate: 'Humid subtropical — hot summers, cold winters, year-round rain',
-    blurb:
-      'The most populous city in the United States and a global financial, cultural, and media capital. New York has been the entry point for waves of immigrants for over a century. Today it is home to massive Chinese, Dominican, Mexican, Indian, and Korean communities among hundreds of others.',
-  },
-  {
-    name: 'Los Angeles',
-    country: 'USA',
-    region: 'California',
-    flag: '🇺🇸',
-    priceCAD: 17.5,
-    coord: [-118.24, 34.05],
-    population: '3,980,000',
-    climate: 'Mediterranean — warm dry summers, mild wet winters',
-    blurb:
-      'The entertainment capital of the world and a major Pacific Rim gateway. Los Angeles has one of the largest Korean communities outside Korea, a massive Mexican-American population, and significant Chinese, Filipino, and Vietnamese communities. Its economy spans entertainment, tech, trade, and aerospace.',
-  },
-  {
-    name: 'Chicago',
-    country: 'USA',
-    region: 'Illinois',
-    flag: '🇺🇸',
-    priceCAD: 16.0,
-    coord: [-87.63, 41.88],
-    population: '2,700,000',
-    climate: 'Humid continental — cold windy winters, hot summers',
-    blurb:
-      "The Midwest's largest city and a major hub for finance, manufacturing, and transportation. Chicago has a storied immigrant history, from early waves of Polish and Italian arrivals to today's large Mexican, Indian, and Chinese communities. Known as the city that shaped American blues, jazz, and architecture.",
-  },
-  {
-    name: 'Houston',
-    country: 'USA',
-    region: 'Texas',
-    flag: '🇺🇸',
-    priceCAD: 11.5,
-    coord: [-95.37, 29.76],
-    population: '2,300,000',
-    climate: 'Humid subtropical — hot summers, mild winters, frequent storms',
-    blurb:
-      "The energy capital of the world and one of the most ethnically diverse cities in the United States. Houston's low cost of living, lack of state income tax, and booming economy have made it a magnet for immigrants from Latin America, Asia, and Africa. It has the largest Vietnamese community in the southern US.",
-  },
-  {
-    name: 'Phoenix',
-    country: 'USA',
-    region: 'Arizona',
-    flag: '🇺🇸',
-    priceCAD: 12.0,
-    coord: [-112.07, 33.45],
-    population: '1,620,000',
-    climate: 'Hot desert — extremely hot summers, mild winters, very little rain',
-    blurb:
-      'One of the fastest-growing cities in the United States. Phoenix has a large Hispanic population and a growing South Asian tech community driven by the expansion of the semiconductor industry in the region. Its affordability relative to coastal cities has driven significant domestic and international migration.',
-  },
-  {
-    name: 'Philadelphia',
-    country: 'USA',
-    region: 'Pennsylvania',
-    flag: '🇺🇸',
-    priceCAD: 15.5,
-    coord: [-75.17, 39.95],
-    population: '1,570,000',
-    climate: 'Humid subtropical — hot summers, cold winters, moderate rainfall',
-    blurb:
-      "One of America's oldest and most historically significant cities, birthplace of the US Declaration of Independence. Philadelphia has a large Black American community and growing immigrant populations from China, Mexico, India, and Vietnam. It is known for its world-class universities, hospitals, and affordable housing relative to nearby New York.",
-  },
-]
-
 const rates: Record<string, number> = {
   CAD: 1,
   USD: 0.73,
@@ -182,35 +47,27 @@ const symbols: Record<string, string> = {
   AED: 'د.إ',
 }
 
-const currencyOptions = [
-  ['CAD', 'CA$ CAD'],
-  ['USD', 'US$ USD'],
-  ['EUR', '€ EUR'],
-  ['CHF', 'Fr CHF'],
-  ['GBP', '£ GBP'],
-  ['JPY', '¥ JPY'],
-  ['CNY', '¥ CNY'],
-  ['AUD', 'AU$ AUD'],
-  ['HKD', 'HK$ HKD'],
-  ['SGD', 'S$ SGD'],
-  ['SAR', '﷼ SAR'],
-  ['PHP', '₱ PHP'],
-  ['MYR', 'RM MYR'],
-  ['MXN', 'MX$ MXN'],
-  ['ARS', 'AR$ ARS'],
-  ['KRW', '₩ KRW'],
-  ['INR', '₹ INR'],
-  ['AED', 'د.إ AED'],
-]
+const currencyOptions = Object.keys(rates).map((code) => [
+  code,
+  `${symbols[code]} ${code}`,
+])
 
-type BaseCity = (typeof cities)[number]
-
-type City = BaseCity & {
-  priceSource?: string | null
-  priceUpdatedAt?: string | null
-  populationSource?: string | null
-  populationUpdatedAt?: string | null
-  confidenceScore?: number | null
+type City = {
+  city: string
+  country: string | null
+  region: string | null
+  flag: string | null
+  latitude: number | null
+  longitude: number | null
+  population: string | null
+  climate: string | null
+  blurb: string | null
+  price_cad: number | null
+  price_source: string | null
+  price_updated_at: string | null
+  population_source: string | null
+  population_updated_at: string | null
+  confidence_score: number | null
 }
 
 export default function Home() {
@@ -221,10 +78,13 @@ export default function Home() {
   const [currency, setCurrency] = useState('CAD')
   const [selectedCity, setSelectedCity] = useState<City | null>(null)
   const [expanded, setExpanded] = useState(false)
-  const [dbCities, setDbCities] = useState<Record<string, any>>({})
+  const [cities, setCities] = useState<City[]>([])
+  const [loadingCities, setLoadingCities] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
 
-  const getPrice = (priceCAD: number) => {
+  const getPrice = (priceCAD: number | null) => {
+    if (!priceCAD || priceCAD <= 0) return 'Pending'
+
     const rate = rates[currency] ?? 1
     const symbol = symbols[currency] ?? 'CA$'
     const converted = priceCAD * rate
@@ -245,6 +105,14 @@ export default function Home() {
     })
   }
 
+  const formatConfidence = (value: number | null) => {
+    if (value === null || value === undefined) return 'Not available'
+
+    if (value <= 1) return `${Math.round(value * 100)}%`
+
+    return `${Math.round(value)}%`
+  }
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
 
@@ -256,40 +124,51 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchCities() {
-      const { data, error } = await supabase.from('cities').select('*')
+      setLoadingCities(true)
+
+      const { data, error } = await supabase
+        .from('cities')
+        .select(
+          `
+          city,
+          country,
+          region,
+          flag,
+          latitude,
+          longitude,
+          population,
+          climate,
+          blurb,
+          price_cad,
+          price_source,
+          price_updated_at,
+          population_source,
+          population_updated_at,
+          confidence_score
+        `
+        )
+        .order('city', { ascending: true })
 
       if (error) {
         console.error('Supabase error:', error)
+        setLoadingCities(false)
         return
       }
 
-      const mapped: Record<string, any> = {}
+      const validCities = (data ?? []).filter(
+        (city) =>
+          city.latitude !== null &&
+          city.longitude !== null &&
+          Number.isFinite(Number(city.latitude)) &&
+          Number.isFinite(Number(city.longitude))
+      )
 
-      ;(data ?? []).forEach((row: any) => {
-        mapped[row.city] = row
-      })
-
-      setDbCities(mapped)
+      setCities(validCities as City[])
+      setLoadingCities(false)
     }
 
     fetchCities()
   }, [])
-
-  const displayCities: City[] = cities.map((city) => {
-    const dbCity = dbCities[city.name]
-
-    return {
-      ...city,
-      priceCAD: dbCity?.price_cad ?? city.priceCAD,
-      population: dbCity?.population ?? city.population,
-      blurb: dbCity?.blurb ?? city.blurb,
-      priceSource: dbCity?.price_source ?? null,
-      priceUpdatedAt: dbCity?.price_updated_at ?? null,
-      populationSource: dbCity?.population_source ?? null,
-      populationUpdatedAt: dbCity?.population_updated_at ?? null,
-      confidenceScore: dbCity?.confidence_score ?? null,
-    }
-  })
 
   const handleSelectCity = (city: City) => setSelectedCity(city)
   const handleClose = () => setSelectedCity(null)
@@ -355,8 +234,12 @@ export default function Home() {
           .attr('stroke', '#d2d5c8')
           .attr('stroke-width', 0.4)
 
-        displayCities.forEach((city) => {
-          const projected = projection(city.coord as [number, number])
+        cities.forEach((city) => {
+          const projected = projection([
+            Number(city.longitude),
+            Number(city.latitude),
+          ] as [number, number])
+
           if (!projected) return
 
           const [x, y] = projected
@@ -382,13 +265,13 @@ export default function Home() {
             .attr('font-family', 'sans-serif')
             .attr('pointer-events', 'none')
             .attr('opacity', 0)
-            .text(city.name)
+            .text(city.city)
 
           cityG.on('click', () => handleSelectCity(city))
         })
       }
     )
-  }, [expanded, dbCities, isMobile])
+  }, [expanded, cities, isMobile])
 
   const resetZoom = () => {
     if (!svgRef.current || !zoomRef.current) return
@@ -469,7 +352,9 @@ export default function Home() {
               }}
             >
               <div>
-                <div style={{ fontSize: 28, marginBottom: 4 }}>{selectedCity.flag}</div>
+                <div style={{ fontSize: 28, marginBottom: 4 }}>
+                  {selectedCity.flag ?? '🌍'}
+                </div>
                 <h2
                   style={{
                     fontFamily: 'DM Serif Display, serif',
@@ -478,7 +363,7 @@ export default function Home() {
                     margin: 0,
                   }}
                 >
-                  {selectedCity.name}
+                  {selectedCity.city}
                 </h2>
               </div>
 
@@ -505,14 +390,15 @@ export default function Home() {
             <div style={{ marginBottom: '1rem' }}>
               <p style={sectionLabel}>Location</p>
               <p style={{ fontSize: 14, color: '#1a1a18', lineHeight: 1.5 }}>
-                {selectedCity.region}, {selectedCity.country}
+                {[selectedCity.region, selectedCity.country].filter(Boolean).join(', ') ||
+                  'Not available'}
               </p>
             </div>
 
             <div style={divider} />
 
             <div style={{ marginBottom: '1rem' }}>
-              <p style={sectionLabel}>Price of a large bowl</p>
+              <p style={sectionLabel}>Baseline fried rice price</p>
 
               <p
                 style={{
@@ -522,11 +408,11 @@ export default function Home() {
                   margin: 0,
                 }}
               >
-                {getPrice(selectedCity.priceCAD)}
+                {getPrice(selectedCity.price_cad)}
               </p>
 
               <p style={{ fontSize: 11, color: '#9b9b90', marginTop: 4 }}>
-                Average from approved restaurant entries
+                Median or approved baseline estimate, depending on available data
               </p>
 
               <div
@@ -538,19 +424,17 @@ export default function Home() {
                 }}
               >
                 <p style={{ margin: 0 }}>
-                  <strong>Updated:</strong> {formatDate(selectedCity.priceUpdatedAt)}
+                  <strong>Updated:</strong> {formatDate(selectedCity.price_updated_at)}
                 </p>
 
                 <p style={{ margin: 0 }}>
                   <strong>Confidence:</strong>{' '}
-                  {selectedCity.confidenceScore !== null &&
-                  selectedCity.confidenceScore !== undefined
-                    ? `${Math.round(selectedCity.confidenceScore * 100)}%`
-                    : 'Not available'}
+                  {formatConfidence(selectedCity.confidence_score)}
                 </p>
 
                 <p style={{ margin: 0 }}>
-                  <strong>Source:</strong> {selectedCity.priceSource ?? 'Not available'}
+                  <strong>Source:</strong>{' '}
+                  {selectedCity.price_source ?? 'Not available'}
                 </p>
               </div>
             </div>
@@ -560,7 +444,7 @@ export default function Home() {
             <div style={{ marginBottom: '1rem' }}>
               <p style={sectionLabel}>City context</p>
               <p style={{ fontSize: 14, color: '#3a3a34', lineHeight: 1.7 }}>
-                {selectedCity.blurb}
+                {selectedCity.blurb ?? 'No city context has been added yet.'}
               </p>
             </div>
 
@@ -601,7 +485,7 @@ export default function Home() {
                 textDecoration: 'none',
               }}
             >
-              egg fried rice <span style={{ color: '#C25E1E' }}>index</span>
+              fried rice <span style={{ color: '#C25E1E' }}>index</span>
             </a>
 
             <div
@@ -634,7 +518,7 @@ export default function Home() {
           <div
             style={{
               padding: isMobile ? '2.25rem 1.25rem 1.5rem' : '4rem 2.5rem 2.5rem',
-              maxWidth: 680,
+              maxWidth: 760,
             }}
           >
             <p
@@ -647,7 +531,7 @@ export default function Home() {
                 marginBottom: '1rem',
               }}
             >
-              Cost of living, simplified
+              Food prices, urban affordability, and restaurant markets
             </p>
 
             <h1
@@ -660,8 +544,8 @@ export default function Home() {
                 marginBottom: '1rem',
               }}
             >
-              What does a bowl cost{' '}
-              <em style={{ color: '#C25E1E' }}>where you&apos;re moving?</em>
+              What does fried rice reveal{' '}
+              <em style={{ color: '#C25E1E' }}>about a city?</em>
             </h1>
 
             <p
@@ -672,8 +556,9 @@ export default function Home() {
                 lineHeight: 1.6,
               }}
             >
-              We track the price of egg fried rice at restaurants across major cities
-              and convert each city price into your currency.
+              The Fried Rice Index tracks fried rice prices across cities and studies
+              what they reveal about baseline affordability, price variation, dish
+              variety, and premiumization in local restaurant markets.
             </p>
           </div>
         </>
@@ -732,7 +617,7 @@ export default function Home() {
                   margin: '0.35rem 0 0',
                 }}
               >
-                Click a city dot to view price, confidence, and context.
+                Click a city dot to view price, confidence, and city context.
               </p>
             </div>
 
@@ -793,6 +678,18 @@ export default function Home() {
             Scroll to zoom · drag to pan · click a city for details · city names appear
             after 3x zoom
           </p>
+
+          {loadingCities && (
+            <p style={{ fontSize: 12, color: '#9b9b90', marginTop: 8 }}>
+              Loading city data...
+            </p>
+          )}
+
+          {!loadingCities && cities.length === 0 && (
+            <p style={{ fontSize: 12, color: '#9b9b90', marginTop: 8 }}>
+              No cities with coordinates are available yet.
+            </p>
+          )}
 
           <div
             style={{
