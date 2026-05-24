@@ -282,41 +282,68 @@ export default function CitiesPage() {
             marginBottom: '2rem',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'space-between',
             gap: '0.75rem',
             flexWrap: 'wrap',
           }}
         >
-          <span
-            style={{
-              fontSize: 11,
-              textTransform: 'uppercase',
-              letterSpacing: '1.2px',
-              color: '#9b9b90',
-            }}
-          >
-            Display currency
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <span
+              style={{
+                fontSize: 11,
+                textTransform: 'uppercase',
+                letterSpacing: '1.2px',
+                color: '#9b9b90',
+              }}
+            >
+              Display currency
+            </span>
 
-          <select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              style={{
+                padding: '0.65rem 0.9rem',
+                border: '0.5px solid #e5e3da',
+                borderRadius: 10,
+                background: '#fff',
+                fontFamily: 'DM Sans, sans-serif',
+                fontSize: 13,
+                color: '#1a1a18',
+                cursor: 'pointer',
+              }}
+            >
+              {currencyOptions.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <a
+            href="/api/download-report"
+            download
             style={{
-              padding: '0.65rem 0.9rem',
-              border: '0.5px solid #e5e3da',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.6rem 1rem',
+              background: '#1a1a18',
+              color: '#fff',
               borderRadius: 10,
-              background: '#fff',
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: 13,
-              color: '#1a1a18',
-              cursor: 'pointer',
+              fontSize: 12,
+              fontWeight: 500,
+              letterSpacing: '0.3px',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
             }}
           >
-            {currencyOptions.map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
+              <path d="M6.5 1v7M3.5 5.5l3 3 3-3M2 10.5h9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Download dataset
+          </a>
         </div>
 
         <div

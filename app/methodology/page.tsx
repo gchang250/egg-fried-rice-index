@@ -275,14 +275,26 @@ export default function MethodologyPage() {
         <div style={cardStyle}>
           <h2 style={h2Style}>9. City-level calculations</h2>
           <p style={paragraphStyle}>
-            The main city price is based on the median approved baseline fried rice
+            The main city price is based on the <strong>median</strong> approved baseline fried rice
             price. The median is used because it is less affected by unusually cheap
             or unusually expensive restaurants.
           </p>
           <p style={paragraphStyle}>
-            For each city, the index can calculate median price, average price, minimum
-            price, maximum price, standard deviation, interquartile range, restaurant
-            count, average confidence, and data quality label.
+            The <strong>market average</strong> is a 5% trimmed mean of all approved
+            entries for a city — the cheapest 5% and most expensive 5% of dishes are
+            excluded before averaging. This reduces the influence of statistical
+            outliers such as a $7 egg fried rice at a specialty spot or a $48 lobster
+            fried rice at an upscale restaurant. The trim removes{' '}
+            <code style={{ fontFamily: 'monospace', fontSize: 13 }}>
+              Math.round(n × 0.05)
+            </code>{' '}
+            entries from each end, which means trimming begins once a city has at
+            least 10 approved entries.
+          </p>
+          <p style={paragraphStyle}>
+            For each city, the index can calculate median baseline price, trimmed
+            market average, minimum price, maximum price, standard deviation,
+            restaurant count, average confidence, and data quality label.
           </p>
         </div>
 
@@ -316,14 +328,27 @@ export default function MethodologyPage() {
         <div style={cardStyle}>
           <h2 style={h2Style}>12. Downloadable datasets</h2>
           <p style={paragraphStyle}>
-            The Fried Rice Index will provide date-stamped downloadable datasets for
-            transparency. The restaurant-level dataset contains approved restaurant
-            entries. The city-level dataset summarizes city statistics such as median
-            price, average price, restaurant count, price spread, confidence, and data
-            quality.
+            The Fried Rice Index provides a date-stamped full dataset download from
+            the <a href="/cities" style={{ color: '#C25E1E' }}>Cities</a> page. The
+            report is a single CSV file containing two sections:
           </p>
+          <ul style={listStyle}>
+            <li>
+              <strong>City summary:</strong> baseline median, 5% trimmed market
+              average, standard deviation, price range, entry counts, data quality
+              label, confidence score, and last-updated date for every indexed city.
+            </li>
+            <li>
+              <strong>Restaurant entries:</strong> every approved restaurant entry
+              with restaurant name, dish name, category, tier, local price, local
+              currency, exchange rate, CAD price, source type, source URL, confidence
+              score, and date accessed.
+            </li>
+          </ul>
           <p style={paragraphStyle}>
-            Dataset files are date-stamped at the time of export.
+            The filename includes the UTC timestamp of download. All prices are in
+            Canadian dollars. Original local prices and exchange rates are preserved
+            so the dataset is fully auditable.
           </p>
         </div>
 

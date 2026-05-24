@@ -134,6 +134,13 @@ function average(values: number[]) {
   return values.reduce((sum, value) => sum + value, 0) / values.length
 }
 
+function standardDeviation(values: number[]) {
+  if (values.length < 2) return null
+  const mean = values.reduce((sum, v) => sum + v, 0) / values.length
+  const variance = values.reduce((sum, v) => sum + (v - mean) ** 2, 0) / (values.length - 1)
+  return Math.sqrt(variance)
+}
+
 function median(values: number[]) {
   if (values.length === 0) return null
 
@@ -255,6 +262,9 @@ export default async function CityDetailPage({ params }: PageProps) {
   const marketMin = city.market_min_cad ?? fallbackMinPrice
   const marketMax = city.market_max_cad ?? fallbackMaxPrice
 
+  // Standard deviation computed live from restaurant entries (all approved prices)
+  const marketStdDev = standardDeviation(allPrices)
+
   const baselineEntryCount = city.baseline_entry_count ?? baselineEntries.length
   const marketEntryCount = city.market_entry_count ?? restaurants.length
   const premiumEntryCount = city.premium_entry_count ?? premiumEntries.length
@@ -335,9 +345,9 @@ export default async function CityDetailPage({ params }: PageProps) {
           />
 
           <StatCard
-            label="Premium entries"
-            value={formatCount(premiumEntryCount)}
-            note="Tracked as market-profile signals"
+            label="Std deviation"
+            value={marketStdDev !== null ? `±CA$${marketStdDev.toFixed(2)}` : 'Pending'}
+            note={`Across ${marketEntryCount} approved entr${marketEntryCount === 1 ? 'y' : 'ies'}`}
           />
 
           <StatCard
