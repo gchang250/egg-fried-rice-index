@@ -248,7 +248,10 @@ export default function Home() {
           if (!projected) return
 
           const [x, y] = projected
-          const cityG = g.append('g').style('cursor', 'pointer')
+          // pointer-events: all is required for Safari to fire click/tap on SVG <g> elements
+          const cityG = g.append('g')
+            .style('cursor', 'pointer')
+            .attr('pointer-events', 'all')
 
           cityG
             .append('circle')
@@ -259,6 +262,8 @@ export default function Home() {
             .attr('fill', '#C25E1E')
             .attr('stroke', '#fff')
             .attr('stroke-width', 2)
+            // explicit pointer-events on the circle so Safari registers taps
+            .attr('pointer-events', 'all')
 
           cityG
             .append('text')
@@ -309,12 +314,9 @@ export default function Home() {
         minHeight: '100vh',
         color: '#1a1a18',
         overflowX: 'hidden',
+        WebkitTapHighlightColor: 'transparent',
       }}
     >
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
-        rel="stylesheet"
-      />
 
       {selectedCity && (
         <div
@@ -332,7 +334,7 @@ export default function Home() {
         style={{
           position: 'fixed',
           top: 0,
-          right: selectedCity ? 0 : isMobile ? '-100vw' : -420,
+          right: 0,
           width: isMobile ? '100vw' : 380,
           maxWidth: '100vw',
           height: '100vh',
@@ -340,7 +342,14 @@ export default function Home() {
           borderLeft: isMobile ? 'none' : '0.5px solid #e5e3da',
           zIndex: 100,
           overflowY: 'auto',
-          transition: 'right 0.35s cubic-bezier(0.4,0,0.2,1)',
+          // translateX is GPU-accelerated and reliable on Safari;
+          // animating `right` triggers layout recalculation on Safari/iOS
+          transform: selectedCity
+            ? 'translateX(0)'
+            : isMobile
+              ? 'translateX(100vw)'
+              : 'translateX(420px)',
+          transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
           padding: isMobile ? '1.25rem' : '2rem',
           boxSizing: 'border-box',
         }}
@@ -691,6 +700,7 @@ export default function Home() {
               overflow: 'hidden',
               background: '#E4E8DC',
               cursor: 'grab',
+              touchAction: 'none',
             }}
           >
             <svg
@@ -700,6 +710,10 @@ export default function Home() {
                 width: '100%',
                 height: expanded && isMobile ? 'calc(100vh - 95px)' : 'auto',
                 display: 'block',
+                // Required for D3 zoom/pan to work on iOS Safari and other touch browsers.
+                // Without this, the browser intercepts touch events for page scrolling
+                // before D3 can process them, breaking all map interaction on mobile.
+                touchAction: 'none',
               }}
             >
               <g ref={gRef} />
