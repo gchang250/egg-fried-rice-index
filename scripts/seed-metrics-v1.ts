@@ -245,7 +245,7 @@ const METRICS: CityMetrics[] = [
     salary_data_source: 'Japan Ministry of Health, Labour and Welfare 2025',
     safety_index: 82,
     healthcare_index: 82,
-    english_proficiency: 'low',
+    english_proficiency: 'medium',
     visa_ease: 'moderate',   // visa-free tourist; work visa requires employer sponsorship
     avg_internet_mbps: 200,
   },
@@ -258,7 +258,7 @@ const METRICS: CityMetrics[] = [
     salary_data_source: 'Japan Ministry of Health, Labour and Welfare 2025',
     safety_index: 80,
     healthcare_index: 80,
-    english_proficiency: 'low',
+    english_proficiency: 'medium',
     visa_ease: 'moderate',
     avg_internet_mbps: 195,
   },
@@ -271,7 +271,7 @@ const METRICS: CityMetrics[] = [
     salary_data_source: 'Statistics Korea / LinkedIn Salary Insights 2025',
     safety_index: 76,
     healthcare_index: 84,
-    english_proficiency: 'low',  // improving rapidly; EF EPI rank rising
+    english_proficiency: 'medium', // tourist infrastructure extensively English-friendly; young population speaks it well
     visa_ease: 'moderate',
     avg_internet_mbps: 245,
   },
@@ -284,7 +284,7 @@ const METRICS: CityMetrics[] = [
     salary_data_source: 'National Bureau of Statistics China 2025',
     safety_index: 65,
     healthcare_index: 63,
-    english_proficiency: 'low',
+    english_proficiency: 'medium',
     visa_ease: 'complex',  // visa required; improving with 6-day visa-free transit
     avg_internet_mbps: 145,
   },
@@ -297,7 +297,7 @@ const METRICS: CityMetrics[] = [
     salary_data_source: 'National Bureau of Statistics China 2025',
     safety_index: 68,
     healthcare_index: 65,
-    english_proficiency: 'low',
+    english_proficiency: 'medium',
     visa_ease: 'complex',
     avg_internet_mbps: 155,
   },
