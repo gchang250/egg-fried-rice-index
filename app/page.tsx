@@ -5,52 +5,19 @@ import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
 
-const rates: Record<string, number> = {
-  CAD: 1,
-  USD: 0.73,
-  EUR: 0.68,
-  CHF: 0.66,
-  GBP: 0.58,
-  JPY: 107.5,
-  CNY: 5.3,
-  AUD: 1.13,
-  HKD: 5.72,
-  SGD: 0.99,
-  SAR: 2.74,
-  PHP: 41.2,
-  MYR: 3.18,
-  MXN: 14.6,
-  ARS: 720.0,
-  KRW: 1001.0,
-  INR: 60.8,
-  AED: 2.68,
-}
+// Import shared rates/symbols from CityPageContent so both pages stay in sync
+import { RATES as rates, SYMBOLS as symbols } from './cities/[city]/CityPageContent'
 
-const symbols: Record<string, string> = {
-  CAD: 'CA$',
-  USD: 'US$',
-  EUR: '€',
-  CHF: 'Fr',
-  GBP: '£',
-  JPY: '¥',
-  CNY: '¥',
-  AUD: 'AU$',
-  HKD: 'HK$',
-  SGD: 'S$',
-  SAR: '﷼',
-  PHP: '₱',
-  MYR: 'RM',
-  MXN: 'MX$',
-  ARS: 'AR$',
-  KRW: '₩',
-  INR: '₹',
-  AED: 'د.إ',
-}
-
-const currencyOptions = Object.keys(rates).map((code) => [
-  code,
-  `${symbols[code]} ${code}`,
-])
+const currencyOptions = [
+  ['CAD', 'CA$ CAD'], ['USD', 'US$ USD'], ['EUR', '€ EUR'], ['GBP', '£ GBP'],
+  ['CHF', 'Fr CHF'], ['AUD', 'AU$ AUD'], ['NZD', 'NZ$ NZD'],
+  ['JPY', '¥ JPY'],  ['CNY', '¥ CNY'],  ['HKD', 'HK$ HKD'], ['SGD', 'S$ SGD'],
+  ['KRW', '₩ KRW'],  ['TWD', 'NT$ TWD'],['INR', '₹ INR'],   ['PKR', '₨ PKR'],
+  ['MXN', 'MX$ MXN'],['BRL', 'R$ BRL'], ['ARS', 'AR$ ARS'],
+  ['AED', 'AED AED'],['SAR', 'SAR SAR'],['QAR', 'QAR QAR'], ['KWD', 'KD KWD'],
+  ['TRY', '₺ TRY'],  ['EGP', 'E£ EGP'],['RUB', '₽ RUB'],   ['ZAR', 'R ZAR'],
+  ['PHP', '₱ PHP'],  ['MYR', 'RM MYR'],
+]
 
 const navLinks = [
   { label: 'cities', href: '/cities' },
