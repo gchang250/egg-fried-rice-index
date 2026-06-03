@@ -57,14 +57,40 @@ export type RestaurantRow = {
 }
 
 // ── Currency data ─────────────────────────────────────────────────────────────
-// Rates = units of foreign currency per 1 CAD
+// Rates = units of foreign currency per 1 CAD.
+// Derived from the seed-script exchange rates so that converting price_cad back
+// to a city's local currency returns the original local price (no rounding drift).
+// Seed rates (X_TO_CAD) → display rate = 1 / X_TO_CAD.
 export const RATES: Record<string, number> = {
-  CAD: 1,      USD: 0.73,   EUR: 0.68,   GBP: 0.58,   CHF: 0.66,
-  AUD: 1.13,   NZD: 1.23,   JPY: 107.5,  CNY: 5.3,    HKD: 5.72,
-  SGD: 0.99,   KRW: 1001,   TWD: 23.4,   INR: 60.8,   PKR: 277.8,
-  MXN: 14.6,   BRL: 3.6,    ARS: 720,    COP: 3100,
-  AED: 2.68,   SAR: 2.74,   QAR: 2.66,   KWD: 0.225,
-  TRY: 27.0,   EGP: 35.7,   RUB: 66.7,   ZAR: 13.2,
+  // Americas
+  CAD: 1,       USD: 0.719,  // 1/1.39
+  MXN: 13.89,   // 1/0.072
+  BRL: 3.6,     ARS: 909,    // 1/0.0011
+  COP: 3100,
+  // Europe
+  GBP: 0.568,   // 1/1.76
+  EUR: 0.663,   // 1/1.51
+  CHF: 0.66,    RUB: 66.7,  // 1/0.015
+  TRY: 27.0,    // 1/0.037
+  // East Asia
+  JPY: 115.1,   // 1/0.00869
+  CNY: 4.926,   // 1/0.203
+  HKD: 5.72,    // 1/0.1748
+  SGD: 0.926,   // 1/1.08
+  KRW: 1099,    // 1/0.00091
+  TWD: 23.4,
+  // South Asia
+  INR: 60.6,    // 1/0.0165
+  PKR: 277.8,   // 1/0.0036
+  // Oceania
+  AUD: 1.136,   // 1/0.88
+  NZD: 1.23,
+  // Middle East / Africa
+  AED: 2.639,   // 1/0.379
+  SAR: 2.703,   // 1/0.370
+  QAR: 2.66,    KWD: 0.225,
+  EGP: 35.71,   // 1/0.028
+  ZAR: 13.2,
 }
 
 export const SYMBOLS: Record<string, string> = {
@@ -335,7 +361,7 @@ export default function CityPageContent({
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.median_rent_1br_cad != null && (
-                <LivingCard label="Monthly rent (1BR, city centre)" bowlCount={bowlsRent}
+                <LivingCard label="Typical monthly rent (1BR)" bowlCount={bowlsRent}
                   amount={convert(city.median_rent_1br_cad, currency)} sub={city.rent_data_source ?? undefined} />
               )}
               {city.median_monthly_salary_cad != null && (
@@ -346,11 +372,22 @@ export default function CityPageContent({
                 <LivingCard label="Tech / knowledge worker salary" bowlCount={bowlsTech}
                   amount={convert(city.tech_salary_cad, currency)} sub="Median gross monthly" />
               )}
-              {city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && (
-                <LivingCard label="Bowls left after rent" bowlCount={bowlsAfterRent}
-                  amount={convert(city.median_monthly_salary_cad - city.median_rent_1br_cad, currency)}
-                  sub={`Rent burden: ${rentBurden} of median salary`} highlight />
-              )}
+              {city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && (() => {
+                const diff = city.median_monthly_salary_cad - city.median_rent_1br_cad
+                const isDeficit = diff < 0
+                return (
+                  <LivingCard
+                    label={isDeficit ? 'Rent exceeds median salary' : 'Bowls left after rent'}
+                    bowlCount={isDeficit ? `−${Math.abs(parseInt(bowlsAfterRent))}` : bowlsAfterRent}
+                    amount={convert(Math.abs(diff), currency)}
+                    sub={isDeficit
+                      ? `Rent burden: ${rentBurden} — median wage cannot cover city rent`
+                      : `Rent burden: ${rentBurden} of median salary`}
+                    highlight
+                    deficit={isDeficit}
+                  />
+                )
+              })()}
             </div>
           </div>
         </section>
@@ -460,18 +497,17 @@ function PriceCard({ label, value, sub, accent = false, wide = false }: {
   )
 }
 
-function LivingCard({ label, bowlCount, amount, sub, highlight = false }: {
-  label: string; bowlCount: string; amount: string; sub?: string; highlight?: boolean
+function LivingCard({ label, bowlCount, amount, sub, highlight = false, deficit = false }: {
+  label: string; bowlCount: string; amount: string; sub?: string; highlight?: boolean; deficit?: boolean
 }) {
+  const bg     = deficit ? '#fff5f5' : highlight ? '#fff8f4' : '#fff'
+  const border = deficit ? '#f5c0c0' : highlight ? '#f5cdb0' : '#e5e3da'
+  const numColor = deficit ? '#c0392b' : highlight ? '#C25E1E' : '#1a1a18'
   return (
-    <div style={{
-      background: highlight ? '#fff8f4' : '#fff',
-      border: `0.5px solid ${highlight ? '#f5cdb0' : '#e5e3da'}`,
-      borderRadius: 16, padding: '1.25rem',
-    }}>
+    <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 16, padding: '1.25rem' }}>
       <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#9b9b90', margin: '0 0 0.5rem' }}>{label}</p>
-      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, color: highlight ? '#C25E1E' : '#1a1a18', margin: 0, lineHeight: 1 }}>
-        {bowlCount} <span style={{ fontSize: 20 }}>🍚</span>
+      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, color: numColor, margin: 0, lineHeight: 1 }}>
+        {deficit ? '−' : ''}{bowlCount} <span style={{ fontSize: 20 }}>🍚</span>
       </p>
       <p style={{ fontSize: 13, color: '#6b6b64', margin: '0.4rem 0 0' }}>{amount} / month</p>
       {sub && <p style={{ fontSize: 11, color: '#9b9b90', margin: '0.25rem 0 0' }}>{sub}</p>}
