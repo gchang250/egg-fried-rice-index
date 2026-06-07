@@ -44,6 +44,15 @@ type City = {
   confidence_score: number | null
 }
 
+function dotColor(priceCAD: number | null): string {
+  if (!priceCAD || priceCAD <= 0) return '#aaa8a0'
+  if (priceCAD < 5)  return '#2d7a4f'
+  if (priceCAD < 9)  return '#4fa36c'
+  if (priceCAD < 14) return '#b8720d'
+  if (priceCAD < 18) return '#C25E1E'
+  return '#942b0a'
+}
+
 export default function Home() {
   const svgRef = useRef<SVGSVGElement>(null)
   const gRef = useRef<SVGGElement>(null)
@@ -226,7 +235,7 @@ export default function Home() {
             .attr('cx', x)
             .attr('cy', y)
             .attr('r', 6)
-            .attr('fill', '#C25E1E')
+            .attr('fill', dotColor(city.price_cad))
             .attr('stroke', '#fff')
             .attr('stroke-width', 2)
             // explicit pointer-events on the circle so Safari registers taps
@@ -687,10 +696,26 @@ export default function Home() {
             </svg>
           </div>
 
-          <p style={{ fontSize: 11, color: '#9b9b90', marginTop: 8 }}>
-            Scroll to zoom · drag to pan · click a city for details · city names appear
-            after 3x zoom
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginTop: 8 }}>
+            <p style={{ fontSize: 11, color: '#9b9b90', margin: 0 }}>
+              Scroll to zoom · drag to pan · click a city · names appear after 3× zoom
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 10, color: '#9b9b90', letterSpacing: '0.5px' }}>BASELINE PRICE</span>
+              {[
+                { color: '#2d7a4f', label: 'Under CA$5' },
+                { color: '#4fa36c', label: 'CA$5–9' },
+                { color: '#b8720d', label: 'CA$9–14' },
+                { color: '#C25E1E', label: 'CA$14–18' },
+                { color: '#942b0a', label: 'CA$18+' },
+              ].map(({ color, label }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 10, color: '#9b9b90' }}>{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {loadingCities && (
             <p style={{ fontSize: 12, color: '#9b9b90', marginTop: 8 }}>
