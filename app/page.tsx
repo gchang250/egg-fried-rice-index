@@ -1,463 +1,466 @@
 'use client'
 
-import { supabase } from '@/lib/supabase'
 import { useEffect, useRef, useState } from 'react'
-import * as d3 from 'd3'
-import * as topojson from 'topojson-client'
-import { RATES as rates, SYMBOLS as symbols } from './cities/[city]/CityPageContent'
 
-const currencyOptions = [
-  ['CAD', 'CA$ CAD'], ['USD', 'US$ USD'], ['EUR', '€ EUR'], ['GBP', '£ GBP'],
-  ['CHF', 'Fr CHF'], ['AUD', 'AU$ AUD'], ['NZD', 'NZ$ NZD'],
-  ['JPY', '¥ JPY'],  ['CNY', '¥ CNY'],  ['HKD', 'HK$ HKD'], ['SGD', 'S$ SGD'],
-  ['KRW', '₩ KRW'],  ['TWD', 'NT$ TWD'], ['INR', '₹ INR'],  ['PKR', '₨ PKR'],
-  ['MXN', 'MX$ MXN'], ['BRL', 'R$ BRL'], ['ARS', 'AR$ ARS'],
-  ['AED', 'AED AED'], ['SAR', 'SAR SAR'], ['TRY', '₺ TRY'],
-  ['EGP', 'E£ EGP'], ['RUB', '₽ RUB'],
-]
-
-type City = {
-  city: string
-  country: string | null
-  region: string | null
-  flag: string | null
-  latitude: number | null
-  longitude: number | null
-  population: string | null
-  blurb: string | null
-  price_cad: number | null
-  price_source: string | null
-  price_updated_at: string | null
-  confidence_score: number | null
-  median_rent_1br_cad: number | null
-  median_monthly_salary_cad: number | null
+function useReveal(threshold = 0.2) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [threshold])
+  return { ref, visible }
 }
 
-// Color tiers — fixed CAD thresholds, dots always reflect relative affordability
-function dotColor(priceCAD: number | null): string {
-  if (!priceCAD || priceCAD <= 0) return '#555550'
-  if (priceCAD < 5)  return '#34a85a'
-  if (priceCAD < 9)  return '#5bbf7a'
-  if (priceCAD < 14) return '#c4890f'
-  if (priceCAD < 18) return '#d9682a'
-  return '#b83418'
-}
-
-// The CAD thresholds that define each color band
-const COLOR_TIERS = [
-  { color: '#34a85a', max: 5 },
-  { color: '#5bbf7a', max: 9 },
-  { color: '#c4890f', max: 14 },
-  { color: '#d9682a', max: 18 },
-  { color: '#b83418', max: Infinity },
+const TICKER_CITIES = [
+  '🇹🇭 Bangkok', '🇨🇦 Toronto', '🇨🇭 Zurich', '🇵🇰 Karachi', '🇳🇬 Lagos',
+  '🇰🇷 Seoul', '🇺🇸 New York', '🇵🇭 Manila', '🇬🇧 London', '🇸🇬 Singapore',
+  '🇮🇳 Mumbai', '🇯🇵 Tokyo', '🇪🇬 Cairo', '🇦🇺 Sydney', '🇦🇪 Dubai',
+  '🇦🇷 Buenos Aires', '🇹🇷 Istanbul', '🇨🇦 Vancouver', '🇮🇩 Jakarta', '🇨🇳 Beijing',
 ]
 
 export default function Home() {
-  const svgRef = useRef<SVGSVGElement>(null)
-  const gRef  = useRef<SVGGElement>(null)
-  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null)
+  const heroTextRef  = useRef<HTMLDivElement>(null)
+  const orb1Ref      = useRef<HTMLDivElement>(null)
+  const orb2Ref      = useRef<HTMLDivElement>(null)
+  const bigRiceRef   = useRef<HTMLDivElement>(null)
 
-  const [currency, setCurrency]       = useState('CAD')
-  const [selectedCity, setSelectedCity] = useState<City | null>(null)
-  const [expanded, setExpanded]       = useState(false)
-  const [cities, setCities]           = useState<City[]>([])
-  const [loadingCities, setLoadingCities] = useState(true)
-  const [isMobile, setIsMobile]       = useState(false)
+  const stats   = useReveal(0.25)
+  const metrics = useReveal(0.15)
+  const cta     = useReveal(0.15)
 
-  // Convert a CAD amount to the selected currency
-  const cvt = (cad: number) => {
-    const rate = rates[currency] ?? 1
-    const sym  = symbols[currency] ?? 'CA$'
-    const val  = cad * rate
-    const digits = val >= 100 ? 0 : 2
-    return `${sym}${val.toLocaleString(undefined, { minimumFractionDigits: digits, maximumFractionDigits: digits })}`
-  }
+  const [cityCount, setCityCount] = useState(0)
 
-  // Legend labels in the currently selected currency
-  const legendTiers = [
-    { color: '#34a85a', label: `Under ${cvt(5)}` },
-    { color: '#5bbf7a', label: `${cvt(5)} – ${cvt(9)}` },
-    { color: '#c4890f', label: `${cvt(9)} – ${cvt(14)}` },
-    { color: '#d9682a', label: `${cvt(14)} – ${cvt(18)}` },
-    { color: '#b83418', label: `${cvt(18)}+` },
-  ]
-
+  // Animate city counter when stats section enters view
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  useEffect(() => {
-    async function fetchCities() {
-      setLoadingCities(true)
-      const { data, error } = await supabase
-        .from('cities')
-        .select(`
-          city, country, region, flag, latitude, longitude,
-          population, blurb, price_cad,
-          price_source, price_updated_at, confidence_score,
-          median_rent_1br_cad, median_monthly_salary_cad
-        `)
-        .order('city', { ascending: true })
-
-      if (error) { setLoadingCities(false); return }
-      setCities(
-        (data ?? []).filter(c =>
-          c.latitude != null && c.longitude != null &&
-          Number.isFinite(Number(c.latitude)) && Number.isFinite(Number(c.longitude))
-        ) as City[]
-      )
-      setLoadingCities(false)
+    if (!stats.visible) return
+    const target = 40
+    const duration = 1600
+    const start = performance.now()
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setCityCount(Math.round(target * eased))
+      if (t < 1) requestAnimationFrame(tick)
     }
-    fetchCities()
-  }, [])
+    requestAnimationFrame(tick)
+  }, [stats.visible])
 
+  // Parallax — direct DOM mutation, no state, no re-renders
   useEffect(() => {
-    if (!svgRef.current || !gRef.current) return
-    const W = 700, H = 380
-    const svg = d3.select(svgRef.current)
-    const g   = d3.select(gRef.current)
-    g.selectAll('*').remove()
-
-    const projection = d3.geoNaturalEarth1().scale(115).translate([W / 2, H / 2 + 14])
-    const pathGen = d3.geoPath().projection(projection)
-
-    const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 12])
-      .on('zoom', event => {
-        g.attr('transform', event.transform)
-        g.selectAll<SVGCircleElement, unknown>('.city-dot')
-          .attr('r', 6 / event.transform.k)
-          .attr('stroke-width', 1.5 / event.transform.k)
-        g.selectAll<SVGTextElement, unknown>('.city-label')
-          .attr('font-size', 9 / event.transform.k)
-          .attr('x', function () {
-            const cx = parseFloat(d3.select(this.parentNode as SVGGElement).select('circle').attr('cx'))
-            return cx + 9 / event.transform.k
-          })
-          .attr('y', function () {
-            const cy = parseFloat(d3.select(this.parentNode as SVGGElement).select('circle').attr('cy'))
-            return cy + 3.5 / event.transform.k
-          })
-          .attr('opacity', event.transform.k >= 3 ? 1 : 0)
-      })
-
-    zoomRef.current = zoom
-    svg.call(zoom)
-
-    // Dark ocean background
-    g.append('rect').attr('width', W).attr('height', H).attr('fill', '#0d1a14')
-
-    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then((world: any) => {
-      g.append('g')
-        .selectAll('path')
-        .data((topojson.feature(world, world.objects.countries) as any).features)
-        .enter()
-        .append('path')
-        .attr('d', pathGen as any)
-        .attr('fill', '#162218')       // dark land
-        .attr('stroke', '#1e3022')     // subtle borders
-        .attr('stroke-width', 0.5)
-
-      cities.forEach(city => {
-        const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
-        if (!projected) return
-        const [x, y] = projected
-        const cityG = g.append('g').style('cursor', 'pointer').attr('pointer-events', 'all')
-
-        cityG.append('circle')
-          .attr('class', 'city-dot')
-          .attr('cx', x).attr('cy', y)
-          .attr('r', 6)
-          .attr('fill', dotColor(city.price_cad))
-          .attr('stroke', 'rgba(0,0,0,0.4)')
-          .attr('stroke-width', 1.5)
-          .attr('pointer-events', 'all')
-
-        cityG.append('text')
-          .attr('class', 'city-label')
-          .attr('x', x + 9).attr('y', y + 3.5)
-          .attr('font-size', 9)
-          .attr('fill', '#b0aca6')
-          .attr('font-family', 'DM Sans, sans-serif')
-          .attr('pointer-events', 'none')
-          .attr('opacity', 0)
-          .text(city.city)
-
-        cityG.on('click', () => setSelectedCity(city))
-      })
-    })
-  }, [expanded, cities, isMobile])
-
-  const resetZoom = () => {
-    if (!svgRef.current || !zoomRef.current) return
-    d3.select(svgRef.current).transition().duration(500).call(zoomRef.current.transform, d3.zoomIdentity)
-  }
-
-  // Affordability context for the city drawer
-  const drawerBowlsAfterRent = (city: City) => {
-    if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad || !city.price_cad) return null
-    const leftover = city.median_monthly_salary_cad - city.median_rent_1br_cad
-    if (leftover <= 0) return null
-    return Math.round(leftover / city.price_cad)
-  }
-
-  const rentBurden = (city: City) => {
-    if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad) return null
-    return Math.round((city.median_rent_1br_cad / city.median_monthly_salary_cad) * 100)
-  }
+    const onScroll = () => {
+      const y = window.scrollY
+      if (heroTextRef.current) {
+        heroTextRef.current.style.transform = `translateY(${y * 0.28}px)`
+        heroTextRef.current.style.opacity   = `${Math.max(0, 1 - y / 550)}`
+      }
+      if (orb1Ref.current)    orb1Ref.current.style.transform    = `translateY(${y * 0.14}px)`
+      if (orb2Ref.current)    orb2Ref.current.style.transform    = `translateY(${-y * 0.07}px)`
+      if (bigRiceRef.current) bigRiceRef.current.style.transform = `rotate(-15deg) translateY(${-y * 0.04}px)`
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc', overflowX: 'hidden', WebkitTapHighlightColor: 'transparent' }}>
+    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', color: '#e8e4dc', overflowX: 'hidden', minHeight: '100vh' }}>
+      <style>{`
+        @keyframes floatA {
+          0%,100% { transform:translateY(0px) scale(1); }
+          50%      { transform:translateY(-38px) scale(1.04); }
+        }
+        @keyframes floatB {
+          0%,100% { transform:translateY(0px); }
+          33%     { transform:translateY(24px); }
+          66%     { transform:translateY(-13px); }
+        }
+        @keyframes floatC {
+          0%,100% { transform:translateY(0px) rotate(0deg); }
+          50%     { transform:translateY(-20px) rotate(9deg); }
+        }
+        @keyframes ticker {
+          0%   { transform:translateX(0); }
+          100% { transform:translateX(-50%); }
+        }
+        @keyframes scrollPulse {
+          0%,100% { opacity:0.35; transform:translateY(0); }
+          50%     { opacity:0.8;  transform:translateY(9px); }
+        }
+        @keyframes dotPulse {
+          0%,100% { opacity:0.5; transform:scale(1); }
+          50%     { opacity:1;   transform:scale(1.4); }
+        }
+      `}</style>
 
-      {/* Backdrop */}
-      {selectedCity && (
-        <div onClick={() => setSelectedCity(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99 }} />
-      )}
-
-      {/* City drawer */}
-      <div style={{
-        position: 'fixed', top: 0, right: 0,
-        width: isMobile ? '100vw' : 390, maxWidth: '100vw',
-        height: '100vh',
-        background: '#141714',
-        borderLeft: isMobile ? 'none' : '0.5px solid #2a3028',
-        zIndex: 100, overflowY: 'auto',
-        transform: selectedCity ? 'translateX(0)' : isMobile ? 'translateX(100vw)' : 'translateX(420px)',
-        transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
-        padding: isMobile ? '1.5rem 1.25rem' : '2rem',
-        boxSizing: 'border-box',
+      {/* ── Glassmorphism Nav ──────────────────────────────────────────────── */}
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '1rem 2rem',
+        background: 'rgba(12,15,13,0.72)',
+        backdropFilter: 'blur(14px)',
+        WebkitBackdropFilter: 'blur(14px)',
+        borderBottom: '0.5px solid rgba(30,38,30,0.7)',
       }}>
-        {selectedCity && (() => {
-          const bowls = drawerBowlsAfterRent(selectedCity)
-          const burden = rentBurden(selectedCity)
-          return (
-            <>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                <div>
-                  <div style={{ fontSize: 32, marginBottom: 6 }}>{selectedCity.flag ?? '🌍'}</div>
-                  <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 30, letterSpacing: -0.5, margin: 0, color: '#f0ece4' }}>
-                    {selectedCity.city}
-                  </h2>
-                  <p style={{ fontSize: 13, color: '#6a6a62', margin: '4px 0 0' }}>
-                    {[selectedCity.region, selectedCity.country].filter(Boolean).join(', ')}
-                    {selectedCity.population ? ` · ${Number(selectedCity.population).toLocaleString()}` : ''}
-                  </p>
-                </div>
-                <button
-                  onClick={() => setSelectedCity(null)}
-                  style={{ background: 'none', border: '0.5px solid #2a3028', borderRadius: 8, padding: '6px 10px', cursor: 'pointer', fontSize: 12, color: '#6a6a62', fontFamily: 'DM Sans, sans-serif', flexShrink: 0 }}
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Price */}
-              <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#5a5a52', margin: '0 0 0.5rem' }}>Baseline fried rice</p>
-                <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 40, color: '#d9682a', margin: 0, lineHeight: 1 }}>
-                  {selectedCity.price_cad ? cvt(selectedCity.price_cad) : 'Pending'}
-                </p>
-                {selectedCity.confidence_score && (
-                  <p style={{ fontSize: 12, color: '#5a5a52', margin: '6px 0 0' }}>
-                    {Math.round(selectedCity.confidence_score <= 1 ? selectedCity.confidence_score * 100 : selectedCity.confidence_score)}% confidence
-                  </p>
-                )}
-              </div>
-
-              {/* Affordability bowls */}
-              {(bowls !== null || burden !== null) && (
-                <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.25rem', display: 'flex', gap: '0.75rem' }}>
-                  {bowls !== null && (
-                    <div style={{ flex: 1, background: '#1a221a', borderRadius: 12, padding: '0.9rem' }}>
-                      <p style={{ fontSize: 10, color: '#5a5a52', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>After rent</p>
-                      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 26, color: '#34a85a', margin: 0 }}>{bowls} <span style={{ fontSize: 16 }}>🍚</span></p>
-                      <p style={{ fontSize: 11, color: '#5a5a52', margin: '3px 0 0' }}>bowls / month</p>
-                    </div>
-                  )}
-                  {burden !== null && (
-                    <div style={{ flex: 1, background: '#1a221a', borderRadius: 12, padding: '0.9rem' }}>
-                      <p style={{ fontSize: 10, color: '#5a5a52', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>Rent burden</p>
-                      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 26, color: burden > 70 ? '#c04030' : burden > 50 ? '#c4890f' : '#34a85a', margin: 0 }}>{burden}%</p>
-                      <p style={{ fontSize: 11, color: '#5a5a52', margin: '3px 0 0' }}>of median salary</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Blurb */}
-              {selectedCity.blurb && (
-                <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.5rem' }}>
-                  <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#5a5a52', margin: '0 0 0.6rem' }}>City context</p>
-                  <p style={{ fontSize: 13, color: '#a8a49c', lineHeight: 1.7, margin: 0 }}>{selectedCity.blurb}</p>
-                </div>
-              )}
-
-              {/* Links */}
-              <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem' }}>
-                <a
-                  href={`/cities/${selectedCity.city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`}
-                  style={{ padding: '0.6rem 0.9rem', borderRadius: 10, border: '0.5px solid #d9682a', color: '#d9682a', textDecoration: 'none', fontSize: 13, background: 'transparent' }}
-                >
-                  Full profile →
-                </a>
-                <a href="/cities" style={{ padding: '0.6rem 0.9rem', borderRadius: 10, border: '0.5px solid #2a3028', color: '#8a8a82', textDecoration: 'none', fontSize: 13 }}>
-                  All cities
-                </a>
-              </div>
-            </>
-          )
-        })()}
-      </div>
-
-      {/* ── Nav ───────────────────────────────────────────────────────────── */}
-      {!(expanded && isMobile) && (
-        <nav style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: isMobile ? '1rem 1.25rem' : '1.1rem 2rem',
-          borderBottom: '0.5px solid #1e261e',
-          position: 'relative', zIndex: 10,
-        }}>
-          <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
-            fried rice <span style={{ color: '#d9682a' }}>index</span>
+        <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc' }}>
+          fried rice <span style={{ color: '#d9682a' }}>index</span>
+        </span>
+        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          {[['cities', '/cities'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
+            <a key={h} href={h} style={{ fontSize: 13, color: '#4a4a42', textDecoration: 'none' }}>{l}</a>
+          ))}
+          <a href="/explore" style={{
+            fontSize: 13, color: '#d9682a', textDecoration: 'none',
+            padding: '0.38rem 0.85rem',
+            border: '0.5px solid rgba(217,104,42,0.45)',
+            borderRadius: 8,
+          }}>
+            explore →
           </a>
-          <div style={{ display: 'flex', gap: isMobile ? '1rem' : '1.75rem' }}>
-            {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-              <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
-            ))}
-          </div>
-        </nav>
-      )}
+        </div>
+      </nav>
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      {!(expanded && isMobile) && (
-        <div style={{ padding: isMobile ? '2rem 1.25rem 1.25rem' : '2.5rem 2rem 1.5rem', maxWidth: 960 }}>
+      {/* ── Hero ──────────────────────────────────────────────────────────── */}
+      <section style={{
+        minHeight: '100vh', position: 'relative', overflow: 'hidden',
+        display: 'flex', alignItems: 'center', paddingTop: 64,
+      }}>
+        {/* Grid */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          backgroundImage: [
+            'linear-gradient(rgba(26,42,30,0.38) 1px, transparent 1px)',
+            'linear-gradient(90deg, rgba(26,42,30,0.38) 1px, transparent 1px)',
+          ].join(','),
+          backgroundSize: '80px 80px',
+        }} />
+
+        {/* Radial vignette over grid */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 20%, #0c0f0d 85%)',
+        }} />
+
+        {/* Orb 1 — orange, top-right */}
+        <div ref={orb1Ref} style={{ position: 'absolute', top: '8%', right: '3%', pointerEvents: 'none' }}>
+          <div style={{
+            width: 580, height: 580,
+            background: 'radial-gradient(circle, rgba(217,104,42,0.22) 0%, transparent 62%)',
+            filter: 'blur(55px)',
+            animation: 'floatA 11s ease-in-out infinite',
+          }} />
+        </div>
+
+        {/* Orb 2 — green, bottom-left */}
+        <div ref={orb2Ref} style={{ position: 'absolute', bottom: '2%', left: '-6%', pointerEvents: 'none' }}>
+          <div style={{
+            width: 500, height: 500,
+            background: 'radial-gradient(circle, rgba(52,168,90,0.16) 0%, transparent 62%)',
+            filter: 'blur(65px)',
+            animation: 'floatB 14s ease-in-out infinite',
+          }} />
+        </div>
+
+        {/* Orb 3 — amber, mid */}
+        <div style={{ position: 'absolute', top: '35%', left: '32%', pointerEvents: 'none' }}>
+          <div style={{
+            width: 360, height: 360,
+            background: 'radial-gradient(circle, rgba(196,137,15,0.09) 0%, transparent 68%)',
+            filter: 'blur(90px)',
+            animation: 'floatC 18s ease-in-out infinite',
+          }} />
+        </div>
+
+        {/* Giant decorative rice bowl */}
+        <div ref={bigRiceRef} style={{
+          position: 'absolute', right: '7%', bottom: '8%',
+          fontSize: 'clamp(110px, 22vw, 240px)',
+          opacity: 0.045,
+          transform: 'rotate(-15deg)',
+          animation: 'floatA 16s ease-in-out infinite',
+          userSelect: 'none', pointerEvents: 'none', lineHeight: 1,
+        }}>🍚</div>
+
+        {/* Hero copy — parallax target */}
+        <div ref={heroTextRef} style={{ position: 'relative', zIndex: 2, padding: '0 2rem', maxWidth: 1050 }}>
+          {/* Eyebrow */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: '2.5rem' }}>
+            <div style={{ width: 44, height: 1, background: 'rgba(217,104,42,0.6)' }} />
+            <span style={{ fontSize: 11, letterSpacing: '2.8px', textTransform: 'uppercase', color: '#3d3d36' }}>
+              The Fried Rice Index · 2025
+            </span>
+          </div>
+
+          {/* Headline */}
           <h1 style={{
             fontFamily: 'DM Serif Display, serif',
-            fontSize: isMobile ? 30 : 40,
-            lineHeight: 1.08, letterSpacing: isMobile ? -0.5 : -1,
-            color: '#f0ece4', margin: '0 0 1rem',
+            fontSize: 'clamp(54px, 10.5vw, 122px)',
+            lineHeight: 0.9,
+            letterSpacing: -4,
+            color: '#f0ece4',
+            margin: '0 0 2.5rem',
           }}>
-            What does fried rice reveal{' '}
-            <em style={{ color: '#d9682a' }}>about a city?</em>
+            What does<br />
+            fried rice<br />
+            <em style={{ color: '#d9682a' }}>reveal?</em>
           </h1>
 
-          {/* Stats strip */}
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-            {[
-              { label: '40 cities', sub: 'indexed' },
-              { label: cvt(1.80), sub: 'cheapest baseline' },
-              { label: cvt(20.68), sub: 'most expensive' },
-              { label: '11.5×', sub: 'price spread' },
-            ].map(s => (
-              <div key={s.label} style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 10, padding: '0.6rem 0.9rem' }}>
-                <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, color: '#d9682a' }}>{s.label}</span>
-                <span style={{ fontSize: 11, color: '#4a4a42', marginLeft: 6 }}>{s.sub}</span>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.6rem' }}>
-            <a href="/cities" style={{ padding: '0.65rem 1.1rem', borderRadius: 10, border: '0.5px solid #d9682a', background: '#d9682a', color: '#fff', textDecoration: 'none', fontSize: 13 }}>
-              Explore cities
-            </a>
-            <a href="/submit" style={{ padding: '0.65rem 1.1rem', borderRadius: 10, border: '0.5px solid #1e261e', color: '#8a8a82', textDecoration: 'none', fontSize: 13 }}>
-              Submit a price
-            </a>
-          </div>
-        </div>
-      )}
-
-      {/* ── Map ──────────────────────────────────────────────────────────── */}
-      <div style={{ padding: expanded && isMobile ? 0 : isMobile ? '0 0 2rem' : '0 2rem 2.5rem' }}>
-
-        {/* Controls bar */}
-        {!(expanded && isMobile) && (
-          <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            gap: '0.75rem', flexWrap: 'wrap',
-            marginBottom: '0.6rem',
+          {/* Sub */}
+          <p style={{
+            fontSize: 'clamp(15px, 1.8vw, 19px)',
+            color: '#434340',
+            maxWidth: 420,
+            lineHeight: 1.78,
+            margin: '0 0 3.5rem',
           }}>
-            <p style={{ fontSize: 12, color: '#3a3a32', margin: 0 }}>
-              Click a dot · scroll to zoom · drag to pan · city names at 3× zoom
-            </p>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <select
-                value={currency}
-                onChange={e => setCurrency(e.target.value)}
-                style={{ padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: '#8a8a82', cursor: 'pointer' }}
-              >
-                {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-              </select>
-              <button onClick={resetZoom} style={ctrlBtn}>Reset zoom</button>
-              <button onClick={() => setExpanded(!expanded)} style={ctrlBtn}>{expanded ? 'Collapse' : 'Expand'}</button>
-            </div>
-          </div>
-        )}
+            One dish. 40 cities. An index that cuts through economic noise to show what life actually costs.
+          </p>
 
-        {/* Map SVG */}
-        <div style={{
-          borderRadius: expanded && isMobile ? 0 : 14,
-          overflow: 'hidden',
-          background: '#0d1a14',
-          cursor: 'grab',
-          touchAction: 'none',
-          border: expanded && isMobile ? 'none' : '0.5px solid #1a2a1e',
-        }}>
-          <svg
-            ref={svgRef}
-            viewBox="0 0 700 380"
-            style={{
-              width: '100%',
-              height: expanded && isMobile ? 'calc(100vh - 95px)' : 'auto',
-              display: 'block',
-              touchAction: 'none',
-            }}
-          >
-            <g ref={gRef} />
-          </svg>
+          {/* Floating rice stack */}
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10 }}>
+            <span style={{ fontSize: 30, animation: 'floatC 6s ease-in-out infinite' }}>🍚</span>
+            <span style={{ fontSize: 22, opacity: 0.5, animation: 'floatC 8.5s ease-in-out infinite 1.8s' }}>🍚</span>
+            <span style={{ fontSize: 14, opacity: 0.22, animation: 'floatC 12s ease-in-out infinite 3.5s' }}>🍚</span>
+          </div>
         </div>
 
-        {/* Legend + loading */}
-        {!(expanded && isMobile) && (
-          <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: 10, color: '#3a3a32', letterSpacing: '0.8px', textTransform: 'uppercase' }}>Baseline price</span>
-              {legendTiers.map(t => (
-                <div key={t.color} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <div style={{ width: 9, height: 9, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
-                  <span style={{ fontSize: 11, color: '#4a4a42' }}>{t.label}</span>
-                </div>
-              ))}
-            </div>
-            {loadingCities && <p style={{ fontSize: 11, color: '#3a3a32', margin: 0 }}>Loading…</p>}
-          </div>
-        )}
+        {/* Scroll hint */}
+        <div style={{
+          position: 'absolute', bottom: '2.2rem', left: '2rem',
+          display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6,
+        }}>
+          <span style={{ fontSize: 10, letterSpacing: '2.2px', textTransform: 'uppercase', color: '#242420', animation: 'scrollPulse 2.6s ease-in-out infinite' }}>Scroll</span>
+          <div style={{ width: 1, height: 48, background: 'linear-gradient(to bottom, #2a2a22, transparent)' }} />
+        </div>
+      </section>
 
-        {/* Expand-mode controls */}
-        {expanded && isMobile && (
-          <div style={{ padding: '0.75rem 1rem', display: 'flex', gap: 8, alignItems: 'center', background: '#141714', borderTop: '0.5px solid #1e261e' }}>
-            <select
-              value={currency}
-              onChange={e => setCurrency(e.target.value)}
-              style={{ flex: 1, padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#0c0f0d', fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: '#8a8a82' }}
-            >
-              {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-            </select>
-            <button onClick={resetZoom} style={ctrlBtn}>Reset</button>
-            <button onClick={() => setExpanded(false)} style={ctrlBtn}>Collapse</button>
-          </div>
-        )}
+      {/* ── Ticker ────────────────────────────────────────────────────────── */}
+      <div style={{
+        borderTop: '0.5px solid #111611', borderBottom: '0.5px solid #111611',
+        background: '#090c09', padding: '0.85rem 0', overflow: 'hidden', whiteSpace: 'nowrap',
+      }}>
+        <div style={{ display: 'inline-flex', animation: 'ticker 32s linear infinite' }}>
+          {[...TICKER_CITIES, ...TICKER_CITIES].map((city, i) => (
+            <span key={i} style={{ margin: '0 2.2rem', fontSize: 12, color: '#1f261f', letterSpacing: '0.4px', fontWeight: 300 }}>
+              {city}
+            </span>
+          ))}
+        </div>
       </div>
 
+      {/* ── The Number ────────────────────────────────────────────────────── */}
+      <section ref={stats.ref} style={{ padding: '10rem 2rem', textAlign: 'center', position: 'relative' }}>
+        {/* Subtle glow behind the number */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          width: 700, height: 500,
+          background: 'radial-gradient(ellipse, rgba(217,104,42,0.08) 0%, transparent 58%)',
+          filter: 'blur(90px)',
+          transform: 'translate(-50%,-50%)',
+          pointerEvents: 'none',
+        }} />
+
+        {/* Live badge */}
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: 9,
+          border: '0.5px solid #1e261e', borderRadius: 100, padding: '0.38rem 1rem',
+          marginBottom: '3rem',
+          transition: 'opacity 0.9s',
+          opacity: stats.visible ? 1 : 0,
+        }}>
+          <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34a85a', animation: 'dotPulse 2s ease-in-out infinite' }} />
+          <span style={{ fontSize: 11, letterSpacing: '1.6px', textTransform: 'uppercase', color: '#3d3d36' }}>
+            across {cityCount} cities
+          </span>
+        </div>
+
+        {/* Big multiplier */}
+        <div style={{
+          fontFamily: 'DM Serif Display, serif',
+          fontSize: 'clamp(88px, 19vw, 216px)',
+          color: '#d9682a',
+          lineHeight: 0.84,
+          letterSpacing: -6,
+          margin: '0 0 1.5rem',
+          position: 'relative',
+          transition: 'opacity 1s 0.12s, transform 1s 0.12s',
+          opacity: stats.visible ? 1 : 0,
+          transform: stats.visible ? 'translateY(0)' : 'translateY(55px)',
+        }}>
+          11.5×
+        </div>
+
+        <p style={{
+          fontSize: 'clamp(16px, 2.2vw, 22px)', color: '#323230',
+          margin: '0 0 6rem',
+          transition: 'opacity 0.9s 0.32s',
+          opacity: stats.visible ? 1 : 0,
+        }}>
+          price difference — from the cheapest bowl to the most expensive
+        </p>
+
+        {/* Price cards */}
+        <div style={{
+          display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap',
+          transition: 'opacity 0.9s 0.5s, transform 0.9s 0.5s',
+          opacity: stats.visible ? 1 : 0,
+          transform: stats.visible ? 'translateY(0)' : 'translateY(28px)',
+        }}>
+          {[
+            { val: 'CA$1.80',  label: 'cheapest bowl',    city: 'Karachi, Pakistan',     color: '#34a85a' },
+            { val: 'CA$20.68', label: 'most expensive',   city: 'Zurich, Switzerland',   color: '#b83418' },
+          ].map(s => (
+            <div key={s.val} style={{
+              padding: '2rem 3rem',
+              border: '0.5px solid #1a2218',
+              borderRadius: 16,
+              background: 'rgba(16,20,16,0.6)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
+              minWidth: 190,
+            }}>
+              <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 48, color: s.color, lineHeight: 1 }}>{s.val}</div>
+              <div style={{ fontSize: 12, color: '#4a4a42', marginTop: 8 }}>{s.label}</div>
+              <div style={{ fontSize: 11, color: '#2e2e2a', marginTop: 4 }}>{s.city}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── What we measure ───────────────────────────────────────────────── */}
+      <section ref={metrics.ref} style={{ padding: '4rem 2rem 8rem', maxWidth: 1120, margin: '0 auto' }}>
+        <div style={{
+          marginBottom: '4.5rem',
+          transition: 'opacity 0.85s, transform 0.85s',
+          opacity: metrics.visible ? 1 : 0,
+          transform: metrics.visible ? 'translateY(0)' : 'translateY(26px)',
+        }}>
+          <span style={{ fontSize: 11, letterSpacing: '2.8px', textTransform: 'uppercase', color: '#323230', display: 'block', marginBottom: '1rem' }}>
+            what the index measures
+          </span>
+          <h2 style={{
+            fontFamily: 'DM Serif Display, serif',
+            fontSize: 'clamp(36px, 5.5vw, 60px)',
+            color: '#f0ece4', margin: 0, lineHeight: 1.04,
+          }}>
+            Food prices reveal<br />
+            <em style={{ color: '#d9682a' }}>what GDP hides.</em>
+          </h2>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.2rem' }}>
+          {[
+            {
+              icon: '🥡',
+              title: 'Baseline price',
+              desc: 'The median cost of a standard bowl of egg fried rice, normalised to remove restaurant tier bias.',
+              delay: '0s',
+            },
+            {
+              icon: '🏠',
+              title: 'Rent burden',
+              desc: 'What fraction of median salary goes to a 1-bedroom. Anchors food prices in real living costs.',
+              delay: '0.18s',
+            },
+            {
+              icon: '🍚',
+              title: 'Bowls after rent',
+              desc: 'How many bowls you can afford with disposable income after rent — the most direct affordability signal.',
+              delay: '0.36s',
+            },
+          ].map(m => (
+            <div key={m.title} style={{
+              padding: '2rem',
+              border: '0.5px solid #181e18',
+              borderRadius: 14,
+              background: '#101310',
+              transition: `opacity 0.8s ${m.delay}, transform 0.8s ${m.delay}`,
+              opacity: metrics.visible ? 1 : 0,
+              transform: metrics.visible ? 'translateY(0)' : 'translateY(34px)',
+            }}>
+              <div style={{ fontSize: 28, marginBottom: '1.2rem' }}>{m.icon}</div>
+              <h3 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 22, color: '#e0dcd4', margin: '0 0 0.75rem', fontWeight: 400 }}>{m.title}</h3>
+              <p style={{ fontSize: 13, color: '#404040', lineHeight: 1.78, margin: 0 }}>{m.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── CTA ───────────────────────────────────────────────────────────── */}
+      <section ref={cta.ref} style={{ padding: '8rem 2rem 11rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        {/* Bottom glow */}
+        <div style={{
+          position: 'absolute', bottom: '-120px', left: '50%',
+          width: 950, height: 520,
+          background: 'radial-gradient(ellipse, rgba(217,104,42,0.13) 0%, transparent 58%)',
+          filter: 'blur(90px)',
+          transform: 'translateX(-50%)',
+          pointerEvents: 'none',
+        }} />
+
+        <span style={{
+          fontSize: 11, letterSpacing: '2.8px', textTransform: 'uppercase', color: '#2e2e2a',
+          display: 'block', marginBottom: '2rem', position: 'relative',
+          transition: 'opacity 0.85s',
+          opacity: cta.visible ? 1 : 0,
+        }}>
+          40 cities · live data
+        </span>
+
+        <h2 style={{
+          fontFamily: 'DM Serif Display, serif',
+          fontSize: 'clamp(46px, 9.5vw, 104px)',
+          color: '#f0ece4',
+          lineHeight: 0.92,
+          letterSpacing: -3,
+          margin: '0 0 3.5rem',
+          position: 'relative',
+          transition: 'opacity 0.85s 0.14s, transform 0.85s 0.14s',
+          opacity: cta.visible ? 1 : 0,
+          transform: cta.visible ? 'translateY(0)' : 'translateY(32px)',
+        }}>
+          Ready to<br />
+          <em style={{ color: '#d9682a' }}>explore?</em>
+        </h2>
+
+        <div style={{
+          display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap',
+          position: 'relative',
+          transition: 'opacity 0.85s 0.28s, transform 0.85s 0.28s',
+          opacity: cta.visible ? 1 : 0,
+          transform: cta.visible ? 'translateY(0)' : 'translateY(22px)',
+        }}>
+          <a href="/explore" style={{
+            padding: '1.05rem 2.6rem',
+            borderRadius: 12,
+            background: '#d9682a',
+            color: '#fff',
+            textDecoration: 'none',
+            fontSize: 16,
+            fontFamily: 'DM Sans, sans-serif',
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+          }}>
+            View the map <span aria-hidden>→</span>
+          </a>
+          <a href="/cities" style={{
+            padding: '1.05rem 2.6rem',
+            borderRadius: 12,
+            border: '0.5px solid #252c25',
+            color: '#6a6a62',
+            textDecoration: 'none',
+            fontSize: 16,
+            fontFamily: 'DM Sans, sans-serif',
+          }}>
+            Browse all cities
+          </a>
+        </div>
+      </section>
     </main>
   )
-}
-
-const ctrlBtn: React.CSSProperties = {
-  background: 'none', border: '0.5px solid #1e261e', borderRadius: 8,
-  padding: '5px 10px', cursor: 'pointer', fontSize: 12, color: '#5a5a52',
-  fontFamily: 'DM Sans, sans-serif',
 }
