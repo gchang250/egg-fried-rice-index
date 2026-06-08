@@ -4,26 +4,16 @@ import { supabase } from '@/lib/supabase'
 import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
-
-// Import shared rates/symbols from CityPageContent so both pages stay in sync
 import { RATES as rates, SYMBOLS as symbols } from './cities/[city]/CityPageContent'
 
 const currencyOptions = [
   ['CAD', 'CA$ CAD'], ['USD', 'US$ USD'], ['EUR', '€ EUR'], ['GBP', '£ GBP'],
   ['CHF', 'Fr CHF'], ['AUD', 'AU$ AUD'], ['NZD', 'NZ$ NZD'],
   ['JPY', '¥ JPY'],  ['CNY', '¥ CNY'],  ['HKD', 'HK$ HKD'], ['SGD', 'S$ SGD'],
-  ['KRW', '₩ KRW'],  ['TWD', 'NT$ TWD'],['INR', '₹ INR'],   ['PKR', '₨ PKR'],
-  ['MXN', 'MX$ MXN'],['BRL', 'R$ BRL'], ['ARS', 'AR$ ARS'],
-  ['AED', 'AED AED'],['SAR', 'SAR SAR'],['QAR', 'QAR QAR'], ['KWD', 'KD KWD'],
-  ['TRY', '₺ TRY'],  ['EGP', 'E£ EGP'],['RUB', '₽ RUB'],   ['ZAR', 'R ZAR'],
-  ['PHP', '₱ PHP'],  ['MYR', 'RM MYR'],
-]
-
-const navLinks = [
-  { label: 'cities', href: '/cities' },
-  { label: 'submit', href: '/submit' },
-  { label: 'about', href: '/about' },
-  { label: 'methodology', href: '/methodology' },
+  ['KRW', '₩ KRW'],  ['TWD', 'NT$ TWD'], ['INR', '₹ INR'],  ['PKR', '₨ PKR'],
+  ['MXN', 'MX$ MXN'], ['BRL', 'R$ BRL'], ['ARS', 'AR$ ARS'],
+  ['AED', 'AED AED'], ['SAR', 'SAR SAR'], ['TRY', '₺ TRY'],
+  ['EGP', 'E£ EGP'], ['RUB', '₽ RUB'],
 ]
 
 type City = {
@@ -34,166 +24,122 @@ type City = {
   latitude: number | null
   longitude: number | null
   population: string | null
-  climate: string | null
   blurb: string | null
   price_cad: number | null
   price_source: string | null
   price_updated_at: string | null
-  population_source: string | null
-  population_updated_at: string | null
   confidence_score: number | null
+  median_rent_1br_cad: number | null
+  median_monthly_salary_cad: number | null
 }
 
+// Color tiers — fixed CAD thresholds, dots always reflect relative affordability
 function dotColor(priceCAD: number | null): string {
-  if (!priceCAD || priceCAD <= 0) return '#aaa8a0'
-  if (priceCAD < 5)  return '#2d7a4f'
-  if (priceCAD < 9)  return '#4fa36c'
-  if (priceCAD < 14) return '#b8720d'
-  if (priceCAD < 18) return '#C25E1E'
-  return '#942b0a'
+  if (!priceCAD || priceCAD <= 0) return '#555550'
+  if (priceCAD < 5)  return '#34a85a'
+  if (priceCAD < 9)  return '#5bbf7a'
+  if (priceCAD < 14) return '#c4890f'
+  if (priceCAD < 18) return '#d9682a'
+  return '#b83418'
 }
+
+// The CAD thresholds that define each color band
+const COLOR_TIERS = [
+  { color: '#34a85a', max: 5 },
+  { color: '#5bbf7a', max: 9 },
+  { color: '#c4890f', max: 14 },
+  { color: '#d9682a', max: 18 },
+  { color: '#b83418', max: Infinity },
+]
 
 export default function Home() {
   const svgRef = useRef<SVGSVGElement>(null)
-  const gRef = useRef<SVGGElement>(null)
+  const gRef  = useRef<SVGGElement>(null)
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null)
 
-  const [currency, setCurrency] = useState('CAD')
+  const [currency, setCurrency]       = useState('CAD')
   const [selectedCity, setSelectedCity] = useState<City | null>(null)
-  const [expanded, setExpanded] = useState(false)
-  const [cities, setCities] = useState<City[]>([])
+  const [expanded, setExpanded]       = useState(false)
+  const [cities, setCities]           = useState<City[]>([])
   const [loadingCities, setLoadingCities] = useState(true)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile]       = useState(false)
 
-  const getPrice = (priceCAD: number | null) => {
-    if (!priceCAD || priceCAD <= 0) return 'Pending'
-
+  // Convert a CAD amount to the selected currency
+  const cvt = (cad: number) => {
     const rate = rates[currency] ?? 1
-    const symbol = symbols[currency] ?? 'CA$'
-    const converted = priceCAD * rate
-
-    return `${symbol}${converted.toLocaleString(undefined, {
-      minimumFractionDigits: converted >= 100 ? 0 : 2,
-      maximumFractionDigits: converted >= 100 ? 0 : 2,
-    })}`
+    const sym  = symbols[currency] ?? 'CA$'
+    const val  = cad * rate
+    const digits = val >= 100 ? 0 : 2
+    return `${sym}${val.toLocaleString(undefined, { minimumFractionDigits: digits, maximumFractionDigits: digits })}`
   }
 
-  const formatDate = (dateString: string | null | undefined) => {
-    if (!dateString) return 'Not available'
-
-    return new Date(dateString).toLocaleDateString(undefined, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    })
-  }
-
-  const formatConfidence = (value: number | null) => {
-    if (value === null || value === undefined) return 'Not available'
-    if (value <= 1) return `${Math.round(value * 100)}%`
-    return `${Math.round(value)}%`
-  }
+  // Legend labels in the currently selected currency
+  const legendTiers = [
+    { color: '#34a85a', label: `Under ${cvt(5)}` },
+    { color: '#5bbf7a', label: `${cvt(5)} – ${cvt(9)}` },
+    { color: '#c4890f', label: `${cvt(9)} – ${cvt(14)}` },
+    { color: '#d9682a', label: `${cvt(14)} – ${cvt(18)}` },
+    { color: '#b83418', label: `${cvt(18)}+` },
+  ]
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-
-    return () => window.removeEventListener('resize', checkMobile)
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
 
   useEffect(() => {
     async function fetchCities() {
       setLoadingCities(true)
-
       const { data, error } = await supabase
         .from('cities')
-        .select(
-          `
-          city,
-          country,
-          region,
-          flag,
-          latitude,
-          longitude,
-          population,
-          climate,
-          blurb,
-          price_cad,
-          price_source,
-          price_updated_at,
-          population_source,
-          population_updated_at,
-          confidence_score
-        `
-        )
+        .select(`
+          city, country, region, flag, latitude, longitude,
+          population, blurb, price_cad,
+          price_source, price_updated_at, confidence_score,
+          median_rent_1br_cad, median_monthly_salary_cad
+        `)
         .order('city', { ascending: true })
 
-      if (error) {
-        console.error('Supabase error:', error)
-        setLoadingCities(false)
-        return
-      }
-
-      const validCities = (data ?? []).filter(
-        (city) =>
-          city.latitude !== null &&
-          city.longitude !== null &&
-          Number.isFinite(Number(city.latitude)) &&
-          Number.isFinite(Number(city.longitude))
+      if (error) { setLoadingCities(false); return }
+      setCities(
+        (data ?? []).filter(c =>
+          c.latitude != null && c.longitude != null &&
+          Number.isFinite(Number(c.latitude)) && Number.isFinite(Number(c.longitude))
+        ) as City[]
       )
-
-      setCities(validCities as City[])
       setLoadingCities(false)
     }
-
     fetchCities()
   }, [])
 
-  const handleSelectCity = (city: City) => setSelectedCity(city)
-  const handleClose = () => setSelectedCity(null)
-
   useEffect(() => {
     if (!svgRef.current || !gRef.current) return
-
-    const W = 700
-    const H = 380
+    const W = 700, H = 380
     const svg = d3.select(svgRef.current)
-    const g = d3.select(gRef.current)
-
+    const g   = d3.select(gRef.current)
     g.selectAll('*').remove()
 
-    const projection = d3
-      .geoNaturalEarth1()
-      .scale(115)
-      .translate([W / 2, H / 2 + 14])
-
+    const projection = d3.geoNaturalEarth1().scale(115).translate([W / 2, H / 2 + 14])
     const pathGen = d3.geoPath().projection(projection)
 
-    const zoom = d3
-      .zoom<SVGSVGElement, unknown>()
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([1, 12])
-      .on('zoom', (event) => {
+      .on('zoom', event => {
         g.attr('transform', event.transform)
-
         g.selectAll<SVGCircleElement, unknown>('.city-dot')
           .attr('r', 6 / event.transform.k)
-          .attr('stroke-width', 2 / event.transform.k)
-
+          .attr('stroke-width', 1.5 / event.transform.k)
         g.selectAll<SVGTextElement, unknown>('.city-label')
           .attr('font-size', 9 / event.transform.k)
           .attr('x', function () {
-            const cx = parseFloat(
-              d3.select(this.parentNode as SVGGElement).select('circle').attr('cx')
-            )
+            const cx = parseFloat(d3.select(this.parentNode as SVGGElement).select('circle').attr('cx'))
             return cx + 9 / event.transform.k
           })
           .attr('y', function () {
-            const cy = parseFloat(
-              d3.select(this.parentNode as SVGGElement).select('circle').attr('cy')
-            )
-            return cy + 4 / event.transform.k
+            const cy = parseFloat(d3.select(this.parentNode as SVGGElement).select('circle').attr('cy'))
+            return cy + 3.5 / event.transform.k
           })
           .attr('opacity', event.transform.k >= 3 ? 1 : 0)
       })
@@ -201,617 +147,317 @@ export default function Home() {
     zoomRef.current = zoom
     svg.call(zoom)
 
-    g.append('rect').attr('width', W).attr('height', H).attr('fill', '#E4E8DC')
+    // Dark ocean background
+    g.append('rect').attr('width', W).attr('height', H).attr('fill', '#0d1a14')
 
-    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(
-      (world: any) => {
-        g.append('g')
-          .selectAll('path')
-          .data((topojson.feature(world, world.objects.countries) as any).features)
-          .enter()
-          .append('path')
-          .attr('d', pathGen as any)
-          .attr('fill', '#EEF0E8')
-          .attr('stroke', '#d2d5c8')
-          .attr('stroke-width', 0.4)
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then((world: any) => {
+      g.append('g')
+        .selectAll('path')
+        .data((topojson.feature(world, world.objects.countries) as any).features)
+        .enter()
+        .append('path')
+        .attr('d', pathGen as any)
+        .attr('fill', '#162218')       // dark land
+        .attr('stroke', '#1e3022')     // subtle borders
+        .attr('stroke-width', 0.5)
 
-        cities.forEach((city) => {
-          const projected = projection([
-            Number(city.longitude),
-            Number(city.latitude),
-          ] as [number, number])
+      cities.forEach(city => {
+        const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
+        if (!projected) return
+        const [x, y] = projected
+        const cityG = g.append('g').style('cursor', 'pointer').attr('pointer-events', 'all')
 
-          if (!projected) return
+        cityG.append('circle')
+          .attr('class', 'city-dot')
+          .attr('cx', x).attr('cy', y)
+          .attr('r', 6)
+          .attr('fill', dotColor(city.price_cad))
+          .attr('stroke', 'rgba(0,0,0,0.4)')
+          .attr('stroke-width', 1.5)
+          .attr('pointer-events', 'all')
 
-          const [x, y] = projected
-          // pointer-events: all is required for Safari to fire click/tap on SVG <g> elements
-          const cityG = g.append('g')
-            .style('cursor', 'pointer')
-            .attr('pointer-events', 'all')
+        cityG.append('text')
+          .attr('class', 'city-label')
+          .attr('x', x + 9).attr('y', y + 3.5)
+          .attr('font-size', 9)
+          .attr('fill', '#b0aca6')
+          .attr('font-family', 'DM Sans, sans-serif')
+          .attr('pointer-events', 'none')
+          .attr('opacity', 0)
+          .text(city.city)
 
-          cityG
-            .append('circle')
-            .attr('class', 'city-dot')
-            .attr('cx', x)
-            .attr('cy', y)
-            .attr('r', 6)
-            .attr('fill', dotColor(city.price_cad))
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 2)
-            // explicit pointer-events on the circle so Safari registers taps
-            .attr('pointer-events', 'all')
-
-          cityG
-            .append('text')
-            .attr('class', 'city-label')
-            .attr('x', x + 9)
-            .attr('y', y + 4)
-            .attr('font-size', isMobile ? 8 : 9)
-            .attr('fill', '#4a4a44')
-            .attr('font-family', 'sans-serif')
-            .attr('pointer-events', 'none')
-            .attr('opacity', 0)
-            .text(city.city)
-
-          cityG.on('click', () => handleSelectCity(city))
-        })
-      }
-    )
+        cityG.on('click', () => setSelectedCity(city))
+      })
+    })
   }, [expanded, cities, isMobile])
 
   const resetZoom = () => {
     if (!svgRef.current || !zoomRef.current) return
-
-    d3.select(svgRef.current)
-      .transition()
-      .duration(500)
-      .call(zoomRef.current.transform, d3.zoomIdentity)
+    d3.select(svgRef.current).transition().duration(500).call(zoomRef.current.transform, d3.zoomIdentity)
   }
 
-  const sectionLabel: React.CSSProperties = {
-    fontSize: 10,
-    fontWeight: 500,
-    letterSpacing: '1.2px',
-    textTransform: 'uppercase',
-    color: '#9b9b90',
-    marginBottom: 4,
+  // Affordability context for the city drawer
+  const drawerBowlsAfterRent = (city: City) => {
+    if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad || !city.price_cad) return null
+    const leftover = city.median_monthly_salary_cad - city.median_rent_1br_cad
+    if (leftover <= 0) return null
+    return Math.round(leftover / city.price_cad)
   }
 
-  const divider: React.CSSProperties = {
-    borderBottom: '0.5px solid #f0ede6',
-    margin: '1rem 0',
+  const rentBurden = (city: City) => {
+    if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad) return null
+    return Math.round((city.median_rent_1br_cad / city.median_monthly_salary_cad) * 100)
   }
 
   return (
-    <main
-      style={{
-        fontFamily: 'DM Sans, sans-serif',
-        background: '#FAFAF8',
-        minHeight: '100vh',
-        color: '#1a1a18',
-        overflowX: 'hidden',
-        WebkitTapHighlightColor: 'transparent',
-      }}
-    >
+    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc', overflowX: 'hidden', WebkitTapHighlightColor: 'transparent' }}>
 
+      {/* Backdrop */}
       {selectedCity && (
-        <div
-          onClick={handleClose}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0,0,0,0.15)',
-            zIndex: 99,
-          }}
-        />
+        <div onClick={() => setSelectedCity(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99 }} />
       )}
 
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          right: 0,
-          width: isMobile ? '100vw' : 380,
-          maxWidth: '100vw',
-          height: '100vh',
-          background: '#fff',
-          borderLeft: isMobile ? 'none' : '0.5px solid #e5e3da',
-          zIndex: 100,
-          overflowY: 'auto',
-          // translateX is GPU-accelerated and reliable on Safari;
-          // animating `right` triggers layout recalculation on Safari/iOS
-          transform: selectedCity
-            ? 'translateX(0)'
-            : isMobile
-              ? 'translateX(100vw)'
-              : 'translateX(420px)',
-          transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
-          padding: isMobile ? '1.25rem' : '2rem',
-          boxSizing: 'border-box',
-        }}
-      >
-        {selectedCity && (
-          <>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                marginBottom: '1.5rem',
-                gap: '1rem',
-              }}
-            >
-              <div>
-                <div style={{ fontSize: 28, marginBottom: 4 }}>
-                  {selectedCity.flag ?? '🌍'}
+      {/* City drawer */}
+      <div style={{
+        position: 'fixed', top: 0, right: 0,
+        width: isMobile ? '100vw' : 390, maxWidth: '100vw',
+        height: '100vh',
+        background: '#141714',
+        borderLeft: isMobile ? 'none' : '0.5px solid #2a3028',
+        zIndex: 100, overflowY: 'auto',
+        transform: selectedCity ? 'translateX(0)' : isMobile ? 'translateX(100vw)' : 'translateX(420px)',
+        transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
+        padding: isMobile ? '1.5rem 1.25rem' : '2rem',
+        boxSizing: 'border-box',
+      }}>
+        {selectedCity && (() => {
+          const bowls = drawerBowlsAfterRent(selectedCity)
+          const burden = rentBurden(selectedCity)
+          return (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                <div>
+                  <div style={{ fontSize: 32, marginBottom: 6 }}>{selectedCity.flag ?? '🌍'}</div>
+                  <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 30, letterSpacing: -0.5, margin: 0, color: '#f0ece4' }}>
+                    {selectedCity.city}
+                  </h2>
+                  <p style={{ fontSize: 13, color: '#6a6a62', margin: '4px 0 0' }}>
+                    {[selectedCity.region, selectedCity.country].filter(Boolean).join(', ')}
+                    {selectedCity.population ? ` · ${Number(selectedCity.population).toLocaleString()}` : ''}
+                  </p>
                 </div>
-
-                <h2
-                  style={{
-                    fontFamily: 'DM Serif Display, serif',
-                    fontSize: 28,
-                    letterSpacing: -0.5,
-                    margin: 0,
-                  }}
+                <button
+                  onClick={() => setSelectedCity(null)}
+                  style={{ background: 'none', border: '0.5px solid #2a3028', borderRadius: 8, padding: '6px 10px', cursor: 'pointer', fontSize: 12, color: '#6a6a62', fontFamily: 'DM Sans, sans-serif', flexShrink: 0 }}
                 >
-                  {selectedCity.city}
-                </h2>
+                  ✕
+                </button>
               </div>
 
-              <button
-                onClick={handleClose}
-                style={{
-                  background: 'none',
-                  border: '0.5px solid #e5e3da',
-                  borderRadius: 8,
-                  padding: '6px 10px',
-                  cursor: 'pointer',
-                  fontSize: 13,
-                  color: '#6b6b64',
-                  fontFamily: 'DM Sans, sans-serif',
-                  flexShrink: 0,
-                }}
-              >
-                Close
-              </button>
-            </div>
-
-            <div style={divider} />
-
-            <div style={{ marginBottom: '1rem' }}>
-              <p style={sectionLabel}>Location</p>
-              <p style={{ fontSize: 14, color: '#1a1a18', lineHeight: 1.5 }}>
-                {[selectedCity.region, selectedCity.country].filter(Boolean).join(', ') ||
-                  'Not available'}
-              </p>
-            </div>
-
-            <div style={divider} />
-
-            <div style={{ marginBottom: '1rem' }}>
-              <p style={sectionLabel}>Baseline fried rice price</p>
-
-              <p
-                style={{
-                  fontFamily: 'DM Serif Display, serif',
-                  fontSize: 32,
-                  color: '#C25E1E',
-                  margin: 0,
-                }}
-              >
-                {getPrice(selectedCity.price_cad)}
-              </p>
-
-              <p style={{ fontSize: 11, color: '#9b9b90', marginTop: 4 }}>
-                Median or approved baseline estimate, depending on available data.
-              </p>
-
-              <div
-                style={{
-                  marginTop: '0.8rem',
-                  fontSize: 12,
-                  color: '#6b6b64',
-                  lineHeight: 1.6,
-                }}
-              >
-                <p style={{ margin: 0 }}>
-                  <strong>Updated:</strong> {formatDate(selectedCity.price_updated_at)}
+              {/* Price */}
+              <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#5a5a52', margin: '0 0 0.5rem' }}>Baseline fried rice</p>
+                <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 40, color: '#d9682a', margin: 0, lineHeight: 1 }}>
+                  {selectedCity.price_cad ? cvt(selectedCity.price_cad) : 'Pending'}
                 </p>
-
-                <p style={{ margin: 0 }}>
-                  <strong>Confidence:</strong>{' '}
-                  {formatConfidence(selectedCity.confidence_score)}
-                </p>
-
-                <p style={{ margin: 0 }}>
-                  <strong>Source:</strong>{' '}
-                  {selectedCity.price_source ?? 'Not available'}
-                </p>
+                {selectedCity.confidence_score && (
+                  <p style={{ fontSize: 12, color: '#5a5a52', margin: '6px 0 0' }}>
+                    {Math.round(selectedCity.confidence_score <= 1 ? selectedCity.confidence_score * 100 : selectedCity.confidence_score)}% confidence
+                  </p>
+                )}
               </div>
-            </div>
 
-            <div style={divider} />
+              {/* Affordability bowls */}
+              {(bowls !== null || burden !== null) && (
+                <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.25rem', display: 'flex', gap: '0.75rem' }}>
+                  {bowls !== null && (
+                    <div style={{ flex: 1, background: '#1a221a', borderRadius: 12, padding: '0.9rem' }}>
+                      <p style={{ fontSize: 10, color: '#5a5a52', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>After rent</p>
+                      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 26, color: '#34a85a', margin: 0 }}>{bowls} <span style={{ fontSize: 16 }}>🍚</span></p>
+                      <p style={{ fontSize: 11, color: '#5a5a52', margin: '3px 0 0' }}>bowls / month</p>
+                    </div>
+                  )}
+                  {burden !== null && (
+                    <div style={{ flex: 1, background: '#1a221a', borderRadius: 12, padding: '0.9rem' }}>
+                      <p style={{ fontSize: 10, color: '#5a5a52', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>Rent burden</p>
+                      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 26, color: burden > 70 ? '#c04030' : burden > 50 ? '#c4890f' : '#34a85a', margin: 0 }}>{burden}%</p>
+                      <p style={{ fontSize: 11, color: '#5a5a52', margin: '3px 0 0' }}>of median salary</p>
+                    </div>
+                  )}
+                </div>
+              )}
 
-            <div style={{ marginBottom: '1rem' }}>
-              <p style={sectionLabel}>City context</p>
-              <p style={{ fontSize: 14, color: '#3a3a34', lineHeight: 1.7 }}>
-                {selectedCity.blurb ?? 'No city context has been added yet.'}
-              </p>
-            </div>
+              {/* Blurb */}
+              {selectedCity.blurb && (
+                <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.5rem' }}>
+                  <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#5a5a52', margin: '0 0 0.6rem' }}>City context</p>
+                  <p style={{ fontSize: 13, color: '#a8a49c', lineHeight: 1.7, margin: 0 }}>{selectedCity.blurb}</p>
+                </div>
+              )}
 
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <a
-              href={`/cities/${selectedCity.city
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '')}`}
-              style={drawerPrimaryButtonStyle}
-            >
-              View full city profile
-            </a>
-
-            <a href="/cities" style={drawerButtonStyle}>
-              View all cities
-            </a>
-
-            <a href="/submit" style={drawerButtonStyle}>
-              Submit data
-            </a>
-
-            <a href="/methodology" style={drawerButtonStyle}>
-              Methodology
-            </a>
-          </div>
-          </>
-        )}
+              {/* Links */}
+              <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem' }}>
+                <a
+                  href={`/cities/${selectedCity.city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`}
+                  style={{ padding: '0.6rem 0.9rem', borderRadius: 10, border: '0.5px solid #d9682a', color: '#d9682a', textDecoration: 'none', fontSize: 13, background: 'transparent' }}
+                >
+                  Full profile →
+                </a>
+                <a href="/cities" style={{ padding: '0.6rem 0.9rem', borderRadius: 10, border: '0.5px solid #2a3028', color: '#8a8a82', textDecoration: 'none', fontSize: 13 }}>
+                  All cities
+                </a>
+              </div>
+            </>
+          )
+        })()}
       </div>
 
+      {/* ── Nav ───────────────────────────────────────────────────────────── */}
       {!(expanded && isMobile) && (
-        <>
-          <nav
-            style={{
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: 'space-between',
-              alignItems: isMobile ? 'flex-start' : 'center',
-              gap: isMobile ? '0.9rem' : 0,
-              padding: isMobile ? '1rem 1.25rem' : '1.25rem 2.5rem',
-              borderBottom: '0.5px solid #e5e3da',
-            }}
-          >
-            <a
-              href="/"
-              style={{
-                fontFamily: 'DM Serif Display, serif',
-                fontSize: 18,
-                color: '#1a1a18',
-                textDecoration: 'none',
-              }}
-            >
-              fried rice <span style={{ color: '#C25E1E' }}>index</span>
-            </a>
-
-            <div
-              style={{
-                display: 'flex',
-                gap: isMobile ? '1rem' : '2rem',
-                flexWrap: 'wrap',
-              }}
-            >
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  style={{
-                    fontSize: 13,
-                    color: '#6b6b64',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </nav>
-
-          <div
-            style={{
-              padding: isMobile ? '2.25rem 1.25rem 1.5rem' : '4rem 2.5rem 2.5rem',
-              maxWidth: 760,
-            }}
-          >
-            <p
-              style={{
-                fontSize: 11,
-                fontWeight: 500,
-                letterSpacing: '1.5px',
-                textTransform: 'uppercase',
-                color: '#C25E1E',
-                marginBottom: '1rem',
-              }}
-            >
-              Food prices, urban affordability, and restaurant markets
-            </p>
-
-            <h1
-              style={{
-                fontFamily: 'DM Serif Display, serif',
-                fontSize: isMobile ? 34 : 46,
-                lineHeight: 1.05,
-                letterSpacing: isMobile ? -0.8 : -1.5,
-                color: '#1a1a18',
-                marginBottom: '1rem',
-              }}
-            >
-              What does fried rice reveal{' '}
-              <em style={{ color: '#C25E1E' }}>about a city?</em>
-            </h1>
-
-            <p
-              style={{
-                fontSize: isMobile ? 14 : 15,
-                fontWeight: 300,
-                color: '#6b6b64',
-                lineHeight: 1.6,
-                maxWidth: 680,
-              }}
-            >
-              The Fried Rice Index tracks fried rice prices across cities and studies
-              what they reveal about baseline affordability, price variation, dish
-              variety, and premiumization in local restaurant markets.
-            </p>
-
-            <div
-              style={{
-                display: 'flex',
-                gap: '0.75rem',
-                flexWrap: 'wrap',
-                marginTop: '1.35rem',
-              }}
-            >
-              <a href="/submit" style={primaryHeroButtonStyle}>
-                Submit a price
-              </a>
-
-              <a href="/cities" style={secondaryHeroButtonStyle}>
-                View cities
-              </a>
-            </div>
+        <nav style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: isMobile ? '1rem 1.25rem' : '1.1rem 2rem',
+          borderBottom: '0.5px solid #1e261e',
+          position: 'relative', zIndex: 10,
+        }}>
+          <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
+            fried rice <span style={{ color: '#d9682a' }}>index</span>
+          </a>
+          <div style={{ display: 'flex', gap: isMobile ? '1rem' : '1.75rem' }}>
+            {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
+              <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
+            ))}
           </div>
-        </>
+        </nav>
       )}
 
-      <div
-        style={{
-          padding:
-            expanded && isMobile
-              ? 0
-              : isMobile
-                ? '0 1.25rem 2rem'
-                : '0 2.5rem 3rem',
-          display: 'block',
-        }}
-      >
-        <div
-          style={{
-            background: '#fff',
-            border: expanded && isMobile ? 'none' : '0.5px solid #e5e3da',
-            borderRadius: expanded && isMobile ? 0 : 16,
-            padding: expanded && isMobile ? '1rem' : isMobile ? '1rem' : '1.5rem',
-            minHeight: expanded && isMobile ? '100vh' : 'auto',
-            maxWidth: expanded ? 'none' : 1180,
-            margin: expanded ? 0 : '0 auto',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: 'space-between',
-              alignItems: isMobile ? 'flex-start' : 'center',
-              gap: isMobile ? '0.75rem' : 0,
-              marginBottom: '1.1rem',
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  fontSize: 11,
-                  fontWeight: 500,
-                  letterSpacing: '1.2px',
-                  textTransform: 'uppercase',
-                  color: '#9b9b90',
-                  margin: 0,
-                }}
-              >
-                Interactive city map
-              </p>
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      {!(expanded && isMobile) && (
+        <div style={{ padding: isMobile ? '2rem 1.25rem 1.25rem' : '2.5rem 2rem 1.5rem', maxWidth: 960 }}>
+          <h1 style={{
+            fontFamily: 'DM Serif Display, serif',
+            fontSize: isMobile ? 30 : 40,
+            lineHeight: 1.08, letterSpacing: isMobile ? -0.5 : -1,
+            color: '#f0ece4', margin: '0 0 1rem',
+          }}>
+            What does fried rice reveal{' '}
+            <em style={{ color: '#d9682a' }}>about a city?</em>
+          </h1>
 
-              <p
-                style={{
-                  fontSize: 13,
-                  color: '#6b6b64',
-                  margin: '0.35rem 0 0',
-                }}
-              >
-                Click a city dot to view price, confidence, and city context.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                style={{
-                  padding: '5px 10px',
-                  border: '0.5px solid #e5e3da',
-                  borderRadius: 8,
-                  background: '#FAFAF8',
-                  fontFamily: 'DM Sans, sans-serif',
-                  fontSize: 12,
-                  color: '#6b6b64',
-                  cursor: 'pointer',
-                }}
-              >
-                {currencyOptions.map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-
-              <button onClick={resetZoom} style={mapButtonStyle}>
-                Reset zoom
-              </button>
-
-              <button onClick={() => setExpanded(!expanded)} style={mapButtonStyle}>
-                {expanded ? 'Collapse' : 'Expand'}
-              </button>
-            </div>
+          {/* Stats strip */}
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+            {[
+              { label: '40 cities', sub: 'indexed' },
+              { label: cvt(1.80), sub: 'cheapest baseline' },
+              { label: cvt(20.68), sub: 'most expensive' },
+              { label: '11.5×', sub: 'price spread' },
+            ].map(s => (
+              <div key={s.label} style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 10, padding: '0.6rem 0.9rem' }}>
+                <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, color: '#d9682a' }}>{s.label}</span>
+                <span style={{ fontSize: 11, color: '#4a4a42', marginLeft: 6 }}>{s.sub}</span>
+              </div>
+            ))}
           </div>
 
-          <div
-            style={{
-              borderRadius: expanded && isMobile ? 0 : 10,
-              overflow: 'hidden',
-              background: '#E4E8DC',
-              cursor: 'grab',
-              touchAction: 'none',
-            }}
-          >
-            <svg
-              ref={svgRef}
-              viewBox="0 0 700 380"
-              style={{
-                width: '100%',
-                height: expanded && isMobile ? 'calc(100vh - 95px)' : 'auto',
-                display: 'block',
-                // Required for D3 zoom/pan to work on iOS Safari and other touch browsers.
-                // Without this, the browser intercepts touch events for page scrolling
-                // before D3 can process them, breaking all map interaction on mobile.
-                touchAction: 'none',
-              }}
-            >
-              <g ref={gRef} />
-            </svg>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginTop: 8 }}>
-            <p style={{ fontSize: 11, color: '#9b9b90', margin: 0 }}>
-              Scroll to zoom · drag to pan · click a city · names appear after 3× zoom
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: 10, color: '#9b9b90', letterSpacing: '0.5px' }}>BASELINE PRICE</span>
-              {[
-                { color: '#2d7a4f', label: 'Under CA$5' },
-                { color: '#4fa36c', label: 'CA$5–9' },
-                { color: '#b8720d', label: 'CA$9–14' },
-                { color: '#C25E1E', label: 'CA$14–18' },
-                { color: '#942b0a', label: 'CA$18+' },
-              ].map(({ color, label }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />
-                  <span style={{ fontSize: 10, color: '#9b9b90' }}>{label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {loadingCities && (
-            <p style={{ fontSize: 12, color: '#9b9b90', marginTop: 8 }}>
-              Loading city data...
-            </p>
-          )}
-
-          {!loadingCities && cities.length === 0 && (
-            <p style={{ fontSize: 12, color: '#9b9b90', marginTop: 8 }}>
-              No cities with coordinates are available yet.
-            </p>
-          )}
-
-          <div
-            style={{
-              display: 'flex',
-              gap: '0.75rem',
-              flexWrap: 'wrap',
-              marginTop: '1rem',
-            }}
-          >
-            <a href="/cities" style={panelButtonStyle}>
-              View all cities
+          <div style={{ display: 'flex', gap: '0.6rem' }}>
+            <a href="/cities" style={{ padding: '0.65rem 1.1rem', borderRadius: 10, border: '0.5px solid #d9682a', background: '#d9682a', color: '#fff', textDecoration: 'none', fontSize: 13 }}>
+              Explore cities
             </a>
-
-            <a href="/submit" style={panelButtonStyle}>
+            <a href="/submit" style={{ padding: '0.65rem 1.1rem', borderRadius: 10, border: '0.5px solid #1e261e', color: '#8a8a82', textDecoration: 'none', fontSize: 13 }}>
               Submit a price
-            </a>
-
-            <a href="/methodology" style={panelButtonStyle}>
-              Read methodology
             </a>
           </div>
         </div>
+      )}
+
+      {/* ── Map ──────────────────────────────────────────────────────────── */}
+      <div style={{ padding: expanded && isMobile ? 0 : isMobile ? '0 0 2rem' : '0 2rem 2.5rem' }}>
+
+        {/* Controls bar */}
+        {!(expanded && isMobile) && (
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            gap: '0.75rem', flexWrap: 'wrap',
+            marginBottom: '0.6rem',
+          }}>
+            <p style={{ fontSize: 12, color: '#3a3a32', margin: 0 }}>
+              Click a dot · scroll to zoom · drag to pan · city names at 3× zoom
+            </p>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <select
+                value={currency}
+                onChange={e => setCurrency(e.target.value)}
+                style={{ padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: '#8a8a82', cursor: 'pointer' }}
+              >
+                {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+              </select>
+              <button onClick={resetZoom} style={ctrlBtn}>Reset zoom</button>
+              <button onClick={() => setExpanded(!expanded)} style={ctrlBtn}>{expanded ? 'Collapse' : 'Expand'}</button>
+            </div>
+          </div>
+        )}
+
+        {/* Map SVG */}
+        <div style={{
+          borderRadius: expanded && isMobile ? 0 : 14,
+          overflow: 'hidden',
+          background: '#0d1a14',
+          cursor: 'grab',
+          touchAction: 'none',
+          border: expanded && isMobile ? 'none' : '0.5px solid #1a2a1e',
+        }}>
+          <svg
+            ref={svgRef}
+            viewBox="0 0 700 380"
+            style={{
+              width: '100%',
+              height: expanded && isMobile ? 'calc(100vh - 95px)' : 'auto',
+              display: 'block',
+              touchAction: 'none',
+            }}
+          >
+            <g ref={gRef} />
+          </svg>
+        </div>
+
+        {/* Legend + loading */}
+        {!(expanded && isMobile) && (
+          <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 10, color: '#3a3a32', letterSpacing: '0.8px', textTransform: 'uppercase' }}>Baseline price</span>
+              {legendTiers.map(t => (
+                <div key={t.color} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <div style={{ width: 9, height: 9, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 11, color: '#4a4a42' }}>{t.label}</span>
+                </div>
+              ))}
+            </div>
+            {loadingCities && <p style={{ fontSize: 11, color: '#3a3a32', margin: 0 }}>Loading…</p>}
+          </div>
+        )}
+
+        {/* Expand-mode controls */}
+        {expanded && isMobile && (
+          <div style={{ padding: '0.75rem 1rem', display: 'flex', gap: 8, alignItems: 'center', background: '#141714', borderTop: '0.5px solid #1e261e' }}>
+            <select
+              value={currency}
+              onChange={e => setCurrency(e.target.value)}
+              style={{ flex: 1, padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#0c0f0d', fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: '#8a8a82' }}
+            >
+              {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+            <button onClick={resetZoom} style={ctrlBtn}>Reset</button>
+            <button onClick={() => setExpanded(false)} style={ctrlBtn}>Collapse</button>
+          </div>
+        )}
       </div>
+
     </main>
   )
 }
 
-const drawerPrimaryButtonStyle: React.CSSProperties = {
-  padding: '0.55rem 0.8rem',
-  borderRadius: 10,
-  border: '0.5px solid #C25E1E',
-  color: '#fff',
-  textDecoration: 'none',
-  fontSize: 13,
-  background: '#C25E1E',
-}
-
-const mapButtonStyle: React.CSSProperties = {
-  background: 'none',
-  border: '0.5px solid #e5e3da',
-  borderRadius: 8,
-  padding: '5px 10px',
-  cursor: 'pointer',
-  fontSize: 12,
-  color: '#6b6b64',
+const ctrlBtn: React.CSSProperties = {
+  background: 'none', border: '0.5px solid #1e261e', borderRadius: 8,
+  padding: '5px 10px', cursor: 'pointer', fontSize: 12, color: '#5a5a52',
   fontFamily: 'DM Sans, sans-serif',
-}
-
-const drawerButtonStyle: React.CSSProperties = {
-  padding: '0.55rem 0.8rem',
-  borderRadius: 10,
-  border: '0.5px solid #e5e3da',
-  color: '#1a1a18',
-  textDecoration: 'none',
-  fontSize: 13,
-  background: '#FAFAF8',
-}
-
-const panelButtonStyle: React.CSSProperties = {
-  padding: '0.6rem 0.9rem',
-  borderRadius: 10,
-  border: '0.5px solid #e5e3da',
-  color: '#1a1a18',
-  textDecoration: 'none',
-  fontSize: 13,
-  background: '#FAFAF8',
-}
-
-const primaryHeroButtonStyle: React.CSSProperties = {
-  padding: '0.7rem 1rem',
-  borderRadius: 10,
-  border: '0.5px solid #C25E1E',
-  color: '#fff',
-  textDecoration: 'none',
-  fontSize: 13,
-  background: '#C25E1E',
-}
-
-const secondaryHeroButtonStyle: React.CSSProperties = {
-  padding: '0.7rem 1rem',
-  borderRadius: 10,
-  border: '0.5px solid #e5e3da',
-  color: '#1a1a18',
-  textDecoration: 'none',
-  fontSize: 13,
-  background: '#fff',
 }

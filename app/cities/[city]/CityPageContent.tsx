@@ -199,7 +199,7 @@ function ScoreBar({ score, label }: { score: number | null; label: string }) {
         <span style={{ fontSize: 12, color: '#9b9b90' }}>/ 100</span>
         <span style={{ fontSize: 11, color, fontWeight: 500 }}>— {grade}</span>
       </div>
-      <div style={{ height: 4, borderRadius: 4, background: '#e5e3da', overflow: 'hidden' }}>
+      <div style={{ height: 4, borderRadius: 4, background: '#1e261e', overflow: 'hidden' }}>
         <div style={{ height: '100%', width: `${pct}%`, background: color, borderRadius: 4 }} />
       </div>
       <p style={{ fontSize: 11, color: '#9b9b90', margin: '4px 0 0' }}>{label}</p>
@@ -270,44 +270,37 @@ export default function CityPageContent({
   const sym = SYMBOLS[currency] ?? currency
 
   return (
-    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#FAFAF8', minHeight: '100vh', color: '#1a1a18' }}>
+    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc' }}>
 
       {/* ── Nav ─────────────────────────────────────────────────────────── */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '1.25rem 2.5rem', borderBottom: '0.5px solid #e5e3da', flexWrap: 'wrap' }}>
-        <Link href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, color: '#1a1a18', textDecoration: 'none' }}>
-          fried rice <span style={{ color: '#C25E1E' }}>index</span>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '1.1rem 2rem', borderBottom: '0.5px solid #1e261e', flexWrap: 'wrap' }}>
+        <Link href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
+          fried rice <span style={{ color: '#d9682a' }}>index</span>
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
           {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <Link key={h} href={h} style={{ fontSize: 13, color: '#6b6b64', textDecoration: 'none' }}>{l}</Link>
+            <Link key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</Link>
           ))}
         </div>
       </nav>
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '4rem 2.5rem 2rem', maxWidth: 1100, margin: '0 auto' }}>
+      <section style={{ padding: '3rem 2rem 2rem', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
-          <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#C25E1E', margin: 0 }}>
+          <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#d9682a', margin: 0 }}>
             City profile
           </p>
-          {/* Currency selector */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 12, color: '#9b9b90' }}>View prices in</span>
+            <span style={{ fontSize: 12, color: '#3a3a32' }}>View in</span>
             <select
               value={currency}
               onChange={e => setCurrency(e.target.value)}
-              style={{
-                padding: '5px 10px', border: '0.5px solid #e5e3da', borderRadius: 8,
-                background: '#fff', fontFamily: 'DM Sans, sans-serif',
-                fontSize: 13, color: '#1a1a18', cursor: 'pointer',
-              }}
+              style={{ padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: '#e8e4dc', cursor: 'pointer' }}
             >
               {CURRENCY_GROUPS.map(group => (
                 <optgroup key={group.label} label={group.label}>
                   {group.codes.filter(c => RATES[c]).map(code => (
-                    <option key={code} value={code}>
-                      {SYMBOLS[code]}{code === 'CAD' ? ' (default)' : ''}
-                    </option>
+                    <option key={code} value={code}>{SYMBOLS[code]}{code === 'CAD' ? ' (default)' : ''}</option>
                   ))}
                 </optgroup>
               ))}
@@ -315,14 +308,14 @@ export default function CityPageContent({
           </div>
         </div>
 
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 58, lineHeight: 1.05, letterSpacing: -1.5, margin: '0 0 0.4rem' }}>
+        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 52, lineHeight: 1.05, letterSpacing: -1.2, margin: '0 0 0.4rem', color: '#f0ece4' }}>
           {city.flag ? `${city.flag} ` : ''}{city.city}
         </h1>
-        <p style={{ fontSize: 15, color: '#6b6b64', margin: '0 0 1.5rem' }}>
+        <p style={{ fontSize: 14, color: '#4a4a42', margin: '0 0 1.25rem' }}>
           {[city.region, city.country].filter(Boolean).join(', ')}
           {city.population ? ` · ${Number(city.population).toLocaleString()} people` : ''}
         </p>
-        <p style={{ fontSize: 16, color: '#3a3a34', lineHeight: 1.75, maxWidth: 720, margin: '0 0 2.5rem' }}>
+        <p style={{ fontSize: 15, color: '#7a7a70', lineHeight: 1.75, maxWidth: 700, margin: '0 0 2rem' }}>
           {city.blurb ?? 'City context coming soon.'}
         </p>
 
@@ -353,7 +346,7 @@ export default function CityPageContent({
       {/* ── Living costs ────────────────────────────────────────────────── */}
       {hasLiving && (
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
-          <div style={{ borderTop: '0.5px solid #e5e3da', paddingTop: '2rem' }}>
+          <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '2rem' }}>
             <h2 style={h2}>What does it cost to live here?</h2>
             <p style={lead}>
               Prices shown in <strong>{sym} {currency}</strong>.
@@ -396,7 +389,7 @@ export default function CityPageContent({
       {/* ── Liveability ─────────────────────────────────────────────────── */}
       {hasLiveability && (
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
-          <div style={{ borderTop: '0.5px solid #e5e3da', paddingTop: '2rem' }}>
+          <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '2rem' }}>
             <h2 style={h2}>Liveability</h2>
             <p style={lead}>Key quality-of-life and practical indicators for international residents.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
@@ -439,7 +432,7 @@ export default function CityPageContent({
 
       {/* ── Fried rice market ───────────────────────────────────────────── */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
-        <div style={{ borderTop: '0.5px solid #e5e3da', paddingTop: '2rem' }}>
+        <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '2rem' }}>
           <h2 style={h2}>Fried rice market</h2>
           <p style={lead}>
             {restaurants.length} approved entries in {city.city}. Prices shown in {sym} {currency}.
@@ -451,9 +444,9 @@ export default function CityPageContent({
 
       {/* ── Data notes ──────────────────────────────────────────────────── */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 3rem' }}>
-        <div style={{ borderTop: '0.5px solid #e5e3da', paddingTop: '2rem' }}>
+        <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '2rem' }}>
           <h2 style={h2}>Data notes</h2>
-          <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+          <div style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 14, padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
             {[
               ['Price source', city.price_source],
               ['Salary source', city.salary_data_source],
@@ -463,11 +456,11 @@ export default function CityPageContent({
               ['Climate', city.climate],
               ['Population', city.population ? Number(city.population).toLocaleString() : null],
             ].filter(([, v]) => v).map(([label, value]) => (
-              <p key={label as string} style={{ fontSize: 13, color: '#3a3a34', margin: 0 }}>
-                <span style={{ color: '#9b9b90', marginRight: 6 }}>{label}:</span>{value}
+              <p key={label as string} style={{ fontSize: 13, color: '#8a8a82', margin: 0 }}>
+                <span style={{ color: '#3a3a32', marginRight: 6 }}>{label}:</span>{value}
               </p>
             ))}
-            <p style={{ fontSize: 13, color: '#9b9b90', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 12, color: '#3a3a32', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
               All monetary values stored in CAD and converted client-side at May 2026 exchange rates.
               Salary and rent figures represent median values for the metropolitan area.
               Liveability scores follow Numbeo methodology (0–100 scale).
@@ -487,12 +480,12 @@ function PriceCard({ label, value, sub, accent = false, wide = false }: {
 }) {
   return (
     <div style={{
-      background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 20,
-      padding: '1.75rem 2rem', minWidth: wide ? 220 : 180,
+      background: '#141714', border: '0.5px solid #1e261e', borderRadius: 18,
+      padding: '1.5rem 1.75rem', minWidth: wide ? 220 : 180,
     }}>
-      <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#9b9b90', margin: '0 0 0.5rem' }}>{label}</p>
-      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: accent ? 48 : 36, color: accent ? '#C25E1E' : '#1a1a18', margin: 0, lineHeight: 1 }}>{value}</p>
-      <p style={{ fontSize: 13, color: '#9b9b90', margin: '0.5rem 0 0' }}>{sub}</p>
+      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.5rem' }}>{label}</p>
+      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: accent ? 44 : 32, color: accent ? '#d9682a' : '#f0ece4', margin: 0, lineHeight: 1 }}>{value}</p>
+      <p style={{ fontSize: 12, color: '#4a4a42', margin: '0.4rem 0 0' }}>{sub}</p>
     </div>
   )
 }
@@ -500,25 +493,25 @@ function PriceCard({ label, value, sub, accent = false, wide = false }: {
 function LivingCard({ label, bowlCount, amount, sub, highlight = false, deficit = false }: {
   label: string; bowlCount: string; amount: string; sub?: string; highlight?: boolean; deficit?: boolean
 }) {
-  const bg     = deficit ? '#fff5f5' : highlight ? '#fff8f4' : '#fff'
-  const border = deficit ? '#f5c0c0' : highlight ? '#f5cdb0' : '#e5e3da'
-  const numColor = deficit ? '#c0392b' : highlight ? '#C25E1E' : '#1a1a18'
+  const bg     = deficit ? '#1f1414' : highlight ? '#1a1a12' : '#141714'
+  const border = deficit ? '#3a2020' : highlight ? '#2e2616' : '#1e261e'
+  const numColor = deficit ? '#c04030' : highlight ? '#d9682a' : '#f0ece4'
   return (
-    <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 16, padding: '1.25rem' }}>
-      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#9b9b90', margin: '0 0 0.5rem' }}>{label}</p>
-      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 36, color: numColor, margin: 0, lineHeight: 1 }}>
-        {deficit ? '−' : ''}{bowlCount} <span style={{ fontSize: 20 }}>🍚</span>
+    <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 14, padding: '1.1rem' }}>
+      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.4rem' }}>{label}</p>
+      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 32, color: numColor, margin: 0, lineHeight: 1 }}>
+        {deficit ? '−' : ''}{bowlCount} <span style={{ fontSize: 18 }}>🍚</span>
       </p>
-      <p style={{ fontSize: 13, color: '#6b6b64', margin: '0.4rem 0 0' }}>{amount} / month</p>
-      {sub && <p style={{ fontSize: 11, color: '#9b9b90', margin: '0.25rem 0 0' }}>{sub}</p>}
+      <p style={{ fontSize: 12, color: '#5a5a52', margin: '0.35rem 0 0' }}>{amount} / month</p>
+      {sub && <p style={{ fontSize: 11, color: '#3a3a32', margin: '0.2rem 0 0' }}>{sub}</p>}
     </div>
   )
 }
 
 function MetaCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1.25rem' }}>
-      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#9b9b90', margin: '0 0 0.75rem' }}>{label}</p>
+    <div style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 14, padding: '1.1rem' }}>
+      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.6rem' }}>{label}</p>
       {children}
     </div>
   )
@@ -530,42 +523,42 @@ function RestaurantTable({ rows, bowlPrice, currency }: {
   const sym = SYMBOLS[currency] ?? currency
   if (!rows.length) {
     return (
-      <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, padding: '1rem', marginTop: '1rem' }}>
-        <p style={{ fontSize: 14, color: '#9b9b90', margin: 0 }}>No approved entries yet.</p>
+      <div style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 14, padding: '1rem', marginTop: '1rem' }}>
+        <p style={{ fontSize: 14, color: '#3a3a32', margin: 0 }}>No approved entries yet.</p>
       </div>
     )
   }
   return (
-    <div style={{ background: '#fff', border: '0.5px solid #e5e3da', borderRadius: 16, overflowX: 'auto', marginTop: '1rem' }}>
+    <div style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 14, overflowX: 'auto', marginTop: '1rem' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
         <thead>
           <tr>
             {['Restaurant', 'Dish', 'Category', 'Tier', 'Local price', `Price (${sym})`, 'In bowls 🍚', 'Baseline', 'Conf.', 'Source'].map(h => (
-              <th key={h} style={{ textAlign: 'left', padding: '0.8rem 0.9rem', fontSize: 10, textTransform: 'uppercase', letterSpacing: '1px', color: '#9b9b90', borderBottom: '0.5px solid #e5e3da', whiteSpace: 'nowrap' }}>{h}</th>
+              <th key={h} style={{ textAlign: 'left', padding: '0.7rem 0.9rem', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1px', color: '#3a3a32', borderBottom: '0.5px solid #1a221a', whiteSpace: 'nowrap' }}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {rows.map(row => (
-            <tr key={row.id} style={{ background: row.included_in_baseline ? '#fdfcf9' : '#fff' }}>
+            <tr key={row.id} style={{ background: row.included_in_baseline ? '#181f18' : '#141714' }}>
               <td style={td}>{row.restaurant_name ?? '—'}</td>
               <td style={td}>{row.dish_name ?? '—'}</td>
               <td style={td}>{fmtCat(row.dish_category)}</td>
               <td style={td}>{fmtTier(row.tier)}</td>
               <td style={{ ...td, whiteSpace: 'nowrap' }}>{fmtLocal(row.local_price, row.local_currency)}</td>
-              <td style={{ ...td, whiteSpace: 'nowrap', fontWeight: 500 }}>{convert(row.price_cad, currency)}</td>
-              <td style={{ ...td, color: '#C25E1E', fontWeight: 500 }}>
+              <td style={{ ...td, whiteSpace: 'nowrap', fontWeight: 500, color: '#e8e4dc' }}>{convert(row.price_cad, currency)}</td>
+              <td style={{ ...td, color: '#d9682a', fontWeight: 500 }}>
                 {row.price_cad != null && bowlPrice ? (row.price_cad / bowlPrice).toFixed(1) : '—'}
               </td>
               <td style={td}>
                 {row.included_in_baseline
-                  ? <span style={{ color: '#2d7a4f', fontWeight: 500 }}>Yes</span>
-                  : <span style={{ color: '#9b9b90' }}>No</span>}
+                  ? <span style={{ color: '#34a85a', fontWeight: 500 }}>Yes</span>
+                  : <span style={{ color: '#2a2a22' }}>No</span>}
               </td>
               <td style={td}>{row.confidence_score != null ? `${Math.round(row.confidence_score <= 1 ? row.confidence_score * 100 : row.confidence_score)}%` : '—'}</td>
               <td style={td}>
                 {row.source_url
-                  ? <a href={row.source_url} target="_blank" rel="noreferrer" style={{ color: '#C25E1E', textDecoration: 'none', fontSize: 12 }}>View ↗</a>
+                  ? <a href={row.source_url} target="_blank" rel="noreferrer" style={{ color: '#d9682a', textDecoration: 'none', fontSize: 12 }}>View ↗</a>
                   : '—'}
               </td>
             </tr>
@@ -579,15 +572,15 @@ function RestaurantTable({ rows, bowlPrice, currency }: {
 // ── Styles ────────────────────────────────────────────────────────────────────
 
 const h2: React.CSSProperties = {
-  fontFamily: 'DM Serif Display, serif', fontSize: 30, letterSpacing: -0.5, margin: '0 0 0.4rem',
+  fontFamily: 'DM Serif Display, serif', fontSize: 28, letterSpacing: -0.5, margin: '0 0 0.4rem', color: '#f0ece4',
 }
 const lead: React.CSSProperties = {
-  fontSize: 14, color: '#6b6b64', lineHeight: 1.6, margin: 0, maxWidth: 700,
+  fontSize: 13, color: '#4a4a42', lineHeight: 1.6, margin: 0, maxWidth: 700,
 }
 const metaValStyle: React.CSSProperties = {
-  fontFamily: 'DM Serif Display, serif', fontSize: 28, color: '#1a1a18', margin: 0,
+  fontFamily: 'DM Serif Display, serif', fontSize: 28, color: '#f0ece4', margin: 0,
 }
 const td: React.CSSProperties = {
-  padding: '0.8rem 0.9rem', fontSize: 13, color: '#3a3a34',
-  borderBottom: '0.5px solid #f0ede6', verticalAlign: 'top',
+  padding: '0.8rem 0.9rem', fontSize: 13, color: '#8a8a82',
+  borderBottom: '0.5px solid #1a221a', verticalAlign: 'top',
 }
