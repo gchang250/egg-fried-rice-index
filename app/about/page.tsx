@@ -1,178 +1,91 @@
 export default function AboutPage() {
-  const navLinkStyle = {
-    fontSize: 13,
-    color: '#6b6b64',
-    textDecoration: 'none',
-  }
-
-  const cardStyle = {
-    background: '#fff',
-    border: '0.5px solid #e5e3da',
-    borderRadius: 16,
-    padding: '1.5rem',
-    marginBottom: '1.25rem',
-  }
-
-  const paragraphStyle = {
-    fontSize: 15,
-    color: '#3a3a34',
-    lineHeight: 1.7,
-    margin: '0 0 0.85rem',
-  }
-
-  const h2Style = {
-    fontFamily: 'DM Serif Display, serif',
-    fontSize: 26,
-    margin: '0 0 0.75rem',
-  }
-
   return (
-    <main
-      style={{
-        fontFamily: 'DM Sans, sans-serif',
-        background: '#FAFAF8',
-        minHeight: '100vh',
-        color: '#1a1a18',
-      }}
-    >
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
-        rel="stylesheet"
-      />
-
-      <nav
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '1.25rem 2.5rem',
-          borderBottom: '0.5px solid #e5e3da',
-        }}
-      >
-        <a
-          href="/"
-          style={{
-            fontFamily: 'DM Serif Display, serif',
-            fontSize: 18,
-            color: '#1a1a18',
-            textDecoration: 'none',
-          }}
-        >
-          fried rice <span style={{ color: '#C25E1E' }}>index</span>
+    <main style={{
+      fontFamily: 'DM Sans, sans-serif',
+      background: '#0c0f0d',
+      minHeight: '100vh',
+      color: '#e8e4dc',
+    }}>
+      <nav style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '1.1rem 2rem',
+        borderBottom: '0.5px solid #1e261e',
+      }}>
+        <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
+          fried rice <span style={{ color: '#d9682a' }}>index</span>
         </a>
-
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          <a href="/cities" style={navLinkStyle}>
-            cities
-          </a>
-          <a href="/submit" style={navLinkStyle}>
-            submit
-          </a>
-          <a href="/about" style={navLinkStyle}>
-            about
-          </a>
-          <a href="/methodology" style={navLinkStyle}>
-            methodology
-          </a>
+        <div style={{ display: 'flex', gap: '1.75rem' }}>
+          {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
+            <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
+          ))}
         </div>
       </nav>
 
-      <section style={{ maxWidth: 860, margin: '0 auto', padding: '4rem 1.5rem' }}>
-        <p
-          style={{
-            fontSize: 11,
-            fontWeight: 500,
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            color: '#C25E1E',
-            marginBottom: '1rem',
-          }}
-        >
+      <section style={{ maxWidth: 860, margin: '0 auto', padding: '4rem 2rem' }}>
+        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#d9682a', marginBottom: '1rem' }}>
           About
         </p>
 
-        <h1
-          style={{
-            fontFamily: 'DM Serif Display, serif',
-            fontSize: 48,
-            lineHeight: 1.05,
-            letterSpacing: -1.5,
-            margin: '0 0 1.25rem',
-          }}
-        >
+        <h1 style={{
+          fontFamily: 'DM Serif Display, serif',
+          fontSize: 48, lineHeight: 1.05, letterSpacing: -1.5,
+          color: '#f0ece4', margin: '0 0 1.25rem',
+        }}>
           A simple dish, a sharper way to compare cities.
         </h1>
 
-        <p
-          style={{
-            fontSize: 16,
-            color: '#6b6b64',
-            lineHeight: 1.7,
-            maxWidth: 700,
-            marginBottom: '3rem',
-          }}
-        >
-          The Fried Rice Index is a food-based affordability project that tracks
-          fried rice prices across cities. It uses restaurant menu data to study
-          baseline affordability, price variation, dish variety, and premiumization
-          in urban restaurant markets.
+        <p style={{ fontSize: 16, color: '#6a6a62', lineHeight: 1.7, maxWidth: 700, marginBottom: '3rem' }}>
+          The Fried Rice Index tracks fried rice prices across cities and uses that data
+          to study baseline affordability, price variation, and restaurant market patterns.
         </p>
 
-        <div style={cardStyle}>
-          <h2 style={h2Style}>Why this exists</h2>
-          <p style={paragraphStyle}>
-            Cost of living is usually described through broad statistics: CPI, rent,
-            wages, exchange rates, and purchasing power parity. Those measures matter,
-            but they can feel abstract.
-          </p>
-          <p style={paragraphStyle}>
-            The Fried Rice Index starts with something concrete: the price of a
-            familiar restaurant dish. By comparing fried rice prices across cities,
-            the project creates a simple way to see how everyday affordability changes
-            from place to place.
-          </p>
-        </div>
-
-        <div style={cardStyle}>
-          <h2 style={h2Style}>What the index does</h2>
-          <p style={paragraphStyle}>
-            The index collects restaurant-level fried rice prices, preserves the
-            original local price and currency, converts prices into Canadian dollars,
-            assigns source confidence scores, and summarizes city-level patterns.
-          </p>
-          <p style={paragraphStyle}>
-            It does not treat every fried rice dish as identical. Basic, vegetable,
-            meat-based, seafood, house special, and premium fried rice dishes are
-            categorized separately so the data can be analyzed more carefully.
-          </p>
-        </div>
-
-        <div style={cardStyle}>
-          <h2 style={h2Style}>What the index is not</h2>
-          <p style={paragraphStyle}>
-            The Fried Rice Index is not a complete cost-of-living model. It does not
-            replace official inflation data, rent data, wage data, CPI, or PPP.
-          </p>
-          <p style={paragraphStyle}>
-            It is a transparent restaurant-price signal: narrow, imperfect, but
-            concrete. Its value comes from making affordability easier to see,
-            question, and compare.
-          </p>
-        </div>
-
-        <div style={cardStyle}>
-          <h2 style={h2Style}>Where the project is going</h2>
-          <p style={paragraphStyle}>
-            The project is being expanded with a stronger methodology, public restaurant
-            submissions, downloadable datasets, twice-yearly insights, and weekly
-            writing on economic affairs.
-          </p>
-          <p style={paragraphStyle}>
-            The goal is to build a public dataset that can support real statistical
-            analysis while remaining readable to people who simply want to understand
-            how cities compare.
-          </p>
-        </div>
+        {[
+          {
+            title: 'Why this exists',
+            body: [
+              "Cost of living gets described through numbers that are hard to feel: CPI, PPP, rent indices. They matter, but they don’t stick.",
+              'The Fried Rice Index starts with something concrete — the price of a bowl of fried rice at a local restaurant. That one number ends up saying a lot about a place.',
+            ],
+          },
+          {
+            title: 'What the index does',
+            body: [
+              'It collects restaurant-level fried rice prices, preserves the original local currency, converts to CAD for comparison, assigns source confidence scores, and summarises city-level patterns.',
+              'Not all dishes are treated as equal. Basic, vegetable, meat, seafood, house special, and premium fried rice are categorised separately so the data holds up under scrutiny.',
+            ],
+          },
+          {
+            title: 'What the index is not',
+            body: [
+              "It is not a full cost-of-living model. It doesn’t replace rent data, wage data, CPI, or PPP.",
+              'It is a transparent, narrow restaurant-price signal. Its value comes from being concrete, comparable, and honest about its own limits.',
+            ],
+          },
+          {
+            title: 'Where the project is going',
+            body: [
+              'The index is expanding with more cities, public restaurant submissions, downloadable datasets, and more regular updates.',
+              'The goal is a public dataset serious enough for real analysis but readable enough for anyone who just wants to understand how cities compare.',
+            ],
+          },
+        ].map(card => (
+          <div key={card.title} style={{
+            background: '#111411',
+            border: '0.5px solid #1a2218',
+            borderRadius: 16,
+            padding: '1.5rem',
+            marginBottom: '1.25rem',
+          }}>
+            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 24, color: '#f0ece4', margin: '0 0 0.75rem', fontWeight: 400 }}>
+              {card.title}
+            </h2>
+            {card.body.map((p, i) => (
+              <p key={i} style={{ fontSize: 15, color: '#6a6a62', lineHeight: 1.75, margin: i < card.body.length - 1 ? '0 0 0.85rem' : 0 }}>
+                {p}
+              </p>
+            ))}
+          </div>
+        ))}
       </section>
     </main>
   )
