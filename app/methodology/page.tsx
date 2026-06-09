@@ -1,8 +1,8 @@
 export default function MethodologyPage() {
   const card = (children: React.ReactNode) => (
     <div style={{
-      background: '#111411',
-      border: '0.5px solid #1a2218',
+      background: 'var(--color-surface)',
+      border: '0.5px solid var(--color-border)',
       borderRadius: 16,
       padding: '1.5rem',
       marginBottom: '1.25rem',
@@ -12,59 +12,59 @@ export default function MethodologyPage() {
   )
 
   const h2 = (text: string) => (
-    <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 24, color: '#f0ece4', margin: '0 0 0.75rem', fontWeight: 400 }}>
+    <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: 'var(--color-text-1)', margin: '0 0 0.75rem', fontWeight: 400 }}>
       {text}
     </h2>
   )
 
   const p = (text: React.ReactNode, key?: number) => (
-    <p key={key} style={{ fontSize: 15, color: '#6a6a62', lineHeight: 1.75, margin: '0 0 0.85rem' }}>
+    <p key={key} style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.75, margin: '0 0 0.85rem' }}>
       {text}
     </p>
   )
 
   const ul = (items: string[]) => (
-    <ul style={{ fontSize: 15, color: '#6a6a62', lineHeight: 1.8, paddingLeft: '1.25rem', marginTop: 0 }}>
+    <ul style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.8, paddingLeft: '1.25rem', marginTop: 0 }}>
       {items.map((item, i) => <li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
     </ul>
   )
 
   return (
     <main style={{
-      fontFamily: 'DM Sans, sans-serif',
-      background: '#0c0f0d',
+      fontFamily: 'var(--font-body)',
+      background: 'var(--color-bg)',
       minHeight: '100vh',
-      color: '#e8e4dc',
+      color: 'var(--color-text-1)',
     }}>
       <nav style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '1.1rem 2rem',
-        borderBottom: '0.5px solid #1e261e',
+        borderBottom: '0.5px solid var(--color-border)',
       }}>
-        <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
-          fried rice <span style={{ color: '#d9682a' }}>index</span>
+        <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none' }}>
+          fried rice <span style={{ color: 'var(--color-accent)' }}>index</span>
         </a>
         <div style={{ display: 'flex', gap: '1.75rem' }}>
           {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
+            <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
           ))}
         </div>
       </nav>
 
       <section style={{ maxWidth: 920, margin: '0 auto', padding: '4rem 2rem' }}>
-        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#d9682a', marginBottom: '1rem' }}>
+        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '1rem' }}>
           Methodology
         </p>
 
         <h1 style={{
-          fontFamily: 'DM Serif Display, serif',
+          fontFamily: 'var(--font-display)',
           fontSize: 48, lineHeight: 1.05, letterSpacing: -1.5,
-          color: '#f0ece4', margin: '0 0 1.25rem',
+          color: 'var(--color-text-1)', margin: '0 0 1.25rem',
         }}>
           How the Fried Rice Index is calculated.
         </h1>
 
-        <p style={{ fontSize: 16, color: '#6a6a62', lineHeight: 1.7, maxWidth: 720, marginBottom: '3rem' }}>
+        <p style={{ fontSize: 16, color: 'var(--color-text-2)', lineHeight: 1.7, maxWidth: 720, marginBottom: '3rem' }}>
           The index compares restaurant fried rice prices across cities and tracks what those
           prices reveal about baseline affordability, dish variety, and local restaurant markets.
         </p>
@@ -143,7 +143,7 @@ export default function MethodologyPage() {
         {card(<>
           {h2('9. City-level calculations')}
           {p('The main city price is based on the <strong>median</strong> approved baseline price. Median is used because it\'s less affected by outliers.', 1)}
-          {p(<>The <strong>market average</strong> is a 5% trimmed mean of all approved entries — the cheapest and most expensive 5% are excluded before averaging. The trim removes <code style={{ fontFamily: 'monospace', fontSize: 13, color: '#d9682a' }}>Math.round(n × 0.05)</code> entries from each end, so trimming begins once a city has at least 10 approved entries.</>, 2)}
+          {p(<>The <strong>market average</strong> is a 5% trimmed mean of all approved entries — the cheapest and most expensive 5% are excluded before averaging. The trim removes <code style={{ fontFamily: 'monospace', fontSize: 13, color: 'var(--color-accent)' }}>Math.round(n × 0.05)</code> entries from each end, so trimming begins once a city has at least 10 approved entries.</>, 2)}
         </>)}
 
         {card(<>
@@ -165,7 +165,7 @@ export default function MethodologyPage() {
 
         {card(<>
           {h2('12. Downloadable datasets')}
-          {p(<>The index provides a date-stamped full dataset download from the <a href="/cities" style={{ color: '#d9682a' }}>Cities</a> page. The report is a single CSV with two sections:</>)}
+          {p(<>The index provides a date-stamped full dataset download from the <a href="/cities" style={{ color: 'var(--color-accent)' }}>Cities</a> page. The report is a single CSV with two sections:</>)}
           {ul([
             '<strong>City summary:</strong> baseline median, 5% trimmed market average, standard deviation, price range, entry counts, data quality label, confidence score, and last-updated date.',
             '<strong>Restaurant entries:</strong> every approved restaurant entry with restaurant name, dish name, category, tier, local price, currency, exchange rate, CAD price, source type, source URL, confidence score, and date accessed.',

@@ -1,40 +1,40 @@
 export default function AboutPage() {
   return (
     <main style={{
-      fontFamily: 'DM Sans, sans-serif',
-      background: '#0c0f0d',
+      fontFamily: 'var(--font-body)',
+      background: 'var(--color-bg)',
       minHeight: '100vh',
-      color: '#e8e4dc',
+      color: 'var(--color-text-1)',
     }}>
       <nav style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '1.1rem 2rem',
-        borderBottom: '0.5px solid #1e261e',
+        borderBottom: '0.5px solid var(--color-border)',
       }}>
-        <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
-          fried rice <span style={{ color: '#d9682a' }}>index</span>
+        <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none', fontStyle: 'italic', letterSpacing: -.2 }}>
+          fried rice <span style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>index</span>
         </a>
         <div style={{ display: 'flex', gap: '1.75rem' }}>
           {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
+            <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
           ))}
         </div>
       </nav>
 
       <section style={{ maxWidth: 860, margin: '0 auto', padding: '4rem 2rem' }}>
-        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#d9682a', marginBottom: '1rem' }}>
+        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '1rem' }}>
           About
         </p>
 
         <h1 style={{
-          fontFamily: 'DM Serif Display, serif',
+          fontFamily: 'var(--font-display)',
           fontSize: 48, lineHeight: 1.05, letterSpacing: -1.5,
-          color: '#f0ece4', margin: '0 0 1.25rem',
+          color: 'var(--color-text-1)', margin: '0 0 1.25rem',
         }}>
           A simple dish, a sharper way to compare cities.
         </h1>
 
-        <p style={{ fontSize: 16, color: '#6a6a62', lineHeight: 1.7, maxWidth: 700, marginBottom: '3rem' }}>
+        <p style={{ fontSize: 16, color: 'var(--color-text-2)', lineHeight: 1.7, maxWidth: 700, marginBottom: '3rem' }}>
           The Fried Rice Index tracks fried rice prices across cities and uses that data
           to study baseline affordability, price variation, and restaurant market patterns.
         </p>
@@ -70,17 +70,17 @@ export default function AboutPage() {
           },
         ].map(card => (
           <div key={card.title} style={{
-            background: '#111411',
-            border: '0.5px solid #1a2218',
+            background: 'var(--color-surface)',
+            border: '0.5px solid var(--color-border)',
             borderRadius: 16,
             padding: '1.5rem',
             marginBottom: '1.25rem',
           }}>
-            <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 24, color: '#f0ece4', margin: '0 0 0.75rem', fontWeight: 400 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: 'var(--color-text-1)', margin: '0 0 0.75rem', fontWeight: 400 }}>
               {card.title}
             </h2>
             {card.body.map((p, i) => (
-              <p key={i} style={{ fontSize: 15, color: '#6a6a62', lineHeight: 1.75, margin: i < card.body.length - 1 ? '0 0 0.85rem' : 0 }}>
+              <p key={i} style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.75, margin: i < card.body.length - 1 ? '0 0 0.85rem' : 0 }}>
                 {p}
               </p>
             ))}

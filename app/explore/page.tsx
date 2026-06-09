@@ -204,7 +204,7 @@ export default function Explore() {
   }
 
   return (
-    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc', overflowX: 'hidden', WebkitTapHighlightColor: 'transparent' }}>
+    <main style={{ fontFamily: 'var(--font-body)', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc', overflowX: 'hidden', WebkitTapHighlightColor: 'transparent' }}>
 
       {selectedCity && (
         <div onClick={() => setSelectedCity(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99 }} />
@@ -230,7 +230,7 @@ export default function Explore() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
                 <div>
                   <div style={{ fontSize: 32, marginBottom: 6 }}>{selectedCity.flag ?? '🌍'}</div>
-                  <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 30, letterSpacing: -0.5, margin: 0, color: '#f0ece4' }}>
+                  <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 30, letterSpacing: -0.5, margin: 0, color: '#f0ece4' }}>
                     {selectedCity.city}
                   </h2>
                   <p style={{ fontSize: 13, color: '#6a6a62', margin: '4px 0 0' }}>
@@ -240,7 +240,7 @@ export default function Explore() {
                 </div>
                 <button
                   onClick={() => setSelectedCity(null)}
-                  style={{ background: 'none', border: '0.5px solid #2a3028', borderRadius: 8, padding: '6px 10px', cursor: 'pointer', fontSize: 12, color: '#6a6a62', fontFamily: 'DM Sans, sans-serif', flexShrink: 0 }}
+                  style={{ background: 'none', border: '0.5px solid #2a3028', borderRadius: 8, padding: '6px 10px', cursor: 'pointer', fontSize: 12, color: '#6a6a62', fontFamily: 'var(--font-body)', flexShrink: 0 }}
                 >
                   ✕
                 </button>
@@ -248,7 +248,7 @@ export default function Explore() {
 
               <div style={{ borderTop: '0.5px solid #1e261e', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
                 <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#5a5a52', margin: '0 0 0.5rem' }}>Baseline fried rice</p>
-                <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 40, color: '#d9682a', margin: 0, lineHeight: 1 }}>
+                <p style={{ fontFamily: 'var(--font-display)', fontSize: 40, color: '#d9682a', margin: 0, lineHeight: 1 }}>
                   {selectedCity.price_cad ? cvt(selectedCity.price_cad) : 'Pending'}
                 </p>
                 {selectedCity.confidence_score && (
@@ -263,14 +263,14 @@ export default function Explore() {
                   {bowls !== null && (
                     <div style={{ flex: 1, background: '#1a221a', borderRadius: 12, padding: '0.9rem' }}>
                       <p style={{ fontSize: 10, color: '#5a5a52', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>After rent</p>
-                      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 26, color: '#34a85a', margin: 0 }}>{bowls} <span style={{ fontSize: 16 }}>🍚</span></p>
+                      <p style={{ fontFamily: 'var(--font-display)', fontSize: 26, color: '#34a85a', margin: 0 }}>{bowls} <span style={{ fontSize: 16 }}>🍚</span></p>
                       <p style={{ fontSize: 11, color: '#5a5a52', margin: '3px 0 0' }}>bowls / month</p>
                     </div>
                   )}
                   {burden !== null && (
                     <div style={{ flex: 1, background: '#1a221a', borderRadius: 12, padding: '0.9rem' }}>
                       <p style={{ fontSize: 10, color: '#5a5a52', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>Rent burden</p>
-                      <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: 26, color: burden > 70 ? '#c04030' : burden > 50 ? '#c4890f' : '#34a85a', margin: 0 }}>{burden}%</p>
+                      <p style={{ fontFamily: 'var(--font-display)', fontSize: 26, color: burden > 70 ? '#c04030' : burden > 50 ? '#c4890f' : '#34a85a', margin: 0 }}>{burden}%</p>
                       <p style={{ fontSize: 11, color: '#5a5a52', margin: '3px 0 0' }}>of median salary</p>
                     </div>
                   )}
@@ -307,12 +307,12 @@ export default function Explore() {
           borderBottom: '0.5px solid #1e261e',
           position: 'relative', zIndex: 10,
         }}>
-          <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
+          <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none' }}>
             fried rice <span style={{ color: '#d9682a' }}>index</span>
           </a>
           <div style={{ display: 'flex', gap: isMobile ? '1rem' : '1.75rem' }}>
             {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-              <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
+              <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
             ))}
           </div>
         </nav>
@@ -321,7 +321,7 @@ export default function Explore() {
       {!(expanded && isMobile) && (
         <div style={{ padding: isMobile ? '2rem 1.25rem 1.25rem' : '2.5rem 2rem 1.5rem', maxWidth: 960 }}>
           <h1 style={{
-            fontFamily: 'DM Serif Display, serif',
+            fontFamily: 'var(--font-display)',
             fontSize: isMobile ? 30 : 40,
             lineHeight: 1.08, letterSpacing: isMobile ? -0.5 : -1,
             color: '#f0ece4', margin: '0 0 1rem',
@@ -338,7 +338,7 @@ export default function Explore() {
               { label: '11.5×', sub: 'price spread' },
             ].map(s => (
               <div key={s.label} style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 10, padding: '0.6rem 0.9rem' }}>
-                <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, color: '#d9682a' }}>{s.label}</span>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: '#d9682a' }}>{s.label}</span>
                 <span style={{ fontSize: 11, color: '#4a4a42', marginLeft: 6 }}>{s.sub}</span>
               </div>
             ))}
@@ -370,7 +370,7 @@ export default function Explore() {
               <select
                 value={currency}
                 onChange={e => setCurrency(e.target.value)}
-                style={{ padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: '#8a8a82', cursor: 'pointer' }}
+                style={{ padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#141714', fontFamily: 'var(--font-body)', fontSize: 12, color: '#8a8a82', cursor: 'pointer' }}
               >
                 {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
               </select>
@@ -422,7 +422,7 @@ export default function Explore() {
             <select
               value={currency}
               onChange={e => setCurrency(e.target.value)}
-              style={{ flex: 1, padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#0c0f0d', fontFamily: 'DM Sans, sans-serif', fontSize: 12, color: '#8a8a82' }}
+              style={{ flex: 1, padding: '5px 10px', border: '0.5px solid #1e261e', borderRadius: 8, background: '#0c0f0d', fontFamily: 'var(--font-body)', fontSize: 12, color: '#8a8a82' }}
             >
               {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
             </select>
@@ -439,5 +439,5 @@ export default function Explore() {
 const ctrlBtn: React.CSSProperties = {
   background: 'none', border: '0.5px solid #1e261e', borderRadius: 8,
   padding: '5px 10px', cursor: 'pointer', fontSize: 12, color: '#5a5a52',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
 }

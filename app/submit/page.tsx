@@ -107,42 +107,42 @@ export default function SubmitPage() {
   }
 
   return (
-    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc' }}>
+    <main style={{ fontFamily: 'var(--font-body)', background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
       <nav style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '1.1rem 2rem',
-        borderBottom: '0.5px solid #1e261e',
+        borderBottom: '0.5px solid var(--color-border)',
       }}>
-        <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
-          fried rice <span style={{ color: '#d9682a' }}>index</span>
+        <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none' }}>
+          fried rice <span style={{ color: 'var(--color-accent)' }}>index</span>
         </a>
         <div style={{ display: 'flex', gap: '1.75rem' }}>
           {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <a key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</a>
+            <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
           ))}
         </div>
       </nav>
 
       <section style={{ maxWidth: 760, margin: '0 auto', padding: '4rem 2rem' }}>
-        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#d9682a', marginBottom: '1rem' }}>
+        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '1rem' }}>
           Submit data
         </p>
 
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 48, lineHeight: 1.05, letterSpacing: -1.2, color: '#f0ece4', margin: '0 0 1rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 48, lineHeight: 1.05, letterSpacing: -1.2, color: 'var(--color-text-1)', margin: '0 0 1rem' }}>
           Submit a fried rice price.
         </h1>
 
-        <p style={{ fontSize: 16, lineHeight: 1.7, color: '#6a6a62', marginBottom: '1.5rem' }}>
+        <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--color-text-2)', marginBottom: '1.5rem' }}>
           Found a price we&apos;re missing? Submit it and we&apos;ll review it before adding it to the index.
         </p>
 
         {message && (
-          <p style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 12, padding: '0.9rem 1rem', color: '#a8a49c', fontSize: 14, marginBottom: '1rem' }}>
+          <p style={{ background: '#141714', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '0.9rem 1rem', color: '#a8a49c', fontSize: 14, marginBottom: '1rem' }}>
             {message}
           </p>
         )}
 
-        <form onSubmit={handleSubmit} style={{ background: '#111411', border: '0.5px solid #1a2218', borderRadius: 18, padding: '1.5rem', display: 'grid', gap: '1rem' }}>
+        <form onSubmit={handleSubmit} style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 18, padding: '1.5rem', display: 'grid', gap: '1rem' }}>
           {[
             { label: 'City', el: (
               <select value={city} onChange={e => setCity(e.target.value)} style={inputStyle}>
@@ -175,7 +175,7 @@ export default function SubmitPage() {
               <textarea value={notes} onChange={e => setNotes(e.target.value)} style={{ ...inputStyle, minHeight: 100, resize: 'vertical' }} placeholder="Optional: delivery markup, menu date, screenshot context, etc." />
             )},
           ].map(({ label, el }) => (
-            <label key={label} style={{ display: 'grid', gap: '0.4rem', fontSize: 13, color: '#5a5a52' }}>
+            <label key={label} style={{ display: 'grid', gap: '0.4rem', fontSize: 13, color: 'var(--color-text-3)' }}>
               {label}
               {el}
             </label>
@@ -184,7 +184,7 @@ export default function SubmitPage() {
           <button type="submit" disabled={saving} style={{
             border: 'none', borderRadius: 10, padding: '0.75rem 1rem',
             background: '#d9682a', color: '#fff',
-            fontFamily: 'DM Sans, sans-serif', fontSize: 14, cursor: 'pointer',
+            fontFamily: 'var(--font-body)', fontSize: 14, cursor: 'pointer',
             opacity: saving ? 0.6 : 1,
           }}>
             {saving ? 'Submitting…' : 'Submit for review'}
@@ -198,10 +198,10 @@ export default function SubmitPage() {
 const inputStyle: CSSProperties = {
   width: '100%', boxSizing: 'border-box',
   padding: '0.75rem 0.9rem',
-  border: '0.5px solid #1e261e',
+  border: '0.5px solid var(--color-border)',
   borderRadius: 10,
-  background: '#0c0f0d',
-  fontFamily: 'DM Sans, sans-serif',
+  background: 'var(--color-bg)',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
-  color: '#e8e4dc',
+  color: 'var(--color-text-1)',
 }
