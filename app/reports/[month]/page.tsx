@@ -149,6 +149,32 @@ export default async function ReportPage({ params }: PageProps) {
     .sort((a, b) => a.median - b.median)
   const regionMaxPrice = Math.max(...regionStats.map(r => r.max), 1)
 
+  // Scatter: price vs rent burden
+  const scatterCities = cities
+    .map(city => {
+      const burden = rentBurden(city)
+      const price = Number(city.price_cad ?? 0)
+      return burden !== null && price > 0
+        ? { city: city.city, flag: city.flag, price, burden }
+        : null
+    })
+    .filter((x): x is { city: string; flag: string | null; price: number; burden: number } => x !== null)
+  const scatterMaxPrice = Math.max(...scatterCities.map(c => c.price), 1)
+
+  // Bowls of fried rice affordable after paying rent
+  const bowlsAfterRent = cities
+    .map(city => {
+      const price = Number(city.price_cad ?? 0)
+      const rent = Number(city.median_rent_1br_cad ?? 0)
+      const salary = Number(city.median_monthly_salary_cad ?? 0)
+      if (price <= 0 || salary <= 0) return null
+      const bowls = Math.round((salary - rent) / price)
+      return { city: city.city, flag: city.flag, bowls }
+    })
+    .filter((x): x is { city: string; flag: string | null; bowls: number } => x !== null)
+    .sort((a, b) => b.bowls - a.bowls)
+  const bowlsMax = Math.max(...bowlsAfterRent.map(c => Math.abs(c.bowls)), 1)
+
   const FONT = "'DM Sans', sans-serif"
   const DISP = "'DM Serif Display', serif"
 
@@ -395,6 +421,93 @@ export default async function ReportPage({ params }: PageProps) {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Scatter: price vs rent burden */}
+      {scatterCities.length > 1 && (
+        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+          <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+            <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
+              Scatter — baseline price vs rent burden
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>Each flag is one city. Bottom-left = cheap + affordable. Top-right = expensive + squeezed.</p>
+            <div style={{ position: 'relative', width: '100%', paddingBottom: '44%', border: '0.5px solid var(--color-border)', borderRadius: 8, overflow: 'hidden', background: 'var(--color-surface)' }}>
+              <div style={{ position: 'absolute', inset: 0 }}>
+                {/* Quadrant backgrounds */}
+                <div style={{ position: 'absolute', left: 0, top: 0, width: '50%', height: '50%', background: 'rgba(196,137,15,0.04)' }} />
+                <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '50%', background: 'rgba(192,64,48,0.05)' }} />
+                <div style={{ position: 'absolute', left: 0, bottom: 0, width: '50%', height: '50%', background: 'rgba(61,184,112,0.06)' }} />
+                <div style={{ position: 'absolute', right: 0, bottom: 0, width: '50%', height: '50%', background: 'rgba(91,191,122,0.04)' }} />
+                {/* Midpoint crosshair */}
+                <div style={{ position: 'absolute', left: '50%', top: '4%', bottom: '14%', width: 1, background: 'var(--color-border)', opacity: 0.6 }} />
+                <div style={{ position: 'absolute', top: '50%', left: '4%', right: '4%', height: 1, background: 'var(--color-border)', opacity: 0.6 }} />
+                {/* Axis labels */}
+                <div style={{ position: 'absolute', bottom: '3%', left: '4%', right: '4%', display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'var(--color-text-3)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  <span>CA$0</span>
+                  <span>← Baseline price →</span>
+                  <span>CA${scatterMaxPrice.toFixed(0)}</span>
+                </div>
+                <div style={{ position: 'absolute', left: '0.5%', top: '4%', bottom: '14%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', fontSize: 9, color: 'var(--color-text-3)' }}>
+                  <span style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', letterSpacing: '1px', textTransform: 'uppercase' }}>100%</span>
+                  <span style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', letterSpacing: '1px', textTransform: 'uppercase' }}>Burden</span>
+                  <span style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', letterSpacing: '1px', textTransform: 'uppercase' }}>0%</span>
+                </div>
+                {/* City flags */}
+                {scatterCities.map((city) => {
+                  const xPct = 6 + (city.price / scatterMaxPrice) * 88
+                  const yPct = 14 + (1 - city.burden / 100) * 78
+                  return (
+                    <div key={city.city} title={`${city.city}: CA$${city.price.toFixed(2)}, ${Math.round(city.burden)}% burden`} style={{ position: 'absolute', left: `${xPct}%`, top: `${yPct}%`, transform: 'translate(-50%, -50%)', fontSize: 15, lineHeight: 1, cursor: 'default', userSelect: 'none' }}>
+                      {city.flag ?? '•'}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
+              {[['Bottom-left', '#3db870', 'Low price, low burden — most liveable'], ['Top-left', '#c4890f', 'Low price, high burden — wage crisis'], ['Top-right', '#c04030', 'High price, high burden — most stressful'], ['Bottom-right', '#3db870', 'High price, low burden — pricey but manageable']].map(([q, c, desc]) => (
+                <div key={q} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--color-text-3)' }}>
+                  <span style={{ width: 8, height: 8, borderRadius: 2, background: c, display: 'inline-block', opacity: 0.8 }} />
+                  {desc}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Bowls after rent */}
+      {bowlsAfterRent.length > 0 && (
+        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+          <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+            <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
+              Salary affordability — bowls of fried rice per month after rent
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>
+              Disposable income (salary − rent) ÷ baseline price. {bowlsAfterRent.length} cities · negative = rent exceeds salary.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '0.35rem 2.5rem' }}>
+              {bowlsAfterRent.map((item) => {
+                const isNeg = item.bowls < 0
+                const barWidth = Math.min(Math.abs(item.bowls) / bowlsMax * 100, 100)
+                const barColor = isNeg ? '#c04030' : item.bowls < 30 ? '#c4890f' : item.bowls < 80 ? '#3db870' : '#1a9e5a'
+                return (
+                  <div key={item.city} style={{ display: 'grid', gridTemplateColumns: '96px 1fr 56px', gap: 8, alignItems: 'center' }}>
+                    <span style={{ fontSize: 11, color: 'var(--color-text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {item.flag} {item.city}
+                    </span>
+                    <span style={{ height: 6, borderRadius: 3, background: 'var(--color-border)', overflow: 'hidden', display: 'block' }}>
+                      <span style={{ display: 'block', width: `${barWidth}%`, height: '100%', borderRadius: 3, background: barColor }} />
+                    </span>
+                    <span style={{ fontSize: 11, color: barColor, textAlign: 'right', fontWeight: 500 }}>
+                      {isNeg ? '−' : ''}{Math.abs(item.bowls)}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>
