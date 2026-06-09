@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
+import { Globe, Search, Download, Building2, X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 
 const FALLBACK_RATES: Record<string, number> = {
@@ -116,109 +117,106 @@ export default function CitiesPage() {
   }, [cleanCities, search, selectedRegion])
 
   return (
-    <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc', overflowX: 'hidden' }}>
+    <main style={{ fontFamily:'var(--font-body)', background:'var(--color-bg)', minHeight:'100vh', color:'var(--color-text-1)', overflowX:'hidden' }}>
 
-      <nav style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? '0.9rem' : 0, padding: isMobile ? '1rem 1.25rem' : '1.1rem 2rem', borderBottom: '0.5px solid #1e261e' }}>
-        <a href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
-          fried rice <span style={{ color: '#d9682a' }}>index</span>
+      <nav style={{ position:'sticky', top:0, zIndex:50, height:52, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 2rem', background:'rgba(9,13,10,.92)', backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)', borderBottom:'0.5px solid var(--color-border)' }}>
+        <a href="/" style={{ fontFamily:'var(--font-display)', fontSize:16, fontStyle:'italic', letterSpacing:-.2, color:'var(--color-text-1)', textDecoration:'none', display:'flex', alignItems:'center', gap:7 }}>
+          <Globe size={14} color="var(--color-accent)" />
+          fried rice <span style={{ color:'var(--color-accent)', fontStyle:'normal' }}>index</span>
         </a>
-        <div style={{ display: 'flex', gap: isMobile ? '1rem' : '1.75rem' }}>
-          {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <a key={h} href={h} style={{ fontSize: 13, color: l === 'cities' ? '#e8e4dc' : '#5a5a52', textDecoration: 'none', fontWeight: l === 'cities' ? 500 : 400 }}>{l}</a>
+        <div style={{ display:'flex', gap:'1.75rem' }}>
+          {[['cities','/cities'],['submit','/submit'],['about','/about'],['methodology','/methodology']].map(([l,h]) => (
+            <a key={h} href={h} style={{ fontSize:13, textDecoration:'none', color: l==='cities' ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l==='cities' ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l==='cities' ? 1 : 0 }}>{l}</a>
           ))}
         </div>
       </nav>
 
-      <section style={{ maxWidth: 1160, margin: '0 auto', padding: isMobile ? '2rem 1.25rem' : '3rem 2rem' }}>
+      <section style={{ maxWidth:1180, margin:'0 auto', padding: isMobile ? '2rem 1.25rem' : '3rem 2rem' }}>
 
-        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#d9682a', marginBottom: '0.75rem' }}>Cities</p>
-        <h1 style={{ fontFamily: 'DM Serif Display, serif', fontSize: isMobile ? 34 : 44, lineHeight: 1.05, letterSpacing: isMobile ? -0.5 : -1, margin: '0 0 0.75rem', color: '#f0ece4' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:'0.75rem' }}>
+          <Building2 size={14} color="var(--color-accent)" />
+          <span style={{ fontSize:11, letterSpacing:'2.5px', textTransform:'uppercase', color:'var(--color-text-3)' }}>Cities</span>
+        </div>
+        <h1 style={{ fontFamily:'var(--font-display)', fontSize: isMobile ? 34 : 44, lineHeight:1.05, letterSpacing: isMobile ? -0.5 : -1, margin:'0 0 0.75rem', color:'var(--color-text-1)', fontWeight:400 }}>
           Fried rice prices by city.
         </h1>
-        <p style={{ fontSize: isMobile ? 13 : 14, color: '#4a4a42', lineHeight: 1.6, maxWidth: 620, marginBottom: '2rem' }}>
-          Ranked cheapest to most expensive. Baseline = median of all basic and vegetable entries.
+        <p style={{ fontSize:14, color:'var(--color-text-2)', lineHeight:1.6, maxWidth:560, marginBottom:'2rem' }}>
+          Ranked cheapest to most expensive. Baseline = median of basic and vegetable entries.
         </p>
 
         {/* Stat cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
+        <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4,1fr)', gap:'1px', marginBottom:'2rem', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
           {[
-            { label: 'CITIES INDEXED', val: String(cleanCities.length), sub: null },
-            { label: 'CHEAPEST', val: cheapest ? `${cheapest.flag ?? ''} ${cheapest.city}` : '—', sub: cheapest ? formatPrice(cheapest.price_cad) : null },
-            { label: 'MOST EXPENSIVE', val: priciest ? `${priciest.flag ?? ''} ${priciest.city}` : '—', sub: priciest ? formatPrice(priciest.price_cad) : null },
-            { label: 'PRICE SPREAD', val: cheapest && priciest ? `${((priciest.price_cad ?? 1) / (cheapest.price_cad ?? 1)).toFixed(1)}×` : '—', sub: 'cheapest vs priciest' },
+            { label:'Cities indexed', val:String(cleanCities.length) },
+            { label:'Cheapest', val: cheapest ? `${cheapest.flag ?? ''} ${cheapest.city}` : '—', sub: cheapest ? formatPrice(cheapest.price_cad) : null },
+            { label:'Most expensive', val: priciest ? `${priciest.flag ?? ''} ${priciest.city}` : '—', sub: priciest ? formatPrice(priciest.price_cad) : null },
+            { label:'Price spread', val: cheapest && priciest ? `${((priciest.price_cad??1)/(cheapest.price_cad??1)).toFixed(1)}×` : '—', sub:'cheapest vs priciest' },
           ].map(s => (
-            <div key={s.label} style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 14, padding: '1.1rem 1.25rem' }}>
-              <p style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.3px', color: '#3a3a32', margin: '0 0 0.45rem' }}>{s.label}</p>
-              <p style={{ fontFamily: 'DM Serif Display, serif', fontSize: s.label === 'CITIES INDEXED' || s.label === 'PRICE SPREAD' ? 30 : 18, color: '#f0ece4', margin: '0 0 0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.val}</p>
-              {s.sub && <p style={{ fontSize: 12, color: '#d9682a', margin: 0 }}>{s.sub}</p>}
+            <div key={s.label} style={{ background:'var(--color-surface)', padding:'1.1rem 1.5rem' }}>
+              <p style={{ fontSize:10, textTransform:'uppercase', letterSpacing:'1.3px', color:'var(--color-text-3)', margin:'0 0 0.4rem' }}>{s.label}</p>
+              <p style={{ fontFamily:'var(--font-display)', fontSize:s.label==='Cities indexed'||s.label==='Price spread'?28:17, color:'var(--color-text-1)', margin:'0 0 0.2rem', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', fontWeight:400 }}>{s.val}</p>
+              {s.sub && <p style={{ fontSize:12, color:'var(--color-accent)', margin:0 }}>{s.sub}</p>}
             </div>
           ))}
         </div>
 
         {/* Controls */}
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '1rem', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center', flex: 1 }}>
-            {/* Search */}
-            <div style={{ position: 'relative' }}>
-              <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', fontSize: 12, color: '#3a3a32', pointerEvents: 'none' }}>🔍</span>
-              <input
-                type="text" placeholder="Search city or country…" value={search} onChange={e => setSearch(e.target.value)}
-                style={{ paddingLeft: 30, paddingRight: 12, paddingTop: 8, paddingBottom: 8, border: '0.5px solid #1e261e', borderRadius: 10, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: '#e8e4dc', outline: 'none', width: isMobile ? '100%' : 210 }}
-              />
+        <div style={{ display:'flex', gap:'0.75rem', flexWrap:'wrap', alignItems:'center', marginBottom:'1rem', justifyContent:'space-between' }}>
+          <div style={{ display:'flex', gap:'0.6rem', flexWrap:'wrap', alignItems:'center', flex:1 }}>
+            <div style={{ position:'relative' }}>
+              <Search size={13} style={{ position:'absolute', left:10, top:'50%', transform:'translateY(-50%)', color:'var(--color-text-3)', pointerEvents:'none' }} />
+              <input type="text" placeholder="Search city or country…" value={search} onChange={e => setSearch(e.target.value)}
+                style={{ paddingLeft:32, paddingRight:12, paddingTop:7, paddingBottom:7, border:'0.5px solid var(--color-border)', borderRadius:8, background:'var(--color-surface)', fontFamily:'var(--font-body)', fontSize:13, color:'var(--color-text-1)', outline:'none', width: isMobile ? '100%' : 210 }} />
             </div>
-            {/* Region pills (desktop) */}
             {!isMobile && (
-              <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+              <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
                 {regions.map(r => (
-                  <button key={r} onClick={() => setSelectedRegion(r)} style={{ padding: '5px 11px', borderRadius: 20, fontSize: 12, cursor: 'pointer', border: selectedRegion === r ? '0.5px solid #d9682a' : '0.5px solid #1e261e', background: selectedRegion === r ? '#1e1a14' : '#141714', color: selectedRegion === r ? '#d9682a' : '#5a5a52', fontFamily: 'DM Sans, sans-serif', fontWeight: selectedRegion === r ? 500 : 400 }}>
+                  <button key={r} onClick={() => setSelectedRegion(r)} style={{ padding:'4px 10px', borderRadius:20, fontSize:12, cursor:'pointer', border: selectedRegion===r ? '0.5px solid var(--color-accent)' : '0.5px solid var(--color-border)', background: selectedRegion===r ? 'rgba(217,104,42,.12)' : 'var(--color-surface)', color: selectedRegion===r ? 'var(--color-accent)' : 'var(--color-text-3)', fontFamily:'var(--font-body)' }}>
                     {r}
                   </button>
                 ))}
               </div>
             )}
-            {/* Region dropdown (mobile) */}
             {isMobile && (
-              <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value)} style={{ padding: '8px 12px', border: '0.5px solid #1e261e', borderRadius: 10, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: '#e8e4dc' }}>
+              <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value)} style={{ padding:'7px 12px', border:'0.5px solid var(--color-border)', borderRadius:8, background:'var(--color-surface)', fontFamily:'var(--font-body)', fontSize:13, color:'var(--color-text-1)' }}>
                 {regions.map(r => <option key={r} value={r}>{r}</option>)}
               </select>
             )}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexShrink: 0 }}>
-            <select value={currency} onChange={e => setCurrency(e.target.value)} style={{ padding: '8px 12px', border: '0.5px solid #1e261e', borderRadius: 10, background: '#141714', fontFamily: 'DM Sans, sans-serif', fontSize: 13, color: '#e8e4dc', cursor: 'pointer' }}>
-              {currencyOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+          <div style={{ display:'flex', alignItems:'center', gap:'0.6rem', flexShrink:0 }}>
+            <select value={currency} onChange={e => setCurrency(e.target.value)} style={{ padding:'7px 12px', border:'0.5px solid var(--color-border)', borderRadius:8, background:'var(--color-surface)', fontFamily:'var(--font-body)', fontSize:13, color:'var(--color-text-1)', cursor:'pointer' }}>
+              {currencyOptions.map(([v,l]) => <option key={v} value={v}>{l}</option>)}
             </select>
-            <a href="/api/download-report" download style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '8px 14px', background: '#1e261e', color: '#8a8a82', borderRadius: 10, fontSize: 12, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', border: '0.5px solid #2a3a2a' }}>
-              <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 5.5l3 3 3-3M2 10.5h9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              Download
+            <a href="/api/download-report" download style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'7px 14px', background:'var(--color-surface)', color:'var(--color-text-2)', borderRadius:8, fontSize:12, textDecoration:'none', whiteSpace:'nowrap', border:'0.5px solid var(--color-border)' }}>
+              <Download size={12} /> Export
             </a>
           </div>
         </div>
 
-        {/* Result count */}
         {(search || selectedRegion !== 'All') && (
-          <p style={{ fontSize: 12, color: '#3a3a32', marginBottom: '0.75rem' }}>
-            Showing {filtered.length} of {cleanCities.length} cities
+          <p style={{ fontSize:12, color:'var(--color-text-3)', marginBottom:'0.75rem', display:'flex', alignItems:'center', gap:6 }}>
+            {filtered.length} of {cleanCities.length} cities
             {selectedRegion !== 'All' ? ` in ${selectedRegion}` : ''}
             {search ? ` matching "${search}"` : ''}
-            {' '}<button onClick={() => { setSearch(''); setSelectedRegion('All') }} style={{ background: 'none', border: 'none', color: '#d9682a', cursor: 'pointer', fontSize: 12, fontFamily: 'DM Sans, sans-serif', padding: 0 }}>Clear</button>
+            <button onClick={() => { setSearch(''); setSelectedRegion('All') }} style={{ background:'none', border:'none', color:'var(--color-accent)', cursor:'pointer', fontSize:12, fontFamily:'var(--font-body)', padding:0, display:'inline-flex', alignItems:'center', gap:3 }}>
+              <X size={11} /> Clear
+            </button>
           </p>
         )}
 
         {loading ? (
-          <p style={{ color: '#3a3a32' }}>Loading cities…</p>
+          <p style={{ color:'var(--color-text-3)', padding:'2rem 0' }}>Loading cities…</p>
         ) : (
-          <div style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 16, overflow: 'hidden' }}>
-
-            {/* Desktop header */}
+          <div style={{ background:'var(--color-surface)', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
             {!isMobile && (
-              <div style={{ display: 'grid', gridTemplateColumns: '52px 2fr 0.85fr 1.3fr 0.7fr 0.9fr 0.8fr', gap: '0.75rem', padding: '0.85rem 1rem', borderBottom: '0.5px solid #1e261e', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#3a3a32' }}>
-                <div>Rank</div><div>City</div><div>Baseline</div><div>Relative cost</div><div>Rent burden</div><div>Data quality</div><div>Updated</div>
+              <div style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 1.3fr 0.7fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:9, textTransform:'uppercase', letterSpacing:'1.2px', color:'var(--color-text-3)' }}>
+                <div>Rank</div><div>City</div><div>Baseline</div><div>Relative cost</div><div>Rent burden</div><div>Quality</div><div>Updated</div>
               </div>
             )}
 
             {filtered.length === 0 && (
-              <div style={{ padding: '2rem 1rem', color: '#3a3a32', fontSize: 14, textAlign: 'center' }}>No cities match your search.</div>
+              <div style={{ padding:'2rem 1rem', color:'var(--color-text-3)', fontSize:14, textAlign:'center' }}>No cities match your search.</div>
             )}
 
             {filtered.map((city, index) => {
@@ -228,23 +226,20 @@ export default function CitiesPage() {
               const isLast = index === filtered.length - 1
 
               return isMobile ? (
-                <a key={city.city} href={href} style={{ display: 'block', padding: '1rem', borderBottom: isLast ? 'none' : '0.5px solid #1a221a', textDecoration: 'none', color: 'inherit' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'flex-start' }}>
-                    <div style={{ flex: 1 }}>
-                      <p style={{ fontSize: 11, color: '#3a3a32', margin: '0 0 0.2rem' }}>#{rank}</p>
-                      <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 22, margin: 0, color: '#f0ece4' }}>
+                <a key={city.city} href={href} style={{ display:'block', padding:'1rem 1.25rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', textDecoration:'none', color:'inherit' }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', gap:'1rem', alignItems:'flex-start' }}>
+                    <div style={{ flex:1 }}>
+                      <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0 0 0.2rem' }}>#{rank}</p>
+                      <h2 style={{ fontFamily:'var(--font-display)', fontSize:22, margin:0, color:'var(--color-text-1)', fontWeight:400 }}>
                         {city.flag ? `${city.flag} ` : ''}{city.city}
                       </h2>
-                      <p style={{ fontSize: 12, color: '#4a4a42', margin: '0.2rem 0 0' }}>
-                        {[city.region, city.country].filter(Boolean).join(', ')}
-                      </p>
-                      {city.population && <p style={{ fontSize: 12, color: '#3a3a32', margin: '0.15rem 0 0' }}>{Number(city.population).toLocaleString()}</p>}
-                      {burden !== null && <p style={{ fontSize: 12, margin: '0.35rem 0 0', color: burdenColor(burden) }}>{burden}% rent burden</p>}
+                      <p style={{ fontSize:12, color:'var(--color-text-3)', margin:'0.2rem 0 0' }}>{[city.region, city.country].filter(Boolean).join(', ')}</p>
+                      {burden !== null && <p style={{ fontSize:12, margin:'0.35rem 0 0', color: burdenColor(burden) }}>{burden}% rent burden</p>}
                     </div>
-                    <div>
-                      <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 22, color: '#d9682a', whiteSpace: 'nowrap', textAlign: 'right' }}>{formatPrice(city.price_cad)}</div>
-                      <div style={{ marginTop: 6, width: 80, height: 3, borderRadius: 2, background: '#1e261e' }}>
-                        <div style={{ height: '100%', width: `${((city.price_cad ?? 0) / maxPrice) * 100}%`, background: barColor(city.price_cad ?? 0, maxPrice), borderRadius: 2 }} />
+                    <div style={{ textAlign:'right' }}>
+                      <div style={{ fontFamily:'var(--font-display)', fontSize:22, color:'var(--color-accent)', whiteSpace:'nowrap', fontWeight:400 }}>{formatPrice(city.price_cad)}</div>
+                      <div style={{ marginTop:6, width:80, height:3, borderRadius:2, background:'var(--color-border)' }}>
+                        <div style={{ height:'100%', width:`${((city.price_cad??0)/maxPrice)*100}%`, background:barColor(city.price_cad??0,maxPrice), borderRadius:2 }} />
                       </div>
                     </div>
                   </div>
@@ -253,47 +248,47 @@ export default function CitiesPage() {
                 <a key={city.city} href={href}
                   onMouseEnter={() => setHoveredCity(city.city)}
                   onMouseLeave={() => setHoveredCity(null)}
-                  style={{ display: 'grid', gridTemplateColumns: '52px 2fr 0.85fr 1.3fr 0.7fr 0.9fr 0.8fr', gap: '0.75rem', padding: '0.85rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid #1a221a', alignItems: 'center', textDecoration: 'none', color: 'inherit', background: hoveredCity === city.city ? '#1a221a' : '#141714', transition: 'background 0.1s' }}>
+                  style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 1.3fr 0.7fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems:'center', textDecoration:'none', color:'inherit', background: hoveredCity===city.city ? 'var(--color-surface-2)' : 'var(--color-surface)', transition:'background 0.1s' }}>
 
-                  <div style={{ fontSize: 12, color: '#3a3a32' }}>#{rank}</div>
+                  <div style={{ fontSize:12, color:'var(--color-text-3)' }}>#{rank}</div>
 
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      {city.flag && <span style={{ fontSize: 18, lineHeight: 1 }}>{city.flag}</span>}
-                      <span style={{ fontFamily: 'DM Serif Display, serif', fontSize: 19, color: '#f0ece4' }}>{city.city}</span>
+                    <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                      {city.flag && <span style={{ fontSize:17, lineHeight:1 }}>{city.flag}</span>}
+                      <span style={{ fontFamily:'var(--font-display)', fontSize:18, color:'var(--color-text-1)', fontWeight:400 }}>{city.city}</span>
                     </div>
-                    <p style={{ fontSize: 11, color: '#3a3a32', margin: '0.2rem 0 0' }}>
+                    <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0.15rem 0 0' }}>
                       {[city.region, city.country].filter(Boolean).join(' · ')}{city.population ? ` · ${Number(city.population).toLocaleString()}` : ''}
                     </p>
                   </div>
 
-                  <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 19, color: '#d9682a' }}>{formatPrice(city.price_cad)}</div>
+                  <div style={{ fontFamily:'var(--font-display)', fontSize:18, color:'var(--color-accent)', fontWeight:400 }}>{formatPrice(city.price_cad)}</div>
 
                   <div>
-                    <div style={{ height: 5, borderRadius: 3, background: '#1a221a', overflow: 'hidden', maxWidth: 160 }}>
-                      <div style={{ height: '100%', width: `${((city.price_cad ?? 0) / maxPrice) * 100}%`, background: barColor(city.price_cad ?? 0, maxPrice), borderRadius: 3 }} />
+                    <div style={{ height:4, borderRadius:2, background:'var(--color-border)', overflow:'hidden', maxWidth:160 }}>
+                      <div style={{ height:'100%', width:`${((city.price_cad??0)/maxPrice)*100}%`, background:barColor(city.price_cad??0,maxPrice), borderRadius:2 }} />
                     </div>
-                    <p style={{ fontSize: 10, color: '#3a3a32', margin: '4px 0 0' }}>
+                    <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'4px 0 0' }}>
                       {priciest && city.price_cad && priciest.price_cad && city.city !== priciest.city
-                        ? `${(priciest.price_cad / city.price_cad).toFixed(1)}× cheaper than ${priciest.city}` : city.city === priciest?.city ? 'Most expensive' : ''}
+                        ? `${(priciest.price_cad/city.price_cad).toFixed(1)}× cheaper than ${priciest.city}` : city.city === priciest?.city ? 'Most expensive' : ''}
                     </p>
                   </div>
 
                   <div>
                     {burden !== null ? (
                       <>
-                        <span style={{ fontSize: 14, fontWeight: 500, color: burdenColor(burden) }}>{burden}%</span>
-                        <p style={{ fontSize: 10, color: '#3a3a32', margin: '2px 0 0' }}>salary → rent</p>
+                        <span style={{ fontSize:13, fontWeight:500, color:burdenColor(burden) }}>{burden}%</span>
+                        <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'2px 0 0' }}>of salary</p>
                       </>
-                    ) : <span style={{ fontSize: 13, color: '#2a2a22' }}>—</span>}
+                    ) : <span style={{ fontSize:13, color:'var(--color-text-4)' }}>—</span>}
                   </div>
 
                   <div>
-                    <span style={{ fontSize: 12, color: '#8a8a82' }}>{city.data_quality_label ?? '—'}</span>
-                    <p style={{ fontSize: 10, color: '#3a3a32', margin: '2px 0 0' }}>{city.baseline_entry_count ?? '—'} BL · {city.market_entry_count ?? '—'} total</p>
+                    <span style={{ fontSize:12, color:'var(--color-text-2)' }}>{city.data_quality_label ?? '—'}</span>
+                    <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'2px 0 0' }}>{city.baseline_entry_count ?? '—'} BL · {city.market_entry_count ?? '—'} total</p>
                   </div>
 
-                  <div style={{ fontSize: 12, color: '#4a4a42' }}>{formatDate(city.price_updated_at)}</div>
+                  <div style={{ fontSize:12, color:'var(--color-text-2)' }}>{formatDate(city.price_updated_at)}</div>
                 </a>
               )
             })}
