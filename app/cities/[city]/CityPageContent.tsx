@@ -148,6 +148,30 @@ function fmtDate(s: string | null | undefined) {
   return new Date(s).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
+function ensureProtocol(url: string): string {
+  if (url.startsWith('http://') || url.startsWith('https://')) return url
+  return `https://${url}`
+}
+
+function isUrl(s: string | null | undefined): s is string {
+  if (!s) return false
+  return s.startsWith('http') || s.startsWith('www.') || /\.[a-z]{2,}\//.test(s) || /^[a-zA-Z0-9-]+\.(com|org|gov|net|edu|co)/.test(s)
+}
+
+function SourceLink({ value }: { value: string | null | undefined }) {
+  if (!value) return <span>—</span>
+  if (isUrl(value)) {
+    const display = value.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]
+    return (
+      <a href={ensureProtocol(value)} target="_blank" rel="noreferrer"
+        style={{ color: '#d9682a', textDecoration: 'none', wordBreak: 'break-all' }}>
+        {display} ↗
+      </a>
+    )
+  }
+  return <span>{value}</span>
+}
+
 function fmtConf(v: number | null) {
   if (v == null) return '—'
   return `${Math.round(v <= 1 ? v * 100 : v)}%`
@@ -448,16 +472,17 @@ export default function CityPageContent({
           <h2 style={h2}>Data notes</h2>
           <div style={{ background: '#141714', border: '0.5px solid #1e261e', borderRadius: 14, padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
             {[
-              ['Price source', city.price_source],
-              ['Salary source', city.salary_data_source],
-              ['Rent source', city.rent_data_source],
-              ['Last updated', fmtDate(city.price_updated_at)],
-              ['Confidence', fmtConf(city.confidence_score)],
-              ['Climate', city.climate],
-              ['Population', city.population ? Number(city.population).toLocaleString() : null],
-            ].filter(([, v]) => v).map(([label, value]) => (
-              <p key={label as string} style={{ fontSize: 13, color: '#8a8a82', margin: 0 }}>
-                <span style={{ color: '#3a3a32', marginRight: 6 }}>{label}:</span>{value}
+              { label: 'Price source',   value: city.price_source,          isSource: true },
+              { label: 'Salary source',  value: city.salary_data_source,    isSource: true },
+              { label: 'Rent source',    value: city.rent_data_source,      isSource: true },
+              { label: 'Last updated',   value: fmtDate(city.price_updated_at), isSource: false },
+              { label: 'Confidence',     value: fmtConf(city.confidence_score), isSource: false },
+              { label: 'Climate',        value: city.climate,               isSource: false },
+              { label: 'Population',     value: city.population ? Number(city.population).toLocaleString() : null, isSource: false },
+            ].filter(({ value }) => value).map(({ label, value, isSource }) => (
+              <p key={label} style={{ fontSize: 13, color: '#8a8a82', margin: 0 }}>
+                <span style={{ color: '#3a3a32', marginRight: 6 }}>{label}:</span>
+                {isSource ? <SourceLink value={value} /> : value}
               </p>
             ))}
             <p style={{ fontSize: 12, color: '#3a3a32', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
@@ -558,7 +583,7 @@ function RestaurantTable({ rows, bowlPrice, currency }: {
               <td style={td}>{row.confidence_score != null ? `${Math.round(row.confidence_score <= 1 ? row.confidence_score * 100 : row.confidence_score)}%` : '—'}</td>
               <td style={td}>
                 {row.source_url
-                  ? <a href={row.source_url} target="_blank" rel="noreferrer" style={{ color: '#d9682a', textDecoration: 'none', fontSize: 12 }}>View ↗</a>
+                  ? <a href={ensureProtocol(row.source_url)} target="_blank" rel="noreferrer" style={{ color: '#d9682a', textDecoration: 'none', fontSize: 12 }}>View ↗</a>
                   : '—'}
               </td>
             </tr>
