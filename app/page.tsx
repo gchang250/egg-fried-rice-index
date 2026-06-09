@@ -23,7 +23,7 @@ function cvt(cad: number | null, cur: string) {
 
 const SLIDES = [
   { num: '1',     color: '#d9682a', glow: 'rgba(217,104,42,.2)',  label: 'dish',   body: 'A bowl of egg fried rice. One dish, wherever you are in the world.' },
-  { num: '40',    color: '#3db870', glow: 'rgba(61,184,112,.18)', label: 'cities',  body: 'Indexed across forty cities on six continents, from Lagos to Seoul.' },
+  { num: '40',    color: '#3db870', glow: 'rgba(61,184,112,.18)', label: 'cities',  body: 'Indexed across forty cities on six continents, from Cairo to Seoul.' },
   { num: '11.5×', color: '#d9682a', glow: 'rgba(217,104,42,.2)',  label: 'spread',  body: 'The cheapest bowl costs eleven and a half times less than the priciest.' },
   { num: '→',     color: '#f0ece4', glow: 'rgba(240,236,228,.1)', label: 'explore', body: 'The data is live. See what fried rice costs where you live — and everywhere else.' },
 ]
@@ -31,7 +31,7 @@ const SLIDES = [
 /* ── nav ─────────────────────────────────────────────────────────────── */
 function NavBar() {
   const [open, setOpen] = useState(false)
-  const links = [['cities','/cities'],['submit','/submit'],['about','/about'],['methodology','/methodology']]
+  const links = [['cities','/cities'],['reports','/reports'],['submit','/submit'],['about','/about'],['methodology','/methodology']]
   return (
     <>
       <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, height:52, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 2rem', background:'rgba(9,13,10,.85)', backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)', borderBottom:'0.5px solid var(--color-border)' }}>

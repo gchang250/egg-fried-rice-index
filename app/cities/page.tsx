@@ -125,7 +125,7 @@ export default function CitiesPage() {
           fried rice <span style={{ color:'var(--color-accent)', fontStyle:'normal' }}>index</span>
         </a>
         <div style={{ display:'flex', gap:'1.75rem' }}>
-          {[['cities','/cities'],['submit','/submit'],['about','/about'],['methodology','/methodology']].map(([l,h]) => (
+          {[['cities','/cities'],['reports','/reports'],['submit','/submit'],['about','/about'],['methodology','/methodology']].map(([l,h]) => (
             <a key={h} href={h} style={{ fontSize:13, textDecoration:'none', color: l==='cities' ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l==='cities' ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l==='cities' ? 1 : 0 }}>{l}</a>
           ))}
         </div>
@@ -190,6 +190,9 @@ export default function CitiesPage() {
             </select>
             <a href="/api/download-report" download style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'7px 14px', background:'var(--color-surface)', color:'var(--color-text-2)', borderRadius:8, fontSize:12, textDecoration:'none', whiteSpace:'nowrap', border:'0.5px solid var(--color-border)' }}>
               <Download size={12} /> Export
+            </a>
+            <a href="/reports" style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'7px 14px', background:'var(--color-surface)', color:'var(--color-text-2)', borderRadius:8, fontSize:12, textDecoration:'none', whiteSpace:'nowrap', border:'0.5px solid var(--color-border)' }}>
+              Monthly reports
             </a>
           </div>
         </div>
