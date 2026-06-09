@@ -2,21 +2,19 @@
 
 import type { CSSProperties, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
+import { Globe, MapPin, Store, Utensils, Tag, DollarSign, Link2, MessageSquare, Send, ArrowRight } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 
-type CityRow = {
-  city: string
-  country: string | null
-}
+type CityRow = { city: string; country: string | null }
 
 const dishCategories = [
-  { value: 'basic',        label: 'Basic fried rice' },
-  { value: 'vegetable',    label: 'Vegetable fried rice' },
-  { value: 'meat_based',   label: 'Meat-based fried rice' },
-  { value: 'seafood',      label: 'Seafood fried rice' },
-  { value: 'house_special',label: 'House special / combination' },
-  { value: 'premium',      label: 'Premium / luxury' },
-  { value: 'unknown',      label: 'Unknown' },
+  { value: 'basic',         label: 'Basic fried rice' },
+  { value: 'vegetable',     label: 'Vegetable fried rice' },
+  { value: 'meat_based',    label: 'Meat-based fried rice' },
+  { value: 'seafood',       label: 'Seafood fried rice' },
+  { value: 'house_special', label: 'House special / combination' },
+  { value: 'premium',       label: 'Premium / luxury' },
+  { value: 'unknown',       label: 'Unknown' },
 ]
 
 const currencies = ['CAD','USD','EUR','GBP','CHF','JPY','CNY','AUD','HKD','SGD','SAR','PHP','MYR','MXN','ARS','KRW','INR','AED']
@@ -25,6 +23,41 @@ const cadRates: Record<string, number> = {
   CAD:1, USD:1.37, EUR:1.48, GBP:1.73, CHF:1.52, JPY:0.0093,
   CNY:0.19, AUD:0.91, HKD:0.18, SGD:1.01, SAR:0.37, PHP:0.024,
   MYR:0.31, MXN:0.08, ARS:0.0014, KRW:0.001, INR:0.016, AED:0.37,
+}
+
+const NAV_LINKS = [['cities','/cities'],['submit','/submit'],['about','/about'],['methodology','/methodology']] as const
+
+function Nav() {
+  return (
+    <nav style={{
+      position: 'sticky', top: 0, zIndex: 50,
+      background: 'rgba(9,13,10,.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+      borderBottom: '0.5px solid var(--color-border)',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 2rem', height: 56,
+    }}>
+      <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none', fontStyle: 'italic', letterSpacing: -.2, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Globe size={15} color="var(--color-accent)" />
+        fried rice <span style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>index</span>
+      </a>
+      <div style={{ display: 'flex', gap: '1.75rem' }}>
+        {NAV_LINKS.map(([l, h]) => (
+          <a key={h} href={h} style={{ fontSize: 13, textDecoration: 'none', color: l === 'submit' ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l === 'submit' ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l === 'submit' ? 1 : 0 }}>{l}</a>
+        ))}
+      </div>
+    </nav>
+  )
+}
+
+function Field({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
+  return (
+    <label style={{ display: 'grid', gap: '0.5rem' }}>
+      <span style={{ fontSize: 12, color: 'var(--color-text-3)', display: 'flex', alignItems: 'center', gap: 6 }}>
+        {icon} {label}
+      </span>
+      {children}
+    </label>
+  )
 }
 
 export default function SubmitPage() {
@@ -39,68 +72,43 @@ export default function SubmitPage() {
   const [notes, setNotes]                 = useState('')
   const [saving, setSaving]               = useState(false)
   const [message, setMessage]             = useState('')
+  const [success, setSuccess]             = useState(false)
 
   useEffect(() => {
-    async function fetchCities() {
-      const { data } = await supabase.from('cities').select('city, country').order('city', { ascending: true })
-      setCities((data ?? []) as CityRow[])
-      if (data && data.length > 0) setCity(data[0].city)
-    }
-    fetchCities()
+    supabase.from('cities').select('city, country').order('city', { ascending: true })
+      .then(({ data }) => {
+        setCities((data ?? []) as CityRow[])
+        if (data?.length) setCity(data[0].city)
+      })
   }, [])
 
-  function selectedCountry() {
-    return cities.find(r => r.city === city)?.country ?? null
-  }
-
-  function includedInBaseline() {
-    return dishCategory === 'basic' || dishCategory === 'vegetable'
-  }
-
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault()
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
     setMessage('')
     setSaving(true)
-
-    const parsedLocalPrice = Number(localPrice)
-    const exchangeRateUsed = cadRates[localCurrency] ?? 1
-    const priceCad = Number((parsedLocalPrice * exchangeRateUsed).toFixed(2))
-
+    const parsed = Number(localPrice)
+    const rate   = cadRates[localCurrency] ?? 1
+    const priceCad = Number((parsed * rate).toFixed(2))
     if (!city || !restaurantName.trim() || !dishName.trim() || !sourceUrl.trim()) {
-      setMessage('City, restaurant, dish name, and source URL are required.')
-      setSaving(false)
-      return
+      setMessage('City, restaurant name, dish name, and source URL are required.')
+      setSaving(false); return
     }
-    if (!Number.isFinite(parsedLocalPrice) || parsedLocalPrice <= 0) {
+    if (!Number.isFinite(parsed) || parsed <= 0) {
       setMessage('Enter a valid local price.')
-      setSaving(false)
-      return
+      setSaving(false); return
     }
-
+    const country = cities.find(r => r.city === city)?.country ?? null
     const { error } = await supabase.from('pending_requests').insert({
-      request_type: 'restaurant',
-      city,
-      country: selectedCountry(),
-      restaurant_name: restaurantName.trim(),
-      dish_name: dishName.trim(),
-      dish_category: dishCategory,
-      included_in_baseline: includedInBaseline(),
-      local_price: parsedLocalPrice,
-      local_currency: localCurrency,
-      exchange_rate_used: exchangeRateUsed,
-      price_cad: priceCad,
-      source: 'Public submission',
-      source_type: 'public_submission',
-      source_url: sourceUrl.trim(),
-      confidence_score: 0.45,
-      date_accessed: new Date().toISOString(),
-      notes: notes.trim() || null,
-      status: 'pending',
+      request_type: 'restaurant', city, country, restaurant_name: restaurantName.trim(),
+      dish_name: dishName.trim(), dish_category: dishCategory,
+      included_in_baseline: dishCategory === 'basic' || dishCategory === 'vegetable',
+      local_price: parsed, local_currency: localCurrency, exchange_rate_used: rate,
+      price_cad: priceCad, source: 'Public submission', source_type: 'public_submission',
+      source_url: sourceUrl.trim(), confidence_score: 0.45,
+      date_accessed: new Date().toISOString(), notes: notes.trim() || null, status: 'pending',
     })
-
     if (error) { setMessage(error.message); setSaving(false); return }
-
-    setMessage('Submitted. It will appear in the index after review.')
+    setSuccess(true)
     setRestaurantName(''); setDishName(''); setDishCategory('basic')
     setLocalPrice(''); setLocalCurrency('CAD'); setSourceUrl(''); setNotes('')
     setSaving(false)
@@ -108,100 +116,86 @@ export default function SubmitPage() {
 
   return (
     <main style={{ fontFamily: 'var(--font-body)', background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
-      <nav style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '1.1rem 2rem',
-        borderBottom: '0.5px solid var(--color-border)',
-      }}>
-        <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none' }}>
-          fried rice <span style={{ color: 'var(--color-accent)' }}>index</span>
-        </a>
-        <div style={{ display: 'flex', gap: '1.75rem' }}>
-          {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
-          ))}
+      <Nav />
+
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: 'clamp(3rem,6vh,5rem) 2rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '1.5rem' }}>
+          <Send size={14} color="var(--color-accent)" />
+          <span style={{ fontSize: 11, letterSpacing: '2.5px', textTransform: 'uppercase', color: 'var(--color-text-3)' }}>Submit data</span>
         </div>
-      </nav>
 
-      <section style={{ maxWidth: 760, margin: '0 auto', padding: '4rem 2rem' }}>
-        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '1rem' }}>
-          Submit data
-        </p>
-
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 48, lineHeight: 1.05, letterSpacing: -1.2, color: 'var(--color-text-1)', margin: '0 0 1rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px,5vw,52px)', fontWeight: 400, lineHeight: 1.05, letterSpacing: -1.2, color: 'var(--color-text-1)', margin: '0 0 1rem' }}>
           Submit a fried rice price.
         </h1>
-
-        <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--color-text-2)', marginBottom: '1.5rem' }}>
+        <p style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.65, marginBottom: '2.5rem' }}>
           Found a price we&apos;re missing? Submit it and we&apos;ll review it before adding it to the index.
         </p>
 
+        {success && (
+          <div style={{ background: 'var(--color-surface)', border: '0.5px solid #3db870', borderRadius: 10, padding: '1rem 1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <ArrowRight size={14} color="#3db870" />
+            <span style={{ fontSize: 14, color: '#3db870' }}>Submitted — we&apos;ll review it and add it to the index if approved.</span>
+          </div>
+        )}
         {message && (
-          <p style={{ background: '#141714', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '0.9rem 1rem', color: '#a8a49c', fontSize: 14, marginBottom: '1rem' }}>
-            {message}
-          </p>
+          <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 10, padding: '1rem 1.25rem', marginBottom: '1.5rem' }}>
+            <p style={{ fontSize: 14, color: 'var(--color-text-2)', margin: 0 }}>{message}</p>
+          </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 18, padding: '1.5rem', display: 'grid', gap: '1rem' }}>
-          {[
-            { label: 'City', el: (
-              <select value={city} onChange={e => setCity(e.target.value)} style={inputStyle}>
-                {cities.map(r => <option key={r.city} value={r.city}>{r.city}</option>)}
-              </select>
-            )},
-            { label: 'Restaurant name', el: (
-              <input value={restaurantName} onChange={e => setRestaurantName(e.target.value)} style={inputStyle} required />
-            )},
-            { label: 'Dish name', el: (
-              <input value={dishName} onChange={e => setDishName(e.target.value)} style={inputStyle} placeholder="Chicken Fried Rice" required />
-            )},
-            { label: 'Dish category', el: (
-              <select value={dishCategory} onChange={e => setDishCategory(e.target.value)} style={inputStyle}>
+        <form onSubmit={handleSubmit} style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '2rem', display: 'grid', gap: '1.25rem' }}>
+          <Field icon={<MapPin size={12} />} label="City">
+            <select value={city} onChange={e => setCity(e.target.value)} style={inp}>
+              {cities.map(r => <option key={r.city} value={r.city}>{r.city}</option>)}
+            </select>
+          </Field>
+          <Field icon={<Store size={12} />} label="Restaurant name">
+            <input value={restaurantName} onChange={e => setRestaurantName(e.target.value)} style={inp} required />
+          </Field>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <Field icon={<Utensils size={12} />} label="Dish name">
+              <input value={dishName} onChange={e => setDishName(e.target.value)} style={inp} placeholder="Egg Fried Rice" required />
+            </Field>
+            <Field icon={<Tag size={12} />} label="Dish category">
+              <select value={dishCategory} onChange={e => setDishCategory(e.target.value)} style={inp}>
                 {dishCategories.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
-            )},
-            { label: 'Local price', el: (
-              <input type="number" step="0.01" value={localPrice} onChange={e => setLocalPrice(e.target.value)} style={inputStyle} required />
-            )},
-            { label: 'Local currency', el: (
-              <select value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} style={inputStyle}>
+            </Field>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <Field icon={<DollarSign size={12} />} label="Local price">
+              <input type="number" step="0.01" value={localPrice} onChange={e => setLocalPrice(e.target.value)} style={inp} required />
+            </Field>
+            <Field icon={<Globe size={12} />} label="Local currency">
+              <select value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} style={inp}>
                 {currencies.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
-            )},
-            { label: 'Source URL', el: (
-              <input value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} style={inputStyle} placeholder="Restaurant menu or ordering page" required />
-            )},
-            { label: 'Notes', el: (
-              <textarea value={notes} onChange={e => setNotes(e.target.value)} style={{ ...inputStyle, minHeight: 100, resize: 'vertical' }} placeholder="Optional: delivery markup, menu date, screenshot context, etc." />
-            )},
-          ].map(({ label, el }) => (
-            <label key={label} style={{ display: 'grid', gap: '0.4rem', fontSize: 13, color: 'var(--color-text-3)' }}>
-              {label}
-              {el}
-            </label>
-          ))}
+            </Field>
+          </div>
+          <Field icon={<Link2 size={12} />} label="Source URL">
+            <input value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} style={inp} placeholder="Link to the restaurant menu or ordering page" required />
+          </Field>
+          <Field icon={<MessageSquare size={12} />} label="Notes (optional)">
+            <textarea value={notes} onChange={e => setNotes(e.target.value)} style={{ ...inp, minHeight: 90, resize: 'vertical' }} placeholder="Delivery markup, menu date, screenshot context, etc." />
+          </Field>
 
-          <button type="submit" disabled={saving} style={{
-            border: 'none', borderRadius: 10, padding: '0.75rem 1rem',
-            background: '#d9682a', color: '#fff',
-            fontFamily: 'var(--font-body)', fontSize: 14, cursor: 'pointer',
-            opacity: saving ? 0.6 : 1,
-          }}>
-            {saving ? 'Submitting…' : 'Submit for review'}
-          </button>
+          <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem' }}>
+            <button type="submit" disabled={saving} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '.75rem 1.75rem', background: 'var(--color-accent)', color: '#fff', border: 'none', borderRadius: 8, fontFamily: 'var(--font-body)', fontSize: 14, cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.6 : 1 }}>
+              <Send size={14} />
+              {saving ? 'Submitting…' : 'Submit for review'}
+            </button>
+          </div>
         </form>
-      </section>
+      </div>
     </main>
   )
 }
 
-const inputStyle: CSSProperties = {
+const inp: CSSProperties = {
   width: '100%', boxSizing: 'border-box',
-  padding: '0.75rem 0.9rem',
+  padding: '0.65rem 0.9rem',
   border: '0.5px solid var(--color-border)',
-  borderRadius: 10,
-  background: 'var(--color-bg)',
-  fontFamily: 'var(--font-body)',
-  fontSize: 14,
+  borderRadius: 8, background: 'var(--color-bg)',
+  fontFamily: 'var(--font-body)', fontSize: 14,
   color: 'var(--color-text-1)',
 }
