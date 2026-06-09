@@ -154,53 +154,10 @@ async function recomputeCityStats() {
   return cityMap
 }
 
-async function updateReportSnapshot() {
-  console.log('\n── Updating monthly_reports exchange_rates_snapshot ──')
-
-  const { data: cities, error: cErr } = await s
-    .from('cities')
-    .select(`
-      city, country, region, flag, price_cad,
-      median_rent_1br_cad, median_monthly_salary_cad,
-      baseline_entry_count, market_entry_count, data_quality_label
-    `)
-    .order('price_cad', { ascending: true, nullsFirst: false })
-
-  if (cErr || !cities) { console.error('Failed to fetch cities:', cErr?.message); return }
-
-  const clean = cities.filter(c => c.price_cad != null && Number(c.price_cad) > 0)
-  const cheapest = clean[0]
-  const priciest = clean[clean.length - 1]
-  const avg = clean.reduce((sum, c) => sum + Number(c.price_cad), 0) / clean.length
-  const spread = r2(Number(priciest.price_cad) / Number(cheapest.price_cad) * 10) / 10
-
-  const { error } = await s
-    .from('monthly_reports')
-    .update({
-      exchange_rates_snapshot: JUNE_2026_RATES,
-      city_snapshot: clean,
-      cheapest_city: cheapest.city,
-      cheapest_price_cad: Number(cheapest.price_cad),
-      priciest_city: priciest.city,
-      priciest_price_cad: Number(priciest.price_cad),
-      spread_ratio: spread,
-      avg_baseline_cad: r2(avg),
-      city_count: clean.length,
-    })
-    .eq('month', '2026-05')
-
-  if (error) {
-    console.error('  Report update failed:', error.message)
-  } else {
-    console.log(`  ✓ exchange_rates_snapshot updated with June 2026 rates`)
-    console.log(`  ✓ city_snapshot refreshed — ${clean.length} cities`)
-    console.log(`  ✓ Spread: ${cheapest.city} (CA$${Number(cheapest.price_cad).toFixed(2)}) → ${priciest.city} (CA$${Number(priciest.price_cad).toFixed(2)}) = ${spread}×`)
-  }
-}
-
 async function main() {
   console.log('═══════════════════════════════════════════════')
   console.log('  Exchange Rate Update — June 2026')
+  console.log('  (live tables only — monthly_reports NOT touched)')
   console.log('═══════════════════════════════════════════════\n')
   console.log('── Step 1: Updating restaurant prices ──')
 
@@ -211,10 +168,11 @@ async function main() {
   console.log(`\n  ✓ ${totalUpdated} restaurant entries updated`)
 
   await recomputeCityStats()
-  await updateReportSnapshot()
 
   console.log('\n═══════════════════════════════════════════════')
-  console.log('  Done.')
+  console.log('  Done. Past reports are unchanged.')
+  console.log('  Run seed-reports-v2.ts at month-end to create')
+  console.log('  the June 2026 report snapshot.')
   console.log('═══════════════════════════════════════════════')
 }
 
