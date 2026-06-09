@@ -3,6 +3,7 @@
 import type { CSSProperties, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { Globe, MapPin, Store, Utensils, Tag, DollarSign, Link2, MessageSquare, Send, ArrowRight } from 'lucide-react'
+import NavBar from '@/app/components/NavBar'
 import { supabase } from '@/lib/supabase'
 
 type CityRow = { city: string; country: string | null }
@@ -25,29 +26,6 @@ const cadRates: Record<string, number> = {
   MYR:0.31, MXN:0.08, ARS:0.0014, KRW:0.001, INR:0.016, AED:0.37,
 }
 
-const NAV_LINKS = [['cities','/cities'],['submit','/submit'],['about','/about'],['methodology','/methodology']] as const
-
-function Nav() {
-  return (
-    <nav style={{
-      position: 'sticky', top: 0, zIndex: 50,
-      background: 'rgba(9,13,10,.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '0.5px solid var(--color-border)',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '0 2rem', height: 56,
-    }}>
-      <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none', fontStyle: 'italic', letterSpacing: -.2, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <Globe size={15} color="var(--color-accent)" />
-        fried rice <span style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>index</span>
-      </a>
-      <div style={{ display: 'flex', gap: '1.75rem' }}>
-        {NAV_LINKS.map(([l, h]) => (
-          <a key={h} href={h} style={{ fontSize: 13, textDecoration: 'none', color: l === 'submit' ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l === 'submit' ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l === 'submit' ? 1 : 0 }}>{l}</a>
-        ))}
-      </div>
-    </nav>
-  )
-}
 
 function Field({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
   return (
@@ -116,7 +94,7 @@ export default function SubmitPage() {
 
   return (
     <main style={{ fontFamily: 'var(--font-body)', background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
-      <Nav />
+      <NavBar active="submit" />
 
       <div style={{ maxWidth: 680, margin: '0 auto', padding: 'clamp(3rem,6vh,5rem) 2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '1.5rem' }}>

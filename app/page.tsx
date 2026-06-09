@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 import {
-  Globe, ChevronRight, RotateCcw, Expand,
+  ChevronRight, RotateCcw, Expand,
   MapPin, BarChart2, TrendingDown, TrendingUp,
-  X, ExternalLink, Menu,
+  X, ExternalLink, Globe,
 } from 'lucide-react'
 import WorldMap, { type MapCity, type WorldMapHandle, LEGEND } from './components/WorldMap'
 import { RATES, SYMBOLS } from './cities/[city]/CityPageContent'
+import NavBar from './components/NavBar'
 
 /* ── helpers ─────────────────────────────────────────────────────────── */
 const CURRENCY_OPTIONS = [
@@ -27,40 +28,6 @@ const SLIDES = [
   { num: '11.5×', color: '#d9682a', glow: 'rgba(217,104,42,.2)',  label: 'spread',  body: 'The cheapest bowl costs eleven and a half times less than the priciest.' },
   { num: '→',     color: '#f0ece4', glow: 'rgba(240,236,228,.1)', label: 'explore', body: 'The data is live. See what fried rice costs where you live — and everywhere else.' },
 ]
-
-/* ── nav ─────────────────────────────────────────────────────────────── */
-function NavBar() {
-  const [open, setOpen] = useState(false)
-  const links = [['cities','/cities'],['reports','/reports'],['submit','/submit'],['about','/about'],['methodology','/methodology']]
-  return (
-    <>
-      <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, height:52, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 2rem', background:'rgba(9,13,10,.85)', backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)', borderBottom:'0.5px solid var(--color-border)' }}>
-        <a href="/" style={{ fontFamily:'var(--font-display)', fontSize:16, fontStyle:'italic', letterSpacing:-.2, color:'var(--color-text-1)', textDecoration:'none', display:'flex', alignItems:'center', gap:7 }}>
-          <Globe size={14} color="var(--color-accent)" />
-          fried rice <span style={{ color:'var(--color-accent)', fontStyle:'normal' }}>index</span>
-        </a>
-        <div style={{ display:'flex', gap:'1.5rem', alignItems:'center' }} className="d-nav">
-          {links.map(([l,h]) => <a key={h} href={h} style={{ fontSize:13, color:'var(--color-text-3)', textDecoration:'none' }}>{l}</a>)}
-        </div>
-        <button onClick={() => setOpen(true)} className="m-btn" style={{ display:'none', background:'none', border:'none', color:'var(--color-text-2)', cursor:'pointer', padding:4 }}>
-          <Menu size={20} />
-        </button>
-      </nav>
-      {open && (
-        <div style={{ position:'fixed', inset:0, zIndex:300, background:'var(--color-bg)' }}>
-          <div style={{ padding:'1rem 2rem', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'0.5px solid var(--color-border)', height:52 }}>
-            <span style={{ fontFamily:'var(--font-display)', fontSize:16, fontStyle:'italic' }}>fried rice <span style={{ color:'var(--color-accent)', fontStyle:'normal' }}>index</span></span>
-            <button onClick={() => setOpen(false)} style={{ background:'none', border:'none', cursor:'pointer', color:'var(--color-text-2)' }}><X size={20} /></button>
-          </div>
-          <div style={{ padding:'2rem' }}>
-            {links.map(([l,h]) => <a key={h} href={h} style={{ display:'block', fontFamily:'var(--font-display)', fontSize:28, color:'var(--color-text-1)', textDecoration:'none', marginBottom:'1.25rem' }}>{l}</a>)}
-          </div>
-        </div>
-      )}
-      <style>{`@media(max-width:600px){.d-nav{display:none!important}.m-btn{display:block!important}}`}</style>
-    </>
-  )
-}
 
 /* ══════════════════════════════════════════════════════════════════════ */
 export default function Home() {
@@ -107,7 +74,7 @@ export default function Home() {
         @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
       `}</style>
 
-      <NavBar />
+      <NavBar fixed />
 
       {/* ══ HERO ═══════════════════════════════════════════════════════ */}
       <section style={{ position:'relative', overflow:'hidden', paddingTop:52, minHeight:'68vh', display:'flex', alignItems:'center' }}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { supabase } from '@/lib/supabase'
+import NavBar from '@/app/components/NavBar'
 import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
@@ -300,23 +301,7 @@ export default function Explore() {
         })()}
       </div>
 
-      {!(expanded && isMobile) && (
-        <nav style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: isMobile ? '1rem 1.25rem' : '1.1rem 2rem',
-          borderBottom: '0.5px solid #1e261e',
-          position: 'relative', zIndex: 10,
-        }}>
-          <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none' }}>
-            fried rice <span style={{ color: '#d9682a' }}>index</span>
-          </a>
-          <div style={{ display: 'flex', gap: isMobile ? '1rem' : '1.75rem' }}>
-            {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-              <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
-            ))}
-          </div>
-        </nav>
-      )}
+      {!(expanded && isMobile) && <NavBar />}
 
       {!(expanded && isMobile) && (
         <div style={{ padding: isMobile ? '2rem 1.25rem 1.25rem' : '2.5rem 2rem 1.5rem', maxWidth: 960 }}>

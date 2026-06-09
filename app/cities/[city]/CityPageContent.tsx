@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import NavBar from '@/app/components/NavBar'
 
 // ── Types (exported so page.tsx can import them) ──────────────────────────────
 
@@ -296,17 +297,7 @@ export default function CityPageContent({
   return (
     <main style={{ fontFamily: 'DM Sans, sans-serif', background: '#0c0f0d', minHeight: '100vh', color: '#e8e4dc' }}>
 
-      {/* ── Nav ─────────────────────────────────────────────────────────── */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '1.1rem 2rem', borderBottom: '0.5px solid #1e261e', flexWrap: 'wrap' }}>
-        <Link href="/" style={{ fontFamily: 'DM Serif Display, serif', fontSize: 17, color: '#e8e4dc', textDecoration: 'none' }}>
-          fried rice <span style={{ color: '#d9682a' }}>index</span>
-        </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-          {[['cities', '/cities'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <Link key={h} href={h} style={{ fontSize: 13, color: '#5a5a52', textDecoration: 'none' }}>{l}</Link>
-          ))}
-        </div>
-      </nav>
+      <NavBar active="cities" />
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section style={{ padding: '3rem 2rem 2rem', maxWidth: 1100, margin: '0 auto' }}>

@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
-import { Globe, Search, Download, Building2, X } from 'lucide-react'
+import { Search, Download, Building2, X } from 'lucide-react'
+import NavBar from '@/app/components/NavBar'
 import { supabase } from '@/lib/supabase'
 
 const FALLBACK_RATES: Record<string, number> = {
@@ -119,17 +120,7 @@ export default function CitiesPage() {
   return (
     <main style={{ fontFamily:'var(--font-body)', background:'var(--color-bg)', minHeight:'100vh', color:'var(--color-text-1)', overflowX:'hidden' }}>
 
-      <nav style={{ position:'sticky', top:0, zIndex:50, height:52, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 2rem', background:'rgba(9,13,10,.92)', backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)', borderBottom:'0.5px solid var(--color-border)' }}>
-        <a href="/" style={{ fontFamily:'var(--font-display)', fontSize:16, fontStyle:'italic', letterSpacing:-.2, color:'var(--color-text-1)', textDecoration:'none', display:'flex', alignItems:'center', gap:7 }}>
-          <Globe size={14} color="var(--color-accent)" />
-          fried rice <span style={{ color:'var(--color-accent)', fontStyle:'normal' }}>index</span>
-        </a>
-        <div style={{ display:'flex', gap:'1.75rem' }}>
-          {[['cities','/cities'],['reports','/reports'],['submit','/submit'],['about','/about'],['methodology','/methodology']].map(([l,h]) => (
-            <a key={h} href={h} style={{ fontSize:13, textDecoration:'none', color: l==='cities' ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l==='cities' ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l==='cities' ? 1 : 0 }}>{l}</a>
-          ))}
-        </div>
-      </nav>
+      <NavBar active="cities" />
 
       <section style={{ maxWidth:1180, margin:'0 auto', padding: isMobile ? '2rem 1.25rem' : '3rem 2rem' }}>
 

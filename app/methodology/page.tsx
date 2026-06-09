@@ -1,28 +1,5 @@
-import { Globe, BookOpen } from 'lucide-react'
-
-const NAV_LINKS = [['cities','/cities'],['submit','/submit'],['about','/about'],['methodology','/methodology']] as const
-
-function Nav({ active }: { active?: string }) {
-  return (
-    <nav style={{
-      position: 'sticky', top: 0, zIndex: 50,
-      background: 'rgba(9,13,10,.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '0.5px solid var(--color-border)',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '0 2rem', height: 56,
-    }}>
-      <a href="/" style={{ fontFamily: 'var(--font-display)', fontSize: 17, color: 'var(--color-text-1)', textDecoration: 'none', fontStyle: 'italic', letterSpacing: -.2, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <Globe size={15} color="var(--color-accent)" />
-        fried rice <span style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>index</span>
-      </a>
-      <div style={{ display: 'flex', gap: '1.75rem' }}>
-        {NAV_LINKS.map(([l, h]) => (
-          <a key={h} href={h} style={{ fontSize: 13, textDecoration: 'none', color: l === active ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l === active ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l === active ? 1 : 0 }}>{l}</a>
-        ))}
-      </div>
-    </nav>
-  )
-}
+import { BookOpen } from 'lucide-react'
+import NavBar from '@/app/components/NavBar'
 
 const SECTIONS = [
   { num: '01', title: 'What the index measures', body: ['The Fried Rice Index is built from restaurant menu data. It compares fried rice prices across cities and studies what those prices reveal about everyday affordability, local restaurant markets, and urban economic conditions.', "It is not a replacement for CPI, PPP, rent data, or wage data. It is a narrower signal based on one common restaurant dish — transparent about what it is and what it isn't."] },
@@ -40,7 +17,7 @@ const SECTIONS = [
 export default function MethodologyPage() {
   return (
     <main style={{ fontFamily: 'var(--font-body)', background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
-      <Nav active="methodology" />
+      <NavBar active="methodology" />
 
       <div style={{ maxWidth: 920, margin: '0 auto', padding: 'clamp(3rem,6vh,5rem) 2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '1.5rem' }}>

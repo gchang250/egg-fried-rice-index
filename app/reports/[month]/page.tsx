@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase-admin'
 import { notFound } from 'next/navigation'
+import NavBar from '@/app/components/NavBar'
 
 export const dynamic = 'force-dynamic'
 
@@ -54,16 +55,7 @@ export default async function ReportPage({ params }: PageProps) {
   return (
     <main style={{ fontFamily: FONT, background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
 
-      <nav style={{ position: 'sticky', top: 0, zIndex: 50, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', background: 'rgba(9,13,10,.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderBottom: '0.5px solid var(--color-border)' }}>
-        <a href="/" style={{ fontFamily: DISP, fontSize: 16, fontStyle: 'italic', letterSpacing: -.2, color: 'var(--color-text-1)', textDecoration: 'none' }}>
-          fried rice <span style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>index</span>
-        </a>
-        <div style={{ display: 'flex', gap: '1.75rem' }}>
-          {[['cities', '/cities'], ['reports', '/reports'], ['submit', '/submit'], ['about', '/about'], ['methodology', '/methodology']].map(([l, h]) => (
-            <a key={h} href={h} style={{ fontSize: 13, textDecoration: 'none', color: l === 'reports' ? 'var(--color-text-1)' : 'var(--color-text-3)', borderBottom: l === 'reports' ? '0.5px solid var(--color-accent)' : 'none', paddingBottom: l === 'reports' ? 1 : 0 }}>{l}</a>
-          ))}
-        </div>
-      </nav>
+      <NavBar active="reports" />
 
       {/* Header */}
       <section style={{ borderBottom: '0.5px solid var(--color-border)', padding: '3rem 2rem 2.5rem', maxWidth: 1100, margin: '0 auto' }}>
