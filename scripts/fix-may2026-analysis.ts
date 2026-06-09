@@ -1,9 +1,9 @@
 /**
- * Seeds the monthly_reports table for the inaugural May 2026 edition.
+ * Updates the May 2026 report analysis text: removes em dashes,
+ * removes "not X" constructions, and tightens filler phrasing.
  *
- * Prerequisites:
- *   1. Run scripts/migrate-reports-v1.sql in the Supabase SQL editor
- *   2. export $(grep -v '^#' .env.local | xargs) && npx tsx scripts/seed-reports-v1.ts
+ * Run with:
+ *   export $(grep -v '^#' .env.local | xargs) && npx tsx scripts/fix-may2026-analysis.ts
  */
 
 import { createClient } from '@supabase/supabase-js'
@@ -23,55 +23,20 @@ Several city prices warrant brief context. Los Angeles records CA$15.64, reflect
 
 This is the first of what will be monthly reports. From July 2026, the index expands by five cities per month, starting with Southeast Asian capitals and adding coverage in Africa and Latin America in subsequent months. Exchange rates are reviewed with each edition; rates used here are documented below. All forty cities hold a "High Confidence" data quality designation, with a minimum of 22 verified restaurant entries per city across budget, mid-market, and premium tiers.`
 
-const EXCHANGE_RATES: Record<string, number> = {
-  USD: 1.39, GBP: 1.76, EUR: 1.51, AUD: 0.88, SGD: 1.08,
-  CNY: 0.203, HKD: 0.1748, JPY: 0.00869, KRW: 0.00091,
-  INR: 0.0165, PKR: 0.0036,
-  AED: 0.379, SAR: 0.370, EGP: 0.028,
-  RUB: 0.015, TRY: 0.037,
-  MXN: 0.072, ARS: 0.0011,
-}
-
 async function main() {
-  const { data: cities, error } = await s
-    .from('cities')
-    .select(`
-      city, country, region, flag, price_cad,
-      median_rent_1br_cad, median_monthly_salary_cad,
-      baseline_entry_count, market_entry_count,
-      data_quality_label, population
-    `)
-    .order('price_cad', { ascending: true, nullsFirst: false })
+  const { error } = await s
+    .from('monthly_reports')
+    .update({
+      analysis: ANALYSIS,
+      subtitle: 'Inaugural Edition: 40 Cities',
+    })
+    .eq('month', '2026-05')
 
-  if (error) { console.error(error); process.exit(1) }
-
-  const clean = (cities ?? []).filter(c => c.price_cad != null && Number(c.price_cad) > 0)
-  const cheapest = clean[0]
-  const priciest = clean[clean.length - 1]
-  const avg = clean.reduce((sum, c) => sum + Number(c.price_cad), 0) / clean.length
-  const spread = Number(priciest.price_cad) / Number(cheapest.price_cad)
-
-  const { error: insertErr } = await s.from('monthly_reports').insert({
-    month:              '2026-05',
-    title:              'May 2026',
-    subtitle:           'Inaugural Edition: 40 Cities',
-    city_count:         clean.length,
-    new_cities:         [],
-    analysis:           ANALYSIS,
-    cheapest_city:      cheapest.city,
-    cheapest_price_cad: Number(cheapest.price_cad),
-    priciest_city:      priciest.city,
-    priciest_price_cad: Number(priciest.price_cad),
-    spread_ratio:       Math.round(spread * 10) / 10,
-    avg_baseline_cad:   Math.round(avg * 100) / 100,
-    exchange_rates_snapshot: EXCHANGE_RATES,
-    city_snapshot:      clean,
-    published_at:       '2026-06-02T00:00:00Z',
-    is_published:       true,
-  })
-
-  if (insertErr) { console.error(insertErr); process.exit(1) }
-  console.log(`Seeded May 2026 report: ${clean.length} cities snapshotted`)
+  if (error) {
+    console.error('Update failed:', error.message)
+    process.exit(1)
+  }
+  console.log('May 2026 analysis text updated.')
 }
 
-main()
+main().catch((err) => { console.error(err); process.exit(1) })

@@ -247,7 +247,7 @@ export default async function ReportPage({ params }: PageProps) {
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
           <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-            Visual analysis — distribution, legend, and price rank
+            Visual analysis: distribution, legend, price rank
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '1.5rem' }}>
@@ -313,7 +313,7 @@ export default async function ReportPage({ params }: PageProps) {
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
           <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-            Price distribution histogram — cities per CA$3 bracket
+            Price distribution histogram: cities per CA$3 bracket
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
             <div style={{ minWidth: 0 }}>
@@ -355,7 +355,7 @@ export default async function ReportPage({ params }: PageProps) {
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
             <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
-              Rent burden — monthly rent as % of median salary
+              Rent burden: monthly rent as % of median salary
             </p>
             <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>
               {burdenByCity.length} cities with data · sorted highest to lowest
@@ -382,7 +382,7 @@ export default async function ReportPage({ params }: PageProps) {
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
             <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-              Regional breakdown — baseline price range by region
+              Regional breakdown: baseline price range by region
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1px', background: 'var(--color-border)', border: '0.5px solid var(--color-border)', borderRadius: 10, overflow: 'hidden' }}>
               {regionStats.map((region) => (
@@ -431,7 +431,7 @@ export default async function ReportPage({ params }: PageProps) {
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
             <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
-              Scatter — baseline price vs rent burden
+              Scatter: baseline price vs rent burden
             </p>
             <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>Each flag is one city. Bottom-left = cheap + affordable. Top-right = expensive + squeezed.</p>
             <div style={{ position: 'relative', width: '100%', paddingBottom: '44%', border: '0.5px solid var(--color-border)', borderRadius: 8, overflow: 'hidden', background: 'var(--color-surface)' }}>
@@ -468,7 +468,7 @@ export default async function ReportPage({ params }: PageProps) {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-              {[['Bottom-left', '#3db870', 'Low price, low burden — most liveable'], ['Top-left', '#c4890f', 'Low price, high burden — wage crisis'], ['Top-right', '#c04030', 'High price, high burden — most stressful'], ['Bottom-right', '#3db870', 'High price, low burden — pricey but manageable']].map(([q, c, desc]) => (
+              {[['Bottom-left', '#3db870', 'Low price, low burden'], ['Top-left', '#c4890f', 'Low price, high burden'], ['Top-right', '#c04030', 'High price, high burden'], ['Bottom-right', '#3db870', 'High price, low burden']].map(([q, c, desc]) => (
                 <div key={q} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--color-text-3)' }}>
                   <span style={{ width: 8, height: 8, borderRadius: 2, background: c, display: 'inline-block', opacity: 0.8 }} />
                   {desc}
@@ -484,7 +484,7 @@ export default async function ReportPage({ params }: PageProps) {
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
             <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
-              Salary affordability — bowls of fried rice per month after rent
+              Salary affordability: bowls of fried rice per month after rent
             </p>
             <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>
               Disposable income (salary − rent) ÷ baseline price. {bowlsAfterRent.length} cities · negative = rent exceeds salary.
@@ -517,7 +517,7 @@ export default async function ReportPage({ params }: PageProps) {
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
           <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-            Statistical analysis — baseline price, rent burden, and sample depth
+            Statistical analysis: baseline price, rent burden, sample depth
           </p>
           <div style={{ border: '0.5px solid var(--color-border)', borderRadius: 10, overflowX: 'auto', background: 'var(--color-surface)' }}>
             <div style={{ minWidth: 720 }}>
@@ -544,7 +544,7 @@ export default async function ReportPage({ params }: PageProps) {
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
           <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-            Exchange rates used — CAD per 1 unit of foreign currency
+            Exchange rates: CAD per 1 unit of foreign currency
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
             {Object.entries(rates).sort(([a], [b]) => a.localeCompare(b)).map(([cur, rate]) => (
@@ -561,7 +561,7 @@ export default async function ReportPage({ params }: PageProps) {
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 5rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
           <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-            City data snapshot — {report.city_count} cities, ranked cheapest to most expensive
+            City data snapshot: {report.city_count} cities, ranked cheapest to most expensive
           </p>
 
           <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, overflowX: 'auto', overflowY: 'hidden' }}>
@@ -601,7 +601,7 @@ export default async function ReportPage({ params }: PageProps) {
                   </div>
 
                   <div>
-                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{zScore !== null ? zScore.toFixed(2) : '—'}</span>
+                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{zScore !== null ? zScore.toFixed(2) : '-'}</span>
                     <div style={{ height: 3, borderRadius: 2, background: 'var(--color-border)', overflow: 'hidden', maxWidth: 70, marginTop: 4 }}>
                       <div style={{ height: '100%', width: `${Math.min(100, Math.abs(zScore ?? 0) * 28)}%`, background: zScore !== null && zScore < 0 ? '#3db870' : 'var(--color-accent)', borderRadius: 2 }} />
                     </div>
@@ -618,17 +618,17 @@ export default async function ReportPage({ params }: PageProps) {
                         <span style={{ fontSize: 13, fontWeight: 500, color: burdenColor(burden) }}>{burden}%</span>
                         <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>of salary</p>
                       </>
-                    ) : <span style={{ fontSize: 13, color: 'var(--color-text-4)' }}>—</span>}
+                    ) : <span style={{ fontSize: 13, color: 'var(--color-text-4)' }}>-</span>}
                   </div>
 
                   <div>
-                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{entries || '—'}</span>
+                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{entries || '-'}</span>
                     <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>total</p>
                   </div>
 
                   <div>
-                    <span style={{ fontSize: 12, color: 'var(--color-text-2)' }}>{city.data_quality_label ?? '—'}</span>
-                    <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>{city.baseline_entry_count ?? '—'} BL</p>
+                    <span style={{ fontSize: 12, color: 'var(--color-text-2)' }}>{city.data_quality_label ?? '-'}</span>
+                    <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>{city.baseline_entry_count ?? '-'} BL</p>
                   </div>
                 </div>
               )

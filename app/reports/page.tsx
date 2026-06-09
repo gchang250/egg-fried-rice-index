@@ -19,7 +19,7 @@ type Report = {
 }
 
 function fmt(n: number | null) {
-  if (!n) return '—'
+  if (!n) return '-'
   return `CA$${n.toFixed(2)}`
 }
 
@@ -55,7 +55,7 @@ export default async function ReportsPage() {
           Index reports.
         </h1>
         <p style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.65, maxWidth: 540, margin: '0 0 3rem' }}>
-          Monthly snapshots of all city data — with exchange rates, full baselines, and written analysis. Published on the first Monday of each month. Five new cities added monthly from July 2026.
+          Monthly snapshots of all city data: exchange rates, full baselines, and written analysis. Published on the first Monday of each month. Five new cities added monthly from July 2026.
         </p>
 
         {reports.length === 0 ? (

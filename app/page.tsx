@@ -17,7 +17,7 @@ const CURRENCY_OPTIONS = [
   ['KRW','₩'],['INR','₹'],['AED','AED'],['BRL','R$'],['MXN','MX$'],
 ]
 function cvt(cad: number | null, cur: string) {
-  if (!cad) return '—'
+  if (!cad) return '-'
   const v = cad * (RATES[cur] ?? 1)
   return `${SYMBOLS[cur] ?? 'CA$'}${v.toLocaleString(undefined, { minimumFractionDigits: v >= 100 ? 0 : 2, maximumFractionDigits: v >= 100 ? 0 : 2 })}`
 }
@@ -43,7 +43,7 @@ const SLIDES = [
   },
   {
     num: '→',     color: '#f0ece4', glow: 'rgba(240,236,228,.12)',
-    label: 'explore', body: 'The data is live. See what fried rice costs where you live — and everywhere else.',
+    label: 'explore', body: 'The data is live. See what fried rice costs where you live, and everywhere else.',
     img: `https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8${Q}`,
   },
 ]
@@ -142,7 +142,7 @@ export default function Home() {
           </h1>
 
           <p style={{ fontSize:'clamp(15px,1.6vw,19px)', color:'rgba(240,236,228,.72)', maxWidth:460, lineHeight:1.7, margin:'0 0 2.5rem', textShadow:'0 1px 12px rgba(0,0,0,.3)' }}>
-            Restaurant prices across forty cities — and what they reveal about the cost of living everywhere.
+            Restaurant prices across forty cities, and what they reveal about the cost of living everywhere.
           </p>
 
           <div style={{ display:'flex', gap:'0.75rem', flexWrap:'wrap' }}>
@@ -346,7 +346,7 @@ export default function Home() {
         </p>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px,1fr))', gap:'1px', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
           {[
-            { num:'01', label:'Baseline price',  body:"What you'd pay at a regular local restaurant. Not a tourist trap — just the going rate." },
+            { num:'01', label:'Baseline price',  body:"What you'd pay at a regular local restaurant. The typical local rate, no tourist markup." },
             { num:'02', label:'Rent burden',      body:"How much of the average paycheck goes to rent before you've spent a dollar on food." },
             { num:'03', label:'Bowls after rent', body:"Once rent is paid, how many bowls can you actually afford? The most direct affordability signal." },
           ].map(c => (
