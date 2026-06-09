@@ -108,6 +108,47 @@ export default async function ReportPage({ params }: PageProps) {
   const paragraphs = String(report.analysis).split('\n\n').filter(Boolean)
   const pubDate = new Date(report.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
 
+  const HIST_BINS = [
+    { lo: 0,  hi: 3,        label: '0–3' },
+    { lo: 3,  hi: 6,        label: '3–6' },
+    { lo: 6,  hi: 9,        label: '6–9' },
+    { lo: 9,  hi: 12,       label: '9–12' },
+    { lo: 12, hi: 15,       label: '12–15' },
+    { lo: 15, hi: 18,       label: '15–18' },
+    { lo: 18, hi: 21,       label: '18–21' },
+    { lo: 21, hi: Infinity, label: '21+' },
+  ]
+  const histBins = HIST_BINS.map(b => ({
+    ...b,
+    count: baselinePrices.filter(p => p >= b.lo && p < b.hi).length,
+  }))
+  const histMax = Math.max(...histBins.map(b => b.count), 1)
+
+  const burdenByCity = cities
+    .map(city => {
+      const burden = rentBurden(city)
+      return burden !== null ? { city: city.city, flag: city.flag, burden } : null
+    })
+    .filter((x): x is { city: string; flag: string | null; burden: number } => x !== null)
+    .sort((a, b) => b.burden - a.burden)
+
+  const regionPriceMap = new Map<string, number[]>()
+  for (const city of cities) {
+    if (!city.region || !city.price_cad) continue
+    const arr = regionPriceMap.get(city.region) ?? []
+    arr.push(Number(city.price_cad))
+    regionPriceMap.set(city.region, arr)
+  }
+  const regionStats = [...regionPriceMap.entries()]
+    .map(([name, prices]) => {
+      const sorted = [...prices].sort((a, b) => a - b)
+      const mid = Math.floor(sorted.length / 2)
+      const med = sorted.length % 2 === 1 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2
+      return { name, count: sorted.length, min: sorted[0], max: sorted[sorted.length - 1], median: med }
+    })
+    .sort((a, b) => a.median - b.median)
+  const regionMaxPrice = Math.max(...regionStats.map(r => r.max), 1)
+
   const FONT = "'DM Sans', sans-serif"
   const DISP = "'DM Serif Display', serif"
 
@@ -241,6 +282,123 @@ export default async function ReportPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Price histogram */}
+      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+        <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+          <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
+            Price distribution histogram — cities per CA$3 bracket
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: '0 0 1rem' }}>Cities by baseline price range</p>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 110, marginBottom: 4 }}>
+                {histBins.map((bin) => (
+                  <div key={bin.label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end', gap: 3 }}>
+                    <span style={{ fontSize: 11, color: 'var(--color-text-3)', lineHeight: 1 }}>{bin.count > 0 ? bin.count : ''}</span>
+                    <div style={{ width: '100%', height: `${(bin.count / histMax) * 82}px`, background: bin.count > 0 ? 'var(--color-accent)' : 'transparent', borderRadius: '2px 2px 0 0', minHeight: bin.count > 0 ? 3 : 0 }} />
+                  </div>
+                ))}
+              </div>
+              <div style={{ height: 1, background: 'var(--color-border)', marginBottom: 6 }} />
+              <div style={{ display: 'flex', gap: 4 }}>
+                {histBins.map((bin) => (
+                  <div key={bin.label} style={{ flex: 1, textAlign: 'center', fontSize: 9, color: 'var(--color-text-3)', lineHeight: 1.3 }}>{bin.label}</div>
+                ))}
+              </div>
+              <p style={{ fontSize: 10, color: 'var(--color-text-4, var(--color-text-3))', margin: '6px 0 0', opacity: 0.7 }}>CA$ per bowl</p>
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: '0 0 1rem' }}>Non-empty brackets</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', border: '0.5px solid var(--color-border)', borderRadius: 8, overflow: 'hidden' }}>
+                {histBins.filter(b => b.count > 0).map((bin) => (
+                  <div key={bin.label} style={{ background: 'var(--color-surface)', padding: '0.75rem 0.9rem' }}>
+                    <p style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: 'var(--color-text-3)', margin: '0 0 3px' }}>CA${bin.label}</p>
+                    <p style={{ fontFamily: DISP, fontSize: 22, color: 'var(--color-accent)', margin: '0 0 1px', fontWeight: 400 }}>{bin.count}</p>
+                    <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: 0 }}>{bin.count === 1 ? 'city' : 'cities'}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Rent burden */}
+      {burdenByCity.length > 0 && (
+        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+          <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+            <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
+              Rent burden — monthly rent as % of median salary
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>
+              {burdenByCity.length} cities with data · sorted highest to lowest
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '0.35rem 2.5rem' }}>
+              {burdenByCity.map((item) => (
+                <div key={item.city} style={{ display: 'grid', gridTemplateColumns: '96px 1fr 50px', gap: 8, alignItems: 'center' }}>
+                  <span style={{ fontSize: 11, color: 'var(--color-text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {item.flag} {item.city}
+                  </span>
+                  <span style={{ height: 6, borderRadius: 3, background: 'var(--color-border)', overflow: 'hidden', display: 'block' }}>
+                    <span style={{ display: 'block', width: `${Math.min(item.burden, 100)}%`, height: '100%', borderRadius: 3, background: burdenColor(item.burden) }} />
+                  </span>
+                  <span style={{ fontSize: 11, color: burdenColor(item.burden), textAlign: 'right', fontWeight: 500 }}>{Math.round(item.burden)}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Regional breakdown */}
+      {regionStats.length > 0 && (
+        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+          <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+            <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
+              Regional breakdown — baseline price range by region
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1px', background: 'var(--color-border)', border: '0.5px solid var(--color-border)', borderRadius: 10, overflow: 'hidden' }}>
+              {regionStats.map((region) => (
+                <div key={region.name} style={{ background: 'var(--color-surface)', padding: '1rem 1.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.65rem' }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--color-text-1)' }}>{region.name}</span>
+                    <span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>{region.count} {region.count === 1 ? 'city' : 'cities'}</span>
+                  </div>
+                  <div style={{ position: 'relative', height: 5, background: 'var(--color-border)', borderRadius: 3, marginBottom: '0.65rem' }}>
+                    <div style={{
+                      position: 'absolute',
+                      left: `${(region.min / regionMaxPrice) * 100}%`,
+                      width: `${Math.max(((region.max - region.min) / regionMaxPrice) * 100, 1)}%`,
+                      height: '100%',
+                      background: 'var(--color-accent)',
+                      borderRadius: 3,
+                    }} />
+                    <div style={{
+                      position: 'absolute',
+                      left: `${(region.median / regionMaxPrice) * 100}%`,
+                      top: -3,
+                      width: 2,
+                      height: 11,
+                      background: 'var(--color-text-1)',
+                      borderRadius: 1,
+                      transform: 'translateX(-1px)',
+                    }} />
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
+                    {([['Min', money(region.min)], ['Median', money(region.median)], ['Max', money(region.max)]] as [string, string][]).map(([label, value]) => (
+                      <div key={label}>
+                        <p style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: 'var(--color-text-3)', margin: '0 0 2px' }}>{label}</p>
+                        <p style={{ fontFamily: DISP, fontSize: 14, color: label === 'Median' ? 'var(--color-accent)' : 'var(--color-text-2)', margin: 0, fontWeight: 400 }}>{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Statistical analysis */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
