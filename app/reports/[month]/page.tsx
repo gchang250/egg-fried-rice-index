@@ -1,6 +1,15 @@
 import { supabase } from '@/lib/supabase-admin'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import NavBar from '@/app/components/NavBar'
+import {
+  distributionStats,
+  money,
+  num,
+  percentileRank,
+  rentBurden,
+  validPositive,
+} from '@/lib/report-stats'
 
 export const dynamic = 'force-dynamic'
 
@@ -28,6 +37,14 @@ function barColor(price: number, max: number) {
   return '#b83418'
 }
 
+function legendColor(label: string) {
+  if (label === 'Low quartile') return '#3db870'
+  if (label === 'High quartile') return '#b83418'
+  if (label === 'Mean marker') return 'var(--color-text-1)'
+  if (label === 'IQR band') return '#e8d8bf'
+  return 'var(--color-accent)'
+}
+
 export default async function ReportPage({ params }: PageProps) {
   const { month } = await params
 
@@ -46,6 +63,48 @@ export default async function ReportPage({ params }: PageProps) {
     : []
   const rates: Record<string, number> = report.exchange_rates_snapshot ?? {}
   const maxPrice = cities.reduce((m, c) => Math.max(m, Number(c.price_cad ?? 0)), 0)
+  const baselinePrices = validPositive(cities.map((city) => city.price_cad))
+  const rentBurdens = cities
+    .map((city) => rentBurden(city))
+    .filter((burden): burden is number => burden !== null && Number.isFinite(burden))
+  const entryCounts = validPositive(cities.map((city) => city.market_entry_count ?? city.baseline_entry_count))
+  const priceStats = distributionStats(baselinePrices)
+  const burdenStats = distributionStats(rentBurdens)
+  const entryStats = distributionStats(entryCounts)
+  const topCities = [...cities]
+    .filter((city) => Number(city.price_cad ?? 0) > 0)
+    .slice(-12)
+    .reverse()
+  const statRows: Array<[string, string, string, string]> = [
+    ['Sample size', String(priceStats.count), String(burdenStats.count), String(entryStats.count)],
+    ['Mean', money(priceStats.mean), `${num(burdenStats.mean, 1)}%`, num(entryStats.mean, 1)],
+    ['Median', money(priceStats.median), `${num(burdenStats.median, 1)}%`, num(entryStats.median, 1)],
+    ['Min / max', `${money(priceStats.min)} / ${money(priceStats.max)}`, `${num(burdenStats.min, 1)}% / ${num(burdenStats.max, 1)}%`, `${num(entryStats.min, 0)} / ${num(entryStats.max, 0)}`],
+    ['Range', money(priceStats.range), `${num(burdenStats.range, 1)} pts`, num(entryStats.range, 0)],
+    ['Std dev', money(priceStats.stdDevSample), `${num(burdenStats.stdDevSample, 1)} pts`, num(entryStats.stdDevSample, 1)],
+    ['Variance', num(priceStats.varianceSample, 3), num(burdenStats.varianceSample, 3), num(entryStats.varianceSample, 3)],
+    ['Std error', money(priceStats.standardError), `${num(burdenStats.standardError, 1)} pts`, num(entryStats.standardError, 1)],
+    ['Coefficient var.', `${num((priceStats.coefficientOfVariation ?? 0) * 100, 1)}%`, `${num((burdenStats.coefficientOfVariation ?? 0) * 100, 1)}%`, `${num((entryStats.coefficientOfVariation ?? 0) * 100, 1)}%`],
+    ['Q1 / Q3', `${money(priceStats.q1)} / ${money(priceStats.q3)}`, `${num(burdenStats.q1, 1)}% / ${num(burdenStats.q3, 1)}%`, `${num(entryStats.q1, 1)} / ${num(entryStats.q3, 1)}`],
+    ['IQR', money(priceStats.iqr), `${num(burdenStats.iqr, 1)} pts`, num(entryStats.iqr, 1)],
+    ['P10 / P90', `${money(priceStats.p10)} / ${money(priceStats.p90)}`, `${num(burdenStats.p10, 1)}% / ${num(burdenStats.p90, 1)}%`, `${num(entryStats.p10, 1)} / ${num(entryStats.p90, 1)}`],
+    ['P95', money(priceStats.p95), `${num(burdenStats.p95, 1)}%`, num(entryStats.p95, 1)],
+    ['MAD', money(priceStats.mad), `${num(burdenStats.mad, 1)} pts`, num(entryStats.mad, 1)],
+    ['Skewness', num(priceStats.skewness, 3), num(burdenStats.skewness, 3), num(entryStats.skewness, 3)],
+    ['Excess kurtosis', num(priceStats.excessKurtosis, 3), num(burdenStats.excessKurtosis, 3), num(entryStats.excessKurtosis, 3)],
+    ['5% trimmed mean', money(priceStats.trimmedMean5), `${num(burdenStats.trimmedMean5, 1)}%`, num(entryStats.trimmedMean5, 1)],
+    ['95% CI', `${money(priceStats.ci95Low)} - ${money(priceStats.ci95High)}`, `${num(burdenStats.ci95Low, 1)}% - ${num(burdenStats.ci95High, 1)}%`, `${num(entryStats.ci95Low, 1)} - ${num(entryStats.ci95High, 1)}`],
+    ['Outlier fences', `${money(priceStats.lowerOutlierFence)} / ${money(priceStats.upperOutlierFence)}`, `${num(burdenStats.lowerOutlierFence, 1)}% / ${num(burdenStats.upperOutlierFence, 1)}%`, `${num(entryStats.lowerOutlierFence, 1)} / ${num(entryStats.upperOutlierFence, 1)}`],
+    ['Outlier count', String(priceStats.outlierCount), String(burdenStats.outlierCount), String(entryStats.outlierCount)],
+  ]
+  const distMin = priceStats.min ?? 0
+  const distMax = priceStats.max ?? 1
+  const distSpan = Math.max(distMax - distMin, 1)
+  const distPos = (value: number | null) => value === null ? 0 : Math.max(0, Math.min(100, ((value - distMin) / distSpan) * 100))
+  const q1Pos = distPos(priceStats.q1)
+  const q3Pos = distPos(priceStats.q3)
+  const medianPos = distPos(priceStats.median)
+  const meanPos = distPos(priceStats.mean)
   const paragraphs = String(report.analysis).split('\n\n').filter(Boolean)
   const pubDate = new Date(report.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
 
@@ -59,10 +118,10 @@ export default async function ReportPage({ params }: PageProps) {
 
       {/* Header */}
       <section style={{ borderBottom: '0.5px solid var(--color-border)', padding: '3rem 2rem 2.5rem', maxWidth: 1100, margin: '0 auto' }}>
-        <a href="/reports" style={{ fontSize: 12, color: 'var(--color-text-3)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5, marginBottom: '1.5rem' }}>
+        <Link href="/reports" style={{ fontSize: 12, color: 'var(--color-text-3)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5, marginBottom: '1.5rem' }}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15,18 9,12 15,6"/></svg>
           All reports
-        </a>
+        </Link>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
           <div>
@@ -117,6 +176,99 @@ export default async function ReportPage({ params }: PageProps) {
         ))}
       </section>
 
+      {/* Visual analysis */}
+      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+        <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+          <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
+            Visual analysis — distribution, legend, and price rank
+          </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '1.5rem' }}>
+            {['Low quartile', 'Middle 50%', 'High quartile', 'Mean marker', 'IQR band'].map((label) => (
+              <div key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 11, color: 'var(--color-text-3)' }}>
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: legendColor(label), display: 'inline-block', border: label === 'Mean marker' ? '0.5px solid var(--color-border)' : 'none' }} />
+                {label}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '1.5rem', alignItems: 'start' }}>
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: '0 0 1rem' }}>Baseline distribution</p>
+              <div style={{ position: 'relative', height: 90, margin: '0 0 0.75rem' }}>
+                <div style={{ position: 'absolute', left: 0, right: 0, top: 38, height: 7, borderRadius: 4, background: 'var(--color-border)' }} />
+                <div style={{ position: 'absolute', left: `${q1Pos}%`, width: `${Math.max(q3Pos - q1Pos, 1)}%`, top: 31, height: 21, borderRadius: 4, background: '#e8d8bf' }} />
+                <div style={{ position: 'absolute', left: `${medianPos}%`, top: 20, bottom: 22, width: 2, background: 'var(--color-accent)' }} />
+                <div style={{ position: 'absolute', left: `${meanPos}%`, top: 20, bottom: 22, width: 1, background: 'var(--color-text-1)' }} />
+                <div style={{ position: 'absolute', left: 0, bottom: 0, fontSize: 11, color: 'var(--color-text-3)' }}>{money(distMin)}</div>
+                <div style={{ position: 'absolute', right: 0, bottom: 0, fontSize: 11, color: 'var(--color-text-3)' }}>{money(distMax)}</div>
+                <div style={{ position: 'absolute', left: `max(0px, min(calc(${medianPos}% - 44px), calc(100% - 88px)))`, top: 0, width: 88, textAlign: 'center', fontSize: 11, color: 'var(--color-accent)' }}>Median {money(priceStats.median)}</div>
+                <div style={{ position: 'absolute', left: `max(0px, min(calc(${meanPos}% - 36px), calc(100% - 72px)))`, top: 58, width: 72, textAlign: 'center', fontSize: 11, color: 'var(--color-text-2)' }}>Mean {money(priceStats.mean)}</div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,minmax(0,1fr))', gap: '1px', border: '0.5px solid var(--color-border)', borderRadius: 8, overflow: 'hidden' }}>
+                {[
+                  ['Q1', money(priceStats.q1)],
+                  ['Q3', money(priceStats.q3)],
+                  ['IQR', money(priceStats.iqr)],
+                  ['Outliers', String(priceStats.outlierCount)],
+                ].map(([label, value]) => (
+                  <div key={label} style={{ background: 'var(--color-surface)', padding: '0.85rem' }}>
+                    <p style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: 'var(--color-text-3)', margin: '0 0 4px' }}>{label}</p>
+                    <p style={{ fontFamily: DISP, fontSize: 18, color: 'var(--color-text-1)', margin: 0, fontWeight: 400 }}>{value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ minWidth: 0 }}>
+              <p style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: '0 0 1rem' }}>Priciest baseline cities</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {topCities.map((city) => {
+                  const price = Number(city.price_cad ?? 0)
+                  const pct = maxPrice > 0 ? (price / maxPrice) * 100 : 0
+                  return (
+                    <div key={city.city} style={{ display: 'grid', gridTemplateColumns: '92px 1fr 62px', gap: 10, alignItems: 'center' }}>
+                      <span style={{ fontSize: 11, color: 'var(--color-text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{city.city}</span>
+                      <span style={{ height: 7, borderRadius: 4, background: 'var(--color-border)', overflow: 'hidden' }}>
+                        <span style={{ display: 'block', width: `${pct}%`, height: '100%', borderRadius: 4, background: barColor(price, maxPrice) }} />
+                      </span>
+                      <span style={{ fontSize: 11, color: 'var(--color-accent)', textAlign: 'right' }}>CA${price.toFixed(2)}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statistical analysis */}
+      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
+        <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
+          <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
+            Statistical analysis — baseline price, rent burden, and sample depth
+          </p>
+          <div style={{ border: '0.5px solid var(--color-border)', borderRadius: 10, overflowX: 'auto', background: 'var(--color-surface)' }}>
+            <div style={{ minWidth: 720 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr', gap: '1px', background: 'var(--color-border)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: 'var(--color-text-3)' }}>
+                {['Measure', 'Baseline price', 'Rent burden', 'Entry count'].map((h) => (
+                  <div key={h} style={{ background: 'var(--color-surface)', padding: '0.7rem 0.9rem' }}>{h}</div>
+                ))}
+              </div>
+              {statRows.map((row, i) => (
+                <div key={row[0]} style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr', gap: '1px', background: 'var(--color-border)' }}>
+                  {row.map((cell, ci) => (
+                    <div key={`${row[0]}-${ci}`} style={{ background: i % 2 === 0 ? 'var(--color-bg)' : 'var(--color-surface)', padding: '0.65rem 0.9rem', fontSize: 12, color: ci === 1 ? 'var(--color-accent)' : ci === 0 ? 'var(--color-text-1)' : 'var(--color-text-2)', fontWeight: ci === 0 ? 500 : 400 }}>
+                      {cell}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Exchange rates */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
@@ -141,10 +293,10 @@ export default async function ReportPage({ params }: PageProps) {
             City data snapshot — {report.city_count} cities, ranked cheapest to most expensive
           </p>
 
-          <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, overflow: 'hidden' }}>
+          <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, overflowX: 'auto', overflowY: 'hidden' }}>
             {/* Header */}
-            <div style={{ display: 'grid', gridTemplateColumns: '44px 2fr 0.85fr 1.3fr 0.75fr 0.8fr', gap: '0.75rem', padding: '0.7rem 1rem', borderBottom: '0.5px solid var(--color-border)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: 'var(--color-text-3)' }}>
-              <div>#</div><div>City</div><div>Baseline</div><div>Relative</div><div>Rent burden</div><div>Quality</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '44px minmax(150px,2fr) 0.8fr 0.65fr 0.65fr 0.8fr 0.6fr 0.8fr', gap: '0.75rem', padding: '0.7rem 1rem', borderBottom: '0.5px solid var(--color-border)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1.2px', color: 'var(--color-text-3)', minWidth: 920 }}>
+              <div>#</div><div>City</div><div>Baseline</div><div>Z-score</div><div>Pctile</div><div>Rent burden</div><div>Entries</div><div>Quality</div>
             </div>
 
             {cities.map((city, index) => {
@@ -153,10 +305,13 @@ export default async function ReportPage({ params }: PageProps) {
               const salary = Number(city.median_monthly_salary_cad ?? 0)
               const burden = rent && salary ? Math.round((rent / salary) * 100) : null
               const isLast = index === cities.length - 1
-              const priciest = cities[cities.length - 1]
+              const zScore = priceStats.stdDevSample && priceStats.mean !== null
+                ? (price - priceStats.mean) / priceStats.stdDevSample
+                : null
+              const entries = Number(city.market_entry_count ?? city.baseline_entry_count ?? 0)
 
               return (
-                <div key={city.city} style={{ display: 'grid', gridTemplateColumns: '44px 2fr 0.85fr 1.3fr 0.75fr 0.8fr', gap: '0.75rem', padding: '0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems: 'center' }}>
+                <div key={city.city} style={{ display: 'grid', gridTemplateColumns: '44px minmax(150px,2fr) 0.8fr 0.65fr 0.65fr 0.8fr 0.6fr 0.8fr', gap: '0.75rem', padding: '0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems: 'center', minWidth: 920 }}>
 
                   <div style={{ fontSize: 12, color: 'var(--color-text-3)' }}>#{index + 1}</div>
 
@@ -175,13 +330,15 @@ export default async function ReportPage({ params }: PageProps) {
                   </div>
 
                   <div>
-                    <div style={{ height: 3, borderRadius: 2, background: 'var(--color-border)', overflow: 'hidden', maxWidth: 140 }}>
-                      <div style={{ height: '100%', width: `${(price / maxPrice) * 100}%`, background: barColor(price, maxPrice), borderRadius: 2 }} />
+                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{zScore !== null ? zScore.toFixed(2) : '—'}</span>
+                    <div style={{ height: 3, borderRadius: 2, background: 'var(--color-border)', overflow: 'hidden', maxWidth: 70, marginTop: 4 }}>
+                      <div style={{ height: '100%', width: `${Math.min(100, Math.abs(zScore ?? 0) * 28)}%`, background: zScore !== null && zScore < 0 ? '#3db870' : 'var(--color-accent)', borderRadius: 2 }} />
                     </div>
-                    <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '3px 0 0' }}>
-                      {city.city !== priciest.city && priciest.price_cad
-                        ? `${(Number(priciest.price_cad) / price).toFixed(1)}× cheaper than ${priciest.city}` : city.city === priciest.city ? 'Most expensive' : ''}
-                    </p>
+                  </div>
+
+                  <div>
+                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{percentileRank(index, cities.length)}</span>
+                    <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>pct</p>
                   </div>
 
                   <div>
@@ -191,6 +348,11 @@ export default async function ReportPage({ params }: PageProps) {
                         <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>of salary</p>
                       </>
                     ) : <span style={{ fontSize: 13, color: 'var(--color-text-4)' }}>—</span>}
+                  </div>
+
+                  <div>
+                    <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{entries || '—'}</span>
+                    <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '1px 0 0' }}>total</p>
                   </div>
 
                   <div>

@@ -1,139 +1,16 @@
 import PDFDocument from 'pdfkit'
 import { supabase } from '@/lib/supabase-admin'
+import {
+  type CitySnapshot,
+  distributionStats,
+  money,
+  num,
+  percentileRank,
+  rentBurden,
+} from '@/lib/report-stats'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
-
-type CitySnapshot = {
-  city?: string | null
-  country?: string | null
-  region?: string | null
-  price_cad?: number | null
-  median_rent_1br_cad?: number | null
-  median_monthly_salary_cad?: number | null
-  baseline_entry_count?: number | null
-  market_entry_count?: number | null
-  data_quality_label?: string | null
-}
-
-type DistributionStats = {
-  count: number
-  mean: number | null
-  median: number | null
-  min: number | null
-  max: number | null
-  range: number | null
-  varianceSample: number | null
-  stdDevSample: number | null
-  standardError: number | null
-  coefficientOfVariation: number | null
-  q1: number | null
-  q3: number | null
-  iqr: number | null
-  p10: number | null
-  p90: number | null
-  p95: number | null
-  mad: number | null
-  skewness: number | null
-  excessKurtosis: number | null
-  trimmedMean5: number | null
-  ci95Low: number | null
-  ci95High: number | null
-  lowerOutlierFence: number | null
-  upperOutlierFence: number | null
-  outlierCount: number
-}
-
-function percentile(sortedValues: number[], p: number): number | null {
-  if (sortedValues.length === 0) return null
-  if (sortedValues.length === 1) return sortedValues[0]
-  const idx = (sortedValues.length - 1) * p
-  const lo = Math.floor(idx)
-  const hi = Math.ceil(idx)
-  const weight = idx - lo
-  return sortedValues[lo] * (1 - weight) + sortedValues[hi] * weight
-}
-
-function trimmedMean(sortedValues: number[], trimFraction = 0.05): number | null {
-  if (sortedValues.length === 0) return null
-  const k = Math.round(sortedValues.length * trimFraction)
-  const trimmed = k > 0 ? sortedValues.slice(k, sortedValues.length - k) : sortedValues
-  const source = trimmed.length ? trimmed : sortedValues
-  return source.reduce((s, v) => s + v, 0) / source.length
-}
-
-function distributionStats(values: number[]): DistributionStats {
-  const sorted = values.filter((v) => Number.isFinite(v) && v > 0).sort((a, b) => a - b)
-  const count = sorted.length
-  const mean = count ? sorted.reduce((s, v) => s + v, 0) / count : null
-  const median = percentile(sorted, 0.5)
-  const min = count ? sorted[0] : null
-  const max = count ? sorted[count - 1] : null
-  const range = min !== null && max !== null ? max - min : null
-  const varianceSample = mean !== null && count > 1
-    ? sorted.reduce((s, v) => s + (v - mean) ** 2, 0) / (count - 1)
-    : null
-  const stdDevSample = varianceSample !== null ? Math.sqrt(varianceSample) : null
-  const standardError = stdDevSample !== null ? stdDevSample / Math.sqrt(count) : null
-  const coefficientOfVariation = stdDevSample !== null && mean !== null && mean !== 0 ? stdDevSample / mean : null
-  const q1 = percentile(sorted, 0.25)
-  const q3 = percentile(sorted, 0.75)
-  const iqr = q1 !== null && q3 !== null ? q3 - q1 : null
-  const deviations = median !== null ? sorted.map((v) => Math.abs(v - median)).sort((a, b) => a - b) : []
-  const mad = percentile(deviations, 0.5)
-  const populationStdDev = mean !== null && count > 0
-    ? Math.sqrt(sorted.reduce((s, v) => s + (v - mean) ** 2, 0) / count)
-    : null
-  const skewness = mean !== null && populationStdDev !== null && populationStdDev > 0 && count > 2
-    ? sorted.reduce((s, v) => s + ((v - mean) / populationStdDev) ** 3, 0) / count
-    : null
-  const excessKurtosis = mean !== null && populationStdDev !== null && populationStdDev > 0 && count > 3
-    ? sorted.reduce((s, v) => s + ((v - mean) / populationStdDev) ** 4, 0) / count - 3
-    : null
-  const ci95Low = mean !== null && standardError !== null ? mean - 1.96 * standardError : null
-  const ci95High = mean !== null && standardError !== null ? mean + 1.96 * standardError : null
-  const lowerOutlierFence = q1 !== null && iqr !== null ? q1 - 1.5 * iqr : null
-  const upperOutlierFence = q3 !== null && iqr !== null ? q3 + 1.5 * iqr : null
-  const outlierCount = lowerOutlierFence !== null && upperOutlierFence !== null
-    ? sorted.filter((v) => v < lowerOutlierFence || v > upperOutlierFence).length
-    : 0
-
-  return {
-    count,
-    mean,
-    median,
-    min,
-    max,
-    range,
-    varianceSample,
-    stdDevSample,
-    standardError,
-    coefficientOfVariation,
-    q1,
-    q3,
-    iqr,
-    p10: percentile(sorted, 0.1),
-    p90: percentile(sorted, 0.9),
-    p95: percentile(sorted, 0.95),
-    mad,
-    skewness,
-    excessKurtosis,
-    trimmedMean5: trimmedMean(sorted, 0.05),
-    ci95Low,
-    ci95High,
-    lowerOutlierFence,
-    upperOutlierFence,
-    outlierCount,
-  }
-}
-
-function money(n: number | null | undefined) {
-  return n === null || n === undefined || !Number.isFinite(n) ? '-' : `CA$${n.toFixed(2)}`
-}
-
-function num(n: number | null | undefined, decimals = 2) {
-  return n === null || n === undefined || !Number.isFinite(n) ? '-' : n.toFixed(decimals)
-}
 
 export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]/download'>) {
   const { month } = await ctx.params
@@ -162,11 +39,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     .map((city) => Number(city.price_cad))
     .filter((price) => Number.isFinite(price) && price > 0)
   const rentBurdens = cities
-    .map((city) => {
-      const rent = Number(city.median_rent_1br_cad ?? 0)
-      const salary = Number(city.median_monthly_salary_cad ?? 0)
-      return rent > 0 && salary > 0 ? (rent / salary) * 100 : null
-    })
+    .map((city) => rentBurden(city))
     .filter((burden): burden is number => burden !== null && Number.isFinite(burden))
   const entryCounts = cities
     .map((city) => Number(city.market_entry_count ?? city.baseline_entry_count ?? 0))
@@ -205,6 +78,93 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
   const hRule = (y: number, color = RULE, thickness = 0.5) =>
     doc.rect(ML, y, CW, thickness).fill(color)
+
+  const addReportPage = () => {
+    doc.addPage()
+    doc.rect(0, 0, PW, PH).fill(BGWARM)
+    hRule(MT, ACCENT, 1.5)
+    return MT + 18
+  }
+
+  const ensureSpace = (currentY: number, needed: number) =>
+    currentY + needed > PH - MB ? addReportPage() : currentY
+
+  const priceColor = (price: number) => {
+    if (!priceStats.q1 || !priceStats.q3) return ACCENT
+    if (price <= priceStats.q1) return '#3db870'
+    if (price >= priceStats.q3) return '#b83418'
+    return ACCENT
+  }
+
+  const drawLegend = (x: number, y: number) => {
+    const items = [
+      ['Low quartile', '#3db870'],
+      ['Middle 50%', ACCENT],
+      ['High quartile', '#b83418'],
+      ['Mean marker', DARK],
+      ['IQR band', '#e8d8bf'],
+    ]
+    let lx = x
+    items.forEach(([label, color]) => {
+      doc.rect(lx, y + 1, 8, 8).fill(color)
+      doc.font('Helvetica').fontSize(7).fillColor(MID).text(label, lx + 11, y, { width: 65 })
+      lx += 78
+    })
+    return y + 18
+  }
+
+  const drawPriceBars = (x: number, y: number, width: number, height: number) => {
+    const topCities = cities
+      .filter((city) => Number.isFinite(Number(city.price_cad)) && Number(city.price_cad) > 0)
+      .slice(-12)
+    const max = Math.max(...topCities.map((city) => Number(city.price_cad)), 1)
+    const rowH = height / topCities.length
+
+    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
+       .text('PRICIEST BASELINE CITIES', x, y, { characterSpacing: 1.1 })
+    doc.font('Helvetica').fontSize(7).fillColor(LITE)
+       .text('Bar length = baseline city price in CA$', x + 160, y + 1)
+    y += 14
+
+    topCities.reverse().forEach((city, i) => {
+      const rowY = y + i * rowH
+      const price = Number(city.price_cad ?? 0)
+      const barW = (price / max) * (width - 120)
+      doc.font('Helvetica').fontSize(7).fillColor(DARK)
+         .text(String(city.city ?? ''), x, rowY + 1, { width: 86, lineBreak: false })
+      doc.rect(x + 90, rowY + 2, width - 120, 5).fill('#efe9df')
+      doc.rect(x + 90, rowY + 2, barW, 5).fill(priceColor(price))
+      doc.font('Helvetica-Bold').fontSize(7).fillColor(ACCENT)
+         .text(money(price), x + width - 28, rowY, { width: 36, align: 'right' })
+    })
+  }
+
+  const drawDistributionStrip = (x: number, y: number, width: number) => {
+    const min = priceStats.min ?? 0
+    const max = priceStats.max ?? 1
+    const span = Math.max(max - min, 1)
+    const pos = (value: number | null) => value === null ? x : x + ((value - min) / span) * width
+    const stripY = y + 34
+    const q1 = pos(priceStats.q1)
+    const q3 = pos(priceStats.q3)
+    const median = pos(priceStats.median)
+    const mean = pos(priceStats.mean)
+
+    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
+       .text('BASELINE PRICE DISTRIBUTION', x, y, { characterSpacing: 1.1 })
+    doc.font('Helvetica').fontSize(7).fillColor(LITE)
+       .text('Whiskers, IQR band, median, mean, and outlier fences', x + 170, y + 1)
+    doc.rect(x, stripY, width, 7).fill('#efe9df')
+    doc.rect(q1, stripY - 3, Math.max(q3 - q1, 1), 13).fill('#e8d8bf')
+    doc.moveTo(median, stripY - 7).lineTo(median, stripY + 16).strokeColor(ACCENT).lineWidth(1.5).stroke()
+    doc.moveTo(mean, stripY - 7).lineTo(mean, stripY + 16).strokeColor(DARK).lineWidth(0.9).stroke()
+    doc.moveTo(pos(priceStats.lowerOutlierFence), stripY - 5).lineTo(pos(priceStats.lowerOutlierFence), stripY + 14).strokeColor(LITE).lineWidth(0.5).stroke()
+    doc.moveTo(pos(priceStats.upperOutlierFence), stripY - 5).lineTo(pos(priceStats.upperOutlierFence), stripY + 14).strokeColor(LITE).lineWidth(0.5).stroke()
+    doc.font('Helvetica').fontSize(7).fillColor(MID).text(money(min), x, stripY + 21)
+    doc.text(money(max), x + width - 52, stripY + 21, { width: 52, align: 'right' })
+    doc.font('Helvetica-Bold').fontSize(7).fillColor(ACCENT).text(`Median ${money(priceStats.median)}`, median - 34, stripY - 20, { width: 68, align: 'center' })
+    doc.font('Helvetica').fontSize(7).fillColor(DARK).text(`Mean ${money(priceStats.mean)}`, mean - 30, stripY + 24, { width: 60, align: 'center' })
+  }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PAGE 1: COVER + ANALYSIS ━━ */
 
@@ -281,10 +241,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   // Paragraphs — each properly wrapped
   paragraphs.forEach((para, i) => {
     if (y > PH - MB - 70) {
-      doc.addPage()
-      doc.rect(0, 0, PW, PH).fill(BGWARM)
-      hRule(MT, ACCENT, 1.5)
-      y = MT + 18
+      y = addReportPage()
     }
     const opts = { width: CW, align: 'justify' as const, lineGap: 3 }
     doc.font(i === 0 ? 'Helvetica-Bold' : 'Helvetica')
@@ -295,10 +252,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   })
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PAGE 2: DATA ━━━━━━ */
-  doc.addPage()
-  doc.rect(0, 0, PW, PH).fill(BGWARM)
-  hRule(MT, ACCENT, 1.5)
-  y = MT + 18
+  y = addReportPage()
 
   /* Exchange rates */
   doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
@@ -323,7 +277,22 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   })
   y += Math.ceil(rateEntries.length / RCOLS) * 15 + 20
 
+  y = ensureSpace(y, 230)
+  hRule(y, ACCENT, 1.5)
+  y += 12
+  doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
+     .text('VISUAL ANALYSIS', ML, y, { characterSpacing: 1.8 })
+  doc.font('Helvetica').fontSize(7.5).fillColor(LITE)
+     .text('Distribution context for the monthly city snapshot', ML + 136, y + 1)
+  y += 18
+  y = drawLegend(ML, y)
+  drawDistributionStrip(ML, y, CW)
+  y += 82
+  drawPriceBars(ML, y, CW, 126)
+  y += 150
+
   /* Statistical analysis */
+  y = ensureSpace(y, 310)
   hRule(y, ACCENT, 1.5)
   y += 12
 
@@ -374,10 +343,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
   statRows.forEach((row, i) => {
     if (y > PH - MB - 18) {
-      doc.addPage()
-      doc.rect(0, 0, PW, PH).fill(BGWARM)
-      hRule(MT, ACCENT, 1.5)
-      y = MT + 18
+      y = addReportPage()
     }
     if (i % 2 === 0) doc.rect(ML, y, CW, 13).fill('#f3f0ea')
     sx = ML
@@ -393,6 +359,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   y += 20
 
   /* City table */
+  y = ensureSpace(y, 70)
   hRule(y, ACCENT, 1.5)
   y += 12
 
@@ -428,10 +395,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
   cities.forEach((city, i) => {
     if (y > PH - MB - 18) {
-      doc.addPage()
-      doc.rect(0, 0, PW, PH).fill(BGWARM)
-      hRule(MT, ACCENT, 1.5)
-      y = drawHeader(MT + 14)
+      y = drawHeader(addReportPage() - 4)
     }
     if (i % 2 === 0) doc.rect(ML, y, CW, 13).fill('#f3f0ea')
 
@@ -442,7 +406,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     const zScore = priceStats.stdDevSample && priceStats.mean !== null
       ? (price - priceStats.mean) / priceStats.stdDevSample
       : null
-    const percentileRank = cities.length > 1 ? Math.round((i / (cities.length - 1)) * 100) : 100
+    const cityPercentileRank = percentileRank(i, cities.length)
     const entries = Number(city.market_entry_count ?? city.baseline_entry_count ?? 0)
 
     const cells = [
@@ -450,7 +414,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
       String(city.city ?? ''),
       `CA$${price.toFixed(2)}`,
       zScore !== null ? zScore.toFixed(2) : '—',
-      `${percentileRank}`,
+      `${cityPercentileRank}`,
       burden,
       entries ? String(entries) : '—',
       String(city.data_quality_label ?? '—'),
