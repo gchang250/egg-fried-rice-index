@@ -89,9 +89,9 @@ const WorldMap = forwardRef<WorldMapHandle, Props>(function WorldMap({ onSelect,
     g.append('rect').attr('width', W).attr('height', H).attr('fill', '#0b1510')
 
     d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then((world: unknown) => {
-      const w = world as { objects: { countries: object } } & object
+      const w = world as any
       g.append('g').selectAll('path')
-        .data((topojson.feature(w, w.objects.countries) as { features: object[] }).features)
+        .data((topojson.feature(w, w.objects.countries) as unknown as { features: object[] }).features)
         .enter().append('path')
         .attr('d', path as unknown as string)
         .attr('fill', '#152018').attr('stroke', '#1e3024').attr('stroke-width', 0.5)
