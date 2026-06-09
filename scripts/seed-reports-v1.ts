@@ -52,8 +52,8 @@ async function main() {
   const spread = Number(priciest.price_cad) / Number(cheapest.price_cad)
 
   const { error: insertErr } = await s.from('monthly_reports').insert({
-    month:              '2026-06',
-    title:              'June 2026',
+    month:              '2026-05',
+    title:              'May 2026',
     subtitle:           'Inaugural Edition — 40 Cities',
     city_count:         clean.length,
     new_cities:         [],
@@ -66,7 +66,7 @@ async function main() {
     avg_baseline_cad:   Math.round(avg * 100) / 100,
     exchange_rates_snapshot: EXCHANGE_RATES,
     city_snapshot:      clean,
-    published_at:       '2026-06-08T00:00:00Z',
+    published_at:       '2026-06-02T00:00:00Z',
     is_published:       true,
   })
 

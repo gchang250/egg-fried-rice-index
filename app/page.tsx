@@ -22,12 +22,34 @@ function cvt(cad: number | null, cur: string) {
   return `${SYMBOLS[cur] ?? 'CA$'}${v.toLocaleString(undefined, { minimumFractionDigits: v >= 100 ? 0 : 2, maximumFractionDigits: v >= 100 ? 0 : 2 })}`
 }
 
+const Q = '?auto=format&fit=crop&w=1920&q=85'
+
+/* Each slide has its own verified fried rice photo */
 const SLIDES = [
-  { num: '1',     color: '#d9682a', glow: 'rgba(217,104,42,.2)',  label: 'dish',   body: 'A bowl of egg fried rice. One dish, wherever you are in the world.' },
-  { num: '40',    color: '#3db870', glow: 'rgba(61,184,112,.18)', label: 'cities',  body: 'Indexed across forty cities on six continents, from Cairo to Seoul.' },
-  { num: '11.5×', color: '#d9682a', glow: 'rgba(217,104,42,.2)',  label: 'spread',  body: 'The cheapest bowl costs eleven and a half times less than the priciest.' },
-  { num: '→',     color: '#f0ece4', glow: 'rgba(240,236,228,.1)', label: 'explore', body: 'The data is live. See what fried rice costs where you live — and everywhere else.' },
+  {
+    num: '1',     color: '#d9682a', glow: 'rgba(217,104,42,.25)',
+    label: 'dish',    body: 'A bowl of egg fried rice. One dish, wherever you are in the world.',
+    img: `https://images.unsplash.com/photo-1603133872878-684f208fb84b${Q}`,
+  },
+  {
+    num: '40',    color: '#3db870', glow: 'rgba(61,184,112,.2)',
+    label: 'cities',  body: 'Indexed across forty cities on six continents, from Cairo to Seoul.',
+    img: `https://images.unsplash.com/photo-1596560548464-f010549b84d7${Q}`,
+  },
+  {
+    num: '11.5×', color: '#d9682a', glow: 'rgba(217,104,42,.25)',
+    label: 'spread',  body: 'The cheapest bowl costs eleven and a half times less than the priciest.',
+    img: `https://images.unsplash.com/photo-1512058564366-18510be2db19${Q}`,
+  },
+  {
+    num: '→',     color: '#f0ece4', glow: 'rgba(240,236,228,.12)',
+    label: 'explore', body: 'The data is live. See what fried rice costs where you live — and everywhere else.',
+    img: `https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8${Q}`,
+  },
 ]
+
+/* Hero — fried rice in a black pan, confirmed Unsplash CDN */
+const HERO_IMG = `https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7${Q}`
 
 /* ══════════════════════════════════════════════════════════════════════ */
 export default function Home() {
@@ -35,14 +57,22 @@ export default function Home() {
   const [selected, setSelected] = useState<MapCity | null>(null)
   const [currency, setCurrency] = useState('CAD')
   const [slide, setSlide]       = useState(0)
+  const [scrollY, setScrollY]   = useState(0)
 
-  /* trigger refs for IntersectionObserver-based slide detection */
   const t0 = useRef<HTMLDivElement>(null)
   const t1 = useRef<HTMLDivElement>(null)
   const t2 = useRef<HTMLDivElement>(null)
   const t3 = useRef<HTMLDivElement>(null)
   const triggers = [t0, t1, t2, t3]
 
+  /* Scroll tracking for parallax */
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  /* Slide detection */
   useEffect(() => {
     const obs = triggers.map((ref, i) => {
       const o = new IntersectionObserver(
@@ -62,60 +92,72 @@ export default function Home() {
     ? Math.round((selected.median_monthly_salary_cad - selected.median_rent_1br_cad) / selected.price_cad) : null
 
   const S = SLIDES[slide]
+  const heroParallax = scrollY * 0.38
 
   return (
     <div style={{ background:'var(--color-bg)', color:'var(--color-text-1)', fontFamily:'var(--font-body)', minHeight:'100vh' }}>
       <style>{`
-        @keyframes orb1{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(-5%,7%)scale(1.08)}66%{transform:translate(7%,-4%)scale(.94)}}
-        @keyframes orb2{0%,100%{transform:translate(0,0)scale(1)}40%{transform:translate(6%,-6%)scale(1.1)}80%{transform:translate(-6%,4%)scale(.93)}}
-        @keyframes orb3{0%,100%{transform:translate(0,0)}25%{transform:translate(5%,5%)}75%{transform:translate(-4%,-4%)}}
-        @keyframes orb4{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(-8%,3%)scale(1.12)}}
-        @keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-        @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+        @keyframes popIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+        @keyframes slideIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+        @keyframes imgReveal{from{opacity:0;transform:scale(1.07) perspective(900px) rotateX(4deg)}to{opacity:1;transform:scale(1) perspective(900px) rotateX(0deg)}}
+        @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,-3%)}40%{transform:translate(3%,2%)}60%{transform:translate(-1%,4%)}80%{transform:translate(2%,-1%)}}
       `}</style>
 
       <NavBar fixed />
 
       {/* ══ HERO ═══════════════════════════════════════════════════════ */}
-      <section style={{ position:'relative', overflow:'hidden', paddingTop:52, minHeight:'68vh', display:'flex', alignItems:'center' }}>
+      <section style={{ position:'relative', overflow:'hidden', height:'100vh', display:'flex', alignItems:'center' }}>
 
-        {/* Aurora orbs */}
-        <div style={{ position:'absolute', inset:0, pointerEvents:'none' }}>
-          <div style={{ position:'absolute', top:'-10%', right:'-6%', width:700, height:700, background:'radial-gradient(circle, rgba(217,104,42,.24) 0%, transparent 58%)', filter:'blur(80px)', animation:'orb1 14s ease-in-out infinite' }} />
-          <div style={{ position:'absolute', bottom:'-12%', left:'-10%', width:620, height:620, background:'radial-gradient(circle, rgba(61,184,112,.18) 0%, transparent 58%)', filter:'blur(80px)', animation:'orb2 19s ease-in-out infinite' }} />
-          <div style={{ position:'absolute', top:'30%', left:'25%', width:480, height:480, background:'radial-gradient(circle, rgba(196,137,15,.12) 0%, transparent 62%)', filter:'blur(100px)', animation:'orb3 24s ease-in-out infinite' }} />
-          <div style={{ position:'absolute', top:'5%', left:'-8%', width:500, height:500, background:'radial-gradient(circle, rgba(180,55,20,.16) 0%, transparent 58%)', filter:'blur(80px)', animation:'orb4 17s ease-in-out infinite' }} />
-        </div>
+        {/* Fried rice photo — parallax layer */}
+        <div style={{
+          position:'absolute', inset:'-20% 0',
+          backgroundImage:`url(${HERO_IMG})`,
+          backgroundSize:'cover', backgroundPosition:'center',
+          transform:`translateY(${heroParallax}px)`,
+          willChange:'transform',
+        }} />
 
-        {/* Grid lines */}
-        <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:'linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px)', backgroundSize:'76px 76px' }} />
-        {/* Vignette */}
-        <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:'radial-gradient(ellipse 85% 70% at 50% 50%, transparent 15%, var(--color-bg) 85%)' }} />
+        {/* Layered dark overlays for editorial depth */}
+        <div style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(6,10,7,.65) 0%, rgba(6,10,7,.3) 40%, rgba(6,10,7,.75) 100%)' }} />
+        <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse 80% 60% at 60% 40%, transparent 30%, rgba(6,10,7,.5) 100%)' }} />
+
+        {/* Film grain overlay */}
+        <div style={{
+          position:'absolute', inset:0, pointerEvents:'none', opacity:.045,
+          backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundSize:'200px 200px',
+          animation:'grain 6s steps(1) infinite',
+        }} />
 
         {/* Content */}
-        <div style={{ position:'relative', zIndex:2, maxWidth:1280, margin:'0 auto', padding:'3rem 2rem', width:'100%' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:'1rem' }}>
-            <MapPin size={13} color="var(--color-accent)" />
-            <span style={{ fontSize:11, letterSpacing:'2.5px', textTransform:'uppercase', color:'var(--color-text-3)' }}>40 cities · food-based affordability index</span>
+        <div style={{ position:'relative', zIndex:2, maxWidth:1280, margin:'0 auto', padding:'6rem 2rem 4rem', width:'100%' }}>
+
+          <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:'1.5rem' }}>
+            <MapPin size={12} color="var(--color-accent)" />
+            <span style={{ fontSize:10, letterSpacing:'3px', textTransform:'uppercase', color:'rgba(240,236,228,.6)' }}>40 cities · food-based affordability index</span>
           </div>
 
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:'2rem' }}>
-            <div>
-              <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(42px,7vw,92px)', fontWeight:400, lineHeight:.92, letterSpacing:-2.5, color:'var(--color-text-1)', margin:'0 0 1.25rem' }}>
-                The Fried<br /><em style={{ color:'var(--color-accent)' }}>Rice Index.</em>
-              </h1>
-              <p style={{ fontSize:'clamp(14px,1.5vw,17px)', color:'var(--color-text-2)', maxWidth:420, lineHeight:1.65, margin:0 }}>
-                Restaurant prices across forty cities — and what they reveal about the cost of living everywhere.
-              </p>
-            </div>
-            <div style={{ display:'flex', gap:'0.75rem', flexWrap:'wrap' }}>
-              <a href="/cities" style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'.75rem 1.5rem', borderRadius:8, background:'var(--color-accent)', color:'#fff', textDecoration:'none', fontSize:14, fontWeight:500 }}>
-                Browse cities <ChevronRight size={15} />
-              </a>
-              <a href="/explore" style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'.75rem 1.5rem', borderRadius:8, border:'0.5px solid var(--color-border)', color:'var(--color-text-2)', textDecoration:'none', fontSize:14 }}>
-                Full map <Expand size={14} />
-              </a>
-            </div>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(52px,8.5vw,110px)', fontWeight:400, lineHeight:.88, letterSpacing:-3, color:'#f0ece4', margin:'0 0 1.75rem', textShadow:'0 2px 40px rgba(0,0,0,.4)' }}>
+            The Fried<br /><em style={{ color:'var(--color-accent)' }}>Rice Index.</em>
+          </h1>
+
+          <p style={{ fontSize:'clamp(15px,1.6vw,19px)', color:'rgba(240,236,228,.72)', maxWidth:460, lineHeight:1.7, margin:'0 0 2.5rem', textShadow:'0 1px 12px rgba(0,0,0,.3)' }}>
+            Restaurant prices across forty cities — and what they reveal about the cost of living everywhere.
+          </p>
+
+          <div style={{ display:'flex', gap:'0.75rem', flexWrap:'wrap' }}>
+            <a href="/cities" style={{ display:'inline-flex', alignItems:'center', gap:7, padding:'.85rem 1.75rem', borderRadius:8, background:'var(--color-accent)', color:'#fff', textDecoration:'none', fontSize:14, fontWeight:500, boxShadow:'0 4px 24px rgba(217,104,42,.35)' }}>
+              Browse cities <ChevronRight size={15} />
+            </a>
+            <a href="/explore" style={{ display:'inline-flex', alignItems:'center', gap:7, padding:'.85rem 1.75rem', borderRadius:8, border:'1px solid rgba(240,236,228,.25)', color:'rgba(240,236,228,.85)', textDecoration:'none', fontSize:14, backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)', background:'rgba(255,255,255,.06)' }}>
+              Full map <Expand size={14} />
+            </a>
+          </div>
+
+          {/* Scroll cue */}
+          <div style={{ position:'absolute', bottom:'3rem', left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:6, opacity:.45 }}>
+            <span style={{ fontSize:9, letterSpacing:'2.5px', textTransform:'uppercase', color:'#f0ece4' }}>scroll</span>
+            <div style={{ width:1, height:40, background:'linear-gradient(to bottom, rgba(240,236,228,.6), transparent)' }} />
           </div>
         </div>
       </section>
@@ -123,46 +165,62 @@ export default function Home() {
       {/* ══ STICKY SCROLL NARRATIVE ════════════════════════════════════ */}
       <div style={{ height:'400vh', position:'relative' }}>
 
-        {/* Invisible scroll triggers — one per 100vh */}
         {[t0,t1,t2,t3].map((ref,i) => (
           <div key={i} ref={ref} style={{ position:'absolute', top:`${i * 25}%`, height:'25%', width:'100%', pointerEvents:'none' }} />
         ))}
 
-        {/* Sticky panel */}
-        <div style={{ position:'sticky', top:0, height:'100vh', display:'flex', overflow:'hidden', borderTop:'0.5px solid var(--color-border)', borderBottom:'0.5px solid var(--color-border)' }}>
+        <div style={{ position:'sticky', top:0, height:'100vh', display:'flex', overflow:'hidden', borderTop:'0.5px solid var(--color-border)' }}>
 
-          {/* Left — giant number */}
-          <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', overflow:'hidden', borderRight:'0.5px solid var(--color-border)' }}>
-            <div style={{ position:'absolute', inset:0, background:`radial-gradient(circle at center, ${S.glow} 0%, transparent 65%)`, transition:'background .8s ease' }} />
+          {/* Left — fried rice photo + giant number */}
+          <div style={{ flex:1, position:'relative', overflow:'hidden', borderRight:'0.5px solid var(--color-border)' }}>
+
+            {/* All slide images stacked, cross-fade on slide change */}
+            {SLIDES.map((sl, i) => (
+              <div key={sl.img} style={{
+                position:'absolute', inset:0,
+                backgroundImage:`url(${sl.img})`,
+                backgroundSize:'cover', backgroundPosition:'center',
+                opacity: i === slide ? 1 : 0,
+                transform: i === slide ? 'scale(1) perspective(1200px) rotateX(0deg)' : 'scale(1.06) perspective(1200px) rotateX(3deg)',
+                transition:'opacity .9s ease, transform 1.4s cubic-bezier(.16,1,.3,1)',
+              }} />
+            ))}
+
+            {/* Dark overlay so the number reads cleanly */}
+            <div style={{ position:'absolute', inset:0, background:'rgba(6,10,7,.58)' }} />
+            <div style={{ position:'absolute', inset:0, background:`radial-gradient(circle at center, ${S.glow} 0%, transparent 60%)`, transition:'background .8s ease' }} />
+
+            {/* Giant number */}
             <div key={`num-${slide}`} style={{
+              position:'absolute', inset:0,
+              display:'flex', alignItems:'center', justifyContent:'center',
               fontFamily:'var(--font-display)',
-              fontSize:'clamp(110px,22vw,300px)',
+              fontSize:'clamp(100px,20vw,280px)',
               color: S.color,
               lineHeight:1,
-              letterSpacing:-8,
-              position:'relative', zIndex:1,
-              animation:'popIn .4s cubic-bezier(.16,1,.3,1)',
-              textShadow:`0 0 120px ${S.glow}`,
+              letterSpacing:-6,
+              animation:'popIn .45s cubic-bezier(.16,1,.3,1)',
+              textShadow:`0 0 100px ${S.glow}, 0 4px 40px rgba(0,0,0,.5)`,
+              userSelect:'none',
             }}>
               {S.num}
             </div>
           </div>
 
           {/* Right — text */}
-          <div style={{ width:'40%', display:'flex', flexDirection:'column', justifyContent:'center', padding:'clamp(2rem,5vw,5rem)' }}>
-            {/* Progress pills */}
+          <div style={{ width:'40%', display:'flex', flexDirection:'column', justifyContent:'center', padding:'clamp(2rem,5vw,5rem)', background:'var(--color-bg)' }}>
             <div style={{ display:'flex', gap:6, marginBottom:'2.5rem', alignItems:'center' }}>
               {SLIDES.map((sl,i) => (
-                <div key={i} style={{ height:5, borderRadius:3, width: i===slide ? 28 : 5, background: i===slide ? sl.color : 'var(--color-border)', transition:'all .5s cubic-bezier(.16,1,.3,1)' }} />
+                <div key={i} style={{ height:4, borderRadius:2, width: i===slide ? 28 : 4, background: i===slide ? sl.color : 'var(--color-border)', transition:'all .5s cubic-bezier(.16,1,.3,1)' }} />
               ))}
               <span style={{ marginLeft:8, fontSize:11, color:'var(--color-text-3)', letterSpacing:'1px' }}>{String(slide+1).padStart(2,'0')} / 04</span>
             </div>
 
-            <div key={`txt-${slide}`} style={{ animation:'slideIn .4s cubic-bezier(.16,1,.3,1)' }}>
-              <h2 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(44px,5vw,74px)', color: S.color, margin:'0 0 1.25rem', lineHeight:.95, letterSpacing:-1.5 }}>
+            <div key={`txt-${slide}`} style={{ animation:'slideIn .45s cubic-bezier(.16,1,.3,1)' }}>
+              <h2 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(44px,5vw,72px)', color: S.color, margin:'0 0 1.25rem', lineHeight:.94, letterSpacing:-1.5 }}>
                 {S.label}
               </h2>
-              <p style={{ fontSize:'clamp(15px,1.6vw,18px)', color:'var(--color-text-2)', lineHeight:1.75, margin:0, maxWidth:340 }}>
+              <p style={{ fontSize:'clamp(15px,1.6vw,18px)', color:'var(--color-text-2)', lineHeight:1.8, margin:0, maxWidth:340 }}>
                 {S.body}
               </p>
             </div>
@@ -187,8 +245,6 @@ export default function Home() {
 
       {/* ══ MAP ════════════════════════════════════════════════════════ */}
       <section style={{ borderTop:'0.5px solid var(--color-border)' }}>
-
-        {/* Toolbar */}
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'.85rem 2rem', borderBottom:'0.5px solid var(--color-border)', flexWrap:'wrap', gap:'.75rem' }}>
           <span style={{ fontSize:12, color:'var(--color-text-3)', display:'flex', alignItems:'center', gap:6 }}>
             <Globe size={13} /> Click a dot · scroll to zoom · names appear at 3×
@@ -204,12 +260,9 @@ export default function Home() {
         </div>
 
         <div style={{ display:'flex' }}>
-          {/* Map */}
           <div style={{ flex:1, overflow:'hidden' }}>
             <WorldMap ref={mapRef} onSelect={setSelected} selected={selected} mapH={440} />
           </div>
-
-          {/* City panel */}
           <div style={{ width: selected ? 'clamp(270px,28vw,340px)' : 0, overflow:'hidden', transition:'width .3s cubic-bezier(.4,0,.2,1)', borderLeft: selected ? '0.5px solid var(--color-border)' : 'none', background:'var(--color-surface)', flexShrink:0 }}>
             {selected && (
               <div style={{ width:'clamp(270px,28vw,340px)', padding:'1.5rem', overflowY:'auto', maxHeight:440 }}>
@@ -223,12 +276,10 @@ export default function Home() {
                     <X size={13} />
                   </button>
                 </div>
-
                 <div style={{ borderTop:'0.5px solid var(--color-border)', paddingTop:'1rem', marginBottom:'1rem' }}>
                   <p style={{ fontSize:10, letterSpacing:'1.5px', textTransform:'uppercase', color:'var(--color-text-3)', margin:'0 0 4px' }}>Baseline price</p>
                   <p style={{ fontFamily:'var(--font-display)', fontSize:34, color:'var(--color-accent)', margin:0, lineHeight:1 }}>{cvt(selected.price_cad, currency)}</p>
                 </div>
-
                 {(rentBurden !== null || bowlsAfterRent !== null) && (
                   <div style={{ display:'flex', gap:'.6rem', marginBottom:'1rem' }}>
                     {bowlsAfterRent !== null && (
@@ -247,9 +298,7 @@ export default function Home() {
                     )}
                   </div>
                 )}
-
                 {selected.blurb && <p style={{ fontSize:12, color:'var(--color-text-2)', lineHeight:1.65, margin:'0 0 1rem' }}>{selected.blurb}</p>}
-
                 <a href={`/cities/${selected.city.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')}`}
                   style={{ display:'inline-flex', alignItems:'center', gap:5, fontSize:13, color:'var(--color-accent)', textDecoration:'none', borderBottom:'0.5px solid var(--color-accent)', paddingBottom:2 }}>
                   Full profile <ExternalLink size={12} />
@@ -259,7 +308,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Legend */}
         <div style={{ padding:'.85rem 2rem', display:'flex', alignItems:'center', gap:'1rem', flexWrap:'wrap', borderTop:'0.5px solid var(--color-border)' }}>
           <span style={{ fontSize:10, letterSpacing:'1.5px', textTransform:'uppercase', color:'var(--color-text-3)' }}>Baseline price</span>
           {LEGEND.map(t => (
@@ -275,10 +323,10 @@ export default function Home() {
       <section style={{ borderBottom:'0.5px solid var(--color-border)' }}>
         <div style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))' }}>
           {[
-            { icon:<Globe size={15} color="var(--color-accent)" />,        val:'40',       sub:'cities indexed' },
-            { icon:<TrendingDown size={15} color="#3db870" />,              val:'CA$1.80',  sub:'cheapest baseline' },
-            { icon:<TrendingUp size={15} color="#c0392b" />,                val:'CA$20.68', sub:'most expensive' },
-            { icon:<BarChart2 size={15} color="var(--color-accent)" />,    val:'11.5×',    sub:'price spread' },
+            { icon:<Globe size={15} color="var(--color-accent)" />,      val:'40',       sub:'cities indexed' },
+            { icon:<TrendingDown size={15} color="#3db870" />,            val:'CA$1.80',  sub:'cheapest baseline' },
+            { icon:<TrendingUp size={15} color="#c0392b" />,              val:'CA$20.68', sub:'most expensive' },
+            { icon:<BarChart2 size={15} color="var(--color-accent)" />,  val:'11.5×',    sub:'price spread' },
           ].map((s,i,a) => (
             <div key={s.sub} style={{ padding:'1.25rem 2rem', display:'flex', alignItems:'center', gap:'1rem', borderRight: i < a.length-1 ? '0.5px solid var(--color-border)' : 'none' }}>
               {s.icon}
