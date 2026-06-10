@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   ChevronRight, RotateCcw, Expand,
-  MapPin, BarChart2, TrendingDown, TrendingUp,
-  X, ExternalLink, Globe,
+  MapPin, X, ExternalLink, Globe,
 } from 'lucide-react'
 import WorldMap, { type MapCity, type WorldMapHandle, LEGEND } from './components/WorldMap'
 import { RATES, SYMBOLS } from './cities/[city]/CityPageContent'
@@ -37,8 +36,8 @@ const SLIDES = [
     img: `https://images.unsplash.com/photo-1596560548464-f010549b84d7${Q}`,
   },
   {
-    num: '11.5×', color: '#d9682a', glow: 'rgba(217,104,42,.25)',
-    label: 'spread',  body: 'The cheapest bowl costs eleven and a half times less than the priciest.',
+    num: '8.8×',  color: '#d9682a', glow: 'rgba(217,104,42,.25)',
+    label: 'spread',  body: 'The cheapest bowl costs nearly nine times less than the priciest. Same dish, opposite ends of the world, CA$19 apart.',
     img: `https://images.unsplash.com/photo-1512058564366-18510be2db19${Q}`,
   },
   {
@@ -50,6 +49,24 @@ const SLIDES = [
 
 /* Hero — fried rice in a black pan, confirmed Unsplash CDN */
 const HERO_IMG = `https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7${Q}`
+
+/* Price spectrum bar — % position = (price_cad - 2.51) / (21.88 - 2.51), June 2026 data */
+const SPECTRUM: { name: string; pct: number; color: string; show: boolean }[] = [
+  { name:'Karachi',   pct:0,   color:'#3db870', show:true  },
+  { name:'Tehran',    pct:5,   color:'#3db870', show:false },
+  { name:'Kolkata',   pct:8,   color:'#3db870', show:false },
+  { name:'Chengdu',   pct:11,  color:'#3db870', show:false },
+  { name:'Istanbul',  pct:16,  color:'#d9682a', show:false },
+  { name:'Tokyo',     pct:20,  color:'#d9682a', show:false },
+  { name:'Singapore', pct:26,  color:'#d9682a', show:true  },
+  { name:'Seoul',     pct:34,  color:'#d9682a', show:false },
+  { name:'Hong Kong', pct:46,  color:'#d9682a', show:true  },
+  { name:'Toronto',   pct:49,  color:'#c4890f', show:false },
+  { name:'Chicago',   pct:59,  color:'#c4890f', show:false },
+  { name:'L.A.',      pct:68,  color:'#c4890f', show:true  },
+  { name:'Paris',     pct:74,  color:'#b83418', show:false },
+  { name:'London',    pct:100, color:'#b83418', show:true  },
+]
 
 /* ══════════════════════════════════════════════════════════════════════ */
 export default function Home() {
@@ -319,43 +336,112 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ STATS STRIP ════════════════════════════════════════════════ */}
-      <section style={{ borderBottom:'0.5px solid var(--color-border)' }}>
-        <div style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))' }}>
-          {[
-            { icon:<Globe size={15} color="var(--color-accent)" />,      val:'40',       sub:'cities indexed' },
-            { icon:<TrendingDown size={15} color="#3db870" />,            val:'CA$1.80',  sub:'cheapest baseline' },
-            { icon:<TrendingUp size={15} color="#c0392b" />,              val:'CA$20.68', sub:'most expensive' },
-            { icon:<BarChart2 size={15} color="var(--color-accent)" />,  val:'11.5×',    sub:'price spread' },
-          ].map((s,i,a) => (
-            <div key={s.sub} style={{ padding:'1.25rem 2rem', display:'flex', alignItems:'center', gap:'1rem', borderRight: i < a.length-1 ? '0.5px solid var(--color-border)' : 'none' }}>
-              {s.icon}
-              <div>
-                <p style={{ fontFamily:'var(--font-display)', fontSize:22, color:'var(--color-text-1)', margin:0, lineHeight:1 }}>{s.val}</p>
-                <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'3px 0 0' }}>{s.sub}</p>
-              </div>
+      {/* ══ PRICE GAP ══════════════════════════════════════════════════ */}
+      <section style={{ borderTop:'0.5px solid var(--color-border)', borderBottom:'0.5px solid var(--color-border)', padding:'6rem 0 5rem' }}>
+        <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 2rem' }}>
+
+          <p style={{ fontSize:10, letterSpacing:'3px', textTransform:'uppercase', color:'var(--color-text-3)', margin:'0 0 4rem' }}>
+            Baseline price · basic &amp; vegetable · 40 cities · June 2026
+          </p>
+
+          {/* Cheapest / spread / priciest */}
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 140px 1fr', gap:'2rem', alignItems:'flex-end', marginBottom:'4rem' }}>
+
+            <div>
+              <p style={{ fontSize:11, color:'#3db870', letterSpacing:'2px', textTransform:'uppercase', margin:'0 0 .5rem' }}>Cheapest · Karachi 🇵🇰</p>
+              <p style={{ fontFamily:'var(--font-display)', fontSize:'clamp(64px,7vw,108px)', color:'#3db870', margin:0, lineHeight:.85, letterSpacing:-3 }}>CA$2.51</p>
+              <p style={{ fontSize:12, color:'var(--color-text-3)', margin:'.75rem 0 0', lineHeight:1.5 }}>Budget Indo-Chinese, Burns Road area</p>
             </div>
-          ))}
+
+            <div style={{ textAlign:'center', paddingBottom:'.25rem' }}>
+              <p style={{ fontFamily:'var(--font-display)', fontSize:'clamp(40px,5vw,60px)', color:'var(--color-accent)', margin:0, lineHeight:1 }}>8.8×</p>
+              <div style={{ width:1, height:24, background:'var(--color-border)', margin:'.75rem auto' }} />
+              <p style={{ fontSize:10, letterSpacing:'2px', textTransform:'uppercase', color:'var(--color-text-3)', margin:0 }}>spread</p>
+            </div>
+
+            <div style={{ textAlign:'right' }}>
+              <p style={{ fontSize:11, color:'#b83418', letterSpacing:'2px', textTransform:'uppercase', margin:'0 0 .5rem' }}>Priciest · London 🇬🇧</p>
+              <p style={{ fontFamily:'var(--font-display)', fontSize:'clamp(64px,7vw,108px)', color:'#b83418', margin:0, lineHeight:.85, letterSpacing:-3 }}>CA$21.88</p>
+              <p style={{ fontSize:12, color:'var(--color-text-3)', margin:'.75rem 0 0', lineHeight:1.5 }}>Soho Chinatown, mid-tier</p>
+            </div>
+          </div>
+
+          {/* Price spectrum bar */}
+          <div style={{ position:'relative', height:52, margin:'0 0 3.5rem' }}>
+            <div style={{ position:'absolute', top:'50%', left:0, right:0, height:1, background:'var(--color-border)', transform:'translateY(-50%)' }} />
+            <div style={{ position:'absolute', top:'50%', left:0, right:0, height:2, background:'linear-gradient(to right,#3db870 0%,#d9682a 45%,#b83418 100%)', transform:'translateY(-50%)', borderRadius:1 }} />
+            {SPECTRUM.map(c => (
+              <div key={c.name} style={{ position:'absolute', top:'50%', left:`${c.pct}%`, transform:'translate(-50%,-50%)', zIndex:2 }}>
+                <div style={{ width:c.show ? 10 : 6, height:c.show ? 10 : 6, borderRadius:'50%', background:c.color, border:'1.5px solid var(--color-bg)', margin:'0 auto' }} />
+                {c.show && (
+                  <p style={{ position:'absolute', top:'140%', left:'50%', transform:'translateX(-50%)', fontSize:9, color:'var(--color-text-3)', whiteSpace:'nowrap', margin:0, letterSpacing:'.5px' }}>{c.name}</p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Secondary stats — no boxes */}
+          <div style={{ display:'flex', paddingTop:'2rem', borderTop:'0.5px solid var(--color-border)' }}>
+            {[
+              { val:'40',      sub:'cities indexed' },
+              { val:'6',       sub:'continents' },
+              { val:'22+',     sub:'entries per city' },
+              { val:'Monthly', sub:'data updates' },
+            ].map((s, i, a) => (
+              <div key={s.sub} style={{ flex:1, paddingLeft: i > 0 ? '2rem' : 0, paddingRight: i < a.length-1 ? '2rem' : 0, borderRight: i < a.length-1 ? '0.5px solid var(--color-border)' : 'none' }}>
+                <p style={{ fontFamily:'var(--font-display)', fontSize:26, color:'var(--color-text-1)', margin:0, lineHeight:1 }}>{s.val}</p>
+                <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'4px 0 0' }}>{s.sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ══ WHAT WE MEASURE ════════════════════════════════════════════ */}
-      <section style={{ maxWidth:1280, margin:'0 auto', padding:'4rem 2rem 5rem' }}>
-        <p style={{ fontSize:11, letterSpacing:'2.5px', textTransform:'uppercase', color:'var(--color-text-3)', marginBottom:'2rem', display:'flex', alignItems:'center', gap:6 }}>
-          <BarChart2 size={13} /> What the index tracks
+      {/* ══ WHAT WE TRACK ══════════════════════════════════════════════ */}
+      <section style={{ maxWidth:1280, margin:'0 auto', padding:'5rem 2rem 6rem' }}>
+        <p style={{ fontSize:11, letterSpacing:'2.5px', textTransform:'uppercase', color:'var(--color-text-3)', marginBottom:'3rem' }}>
+          What the index tracks
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px,1fr))', gap:'1px', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
-          {[
-            { num:'01', label:'Baseline price',  body:"What you'd pay at a regular local restaurant. The typical local rate, no tourist markup." },
-            { num:'02', label:'Rent burden',      body:"How much of the average paycheck goes to rent before you've spent a dollar on food." },
-            { num:'03', label:'Bowls after rent', body:"Once rent is paid, how many bowls can you actually afford? The most direct affordability signal." },
-          ].map(c => (
-            <div key={c.label} style={{ padding:'2rem', background:'var(--color-surface)' }}>
-              <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0 0 1rem' }}>{c.num}</p>
-              <h3 style={{ fontFamily:'var(--font-display)', fontSize:20, color:'var(--color-text-1)', margin:'0 0 .75rem', fontWeight:400 }}>{c.label}</h3>
-              <p style={{ fontSize:13, color:'var(--color-text-2)', lineHeight:1.75, margin:0 }}>{c.body}</p>
+
+        <div>
+          {([
+            {
+              num:'01', title:'Baseline price',
+              body:"What you'd pay at a regular local restaurant — the local rate, no tourist markup. Calculated as the median of all basic and vegetable fried rice entries per city.",
+              stat: null as string | null, statCaption:'',
+            },
+            {
+              num:'02', title:'Rent burden',
+              body:'Monthly rent as a share of median salary, measured before any food spending. Buenos Aires, Tehran, and Cairo require nearly all of a typical paycheck for housing alone.',
+              stat:'92%', statCaption:'Buenos Aires · highest burden',
+            },
+            {
+              num:'03', title:'Bowls after rent',
+              body:"Once rent is paid, how many bowls can a median earner afford per month? The most direct signal of what everyday food affordability actually looks like in a city.",
+              stat: null as string | null, statCaption:'',
+            },
+          ]).map(item => (
+            <div key={item.num} style={{ padding:'3rem 0', borderTop:'0.5px solid var(--color-border)' }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:'2rem' }}>
+                <div style={{ flex:1 }}>
+                  <p style={{ fontSize:10, letterSpacing:'2px', color:'var(--color-text-3)', margin:'0 0 .5rem' }}>{item.num}</p>
+                  <h3 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,4vw,52px)', color:'var(--color-text-1)', margin:'0 0 1.25rem', fontWeight:400, letterSpacing:-1, lineHeight:.95 }}>
+                    {item.title}.
+                  </h3>
+                  <p style={{ fontSize:15, color:'var(--color-text-2)', lineHeight:1.75, maxWidth:580, margin:0 }}>
+                    {item.body}
+                  </p>
+                </div>
+                {item.stat && (
+                  <div style={{ textAlign:'right', flexShrink:0, paddingTop:'.5rem' }}>
+                    <p style={{ fontFamily:'var(--font-display)', fontSize:'clamp(56px,7vw,88px)', color:'#b83418', margin:0, lineHeight:.9, letterSpacing:-2 }}>{item.stat}</p>
+                    <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'.5rem 0 0', letterSpacing:'.5px' }}>{item.statCaption}</p>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
+          <div style={{ borderTop:'0.5px solid var(--color-border)' }} />
         </div>
       </section>
     </div>
