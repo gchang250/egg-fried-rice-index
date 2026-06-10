@@ -1,3 +1,5 @@
+import path from 'node:path'
+import fs from 'node:fs'
 import PDFDocument from 'pdfkit'
 import { supabase } from '@/lib/supabase-admin'
 import {
@@ -11,6 +13,23 @@ import {
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+
+/* ── Design system (mirrors app/globals.css + the landing page) ──────── */
+const BG       = '#0a0a0c'
+const SURFACE  = '#101013'
+const SURFACE2 = '#15151a'
+const LINE     = '#222228'
+const LINE_SOFT = '#1a1a1f'
+const T1 = '#ece9e2'
+const T2 = '#a8a8b0'
+const T3 = '#8d8d96'
+const T4 = '#55555e'
+const GOLD   = '#c8a862'   // accent
+const JADE   = '#76a98c'   // affordable / low end
+const COPPER = '#c0674e'   // expensive / high end
+const TRACK  = '#1e1e24'   // bar track on dark
+
+const FONT_DIR = path.join(process.cwd(), 'lib', 'report-fonts')
 
 export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]/download'>) {
   const { month } = await ctx.params
@@ -101,6 +120,14 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     .filter((x): x is { city: string; price: number; burden: number } => x !== null)
   const scatterMaxPrice = Math.max(...scatterCities.map(c => c.price), 1)
   const scatterMaxBurden = Math.max(...scatterCities.map(c => c.burden), 1)
+  // Label only the four extreme cities to avoid an unreadable cluster
+  const scatterLabelSet = new Set<string>()
+  if (scatterCities.length) {
+    const byPrice = [...scatterCities].sort((a, b) => a.price - b.price)
+    const byBurden = [...scatterCities].sort((a, b) => a.burden - b.burden)
+    ;[byPrice[0], byPrice[byPrice.length - 1], byBurden[0], byBurden[byBurden.length - 1]]
+      .forEach(c => c && scatterLabelSet.add(c.city))
+  }
 
   const bowlsAfterRent = cities
     .map(c => {
@@ -117,18 +144,10 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
   /* PDF constants */
   const PW = 595.28, PH = 841.89
-  const ML = 56, MR = 56, MT = 56, MB = 56
+  const ML = 54, MR = 54, MT = 54, MB = 52
   const CW = PW - ML - MR
-
-  const ACCENT = '#d9682a'
-  const DARK   = '#111111'
-  const MID    = '#555555'
-  const LITE   = '#999999'
-  const RULE   = '#e0ddd8'
-  const BGWARM = '#f8f6f2'
-  const BAR_BG = '#efe9df'
-
   const BOTTOM = PH - MB
+  const FOOT_Y = PH - 34
 
   /* Build PDF */
   const doc = new PDFDocument({
@@ -142,62 +161,95 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     },
   })
 
+  /* Fonts — embed Geist (matches the site); fall back to the built-in
+     Helvetica family if the vendored .ttf files are unavailable. */
+  const F = { body: 'Helvetica', med: 'Helvetica', semi: 'Helvetica-Bold', mono: 'Courier', monoMed: 'Courier-Bold' }
+  try {
+    doc.registerFont('Geist',      fs.readFileSync(path.join(FONT_DIR, 'Geist-Regular.ttf')))
+    doc.registerFont('Geist-Med',  fs.readFileSync(path.join(FONT_DIR, 'Geist-Medium.ttf')))
+    doc.registerFont('Geist-Semi', fs.readFileSync(path.join(FONT_DIR, 'Geist-SemiBold.ttf')))
+    doc.registerFont('Mono',       fs.readFileSync(path.join(FONT_DIR, 'GeistMono-Regular.ttf')))
+    doc.registerFont('Mono-Med',   fs.readFileSync(path.join(FONT_DIR, 'GeistMono-Medium.ttf')))
+    F.body = 'Geist'; F.med = 'Geist-Med'; F.semi = 'Geist-Semi'; F.mono = 'Mono'; F.monoMed = 'Mono-Med'
+  } catch {
+    // keep Helvetica/Courier fallback
+  }
+
   const chunks: Buffer[] = []
   doc.on('data', (c: Buffer) => chunks.push(c))
   const done = new Promise<void>(res => doc.on('end', res))
 
-  const hRule = (y: number, color = RULE, thickness = 0.5) =>
+  // Paint a dark background on every page (incl. any auto-added overflow page)
+  doc.on('pageAdded', () => {
+    doc.save()
+    doc.rect(0, 0, PW, PH).fill(BG)
+    doc.restore()
+  })
+
+  const hRule = (y: number, color = LINE, thickness = 0.5) =>
     doc.rect(ML, y, CW, thickness).fill(color)
 
+  // Deliberate new content page: dark bg (via handler) + gold top rule
   const addReportPage = () => {
     doc.addPage()
-    doc.rect(0, 0, PW, PH).fill(BGWARM)
-    hRule(MT, ACCENT, 1.5)
-    return MT + 18
+    doc.rect(ML, MT, CW, 1.5).fill(GOLD)
+    return MT + 16
   }
 
   // Only adds a page when the needed block won't fit
   const ensureSpace = (currentY: number, needed: number) =>
     currentY + needed > BOTTOM ? addReportPage() : currentY
 
-  const priceColor = (price: number) => {
-    if (!priceStats.q1 || !priceStats.q3) return ACCENT
-    if (price <= priceStats.q1) return '#3db870'
-    if (price >= priceStats.q3) return '#b83418'
-    return ACCENT
+  // Translucent fill helper (for soft bands / tints on the dark canvas)
+  const softFill = (x: number, y: number, w: number, h: number, color: string, alpha: number) => {
+    doc.save(); doc.fillOpacity(alpha); doc.rect(x, y, w, h).fill(color); doc.fillOpacity(1); doc.restore()
   }
 
-  const burdenFill = (pct: number) =>
-    pct <= 45 ? '#3db870' : pct <= 65 ? '#c4890f' : '#b83418'
+  const priceColor = (price: number) => {
+    if (!priceStats.q1 || !priceStats.q3) return GOLD
+    if (price <= priceStats.q1) return JADE
+    if (price >= priceStats.q3) return COPPER
+    return GOLD
+  }
+  const burdenFill = (pct: number) => (pct <= 45 ? JADE : pct <= 65 ? GOLD : COPPER)
 
-  // Accent rule + uppercase section title + right-aligned subtitle
+  // Gold rule + mono uppercase section title + right-aligned subtitle
   const sectionHead = (title: string, subtitle: string, y: number): number => {
-    hRule(y, ACCENT, 1.5)
-    y += 12
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text(title, ML, y, { characterSpacing: 1.8 })
+    hRule(y, GOLD, 1.5)
+    y += 13
+    doc.font(F.monoMed).fontSize(8).fillColor(GOLD)
+       .text(title.toUpperCase(), ML, y, { characterSpacing: 1.4, lineBreak: false })
     if (subtitle) {
-      doc.font('Helvetica').fontSize(7).fillColor(LITE)
-         .text(subtitle, ML, y + 1, { width: CW, align: 'right' })
+      doc.font(F.body).fontSize(7.5).fillColor(T3)
+         .text(subtitle, ML, y + 1, { width: CW, align: 'right', lineBreak: false })
     }
-    return y + 16
+    return y + 18
+  }
+
+  // Small mono caption used above each chart
+  const chartHead = (label: string, note: string, x: number, y: number, width: number) => {
+    doc.font(F.monoMed).fontSize(7.5).fillColor(GOLD)
+       .text(label.toUpperCase(), x, y, { characterSpacing: 1, lineBreak: false })
+    doc.font(F.body).fontSize(7).fillColor(T3)
+       .text(note, x, y + 0.5, { width, align: 'right', lineBreak: false })
+    return y + 15
   }
 
   /* ─────────────────────────────────────── Chart drawing functions ── */
 
   const drawLegend = (x: number, y: number): number => {
     const items: [string, string][] = [
-      ['Low quartile', '#3db870'],
-      ['Middle 50%', ACCENT],
-      ['High quartile', '#b83418'],
-      ['Mean marker', DARK],
-      ['IQR band', '#e8d8bf'],
+      ['Low quartile', JADE],
+      ['Middle 50%', GOLD],
+      ['High quartile', COPPER],
+      ['Mean marker', T1],
+      ['IQR band', '#4a4230'],
     ]
     let lx = x
     items.forEach(([label, color]) => {
       doc.rect(lx, y + 1, 8, 8).fill(color)
-      doc.font('Helvetica').fontSize(7).fillColor(MID).text(label, lx + 11, y, { width: 65 })
-      lx += 78
+      doc.font(F.body).fontSize(7).fillColor(T2).text(label, lx + 11, y, { width: 66, lineBreak: false })
+      lx += 80
     })
     return y + 18
   }
@@ -208,31 +260,27 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     const span = Math.max(max - min, 1)
     const pos = (v: number | null) => v === null ? x : x + ((v - min) / span) * width
 
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('BASELINE PRICE DISTRIBUTION', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text('Whiskers, IQR band, median and mean', x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Baseline price distribution', 'Whiskers, IQR band, median and mean', x, y, width)
 
     const sy = y + 20
-    doc.rect(x, sy, width, 7).fill(BAR_BG)
+    doc.rect(x, sy, width, 7).fill(TRACK)
     const q1x = pos(priceStats.q1), q3x = pos(priceStats.q3)
-    doc.rect(q1x, sy - 3, Math.max(q3x - q1x, 1), 13).fill('#e8d8bf')
+    softFill(q1x, sy - 3, Math.max(q3x - q1x, 1), 13, GOLD, 0.22)
     const mx = pos(priceStats.median), mnx = pos(priceStats.mean)
-    doc.moveTo(mx, sy - 7).lineTo(mx, sy + 16).strokeColor(ACCENT).lineWidth(1.5).stroke()
-    doc.moveTo(mnx, sy - 7).lineTo(mnx, sy + 16).strokeColor(DARK).lineWidth(0.9).stroke()
+    doc.moveTo(mx, sy - 7).lineTo(mx, sy + 16).strokeColor(GOLD).lineWidth(1.5).stroke()
+    doc.moveTo(mnx, sy - 7).lineTo(mnx, sy + 16).strokeColor(T1).lineWidth(0.9).stroke()
     const lf = pos(priceStats.lowerOutlierFence), uf = pos(priceStats.upperOutlierFence)
-    doc.moveTo(lf, sy - 5).lineTo(lf, sy + 14).strokeColor(LITE).lineWidth(0.5).stroke()
-    doc.moveTo(uf, sy - 5).lineTo(uf, sy + 14).strokeColor(LITE).lineWidth(0.5).stroke()
+    doc.moveTo(lf, sy - 5).lineTo(lf, sy + 14).strokeColor(T4).lineWidth(0.5).stroke()
+    doc.moveTo(uf, sy - 5).lineTo(uf, sy + 14).strokeColor(T4).lineWidth(0.5).stroke()
 
-    doc.font('Helvetica').fontSize(7).fillColor(MID).text(money(min), x, sy + 21)
-    doc.text(money(max), x + width - 52, sy + 21, { width: 52, align: 'right' })
-    doc.font('Helvetica-Bold').fontSize(7).fillColor(ACCENT)
-       .text(`Median ${money(priceStats.median)}`, mx - 34, sy - 20, { width: 68, align: 'center' })
-    doc.font('Helvetica').fontSize(7).fillColor(DARK)
-       .text(`Mean ${money(priceStats.mean)}`, mnx - 30, sy + 24, { width: 60, align: 'center' })
+    doc.font(F.body).fontSize(7).fillColor(T2).text(money(min), x, sy + 21, { lineBreak: false })
+    doc.text(money(max), x + width - 52, sy + 21, { width: 52, align: 'right', lineBreak: false })
+    doc.font(F.med).fontSize(7).fillColor(GOLD)
+       .text(`Median ${money(priceStats.median)}`, mx - 34, sy - 20, { width: 68, align: 'center', lineBreak: false })
+    doc.font(F.body).fontSize(7).fillColor(T1)
+       .text(`Mean ${money(priceStats.mean)}`, mnx - 30, sy + 24, { width: 60, align: 'center', lineBreak: false })
 
-    return y + 20 + 7 + 28 // sy base + strip + labels
+    return y + 20 + 7 + 28
   }
 
   const drawPriceBars = (x: number, y: number, width: number, height: number): number => {
@@ -242,33 +290,25 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     const maxP = Math.max(...topCities.map((c) => Number(c.price_cad)), 1)
     const rowH = height / topCities.length
 
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('PRICIEST BASELINE CITIES', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text('Bar = baseline price in CA$', x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Priciest baseline cities', 'Bar = baseline price in CA$', x, y, width)
 
     topCities.forEach((city, i) => {
       const ry = y + i * rowH
       const price = Number(city.price_cad ?? 0)
       const barW = (price / maxP) * (width - 120)
-      doc.font('Helvetica').fontSize(7).fillColor(DARK)
+      doc.font(F.body).fontSize(7).fillColor(T2)
          .text(String(city.city ?? ''), x, ry + 1, { width: 86, lineBreak: false })
-      doc.rect(x + 90, ry + 2, width - 120, 5).fill(BAR_BG)
+      doc.rect(x + 90, ry + 2, width - 120, 5).fill(TRACK)
       doc.rect(x + 90, ry + 2, barW, 5).fill(priceColor(price))
-      doc.font('Helvetica-Bold').fontSize(7).fillColor(ACCENT)
-         .text(money(price), x + width - 28, ry, { width: 36, align: 'right' })
+      doc.font(F.med).fontSize(7).fillColor(GOLD)
+         .text(money(price), x + width - 36, ry, { width: 44, align: 'right', lineBreak: false })
     })
 
     return y + height + 10
   }
 
   const drawHistogram = (x: number, y: number, width: number): number => {
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('PRICE HISTOGRAM', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text('Cities per CA$3 bracket', x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Price histogram', 'Cities per CA$3 bracket', x, y, width)
 
     const BAR_AREA = 52
     const binW = width / HIST_BINS.length
@@ -278,20 +318,20 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
       const barH = (bin.count / histMax) * BAR_AREA
       const barY = y + BAR_AREA - barH
       if (bin.count > 0) {
-        doc.rect(bx + 2, barY, Math.max(binW - 4, 2), barH).fill(ACCENT)
-        doc.font('Helvetica-Bold').fontSize(6.5).fillColor(DARK)
-           .text(String(bin.count), bx, barY - 10, { width: binW, align: 'center' })
+        doc.rect(bx + 2, barY, Math.max(binW - 4, 2), barH).fill(GOLD)
+        doc.font(F.med).fontSize(6.5).fillColor(T1)
+           .text(String(bin.count), bx, barY - 10, { width: binW, align: 'center', lineBreak: false })
       }
     })
-    doc.rect(x, y + BAR_AREA, width, 0.5).fill(RULE)
+    doc.rect(x, y + BAR_AREA, width, 0.5).fill(LINE)
 
     HIST_BINS.forEach((bin, i) => {
       const bx = x + i * binW
-      doc.font('Helvetica').fontSize(6).fillColor(LITE)
-         .text(bin.label, bx, y + BAR_AREA + 5, { width: binW, align: 'center' })
+      doc.font(F.body).fontSize(6).fillColor(T3)
+         .text(bin.label, bx, y + BAR_AREA + 5, { width: binW, align: 'center', lineBreak: false })
     })
-    doc.font('Helvetica').fontSize(6.5).fillColor(LITE)
-       .text('CA$ per bowl', x, y + BAR_AREA + 16, { width: 60 })
+    doc.font(F.body).fontSize(6.5).fillColor(T4)
+       .text('CA$ per bowl', x, y + BAR_AREA + 16, { width: 60, lineBreak: false })
 
     return y + BAR_AREA + 28
   }
@@ -302,28 +342,24 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     const BAR_X = x + 100
     const BAR_W = width - 100 - 76
 
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('REGIONAL BREAKDOWN', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text('Baseline price range per region', x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Regional breakdown', 'Baseline price range per region', x, y, width)
 
     regionStats.forEach((region, i) => {
       const ry = y + i * ROW_H
-      doc.font('Helvetica').fontSize(7).fillColor(DARK)
+      doc.font(F.body).fontSize(7).fillColor(T2)
          .text(region.name, x, ry + 2, { width: 96, lineBreak: false })
-      doc.font('Helvetica').fontSize(6.5).fillColor(LITE)
+      doc.font(F.body).fontSize(6.5).fillColor(T3)
          .text(`${region.count} ${region.count === 1 ? 'city' : 'cities'}`, x + 98, ry + 2, { width: 30, lineBreak: false })
 
       const leftPct = region.min / regionMaxPrice
       const widthPct = Math.max((region.max - region.min) / regionMaxPrice, 0.01)
       const medPct = region.median / regionMaxPrice
 
-      doc.rect(BAR_X, ry + 5, BAR_W, 4).fill(BAR_BG)
-      doc.rect(BAR_X + leftPct * BAR_W, ry + 5, widthPct * BAR_W, 4).fill(ACCENT)
-      doc.rect(BAR_X + medPct * BAR_W - 0.5, ry + 3, 1, 8).fill(DARK)
+      doc.rect(BAR_X, ry + 5, BAR_W, 4).fill(TRACK)
+      doc.rect(BAR_X + leftPct * BAR_W, ry + 5, widthPct * BAR_W, 4).fill(GOLD)
+      doc.rect(BAR_X + medPct * BAR_W - 0.5, ry + 3, 1, 8).fill(T1)
 
-      doc.font('Helvetica').fontSize(6).fillColor(LITE)
+      doc.font(F.body).fontSize(6).fillColor(T3)
          .text(`${money(region.min)} / ${money(region.median)} / ${money(region.max)}`,
                BAR_X + BAR_W + 4, ry + 3, { width: 72, lineBreak: false })
     })
@@ -337,11 +373,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     const COL_W = (width - 16) / 2
     const half = Math.ceil(burdenByCity.length / 2)
 
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('RENT BURDEN', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text(`Monthly rent as % of median salary, ${burdenByCity.length} cities`, x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Rent burden', `Monthly rent as % of median salary, ${burdenByCity.length} cities`, x, y, width)
 
     burdenByCity.forEach((item, i) => {
       const col = i < half ? 0 : 1
@@ -354,12 +386,12 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
       const barLen = (Math.min(item.burden, 100) / 100) * BAR_W
       const bColor = burdenFill(item.burden)
 
-      doc.font('Helvetica').fontSize(6.5).fillColor(DARK)
+      doc.font(F.body).fontSize(6.5).fillColor(T2)
          .text(item.city, cx, ry, { width: 56, lineBreak: false })
-      doc.rect(BAR_X, ry + 1.5, BAR_W, 4).fill(BAR_BG)
+      doc.rect(BAR_X, ry + 1.5, BAR_W, 4).fill(TRACK)
       doc.rect(BAR_X, ry + 1.5, Math.max(barLen, 0), 4).fill(bColor)
-      doc.font('Helvetica-Bold').fontSize(6.5).fillColor(bColor)
-         .text(`${Math.round(item.burden)}%`, BAR_X + BAR_W + 2, ry, { width: 24, align: 'right' })
+      doc.font(F.med).fontSize(6.5).fillColor(bColor)
+         .text(`${Math.round(item.burden)}%`, BAR_X + BAR_W + 2, ry, { width: 24, align: 'right', lineBreak: false })
     })
 
     return y + half * ROW_H + 14
@@ -367,47 +399,41 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
   const drawScatter = (x: number, y: number, width: number): number => {
     if (scatterCities.length < 2) return y
-    const PLOT_H = 130
-    const PAD_L = 24, PAD_B = 20, PAD_T = 14, PAD_R = 8
+    const PLOT_H = 150
+    const PAD_L = 26, PAD_B = 22, PAD_T = 14, PAD_R = 10
     const IW = width - PAD_L - PAD_R
     const IH = PLOT_H - PAD_T - PAD_B
 
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('SCATTER: BASELINE PRICE vs RENT BURDEN', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text('Each dot = one city', x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Scatter: baseline price vs rent burden', 'Each dot = one city; extremes labelled', x, y, width)
 
     const px = x + PAD_L
     const py = y + PAD_T
 
-    // Plot background
-    doc.rect(px, py, IW, IH).fill(BAR_BG)
-
+    doc.rect(px, py, IW, IH).fill(SURFACE)
     // Quadrant dividers
-    doc.moveTo(px + IW / 2, py).lineTo(px + IW / 2, py + IH).strokeColor(RULE).lineWidth(0.5).stroke()
-    doc.moveTo(px, py + IH / 2).lineTo(px + IW, py + IH / 2).strokeColor(RULE).lineWidth(0.5).stroke()
+    doc.moveTo(px + IW / 2, py).lineTo(px + IW / 2, py + IH).strokeColor(LINE).lineWidth(0.5).stroke()
+    doc.moveTo(px, py + IH / 2).lineTo(px + IW, py + IH / 2).strokeColor(LINE).lineWidth(0.5).stroke()
 
     // Axis labels
-    doc.font('Helvetica').fontSize(6).fillColor(LITE)
-       .text(money(0), x, py + IH + 3, { width: PAD_L, align: 'right' })
-       .text(money(scatterMaxPrice), px + IW - 10, py + IH + 3, { width: 32 })
-       .text('0%', x, py + IH - 4, { width: PAD_L - 2, align: 'right' })
-       .text('100%', x, py - 2, { width: PAD_L - 2, align: 'right' })
-    doc.font('Helvetica').fontSize(6.5).fillColor(MID)
-       .text('Price (CA$)', px + IW / 2 - 20, py + IH + PAD_B - 8, { width: 40, align: 'center' })
+    doc.font(F.body).fontSize(6).fillColor(T3)
+       .text(money(0), x, py + IH + 4, { width: PAD_L, align: 'right', lineBreak: false })
+       .text(money(scatterMaxPrice), px + IW - 36, py + IH + 4, { width: 36, align: 'right', lineBreak: false })
+       .text('0%', x, py + IH - 4, { width: PAD_L - 2, align: 'right', lineBreak: false })
+       .text('100%', x, py - 2, { width: PAD_L - 2, align: 'right', lineBreak: false })
+    doc.font(F.body).fontSize(6.5).fillColor(T3)
+       .text('Price (CA$) >', px + IW / 2 - 24, py + IH + PAD_B - 8, { width: 60, align: 'center', lineBreak: false })
 
-    // City dots + abbreviated labels
+    // Dots
     scatterCities.forEach(city => {
       const dotX = px + (city.price / scatterMaxPrice) * IW
       const dotY = py + (1 - city.burden / Math.max(scatterMaxBurden, 100)) * IH
-      const dotColor = city.burden > 65 && city.price > scatterMaxPrice * 0.5 ? '#b83418'
-        : city.burden > 65 ? '#c4890f'
-        : '#3db870'
-      doc.rect(dotX - 2, dotY - 2, 4, 4).fill(dotColor)
-      const label = city.city.substring(0, 3)
-      doc.font('Helvetica').fontSize(5).fillColor(DARK)
-         .text(label, dotX + 3, dotY - 3, { width: 18, lineBreak: false })
+      doc.circle(dotX, dotY, 2.4).fill(burdenFill(city.burden))
+      if (scatterLabelSet.has(city.city)) {
+        const onRight = dotX > px + IW * 0.7
+        doc.font(F.body).fontSize(6).fillColor(T1)
+           .text(city.city, onRight ? dotX - 60 : dotX + 5, dotY - 3,
+                 { width: 56, align: onRight ? 'right' : 'left', lineBreak: false })
+      }
     })
 
     return y + PLOT_H
@@ -419,11 +445,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     const COL_W = (width - 16) / 2
     const half = Math.ceil(bowlsAfterRent.length / 2)
 
-    doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-       .text('BOWLS AFTER RENT', x, y, { characterSpacing: 1.1 })
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text(`Disposable income / baseline price, ${bowlsAfterRent.length} cities`, x, y + 1, { width, align: 'right' })
-    y += 14
+    y = chartHead('Bowls after rent', `Disposable income / baseline price, ${bowlsAfterRent.length} cities`, x, y, width)
 
     bowlsAfterRent.forEach((item, i) => {
       const col = i < half ? 0 : 1
@@ -435,14 +457,14 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
       const BAR_W = COL_W - 60 - 32
       const isNeg = item.bowls < 0
       const barLen = (Math.min(Math.abs(item.bowls), bowlsMax) / bowlsMax) * BAR_W
-      const bColor = isNeg ? '#b83418' : item.bowls < 30 ? '#c4890f' : '#3db870'
+      const bColor = isNeg ? COPPER : item.bowls < 30 ? GOLD : JADE
 
-      doc.font('Helvetica').fontSize(6.5).fillColor(DARK)
+      doc.font(F.body).fontSize(6.5).fillColor(T2)
          .text(item.city, cx, ry, { width: 56, lineBreak: false })
-      doc.rect(BAR_X, ry + 1.5, BAR_W, 4).fill(BAR_BG)
+      doc.rect(BAR_X, ry + 1.5, BAR_W, 4).fill(TRACK)
       doc.rect(BAR_X, ry + 1.5, Math.max(barLen, 0), 4).fill(bColor)
-      doc.font('Helvetica-Bold').fontSize(6.5).fillColor(bColor)
-         .text(`${isNeg ? '-' : ''}${Math.abs(item.bowls)}`, BAR_X + BAR_W + 2, ry, { width: 28, align: 'right' })
+      doc.font(F.med).fontSize(6.5).fillColor(bColor)
+         .text(`${isNeg ? '-' : ''}${Math.abs(item.bowls)}`, BAR_X + BAR_W + 2, ry, { width: 28, align: 'right', lineBreak: false })
     })
 
     return y + half * ROW_H + 14
@@ -450,36 +472,36 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PAGE 1: COVER + ANALYSIS ━━ */
 
-  doc.rect(0, 0, PW, PH).fill(BGWARM)
-  hRule(MT, ACCENT, 1.5)
+  doc.rect(0, 0, PW, PH).fill(BG)
+  doc.rect(ML, MT, CW, 1.5).fill(GOLD)
 
   let y = MT + 18
-  doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-     .text('FRIED RICE INDEX', ML, y, { characterSpacing: 2.5 })
+  doc.font(F.monoMed).fontSize(8).fillColor(GOLD)
+     .text('FRIED RICE INDEX', ML, y, { characterSpacing: 2, lineBreak: false })
   y += 13
-  doc.font('Helvetica').fontSize(8).fillColor(LITE)
-     .text('efr-index.vercel.app', ML, y)
+  doc.font(F.mono).fontSize(8).fillColor(T3).text('efr-index.vercel.app', ML, y, { lineBreak: false })
 
-  y += 44
-  doc.font('Helvetica-Bold').fontSize(54).fillColor(DARK).text(report.title, ML, y)
-  y += 65
+  y += 46
+  doc.font(F.semi).fontSize(54).fillColor(T1).text(report.title, ML, y, { lineBreak: false })
+  y += 66
 
   if (report.subtitle) {
-    doc.font('Helvetica').fontSize(13).fillColor(MID).text(report.subtitle, ML, y)
-    y += 20
+    doc.font(F.body).fontSize(13).fillColor(T2).text(report.subtitle, ML, y, { lineBreak: false })
+    y += 22
   }
 
   hRule(y)
-  y += 9
-  doc.font('Helvetica-Bold').fontSize(8).fillColor(DARK)
-     .text('MONTHLY REPORT', ML, y, { characterSpacing: 0.8 })
+  y += 10
+  doc.font(F.monoMed).fontSize(8).fillColor(T2)
+     .text('MONTHLY REPORT', ML, y, { characterSpacing: 0.8, lineBreak: false })
   y += 13
-  doc.font('Helvetica').fontSize(7.5).fillColor(LITE)
-     .text(`Downloaded ${downloadedAt}`, ML, y)
+  doc.font(F.body).fontSize(7.5).fillColor(T3)
+     .text(`Downloaded ${downloadedAt}`, ML, y, { lineBreak: false })
   y += 24
 
   // Key stats strip
-  doc.rect(ML, y, CW, 60).fill(BAR_BG)
+  doc.rect(ML, y, CW, 62).fill(SURFACE)
+  doc.rect(ML, y, CW, 62).lineWidth(0.5).stroke(LINE)
   const STATS = [
     { l: 'CITIES',         v: String(report.city_count) },
     { l: 'CHEAPEST',       v: `CA$${Number(report.cheapest_price_cad).toFixed(2)}`, s: report.cheapest_city },
@@ -489,99 +511,88 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   ]
   const SW = CW / STATS.length
   STATS.forEach((s, i) => {
-    const sx = ML + i * SW + 8
-    doc.font('Helvetica').fontSize(6).fillColor(LITE)
-       .text(s.l, sx, y + 9, { width: SW - 12, characterSpacing: 0.6 })
-    doc.font('Helvetica-Bold').fontSize(15).fillColor(ACCENT)
-       .text(s.v, sx, y + 20, { width: SW - 12 })
+    const sx = ML + i * SW + 10
+    if (i > 0) doc.rect(ML + i * SW, y + 12, 0.5, 38).fill(LINE)
+    doc.font(F.mono).fontSize(6).fillColor(T3)
+       .text(s.l, sx, y + 11, { width: SW - 14, characterSpacing: 0.6, lineBreak: false })
+    doc.font(F.semi).fontSize(15).fillColor(GOLD)
+       .text(s.v, sx, y + 21, { width: SW - 12, lineBreak: false })
     if (s.s) {
-      doc.font('Helvetica').fontSize(7.5).fillColor(MID)
-         .text(s.s, sx, y + 40, { width: SW - 12 })
+      doc.font(F.body).fontSize(7.5).fillColor(T2)
+         .text(s.s, sx, y + 41, { width: SW - 14, lineBreak: false })
     }
   })
-  y += 70
+  y += 74
 
   // Analysis section
-  hRule(y)
-  y += 12
-  doc.font('Helvetica-Bold').fontSize(7.5).fillColor(ACCENT)
-     .text('ANALYSIS', ML, y, { characterSpacing: 1.8 })
-  y += 15
-  hRule(y, '#eee9e0')
-  y += 12
+  hRule(y, GOLD, 1.5)
+  y += 13
+  doc.font(F.monoMed).fontSize(8).fillColor(GOLD)
+     .text('ANALYSIS', ML, y, { characterSpacing: 1.4, lineBreak: false })
+  y += 17
 
   paragraphs.forEach((para, i) => {
     if (y > BOTTOM - 70) y = addReportPage()
-    const opts = { width: CW, align: 'justify' as const, lineGap: 3 }
-    doc.font(i === 0 ? 'Helvetica-Bold' : 'Helvetica')
+    const opts = { width: CW, align: 'justify' as const, lineGap: 3.5 }
+    doc.font(i === 0 ? F.med : F.body)
        .fontSize(9.5)
-       .fillColor(i === 0 ? DARK : '#2d2d2d')
+       .fillColor(i === 0 ? T1 : T2)
        .text(para, ML, y, opts)
     y = doc.y + 11
   })
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ EXCHANGE RATES ━━ */
-  // Continue on the same page as analysis if there is room; start fresh if not
-  y = ensureSpace(y, 80)
+  y = ensureSpace(y, 90)
   y += 10
-
-  y = sectionHead('EXCHANGE RATES', `CAD per 1 unit of foreign currency, ${report.title}`, y)
+  y = sectionHead('Exchange rates', `CAD per 1 unit of foreign currency, ${report.title}`, y)
 
   const rateEntries = Object.entries(rates).sort(([a], [b]) => a.localeCompare(b))
   const RCOLS = 4, RCW = CW / RCOLS
   rateEntries.forEach(([cur, rate], i) => {
     const col = i % RCOLS, row = Math.floor(i / RCOLS)
     const rx = ML + col * RCW, ry = y + row * 15
-    doc.font('Helvetica-Bold').fontSize(8).fillColor(DARK).text(cur, rx, ry, { width: 28 })
-    doc.font('Helvetica').fontSize(8).fillColor(MID)
-       .text(Number(rate).toFixed(5), rx + 30, ry, { width: RCW - 36 })
+    doc.font(F.monoMed).fontSize(8).fillColor(T1).text(cur, rx, ry, { width: 30, lineBreak: false })
+    doc.font(F.mono).fontSize(8).fillColor(T3)
+       .text(Number(rate).toFixed(5), rx + 32, ry, { width: RCW - 38, lineBreak: false })
   })
   y += Math.ceil(rateEntries.length / RCOLS) * 15 + 16
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ VISUAL ANALYSIS ━━ */
-
-  y = ensureSpace(y, 140)
-  y = sectionHead('VISUAL ANALYSIS', 'Price distribution, chart legend, and city rankings', y)
+  y = ensureSpace(y, 150)
+  y = sectionHead('Visual analysis', 'Price distribution, chart legend, and city rankings', y)
   y = drawLegend(ML, y)
 
-  // Distribution strip + price bars: two-column if enough width, else stacked
   y = ensureSpace(y, 100)
   y = drawDistributionStrip(ML, y, CW)
-  y += 8
+  y += 10
 
-  y = ensureSpace(y, 140)
+  y = ensureSpace(y, 150)
   y = drawPriceBars(ML, y, CW, 126)
   y += 16
 
-  // Histogram
   y = ensureSpace(y, 100)
   y = drawHistogram(ML, y, CW)
-  y += 8
+  y += 10
 
-  // Regional breakdown
-  y = ensureSpace(y, regionStats.length > 0 ? Math.min(regionStats.length * 18 + 40, 200) : 40)
+  y = ensureSpace(y, regionStats.length > 0 ? Math.min(regionStats.length * 18 + 44, 220) : 44)
   y = drawRegions(ML, y, CW)
-  y += 8
+  y += 10
 
-  // Rent burden
-  y = ensureSpace(y, burdenByCity.length > 0 ? Math.min(Math.ceil(burdenByCity.length / 2) * 9 + 40, 200) : 40)
+  y = ensureSpace(y, burdenByCity.length > 0 ? Math.min(Math.ceil(burdenByCity.length / 2) * 9 + 44, 220) : 44)
   y = drawBurdenBars(ML, y, CW)
-  y += 8
+  y += 12
 
-  // Scatter
-  y = ensureSpace(y, 170)
+  y = ensureSpace(y, 190)
   y = drawScatter(ML, y, CW)
-  y += 8
+  y += 12
 
-  // Bowls after rent
-  y = ensureSpace(y, bowlsAfterRent.length > 0 ? Math.min(Math.ceil(bowlsAfterRent.length / 2) * 9 + 40, 200) : 40)
+  y = ensureSpace(y, bowlsAfterRent.length > 0 ? Math.min(Math.ceil(bowlsAfterRent.length / 2) * 9 + 44, 220) : 44)
   y = drawBowls(ML, y, CW)
-  y += 8
+  y += 12
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ STATISTICAL ANALYSIS ━━ */
-
-  y = ensureSpace(y, 80)
-  y = sectionHead('STATISTICAL ANALYSIS', 'Baseline price, rent burden, and entry count distributions', y)
+  y = ensureSpace(y, 90)
+  y = sectionHead('Statistical analysis', 'Baseline price, rent burden, and entry count distributions', y)
 
   const statRows: Array<[string, string, string, string]> = [
     ['Sample size', String(priceStats.count), String(burdenStats.count), String(entryStats.count)],
@@ -614,23 +625,23 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   ]
 
   y = ensureSpace(y, 28)
-  doc.rect(ML, y, CW, 14).fill(BAR_BG)
+  doc.rect(ML, y, CW, 14).fill(SURFACE)
   let sx = ML
   SCOLS.forEach((c) => {
-    doc.font('Helvetica-Bold').fontSize(6).fillColor(LITE)
-       .text(c.h, sx + 3, y + 3.5, { width: c.w - 4, characterSpacing: 0.4 })
+    doc.font(F.monoMed).fontSize(6).fillColor(T3)
+       .text(c.h, sx + 3, y + 4, { width: c.w - 4, characterSpacing: 0.4, lineBreak: false })
     sx += c.w
   })
   y += 14
 
   statRows.forEach((row, i) => {
     if (y > BOTTOM - 18) y = addReportPage()
-    if (i % 2 === 0) doc.rect(ML, y, CW, 13).fill('#f3f0ea')
+    if (i % 2 === 0) doc.rect(ML, y, CW, 13).fill(SURFACE2)
     sx = ML
     row.forEach((cell, ci) => {
-      doc.font(ci === 0 ? 'Helvetica-Bold' : 'Helvetica').fontSize(7)
-         .fillColor(ci === 1 ? ACCENT : DARK)
-         .text(cell, sx + 3, y + 2.5, { width: SCOLS[ci].w - 4, lineBreak: false })
+      doc.font(ci === 0 ? F.med : F.body).fontSize(7)
+         .fillColor(ci === 1 ? GOLD : ci === 0 ? T1 : T2)
+         .text(cell, sx + 3, y + 2.8, { width: SCOLS[ci].w - 4, lineBreak: false })
       sx += SCOLS[ci].w
     })
     y += 13
@@ -638,9 +649,8 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   y += 16
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CITY TABLE ━━ */
-
   y = ensureSpace(y, 70)
-  y = sectionHead('CITY DATA SNAPSHOT', `${report.city_count} cities, cheapest to most expensive`, y)
+  y = sectionHead('City data snapshot', `${report.city_count} cities, cheapest to most expensive`, y)
 
   const COLS = [
     { h: '#',           w: 22 },
@@ -654,11 +664,11 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   ]
 
   const drawTableHeader = (hy: number) => {
-    doc.rect(ML, hy, CW, 14).fill(BAR_BG)
+    doc.rect(ML, hy, CW, 14).fill(SURFACE)
     let cx = ML
     COLS.forEach(c => {
-      doc.font('Helvetica-Bold').fontSize(6).fillColor(LITE)
-         .text(c.h, cx + 3, hy + 3.5, { width: c.w - 4, characterSpacing: 0.4 })
+      doc.font(F.monoMed).fontSize(6).fillColor(T3)
+         .text(c.h, cx + 3, hy + 4, { width: c.w - 4, characterSpacing: 0.4, lineBreak: false })
       cx += c.w
     })
     return hy + 14
@@ -670,7 +680,7 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
     if (y > BOTTOM - 18) {
       y = drawTableHeader(addReportPage())
     }
-    if (i % 2 === 0) doc.rect(ML, y, CW, 13).fill('#f3f0ea')
+    if (i % 2 === 0) doc.rect(ML, y, CW, 13).fill(SURFACE2)
 
     const price = Number(city.price_cad ?? 0)
     const rent = Number(city.median_rent_1br_cad ?? 0)
@@ -693,9 +703,9 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
 
     let cx = ML
     cells.forEach((cell, ci) => {
-      doc.font('Helvetica').fontSize(7.5)
-         .fillColor(ci === 2 ? ACCENT : DARK)
-         .text(cell, cx + 3, y + 2.5, { width: COLS[ci].w - 4, lineBreak: false })
+      doc.font(ci === 1 ? F.med : F.body).fontSize(7.5)
+         .fillColor(ci === 2 ? GOLD : ci === 1 ? T1 : T2)
+         .text(cell, cx + 3, y + 2.8, { width: COLS[ci].w - 4, lineBreak: false })
       cx += COLS[ci].w
     })
     y += 13
@@ -705,10 +715,14 @@ export async function GET(_req: Request, ctx: RouteContext<'/api/reports/[month]
   const range = doc.bufferedPageRange()
   for (let p = 0; p < range.count; p++) {
     doc.switchToPage(range.start + p)
-    hRule(BOTTOM + 8, RULE)
-    doc.font('Helvetica').fontSize(7).fillColor(LITE)
-       .text('Fried Rice Index · efr-index.vercel.app', ML, BOTTOM + 14, { width: CW / 2 })
-    doc.text(`Page ${p + 1} of ${range.count}`, ML, BOTTOM + 14, { width: CW, align: 'right' })
+    // Drop the bottom margin so footer text below it does NOT trigger
+    // PDFKit's auto page-break (the cause of trailing blank pages).
+    doc.page.margins.bottom = 0
+    doc.rect(ML, FOOT_Y, CW, 0.5).fill(LINE)
+    doc.font(F.mono).fontSize(6.5).fillColor(T4)
+       .text('FRIED RICE INDEX · efr-index.vercel.app', ML, FOOT_Y + 7, { width: CW * 0.7, lineBreak: false })
+    doc.font(F.mono).fontSize(6.5).fillColor(T4)
+       .text(`${String(p + 1).padStart(2, '0')} / ${String(range.count).padStart(2, '0')}`, ML, FOOT_Y + 7, { width: CW, align: 'right', lineBreak: false })
   }
 
   doc.end()

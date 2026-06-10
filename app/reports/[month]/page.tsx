@@ -22,26 +22,29 @@ type CitySnap = {
   market_entry_count: number | null; data_quality_label: string | null
 }
 
+// Palette mirrors app/globals.css: jade (affordable) / gold (accent) / copper (expensive)
+const JADE = '#76a98c'
+const GOLD = '#c8a862'
+const COPPER = '#c0674e'
+
 function burdenColor(pct: number) {
-  if (pct <= 45) return '#3db870'
-  if (pct <= 65) return '#c4890f'
-  return '#c04030'
+  if (pct <= 45) return JADE
+  if (pct <= 65) return GOLD
+  return COPPER
 }
 
 function barColor(price: number, max: number) {
   const p = price / max
-  if (p < 0.15) return '#34a85a'
-  if (p < 0.35) return '#5bbf7a'
-  if (p < 0.60) return '#c4890f'
-  if (p < 0.82) return '#d9682a'
-  return '#b83418'
+  if (p < 0.30) return JADE
+  if (p < 0.60) return GOLD
+  return COPPER
 }
 
 function legendColor(label: string) {
-  if (label === 'Low quartile') return '#3db870'
-  if (label === 'High quartile') return '#b83418'
+  if (label === 'Low quartile') return JADE
+  if (label === 'High quartile') return COPPER
   if (label === 'Mean marker') return 'var(--color-text-1)'
-  if (label === 'IQR band') return '#e8d8bf'
+  if (label === 'IQR band') return '#4a4230'
   return 'var(--color-accent)'
 }
 
@@ -175,8 +178,8 @@ export default async function ReportPage({ params }: PageProps) {
     .sort((a, b) => b.bowls - a.bowls)
   const bowlsMax = Math.max(...bowlsAfterRent.map(c => Math.abs(c.bowls)), 1)
 
-  const FONT = "'DM Sans', sans-serif"
-  const DISP = "'DM Serif Display', serif"
+  const FONT = 'var(--font-body)'
+  const DISP = 'var(--font-display)'
 
   return (
     <main style={{ fontFamily: FONT, background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
@@ -264,7 +267,7 @@ export default async function ReportPage({ params }: PageProps) {
               <p style={{ fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: '0 0 1rem' }}>Baseline distribution</p>
               <div style={{ position: 'relative', height: 90, margin: '0 0 0.75rem' }}>
                 <div style={{ position: 'absolute', left: 0, right: 0, top: 38, height: 7, borderRadius: 4, background: 'var(--color-border)' }} />
-                <div style={{ position: 'absolute', left: `${q1Pos}%`, width: `${Math.max(q3Pos - q1Pos, 1)}%`, top: 31, height: 21, borderRadius: 4, background: '#e8d8bf' }} />
+                <div style={{ position: 'absolute', left: `${q1Pos}%`, width: `${Math.max(q3Pos - q1Pos, 1)}%`, top: 31, height: 21, borderRadius: 4, background: 'rgba(200,168,98,0.20)' }} />
                 <div style={{ position: 'absolute', left: `${medianPos}%`, top: 20, bottom: 22, width: 2, background: 'var(--color-accent)' }} />
                 <div style={{ position: 'absolute', left: `${meanPos}%`, top: 20, bottom: 22, width: 1, background: 'var(--color-text-1)' }} />
                 <div style={{ position: 'absolute', left: 0, bottom: 0, fontSize: 11, color: 'var(--color-text-3)' }}>{money(distMin)}</div>
@@ -437,10 +440,10 @@ export default async function ReportPage({ params }: PageProps) {
             <div style={{ position: 'relative', width: '100%', paddingBottom: '44%', border: '0.5px solid var(--color-border)', borderRadius: 8, overflow: 'hidden', background: 'var(--color-surface)' }}>
               <div style={{ position: 'absolute', inset: 0 }}>
                 {/* Quadrant backgrounds */}
-                <div style={{ position: 'absolute', left: 0, top: 0, width: '50%', height: '50%', background: 'rgba(196,137,15,0.04)' }} />
-                <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '50%', background: 'rgba(192,64,48,0.05)' }} />
-                <div style={{ position: 'absolute', left: 0, bottom: 0, width: '50%', height: '50%', background: 'rgba(61,184,112,0.06)' }} />
-                <div style={{ position: 'absolute', right: 0, bottom: 0, width: '50%', height: '50%', background: 'rgba(91,191,122,0.04)' }} />
+                <div style={{ position: 'absolute', left: 0, top: 0, width: '50%', height: '50%', background: 'rgba(200,168,98,0.05)' }} />
+                <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '50%', background: 'rgba(192,103,78,0.06)' }} />
+                <div style={{ position: 'absolute', left: 0, bottom: 0, width: '50%', height: '50%', background: 'rgba(118,169,140,0.06)' }} />
+                <div style={{ position: 'absolute', right: 0, bottom: 0, width: '50%', height: '50%', background: 'rgba(118,169,140,0.04)' }} />
                 {/* Midpoint crosshair */}
                 <div style={{ position: 'absolute', left: '50%', top: '4%', bottom: '14%', width: 1, background: 'var(--color-border)', opacity: 0.6 }} />
                 <div style={{ position: 'absolute', top: '50%', left: '4%', right: '4%', height: 1, background: 'var(--color-border)', opacity: 0.6 }} />
@@ -468,7 +471,7 @@ export default async function ReportPage({ params }: PageProps) {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-              {[['Bottom-left', '#3db870', 'Low price, low burden'], ['Top-left', '#c4890f', 'Low price, high burden'], ['Top-right', '#c04030', 'High price, high burden'], ['Bottom-right', '#3db870', 'High price, low burden']].map(([q, c, desc]) => (
+              {[['Bottom-left', JADE, 'Low price, low burden'], ['Top-left', GOLD, 'Low price, high burden'], ['Top-right', COPPER, 'High price, high burden'], ['Bottom-right', JADE, 'High price, low burden']].map(([q, c, desc]) => (
                 <div key={q} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--color-text-3)' }}>
                   <span style={{ width: 8, height: 8, borderRadius: 2, background: c, display: 'inline-block', opacity: 0.8 }} />
                   {desc}
@@ -493,7 +496,7 @@ export default async function ReportPage({ params }: PageProps) {
               {bowlsAfterRent.map((item) => {
                 const isNeg = item.bowls < 0
                 const barWidth = Math.min(Math.abs(item.bowls) / bowlsMax * 100, 100)
-                const barColor = isNeg ? '#c04030' : item.bowls < 30 ? '#c4890f' : item.bowls < 80 ? '#3db870' : '#1a9e5a'
+                const barColor = isNeg ? COPPER : item.bowls < 30 ? GOLD : item.bowls < 80 ? JADE : '#8fc4a6'
                 return (
                   <div key={item.city} style={{ display: 'grid', gridTemplateColumns: '96px 1fr 56px', gap: 8, alignItems: 'center' }}>
                     <span style={{ fontSize: 11, color: 'var(--color-text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -603,7 +606,7 @@ export default async function ReportPage({ params }: PageProps) {
                   <div>
                     <span style={{ fontSize: 13, color: 'var(--color-text-2)' }}>{zScore !== null ? zScore.toFixed(2) : '-'}</span>
                     <div style={{ height: 3, borderRadius: 2, background: 'var(--color-border)', overflow: 'hidden', maxWidth: 70, marginTop: 4 }}>
-                      <div style={{ height: '100%', width: `${Math.min(100, Math.abs(zScore ?? 0) * 28)}%`, background: zScore !== null && zScore < 0 ? '#3db870' : 'var(--color-accent)', borderRadius: 2 }} />
+                      <div style={{ height: '100%', width: `${Math.min(100, Math.abs(zScore ?? 0) * 28)}%`, background: zScore !== null && zScore < 0 ? JADE : 'var(--color-accent)', borderRadius: 2 }} />
                     </div>
                   </div>
 

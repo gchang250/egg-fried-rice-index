@@ -36,8 +36,8 @@ export default async function ReportsPage() {
 
   const reports = error ? [] : (data ?? []) as Report[]
 
-  const FONT = "'DM Sans', sans-serif"
-  const DISP = "'DM Serif Display', serif"
+  const FONT = 'var(--font-body)'
+  const DISP = 'var(--font-display)'
 
   return (
     <main style={{ fontFamily: FONT, background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
@@ -88,7 +88,7 @@ export default async function ReportsPage() {
                         </div>
                         <div>
                           <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Cheapest</p>
-                          <p style={{ fontFamily: DISP, fontSize: 20, color: '#3db870', margin: 0, fontWeight: 400 }}>{fmt(r.cheapest_price_cad)}</p>
+                          <p style={{ fontFamily: DISP, fontSize: 20, color: 'var(--color-green)', margin: 0, fontWeight: 400 }}>{fmt(r.cheapest_price_cad)}</p>
                         </div>
                         <div>
                           <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Priciest</p>
