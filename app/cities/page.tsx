@@ -82,7 +82,7 @@ export default function CitiesPage() {
   }, [])
 
   const formatDate = (s: string | null) =>
-    s ? new Date(s).toLocaleDateString(undefined, { year: 'numeric', month: 'short' }) : '—'
+    s ? new Date(s).toLocaleDateString(undefined, { year: 'numeric', month: 'short' }) : '-'
 
   const formatPrice = (cad: number | null) => {
     if (!cad || cad <= 0) return 'Pending'
@@ -139,9 +139,9 @@ export default function CitiesPage() {
         <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4,1fr)', gap:'1px', marginBottom:'2rem', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
           {[
             { label:'Cities indexed', val:String(cleanCities.length) },
-            { label:'Cheapest', val: cheapest ? `${cheapest.flag ?? ''} ${cheapest.city}` : '—', sub: cheapest ? formatPrice(cheapest.price_cad) : null },
-            { label:'Most expensive', val: priciest ? `${priciest.flag ?? ''} ${priciest.city}` : '—', sub: priciest ? formatPrice(priciest.price_cad) : null },
-            { label:'Price spread', val: cheapest && priciest ? `${((priciest.price_cad??1)/(cheapest.price_cad??1)).toFixed(1)}×` : '—', sub:'cheapest vs priciest' },
+            { label:'Cheapest', val: cheapest ? `${cheapest.flag ?? ''} ${cheapest.city}` : '-', sub: cheapest ? formatPrice(cheapest.price_cad) : null },
+            { label:'Most expensive', val: priciest ? `${priciest.flag ?? ''} ${priciest.city}` : '-', sub: priciest ? formatPrice(priciest.price_cad) : null },
+            { label:'Price spread', val: cheapest && priciest ? `${((priciest.price_cad??1)/(cheapest.price_cad??1)).toFixed(1)}×` : '-', sub:'cheapest vs priciest' },
           ].map(s => (
             <div key={s.label} style={{ background:'var(--color-surface)', padding:'1.1rem 1.5rem' }}>
               <p style={{ fontSize:10, textTransform:'uppercase', letterSpacing:'1.3px', color:'var(--color-text-3)', margin:'0 0 0.4rem' }}>{s.label}</p>
@@ -271,12 +271,12 @@ export default function CitiesPage() {
                         <span style={{ fontSize:13, fontWeight:500, color:burdenColor(burden) }}>{burden}%</span>
                         <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'2px 0 0' }}>of salary</p>
                       </>
-                    ) : <span style={{ fontSize:13, color:'var(--color-text-4)' }}>—</span>}
+                    ) : <span style={{ fontSize:13, color:'var(--color-text-4)' }}>-</span>}
                   </div>
 
                   <div>
-                    <span style={{ fontSize:12, color:'var(--color-text-2)' }}>{city.data_quality_label ?? '—'}</span>
-                    <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'2px 0 0' }}>{city.baseline_entry_count ?? '—'} BL · {city.market_entry_count ?? '—'} total</p>
+                    <span style={{ fontSize:12, color:'var(--color-text-2)' }}>{city.data_quality_label ?? '-'}</span>
+                    <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'2px 0 0' }}>{city.baseline_entry_count ?? '-'} BL · {city.market_entry_count ?? '-'} total</p>
                   </div>
 
                   <div style={{ fontSize:12, color:'var(--color-text-2)' }}>{formatDate(city.price_updated_at)}</div>

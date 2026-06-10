@@ -4,11 +4,11 @@ import NavBar from '@/app/components/NavBar'
 const CARDS = [
   {
     title: 'Why this exists',
-    body: ["Cost of living gets described through numbers that are hard to feel: CPI, PPP, rent indices. They matter, but they don't stick.", "The Fried Rice Index starts with something concrete — the price of a bowl of fried rice at a local restaurant. That one number ends up saying a lot about a place."],
+    body: ["Cost of living gets described through numbers that are hard to feel: CPI, PPP, rent indices. They matter, but they don't stick.", "The Fried Rice Index starts with something concrete: the price of a bowl of fried rice at a local restaurant. That one number ends up saying a lot about a place."],
   },
   {
     title: 'What the index does',
-    body: ["It collects restaurant-level fried rice prices, preserves the original local currency, converts to CAD for comparison, assigns confidence scores, and summarises city-level patterns.", "Not all dishes are treated as equal. Basic, vegetable, meat, seafood, house special, and premium fried rice are categorised separately so the data holds up under scrutiny."],
+    body: ["It collects restaurant-level fried rice prices, preserves the original local currency, converts to CAD for comparison, assigns confidence scores, and summarises city-level patterns.", "Basic, vegetable, meat, seafood, house special, and premium fried rice are categorised separately so the data holds up under scrutiny."],
   },
   {
     title: 'What the index is not',

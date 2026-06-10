@@ -244,7 +244,7 @@ export async function GET() {
     const lines: string[] = []
 
     // Report header block
-    lines.push(csvRow(['FRIED RICE INDEX — FULL DATASET REPORT']))
+    lines.push(csvRow(['FRIED RICE INDEX : FULL DATASET REPORT']))
     lines.push(csvRow(['Publisher', PUBLISHER]))
     lines.push(csvRow(['Report version', REPORT_VERSION]))
     lines.push(csvRow(['Generated (UTC)', generatedAtDisplay]))
@@ -253,11 +253,11 @@ export async function GET() {
     lines.push(csvRow(['Market average method', '5% trimmed mean (top and bottom 5% excluded)']))
     lines.push(csvRow(['Std deviation basis', 'Sample std dev across all approved entries per city']))
     lines.push(csvRow(['Baseline definition', 'Basic or vegetable fried rice only']))
-    lines.push(csvRow(['Licence', 'Public domain — cite efr-index.vercel.app']))
+    lines.push(csvRow(['Licence', 'Public domain : cite efr-index.vercel.app']))
     lines.push('')
 
     // ── Section 0: Overall statistics ───────────────────────────────────────
-    lines.push(csvRow(['SECTION 0 — OVERALL STATISTICAL ANALYSIS']))
+    lines.push(csvRow(['SECTION 0 : OVERALL STATISTICAL ANALYSIS']))
     lines.push(csvRow(['Metric', 'All Restaurant Entries', 'Baseline Restaurant Entries', 'City Baseline Medians']))
     const statRows: Array<[string, keyof DistributionStats, number]> = [
       ['Count', 'count', 0],
@@ -308,7 +308,7 @@ export async function GET() {
     lines.push('')
 
     // ── Section 1: City summary ──────────────────────────────────────────────
-    lines.push(csvRow(['SECTION 1 — CITY SUMMARY']))
+    lines.push(csvRow(['SECTION 1 : CITY SUMMARY']))
     lines.push(
       csvRow([
         'City',
@@ -389,7 +389,7 @@ export async function GET() {
     lines.push('')
 
     // ── Section 2: Restaurant entries ───────────────────────────────────────
-    lines.push(csvRow(['SECTION 2 — RESTAURANT ENTRIES']))
+    lines.push(csvRow(['SECTION 2 : RESTAURANT ENTRIES']))
     lines.push(
       csvRow([
         'City',
@@ -435,7 +435,7 @@ export async function GET() {
     }
 
     lines.push('')
-    lines.push(csvRow([`End of report — generated ${generatedAtISO}`]))
+    lines.push(csvRow([`End of report : generated ${generatedAtISO}`]))
 
     const csv = lines.join('\r\n')
     const filename = `fried-rice-index-${filenamestamp}.csv`

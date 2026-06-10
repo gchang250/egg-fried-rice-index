@@ -116,7 +116,7 @@ const CURRENCY_GROUPS = [
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function convert(cadAmount: number | null | undefined, currency: string): string {
-  if (cadAmount == null || !Number.isFinite(cadAmount)) return '—'
+  if (cadAmount == null || !Number.isFinite(cadAmount)) return '-'
   const rate = RATES[currency] ?? 1
   const sym  = SYMBOLS[currency] ?? `${currency} `
   const val  = cadAmount * rate
@@ -129,7 +129,7 @@ function convert(cadAmount: number | null | undefined, currency: string): string
 }
 
 function fmtLocal(price: number | null, currency: string | null): string {
-  if (price == null || !currency) return '—'
+  if (price == null || !currency) return '-'
   const sym    = SYMBOLS[currency] ?? `${currency} `
   const digits = price >= 100 ? 0 : 2
   return `${sym}${price.toLocaleString(undefined, {
@@ -139,13 +139,13 @@ function fmtLocal(price: number | null, currency: string | null): string {
 }
 
 function bowls(amount: number | null, bowlPrice: number | null): string {
-  if (!amount || !bowlPrice || bowlPrice === 0) return '—'
+  if (!amount || !bowlPrice || bowlPrice === 0) return '-'
   const n = amount / bowlPrice
   return n < 10 ? n.toFixed(1) : Math.round(n).toLocaleString()
 }
 
 function fmtDate(s: string | null | undefined) {
-  if (!s) return '—'
+  if (!s) return '-'
   return new Date(s).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
@@ -160,7 +160,7 @@ function isUrl(s: string | null | undefined): s is string {
 }
 
 function SourceLink({ value }: { value: string | null | undefined }) {
-  if (!value) return <span>—</span>
+  if (!value) return <span>-</span>
   if (isUrl(value)) {
     const display = value.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]
     return (
@@ -174,7 +174,7 @@ function SourceLink({ value }: { value: string | null | undefined }) {
 }
 
 function fmtConf(v: number | null) {
-  if (v == null) return '—'
+  if (v == null) return '-'
   return `${Math.round(v <= 1 ? v * 100 : v)}%`
 }
 
@@ -183,14 +183,14 @@ function fmtCat(v: string | null) {
     basic: 'Basic', vegetable: 'Vegetable', meat_based: 'Meat-based',
     seafood: 'Seafood', house_special: 'House special', premium: 'Premium',
   }
-  return v ? (m[v] ?? v.replace(/_/g, ' ')) : '—'
+  return v ? (m[v] ?? v.replace(/_/g, ' ')) : '-'
 }
 
 function fmtTier(v: string | null) {
   const m: Record<string, string> = {
     low_tier: 'Budget', mid_tier: 'Mid-range', high_end: 'High-end', premium: 'Premium',
   }
-  return v ? (m[v] ?? v.replace(/_/g, ' ')) : '—'
+  return v ? (m[v] ?? v.replace(/_/g, ' ')) : '-'
 }
 
 function median(vals: number[]) {
@@ -213,7 +213,7 @@ function stddev(vals: number[]) {
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function ScoreBar({ score, label }: { score: number | null; label: string }) {
-  if (score == null) return <p style={metaValStyle}>—</p>
+  if (score == null) return <p style={metaValStyle}>-</p>
   const pct   = Math.min(100, Math.max(0, score))
   const color = pct >= 70 ? '#2d7a4f' : pct >= 50 ? '#b5730a' : '#c0392b'
   const grade = pct >= 80 ? 'Excellent' : pct >= 65 ? 'Good' : pct >= 50 ? 'Moderate' : 'Below avg'
@@ -222,7 +222,7 @@ function ScoreBar({ score, label }: { score: number | null; label: string }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
         <span style={{ ...metaValStyle, color }}>{score}</span>
         <span style={{ fontSize: 12, color: '#9b9b90' }}>/ 100</span>
-        <span style={{ fontSize: 11, color, fontWeight: 500 }}>— {grade}</span>
+        <span style={{ fontSize: 11, color, fontWeight: 500 }}>· {grade}</span>
       </div>
       <div style={{ height: 4, borderRadius: 4, background: '#1e261e', overflow: 'hidden' }}>
         <div style={{ height: '100%', width: `${pct}%`, background: color, borderRadius: 4 }} />
@@ -233,7 +233,7 @@ function ScoreBar({ score, label }: { score: number | null; label: string }) {
 }
 
 function Badge({ value }: { value: string | null }) {
-  if (!value) return <span style={metaValStyle}>—</span>
+  if (!value) return <span style={metaValStyle}>-</span>
   const styles: Record<string, React.CSSProperties> = {
     native:   { background: '#eaf4ed', color: '#2d7a4f', border: '0.5px solid #c3e0cc' },
     high:     { background: '#eaf4ed', color: '#2d7a4f', border: '0.5px solid #c3e0cc' },
@@ -287,10 +287,10 @@ export default function CityPageContent({
   const bowlsTech      = bowls(city.tech_salary_cad, bowlPrice)
   const bowlsAfterRent = (city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && bowlPrice)
     ? bowls(city.median_monthly_salary_cad - city.median_rent_1br_cad, bowlPrice)
-    : '—'
+    : '-'
   const rentBurden = (city.median_rent_1br_cad != null && city.median_monthly_salary_cad != null && city.median_monthly_salary_cad > 0)
     ? `${Math.round((city.median_rent_1br_cad / city.median_monthly_salary_cad) * 100)}%`
-    : '—'
+    : '-'
 
   const sym = SYMBOLS[currency] ?? currency
 
@@ -351,7 +351,7 @@ export default function CityPageContent({
             label="Price range"
             value={mktMin != null && mktMax != null
               ? `${convert(mktMin, currency)}–${convert(mktMax, currency)}`
-              : '—'}
+              : '-'}
             sub={sd != null ? `±${convert(sd, currency)} std dev` : 'All approved entries'}
             wide
           />
@@ -365,7 +365,7 @@ export default function CityPageContent({
             <h2 style={h2}>What does it cost to live here?</h2>
             <p style={lead}>
               Prices shown in <strong>{sym} {currency}</strong>.
-              Bowl ratios are currency-neutral — one bowl in {city.city} = <strong>{convert(bowlPrice, currency)}</strong>.
+              Bowl ratios are currency-neutral. One bowl in {city.city} = <strong>{convert(bowlPrice, currency)}</strong>.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.median_rent_1br_cad != null && (
@@ -389,7 +389,7 @@ export default function CityPageContent({
                     bowlCount={isDeficit ? `−${Math.abs(parseInt(bowlsAfterRent))}` : bowlsAfterRent}
                     amount={convert(Math.abs(diff), currency)}
                     sub={isDeficit
-                      ? `Rent burden: ${rentBurden} — median wage cannot cover city rent`
+                      ? `Rent burden: ${rentBurden}. Median wage cannot cover city rent.`
                       : `Rent burden: ${rentBurden} of median salary`}
                     highlight
                     deficit={isDeficit}
@@ -557,25 +557,25 @@ function RestaurantTable({ rows, bowlPrice, currency }: {
         <tbody>
           {rows.map(row => (
             <tr key={row.id} style={{ background: row.included_in_baseline ? '#181f18' : '#141714' }}>
-              <td style={td}>{row.restaurant_name ?? '—'}</td>
-              <td style={td}>{row.dish_name ?? '—'}</td>
+              <td style={td}>{row.restaurant_name ?? '-'}</td>
+              <td style={td}>{row.dish_name ?? '-'}</td>
               <td style={td}>{fmtCat(row.dish_category)}</td>
               <td style={td}>{fmtTier(row.tier)}</td>
               <td style={{ ...td, whiteSpace: 'nowrap' }}>{fmtLocal(row.local_price, row.local_currency)}</td>
               <td style={{ ...td, whiteSpace: 'nowrap', fontWeight: 500, color: '#e8e4dc' }}>{convert(row.price_cad, currency)}</td>
               <td style={{ ...td, color: '#d9682a', fontWeight: 500 }}>
-                {row.price_cad != null && bowlPrice ? (row.price_cad / bowlPrice).toFixed(1) : '—'}
+                {row.price_cad != null && bowlPrice ? (row.price_cad / bowlPrice).toFixed(1) : '-'}
               </td>
               <td style={td}>
                 {row.included_in_baseline
                   ? <span style={{ color: '#34a85a', fontWeight: 500 }}>Yes</span>
                   : <span style={{ color: '#2a2a22' }}>No</span>}
               </td>
-              <td style={td}>{row.confidence_score != null ? `${Math.round(row.confidence_score <= 1 ? row.confidence_score * 100 : row.confidence_score)}%` : '—'}</td>
+              <td style={td}>{row.confidence_score != null ? `${Math.round(row.confidence_score <= 1 ? row.confidence_score * 100 : row.confidence_score)}%` : '-'}</td>
               <td style={td}>
                 {row.source_url
                   ? <a href={ensureProtocol(row.source_url)} target="_blank" rel="noreferrer" style={{ color: '#d9682a', textDecoration: 'none', fontSize: 12 }}>View ↗</a>
-                  : '—'}
+                  : '-'}
               </td>
             </tr>
           ))}
