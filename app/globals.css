@@ -8,30 +8,38 @@
 
 :root {
   /* ── Surfaces ───────────────────────────────────────────────────── */
-  --color-bg:           #09100a;   /* page background                  */
-  --color-surface:      #111611;   /* card / panel                     */
-  --color-surface-2:    #1a211a;   /* elevated card                    */
-  --color-border:       rgba(255, 255, 255, 0.065);
+  --color-bg:           #0a0a0c;
+  --color-surface:      #101013;
+  --color-surface-2:    #15151a;
+  --color-border:       #1e1e24;
 
-  /* ── Foreground (WCAG AA on --color-bg) ────────────────────────── */
-  --color-text-1:       #f4f0e8;   /* primary   · 17.2:1 ✓            */
-  --color-text-2:       #9c9890;   /* secondary ·  7.4:1 ✓            */
-  --color-text-3:       #5c5a54;   /* muted     ·  4.5:1 ✓ (AA min)   */
-  --color-text-4:       #2e2e28;   /* ghost     · decorative only      */
+  /* ── Foreground ─────────────────────────────────────────────────── */
+  --color-text-1:       #ece9e2;
+  --color-text-2:       #a8a8b0;
+  --color-text-3:       #8d8d96;
+  --color-text-4:       #55555e;
 
-  /* ── Brand accent ───────────────────────────────────────────────── */
-  --color-accent:       #d9682a;
-  --color-accent-dim:   rgba(217, 104, 42, 0.12);
-  --color-accent-glow:  rgba(217, 104, 42, 0.22);
+  /* ── Brand accent (champagne gold) ─────────────────────────────── */
+  --color-accent:       #c8a862;
+  --color-accent-dim:   rgba(200, 168, 98, 0.10);
+  --color-accent-glow:  rgba(200, 168, 98, 0.18);
 
   /* ── Status ─────────────────────────────────────────────────────── */
-  --color-green:        #3db870;
-  --color-red:          #c03c2c;
-  --color-amber:        #c4890f;
+  --color-green:        #76a98c;   /* jade — affordable end            */
+  --color-red:          #c0674e;   /* copper — expensive end           */
+  --color-amber:        #c8a862;   /* same as accent                   */
+
+  /* ── Named color aliases ────────────────────────────────────────── */
+  --gold:               #c8a862;
+  --jade:               #76a98c;
+  --copper:             #c0674e;
+  --line:               #222228;
+  --line-soft:          #1a1a1f;
 
   /* ── Typography ─────────────────────────────────────────────────── */
-  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --font-body:    'Bricolage Grotesque', system-ui, sans-serif;
+  --font-display: 'Geist', system-ui, sans-serif;
+  --font-body:    'Geist', system-ui, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, monospace;
 }
 
 /* ── Light theme (add .light to <html> to activate) ─────────────────── */
