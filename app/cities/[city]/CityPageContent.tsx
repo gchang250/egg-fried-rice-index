@@ -1,8 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import NavBar from '@/app/components/NavBar'
+
+export type HistoryPoint = {
+  month: string
+  date: string
+  price_cad: number
+}
 
 // ── Types (exported so page.tsx can import them) ──────────────────────────────
 
@@ -115,9 +121,9 @@ const CURRENCY_GROUPS = [
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function convert(cadAmount: number | null | undefined, currency: string): string {
+function convert(cadAmount: number | null | undefined, currency: string, ratesDict: Record<string, number> = RATES): string {
   if (cadAmount == null || !Number.isFinite(cadAmount)) return '-'
-  const rate = RATES[currency] ?? 1
+  const rate = ratesDict[currency] ?? RATES[currency] ?? 1
   const sym  = SYMBOLS[currency] ?? `${currency} `
   const val  = cadAmount * rate
   // Large amounts (¥, ₩, ₨, ARS…) get 0 decimals; small amounts get 2
@@ -258,16 +264,122 @@ function Badge({ value }: { value: string | null }) {
   )
 }
 
+// ── Historical Price Chart component ──────────────────────────────────────────
+
+function HistoricalPriceChart({ history, currency, rates }: {
+  history: HistoryPoint[]; currency: string; rates: Record<string, number>
+}) {
+  if (history.length === 0) return null;
+
+  const rate = rates[currency] ?? 1
+  const sym = SYMBOLS[currency] ?? 'CA$'
+  
+  const points = history.map(pt => ({
+    ...pt,
+    price: pt.price_cad * rate
+  }))
+  
+  const prices = points.map(p => p.price)
+  const minP = Math.min(...prices) * 0.9
+  const maxP = Math.max(...prices) * 1.1
+  const pDiff = maxP - minP === 0 ? 1 : maxP - minP
+
+  const W = 600
+  const H = 200
+  const padding = { top: 22, right: 30, bottom: 30, left: 50 }
+  
+  const getX = (idx: number) => padding.left + (idx / (points.length - 1 || 1)) * (W - padding.left - padding.right)
+  const getY = (price: number) => H - padding.bottom - ((price - minP) / pDiff) * (H - padding.top - padding.bottom)
+
+  let pathD = ""
+  points.forEach((pt, i) => {
+    const x = getX(i)
+    const y = getY(pt.price)
+    if (i === 0) pathD = `M ${x} ${y}`
+    else pathD += ` L ${x} ${y}`
+  })
+
+  let areaD = ""
+  if (points.length > 1) {
+    areaD = `${pathD} L ${getX(points.length - 1)} ${H - padding.bottom} L ${getX(0)} ${H - padding.bottom} Z`
+  }
+
+  return (
+    <div className="glass-panel" style={{ borderRadius: 18, padding: '1.5rem', flex: '1 1 340px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 230 }}>
+      <div>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 12px' }}>
+          Historical Price Trend
+        </p>
+      </div>
+      {points.length < 2 ? (
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-3)', fontSize: 12.5, fontFamily: 'var(--font-body)', textAlign: 'center', padding: '0 1rem' }}>
+          Price history tracking started {points[0]?.date ?? 'recently'}. Baseline price is currently stable.
+        </div>
+      ) : (
+        <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center' }}>
+          <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto', display: 'block' }}>
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0.00" />
+              </linearGradient>
+            </defs>
+            
+            {/* Grid lines */}
+            <line x1={padding.left} y1={getY(minP / 0.9)} x2={W - padding.right} y2={getY(minP / 0.9)} stroke="var(--color-border)" strokeWidth={0.5} strokeDasharray="2 4" />
+            <line x1={padding.left} y1={getY((minP / 0.9 + maxP / 1.1) / 2)} x2={W - padding.right} y2={getY((minP / 0.9 + maxP / 1.1) / 2)} stroke="var(--color-border)" strokeWidth={0.5} strokeDasharray="2 4" />
+            <line x1={padding.left} y1={getY(maxP / 1.1)} x2={W - padding.right} y2={getY(maxP / 1.1)} stroke="var(--color-border)" strokeWidth={0.5} strokeDasharray="2 4" />
+
+            {/* Gradient Area under line */}
+            <path d={areaD} fill="url(#chartGrad)" />
+
+            {/* Line Path */}
+            <path d={pathD} fill="none" stroke="var(--color-accent)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+
+            {/* Dots and Labels */}
+            {points.map((pt, i) => {
+              const x = getX(i)
+              const y = getY(pt.price)
+              return (
+                <g key={pt.month} style={{ cursor: 'pointer' }}>
+                  <title>{pt.date}: {sym}{pt.price.toFixed(2)}</title>
+                  <circle cx={x} cy={y} r={4.5} fill="var(--color-bg)" stroke="var(--color-accent)" strokeWidth={2.5} />
+                  <text x={x} y={y - 10} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={10} fill="var(--color-text-1)" fontWeight={500}>
+                    {sym}{pt.price.toFixed(2)}
+                  </text>
+                  <text x={x} y={H - 8} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={9} fill="var(--color-text-3)">
+                    {pt.date}
+                  </text>
+                </g>
+              )
+            })}
+          </svg>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function CityPageContent({
   city,
   restaurants,
+  history = [],
 }: {
   city: CityRow
   restaurants: RestaurantRow[]
+  history?: HistoryPoint[]
 }) {
   const [currency, setCurrency] = useState('CAD')
+  const [rates, setRates] = useState<Record<string, number>>(RATES)
+
+  useEffect(() => {
+    fetch('/api/exchange-rates')
+      .then(r => r.json())
+      .then(d => { if (d && typeof d === 'object') setRates(d) })
+      .catch(() => {})
+  }, [])
 
   const blEntries = restaurants.filter(r => r.included_in_baseline)
   const allPrices = restaurants.map(r => r.price_cad).filter((p): p is number => p != null)
@@ -335,27 +447,30 @@ export default function CityPageContent({
           {city.blurb ?? 'City context coming soon.'}
         </p>
 
-        {/* Stat cards */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          <PriceCard
-            label="Baseline fried rice"
-            value={convert(bowlPrice, currency)}
-            sub={`${city.data_quality_label ?? 'Pending'} · ${city.baseline_entry_count ?? blEntries.length} sources`}
-            accent
-          />
-          <PriceCard
-            label="Market average"
-            value={convert(mktAvg, currency)}
-            sub={`${city.market_entry_count ?? restaurants.length} entries tracked`}
-          />
-          <PriceCard
-            label="Price range"
-            value={mktMin != null && mktMax != null
-              ? `${convert(mktMin, currency)}–${convert(mktMax, currency)}`
-              : '-'}
-            sub={sd != null ? `±${convert(sd, currency)} std dev` : 'All approved entries'}
-            wide
-          />
+        {/* Stat cards & historical price chart */}
+        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', flex: '1 1 500px', alignItems: 'flex-start' }}>
+            <PriceCard
+              label="Baseline fried rice"
+              value={convert(bowlPrice, currency, rates)}
+              sub={`${city.data_quality_label ?? 'Pending'} · ${city.baseline_entry_count ?? blEntries.length} sources`}
+              accent
+            />
+            <PriceCard
+              label="Market average"
+              value={convert(mktAvg, currency, rates)}
+              sub={`${city.market_entry_count ?? restaurants.length} entries tracked`}
+            />
+            <PriceCard
+              label="Price range"
+              value={mktMin != null && mktMax != null
+                ? `${convert(mktMin, currency, rates)}–${convert(mktMax, currency, rates)}`
+                : '-'}
+              sub={sd != null ? `±${convert(sd, currency, rates)} std dev` : 'All approved entries'}
+              wide
+            />
+          </div>
+          <HistoricalPriceChart history={history} currency={currency} rates={rates} />
         </div>
       </section>
 
@@ -366,20 +481,20 @@ export default function CityPageContent({
             <h2 style={h2}>What does it cost to live here?</h2>
             <p style={lead}>
               Prices shown in <strong>{sym} {currency}</strong>.
-              Bowl ratios are currency-neutral. One bowl in {city.city} = <strong>{convert(bowlPrice, currency)}</strong>.
+              Bowl ratios are currency-neutral. One bowl in {city.city} = <strong>{convert(bowlPrice, currency, rates)}</strong>.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.median_rent_1br_cad != null && (
                 <LivingCard label="Typical monthly rent (1BR)" bowlCount={bowlsRent}
-                  amount={convert(city.median_rent_1br_cad, currency)} sub={city.rent_data_source ?? undefined} />
+                  amount={convert(city.median_rent_1br_cad, currency, rates)} sub={city.rent_data_source ?? undefined} />
               )}
               {city.median_monthly_salary_cad != null && (
                 <LivingCard label="Median monthly salary" bowlCount={bowlsSalary}
-                  amount={convert(city.median_monthly_salary_cad, currency)} sub={city.salary_data_source ?? undefined} />
+                  amount={convert(city.median_monthly_salary_cad, currency, rates)} sub={city.salary_data_source ?? undefined} />
               )}
               {city.tech_salary_cad != null && (
                 <LivingCard label="Tech / knowledge worker salary" bowlCount={bowlsTech}
-                  amount={convert(city.tech_salary_cad, currency)} sub="Median gross monthly" />
+                  amount={convert(city.tech_salary_cad, currency, rates)} sub="Median gross monthly" />
               )}
               {city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && (() => {
                 const diff = city.median_monthly_salary_cad - city.median_rent_1br_cad
@@ -388,7 +503,7 @@ export default function CityPageContent({
                   <LivingCard
                     label={isDeficit ? 'Rent exceeds median salary' : 'Bowls left after rent'}
                     bowlCount={isDeficit ? `−${Math.abs(parseInt(bowlsAfterRent))}` : bowlsAfterRent}
-                    amount={convert(Math.abs(diff), currency)}
+                    amount={convert(Math.abs(diff), currency, rates)}
                     sub={isDeficit
                       ? `Rent burden: ${rentBurden}. Median wage cannot cover city rent.`
                       : `Rent burden: ${rentBurden} of median salary`}
@@ -454,7 +569,7 @@ export default function CityPageContent({
             {restaurants.length} approved entries in {city.city}. Prices shown in {sym} {currency}.
             Baseline entries (basic + vegetable) set the index price.
           </p>
-          <RestaurantTable rows={restaurants} bowlPrice={bowlPrice} currency={currency} />
+          <RestaurantTable rows={restaurants} bowlPrice={bowlPrice} currency={currency} rates={rates} />
         </div>
       </section>
 
@@ -534,8 +649,8 @@ function MetaCard({ label, children }: { label: string; children: React.ReactNod
   )
 }
 
-function RestaurantTable({ rows, bowlPrice, currency }: {
-  rows: RestaurantRow[]; bowlPrice: number | null; currency: string
+function RestaurantTable({ rows, bowlPrice, currency, rates }: {
+  rows: RestaurantRow[]; bowlPrice: number | null; currency: string; rates: Record<string, number>
 }) {
   const sym = SYMBOLS[currency] ?? currency
   if (!rows.length) {
@@ -563,7 +678,7 @@ function RestaurantTable({ rows, bowlPrice, currency }: {
               <td style={td}>{fmtCat(row.dish_category)}</td>
               <td style={td}>{fmtTier(row.tier)}</td>
               <td style={{ ...td, whiteSpace: 'nowrap' }}>{fmtLocal(row.local_price, row.local_currency)}</td>
-              <td style={{ ...td, whiteSpace: 'nowrap', fontWeight: 500, color: 'var(--color-text-1)' }}>{convert(row.price_cad, currency)}</td>
+              <td style={{ ...td, whiteSpace: 'nowrap', fontWeight: 500, color: 'var(--color-text-1)' }}>{convert(row.price_cad, currency, rates)}</td>
               <td style={{ ...td, color: 'var(--color-accent)', fontWeight: 500 }}>
                 {row.price_cad != null && bowlPrice ? (row.price_cad / bowlPrice).toFixed(1) : '-'}
               </td>

@@ -99,3 +99,53 @@ body {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* ── Overhaul Styles & Glassmorphism ────────────────────────────────── */
+.glass-panel {
+  background: rgba(16, 16, 19, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+}
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+}
+
+.glow-hover {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+}
+.glow-hover:hover {
+  border-color: rgba(200, 168, 98, 0.45) !important;
+  box-shadow: 0 4px 24px rgba(200, 168, 98, 0.08);
+  transform: translateY(-2px);
+}
+
+.light .glow-hover:hover {
+  border-color: rgba(194, 90, 34, 0.4) !important;
+  box-shadow: 0 4px 24px rgba(194, 90, 34, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+

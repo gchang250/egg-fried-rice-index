@@ -46,5 +46,36 @@ export default async function CityDetailPage({ params }: PageProps) {
     ;(city as any).price_cad = median(blPrices)
   }
 
-  return <CityPageContent city={city} restaurants={restaurants} />
+  // Fetch baseline price history from published monthly reports
+  const { data: reportsData } = await supabase
+    .from('monthly_reports')
+    .select('month, title, published_at, city_snapshot')
+    .eq('is_published', true)
+    .order('month', { ascending: true })
+
+  const history = (reportsData ?? [])
+    .map(r => {
+      const snap = Array.isArray(r.city_snapshot)
+        ? r.city_snapshot.find((c: any) => slugify(c.city) === slug)
+        : null
+      return snap && snap.price_cad != null
+        ? { month: r.month, date: r.title, price_cad: Number(snap.price_cad) }
+        : null
+    })
+    .filter((pt): pt is { month: string; date: string; price_cad: number } => pt !== null)
+
+  // Append the current live price if it is newer
+  if (city.price_cad != null) {
+    const currentMonthStr = new Date().toISOString().slice(0, 7) // e.g. "2026-06"
+    const hasCurrentMonth = history.some(pt => pt.month === currentMonthStr)
+    if (!hasCurrentMonth) {
+      history.push({
+        month: currentMonthStr,
+        date: new Date().toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
+        price_cad: Number(city.price_cad)
+      })
+    }
+  }
+
+  return <CityPageContent city={city} restaurants={restaurants} history={history} />
 }

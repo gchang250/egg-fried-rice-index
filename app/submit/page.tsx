@@ -51,6 +51,7 @@ export default function SubmitPage() {
   const [saving, setSaving]               = useState(false)
   const [message, setMessage]             = useState('')
   const [success, setSuccess]             = useState(false)
+  const [rates, setRates]                 = useState<Record<string, number>>({})
 
   useEffect(() => {
     supabase.from('cities').select('city, country').order('city', { ascending: true })
@@ -58,6 +59,11 @@ export default function SubmitPage() {
         setCities((data ?? []) as CityRow[])
         if (data?.length) setCity(data[0].city)
       })
+
+    fetch('/api/exchange-rates')
+      .then(r => r.json())
+      .then(d => { if (d && typeof d === 'object') setRates(d) })
+      .catch(() => {})
   }, [])
 
   async function handleSubmit(e: FormEvent) {
@@ -65,7 +71,15 @@ export default function SubmitPage() {
     setMessage('')
     setSaving(true)
     const parsed = Number(localPrice)
-    const rate   = cadRates[localCurrency] ?? 1
+    
+    // Convert foreign price to CAD using live rate (divided because API rate is foreign units per 1 CAD)
+    let rate = 1
+    if (rates[localCurrency]) {
+      rate = 1 / rates[localCurrency]
+    } else {
+      rate = cadRates[localCurrency] ?? 1
+    }
+    
     const priceCad = Number((parsed * rate).toFixed(2))
     if (!city || !restaurantName.trim() || !dishName.trim() || !sourceUrl.trim()) {
       setMessage('City, restaurant name, dish name, and source URL are required.')

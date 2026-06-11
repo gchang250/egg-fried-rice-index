@@ -2,7 +2,7 @@
 
 import { supabase } from '@/lib/supabase'
 import NavBar from '@/app/components/NavBar'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
 import { RATES as rates, SYMBOLS as symbols } from '@/app/cities/[city]/CityPageContent'
@@ -32,6 +32,9 @@ type City = {
   confidence_score: number | null
   median_rent_1br_cad: number | null
   median_monthly_salary_cad: number | null
+  safety_index: number | null
+  healthcare_index: number | null
+  avg_internet_mbps: number | null
 }
 
 function dotColor(priceCAD: number | null): string {
@@ -62,9 +65,22 @@ export default function Explore() {
   const [cities, setCities]             = useState<City[]>([])
   const [loadingCities, setLoadingCities] = useState(true)
   const [isMobile, setIsMobile]         = useState(false)
+  const [ratesState, setRatesState]     = useState<Record<string, number>>(rates)
+
+  // Filters State
+  const [priceRange, setPriceRange]     = useState(25)
+  const [rentBurdenMax, setRentBurdenMax] = useState(100)
+  const [regionFilter, setRegionFilter]   = useState('All')
+
+  useEffect(() => {
+    fetch('/api/exchange-rates')
+      .then(r => r.json())
+      .then(d => { if (d && typeof d === 'object') setRatesState(d) })
+      .catch(() => {})
+  }, [])
 
   const cvt = (cad: number) => {
-    const rate = rates[currency] ?? 1
+    const rate = ratesState[currency] ?? rates[currency] ?? 1
     const sym  = symbols[currency] ?? 'CA$'
     const val  = cad * rate
     const digits = val >= 100 ? 0 : 2
@@ -78,6 +94,13 @@ export default function Explore() {
     { color: '#c8a862', label: `${cvt(14)} – ${cvt(18)}` },
     { color: '#c0674e', label: `${cvt(18)}+` },
   ]
+
+  const regionsList = useMemo(() => {
+    const seen = new Set<string>()
+    cities.forEach(c => { if (c.region) seen.add(c.region) })
+    return ['All', ...Array.from(seen).sort()]
+  }, [cities])
+
   const cityPrices = cities
     .map(city => city.price_cad)
     .filter((price): price is number => price != null && Number.isFinite(price) && price > 0)
@@ -107,7 +130,8 @@ export default function Explore() {
           city, country, region, flag, latitude, longitude,
           population, blurb, price_cad,
           price_source, price_updated_at, confidence_score,
-          median_rent_1br_cad, median_monthly_salary_cad
+          median_rent_1br_cad, median_monthly_salary_cad,
+          safety_index, healthcare_index, avg_internet_mbps
         `)
         .order('city', { ascending: true })
 
@@ -158,6 +182,20 @@ export default function Explore() {
 
     g.append('rect').attr('width', W).attr('height', H).attr('fill', '#0a0a0c')
 
+    // Filter cities based on slider criteria
+    const filteredCities = cities.filter(city => {
+      const price = city.price_cad ?? 0
+      const rent = city.median_rent_1br_cad
+      const salary = city.median_monthly_salary_cad
+      const burden = rent && salary ? (rent / salary) * 100 : null
+      
+      const matchPrice = price <= priceRange
+      const matchRent = burden === null || burden <= rentBurdenMax
+      const matchRegion = regionFilter === 'All' || city.region === regionFilter
+      
+      return matchPrice && matchRent && matchRegion
+    })
+
     d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then((world: any) => {
       g.append('g')
         .selectAll('path')
@@ -169,7 +207,7 @@ export default function Explore() {
         .attr('stroke', '#1e1e24')
         .attr('stroke-width', 0.5)
 
-      cities.forEach(city => {
+      filteredCities.forEach(city => {
         const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
         if (!projected) return
         const [x, y] = projected
@@ -197,7 +235,7 @@ export default function Explore() {
         cityG.on('click', () => setSelectedCity(city))
       })
     })
-  }, [expanded, cities, isMobile])
+  }, [expanded, cities, isMobile, priceRange, rentBurdenMax, regionFilter])
 
   const resetZoom = () => {
     if (!svgRef.current || !zoomRef.current) return
@@ -290,6 +328,33 @@ export default function Explore() {
                 </div>
               )}
 
+              {/* Liveability Indicators */}
+              {(selectedCity.safety_index !== null || selectedCity.healthcare_index !== null || selectedCity.avg_internet_mbps !== null) && (
+                <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
+                  <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '0.75rem' }}>Liveability Indicators</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                    {selectedCity.safety_index != null && (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }}>
+                        <span style={{ color: 'var(--color-text-2)' }}>🛡️ Safety Index</span>
+                        <span style={{ fontFamily: 'var(--font-mono)', color: selectedCity.safety_index >= 70 ? 'var(--color-green)' : selectedCity.safety_index >= 50 ? 'var(--color-accent)' : 'var(--color-red)' }}>{selectedCity.safety_index}/100</span>
+                      </div>
+                    )}
+                    {selectedCity.healthcare_index != null && (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }}>
+                        <span style={{ color: 'var(--color-text-2)' }}>🏥 Healthcare Index</span>
+                        <span style={{ fontFamily: 'var(--font-mono)', color: selectedCity.healthcare_index >= 70 ? 'var(--color-green)' : selectedCity.healthcare_index >= 50 ? 'var(--color-accent)' : 'var(--color-red)' }}>{selectedCity.healthcare_index}/100</span>
+                      </div>
+                    )}
+                    {selectedCity.avg_internet_mbps != null && (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }}>
+                        <span style={{ color: 'var(--color-text-2)' }}>⚡ Internet Speed</span>
+                        <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-accent)' }}>{selectedCity.avg_internet_mbps} Mbps</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {selectedCity.blurb && (
                 <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.5rem' }}>
                   <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#5a5a52', margin: '0 0 0.6rem' }}>City context</p>
@@ -372,26 +437,109 @@ export default function Explore() {
           </div>
         )}
 
-        <div style={{
-          borderRadius: expanded && isMobile ? 0 : 14,
-          overflow: 'hidden',
-          background: 'var(--color-bg)',
-          cursor: 'grab',
-          touchAction: 'none',
-          border: expanded && isMobile ? 'none' : '0.5px solid var(--color-border)',
-        }}>
-          <svg
-            ref={svgRef}
-            viewBox="0 0 700 380"
-            style={{
-              width: '100%',
-              height: expanded && isMobile ? 'calc(100vh - 95px)' : 'auto',
-              display: 'block',
-              touchAction: 'none',
-            }}
-          >
-            <g ref={gRef} />
-          </svg>
+        <div style={{ display: 'flex', flexDirection: isMobile || expanded ? 'column' : 'row', gap: '1.5rem', alignItems: 'stretch' }}>
+          {/* Filters Sidebar */}
+          {!(expanded && isMobile) && (
+            <div className="glass-panel" style={{ borderRadius: 14, padding: '1.5rem', flex: '1 1 240px', maxWidth: isMobile ? '100%' : 260, display: 'flex', flexDirection: 'column', gap: '1.25rem', justifyContent: 'flex-start' }}>
+              <div>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 10px' }}>
+                  Filters
+                </p>
+              </div>
+
+              {/* Price Filter Slider */}
+              <div>
+                <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--color-text-2)', marginBottom: 6 }}>
+                  <span>Max price:</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-accent)', fontWeight: 500 }}>{cvt(priceRange)}</span>
+                </label>
+                <input
+                  type="range"
+                  min={1}
+                  max={25}
+                  step={0.5}
+                  value={priceRange}
+                  onChange={e => setPriceRange(parseFloat(e.target.value))}
+                  style={{ width: '100%', accentColor: 'var(--color-accent)', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5, color: 'var(--color-text-4)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>
+                  <span>{cvt(1)}</span>
+                  <span>{cvt(25)}</span>
+                </div>
+              </div>
+
+              {/* Rent Burden Filter Slider */}
+              <div>
+                <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--color-text-2)', marginBottom: 6 }}>
+                  <span>Max Rent burden:</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-accent)', fontWeight: 500 }}>{rentBurdenMax}%</span>
+                </label>
+                <input
+                  type="range"
+                  min={10}
+                  max={100}
+                  step={5}
+                  value={rentBurdenMax}
+                  onChange={e => setRentBurdenMax(parseInt(e.target.value))}
+                  style={{ width: '100%', accentColor: 'var(--color-accent)', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5, color: 'var(--color-text-4)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>
+                  <span>10%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+              {/* Region Filter Selector */}
+              <div>
+                <label style={{ display: 'block', fontSize: 12, color: 'var(--color-text-2)', marginBottom: 6 }}>
+                  Geographic Region:
+                </label>
+                <select
+                  value={regionFilter}
+                  onChange={e => setRegionFilter(e.target.value)}
+                  style={{ width: '100%', padding: '6px 10px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--color-text-1)', cursor: 'pointer' }}
+                >
+                  {regionsList.map(r => (
+                    <option key={r} value={r}>{r}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Reset Filters button */}
+              <button
+                onClick={() => { setPriceRange(25); setRentBurdenMax(100); setRegionFilter('All'); }}
+                style={{ marginTop: 'auto', padding: '8px 12px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', color: 'var(--color-text-2)', fontFamily: 'var(--font-body)', fontSize: 12.5, cursor: 'pointer', textAlign: 'center', transition: '0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-text-3)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
+
+          {/* Map canvas */}
+          <div style={{
+            flex: '2 1 500px',
+            borderRadius: expanded && isMobile ? 0 : 14,
+            overflow: 'hidden',
+            background: 'var(--color-bg)',
+            cursor: 'grab',
+            touchAction: 'none',
+            border: expanded && isMobile ? 'none' : '0.5px solid var(--color-border)',
+          }}>
+            <svg
+              ref={svgRef}
+              viewBox="0 0 700 380"
+              style={{
+                width: '100%',
+                height: expanded && isMobile ? 'calc(100vh - 95px)' : 'auto',
+                display: 'block',
+                touchAction: 'none',
+              }}
+            >
+              <g ref={gRef} />
+            </svg>
+          </div>
         </div>
 
         {!(expanded && isMobile) && (

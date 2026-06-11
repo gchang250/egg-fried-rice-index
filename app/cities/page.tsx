@@ -24,6 +24,8 @@ type CityRow = {
   confidence_score: number | null; baseline_entry_count: number | null
   market_entry_count: number | null; data_quality_label: string | null
   median_rent_1br_cad: number | null; median_monthly_salary_cad: number | null
+  safety_index: number | null; healthcare_index: number | null; avg_internet_mbps: number | null
+  tech_salary_cad: number | null
 }
 
 function slugifyCity(city: string) {
@@ -55,6 +57,10 @@ export default function CitiesPage() {
   const [search, setSearch]               = useState('')
   const [selectedRegion, setSelectedRegion] = useState('All')
   const [hoveredCity, setHoveredCity]     = useState<string | null>(null)
+  
+  // Comparison State
+  const [compareA, setCompareA]           = useState('')
+  const [compareB, setCompareB]           = useState('')
 
   useEffect(() => {
     fetch('/api/exchange-rates').then(r => r.json()).then(d => { if (d?.CAD) setRates(d) }).catch(() => {})
@@ -72,7 +78,8 @@ export default function CitiesPage() {
       const { data, error } = await supabase.from('cities').select(`
         city, country, region, flag, population, price_cad, price_updated_at,
         confidence_score, baseline_entry_count, market_entry_count, data_quality_label,
-        median_rent_1br_cad, median_monthly_salary_cad
+        median_rent_1br_cad, median_monthly_salary_cad,
+        safety_index, healthcare_index, avg_internet_mbps, tech_salary_cad
       `).order('price_cad', { ascending: true, nullsFirst: false })
       if (error) { setLoading(false); return }
       setCities((data ?? []) as CityRow[])
@@ -285,6 +292,156 @@ export default function CitiesPage() {
             })}
           </div>
         )}
+
+        {/* City Comparison Dashboard */}
+        <section className="glass-panel" style={{ marginTop: '4rem', padding: isMobile ? '1.5rem' : '2.5rem', borderRadius: 16, border: '1px solid var(--color-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M4 4l17 17"/></svg>
+            <span style={{ fontSize: 11, letterSpacing: '2.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', fontFamily: 'var(--font-mono)' }}>Comparison</span>
+          </div>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: isMobile ? 26 : 34, letterSpacing: -0.8, margin: '0 0 0.5rem', color: 'var(--color-text-1)', fontWeight: 400 }}>
+            Compare Cities Side-by-Side.
+          </h2>
+          <p style={{ fontSize: 14, color: 'var(--color-text-2)', lineHeight: 1.6, maxWidth: 560, marginBottom: '2rem' }}>
+            Select two cities to compare baseline fried rice prices, rent burdens, purchasing power, and liveability indices.
+          </p>
+
+          <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <label style={{ display: 'block', fontSize: 10.5, color: 'var(--color-text-3)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>Base City</label>
+              <select value={compareA} onChange={e => setCompareA(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-text-1)', cursor: 'pointer' }}>
+                <option value="">Select a city...</option>
+                {cleanCities.map(c => (
+                  <option key={c.city} value={c.city}>{c.flag} {c.city}</option>
+                ))}
+              </select>
+            </div>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <label style={{ display: 'block', fontSize: 10.5, color: 'var(--color-text-3)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>Comparison City</label>
+              <select value={compareB} onChange={e => setCompareB(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-text-1)', cursor: 'pointer' }}>
+                <option value="">Select a city...</option>
+                {cleanCities.map(c => (
+                  <option key={c.city} value={c.city}>{c.flag} {c.city}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {compareA && compareB && (() => {
+            const cityDataA = cleanCities.find(c => c.city === compareA)
+            const cityDataB = cleanCities.find(c => c.city === compareB)
+            
+            if (!cityDataA || !cityDataB) return null
+
+            const priceA = cityDataA.price_cad ?? 0
+            const priceB = cityDataB.price_cad ?? 0
+            
+            const rentA = cityDataA.median_rent_1br_cad
+            const rentB = cityDataB.median_rent_1br_cad
+            
+            const salA = cityDataA.median_monthly_salary_cad
+            const salB = cityDataB.median_monthly_salary_cad
+            
+            const burdenValA = rentA && salA ? Math.round((rentA / salA) * 100) : null
+            const burdenValB = rentB && salB ? Math.round((rentB / salB) * 100) : null
+            
+            const bowlsA = salA && rentA && priceA > 0 ? Math.round((salA - rentA) / priceA) : null
+            const bowlsB = salB && rentB && priceB > 0 ? Math.round((salB - rentB) / priceB) : null
+
+            const compRows = [
+              {
+                label: 'Baseline Price',
+                valA: formatPrice(priceA),
+                valB: formatPrice(priceB),
+                better: priceA < priceB ? 'A' : priceA > priceB ? 'B' : 'draw',
+                desc: priceA < priceB ? `${cityDataA.city} is ${(priceB / priceA).toFixed(1)}× cheaper` : `${cityDataB.city} is ${(priceA / priceB).toFixed(1)}× cheaper`
+              },
+              {
+                label: 'Rent Burden',
+                valA: burdenValA !== null ? `${burdenValA}%` : '-',
+                valB: burdenValB !== null ? `${burdenValB}%` : '-',
+                better: burdenValA !== null && burdenValB !== null ? (burdenValA < burdenValB ? 'A' : burdenValA > burdenValB ? 'B' : 'draw') : 'draw',
+                desc: burdenValA !== null && burdenValB !== null ? (burdenValA < burdenValB ? `${cityDataA.city} is ${burdenValB - burdenValA}% lower` : `${cityDataB.city} is ${burdenValA - burdenValB}% lower`) : '-'
+              },
+              {
+                label: 'Leftover bowls (wage/month)',
+                valA: bowlsA !== null ? `${bowlsA} 🍚` : '-',
+                valB: bowlsB !== null ? `${bowlsB} 🍚` : '-',
+                better: bowlsA !== null && bowlsB !== null ? (bowlsA > bowlsB ? 'A' : bowlsA < bowlsB ? 'B' : 'draw') : 'draw',
+                desc: bowlsA !== null && bowlsB !== null ? (bowlsA > bowlsB ? `${cityDataA.city} has ${bowlsA - bowlsB} more bowls` : `${cityDataB.city} has ${bowlsB - bowlsA} more bowls`) : '-'
+              },
+              {
+                label: 'Safety Score (/100)',
+                valA: cityDataA.safety_index !== null ? String(cityDataA.safety_index) : '-',
+                valB: cityDataB.safety_index !== null ? String(cityDataB.safety_index) : '-',
+                better: cityDataA.safety_index !== null && cityDataB.safety_index !== null ? (cityDataA.safety_index > cityDataB.safety_index ? 'A' : cityDataA.safety_index < cityDataB.safety_index ? 'B' : 'draw') : 'draw',
+                desc: cityDataA.safety_index !== null && cityDataB.safety_index !== null ? (cityDataA.safety_index > cityDataB.safety_index ? `${cityDataA.city} is safer (+${(cityDataA.safety_index - cityDataB.safety_index).toFixed(0)})` : `${cityDataB.city} is safer (+${(cityDataB.safety_index - cityDataA.safety_index).toFixed(0)})`) : '-'
+              },
+              {
+                label: 'Healthcare Score (/100)',
+                valA: cityDataA.healthcare_index !== null ? String(cityDataA.healthcare_index) : '-',
+                valB: cityDataB.healthcare_index !== null ? String(cityDataB.healthcare_index) : '-',
+                better: cityDataA.healthcare_index !== null && cityDataB.healthcare_index !== null ? (cityDataA.healthcare_index > cityDataB.healthcare_index ? 'A' : cityDataA.healthcare_index < cityDataB.healthcare_index ? 'B' : 'draw') : 'draw',
+                desc: cityDataA.healthcare_index !== null && cityDataB.healthcare_index !== null ? (cityDataA.healthcare_index > cityDataB.healthcare_index ? `${cityDataA.city} has better healthcare (+${(cityDataA.healthcare_index - cityDataB.healthcare_index).toFixed(0)})` : `${cityDataB.city} has better healthcare (+${(cityDataB.healthcare_index - cityDataA.healthcare_index).toFixed(0)})`) : '-'
+              },
+              {
+                label: 'Internet Speed',
+                valA: cityDataA.avg_internet_mbps !== null ? `${cityDataA.avg_internet_mbps} Mbps` : '-',
+                valB: cityDataB.avg_internet_mbps !== null ? `${cityDataB.avg_internet_mbps} Mbps` : '-',
+                better: cityDataA.avg_internet_mbps !== null && cityDataB.avg_internet_mbps !== null ? (cityDataA.avg_internet_mbps > cityDataB.avg_internet_mbps ? 'A' : cityDataA.avg_internet_mbps < cityDataB.avg_internet_mbps ? 'B' : 'draw') : 'draw',
+                desc: cityDataA.avg_internet_mbps !== null && cityDataB.avg_internet_mbps !== null ? (cityDataA.avg_internet_mbps > cityDataB.avg_internet_mbps ? `${cityDataA.city} is ${(cityDataA.avg_internet_mbps - cityDataB.avg_internet_mbps).toFixed(0)} Mbps faster` : `${cityDataB.city} is ${(cityDataB.avg_internet_mbps - cityDataA.avg_internet_mbps).toFixed(0)} Mbps faster`) : '-'
+              }
+            ]
+
+            return (
+              <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, overflow: 'hidden', padding: isMobile ? '1rem' : '1.5rem 2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', borderBottom: '1px solid var(--color-border)', paddingBottom: '1.25rem', marginBottom: '1.25rem', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--color-text-3)', fontFamily: 'var(--font-mono)' }}>Comparative Index</div>
+                  <div style={{ textAlign: 'center' }}>
+                    <span style={{ fontSize: 24, lineHeight: 1 }}>{cityDataA.flag}</span>
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, margin: '4px 0 0', color: 'var(--color-text-1)', fontWeight: 500 }}>{cityDataA.city}</h3>
+                    <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: 0 }}>{cityDataA.country}</p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <span style={{ fontSize: 24, lineHeight: 1 }}>{cityDataB.flag}</span>
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, margin: '4px 0 0', color: 'var(--color-text-1)', fontWeight: 500 }}>{cityDataB.city}</h3>
+                    <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: 0 }}>{cityDataB.country}</p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {compRows.map(row => {
+                    const bgA = row.better === 'A' ? 'var(--color-accent-dim)' : 'transparent'
+                    const bgB = row.better === 'B' ? 'var(--color-accent-dim)' : 'transparent'
+                    
+                    const borderA = row.better === 'A' ? '0.5px solid rgba(200, 168, 98, 0.25)' : '0.5px solid transparent'
+                    const borderB = row.better === 'B' ? '0.5px solid rgba(200, 168, 98, 0.25)' : '0.5px solid transparent'
+                    
+                    const colA = row.better === 'A' ? 'var(--color-accent)' : 'var(--color-text-1)'
+                    const colB = row.better === 'B' ? 'var(--color-accent)' : 'var(--color-text-1)'
+
+                    return (
+                      <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', alignItems: 'center', padding: '10px 0', borderBottom: '0.5px solid var(--color-border)', gap: '0.5rem' }}>
+                        <div>
+                          <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-2)' }}>{row.label}</span>
+                          {row.desc !== '-' && (
+                            <span style={{ display: 'block', fontSize: 10, color: 'var(--color-text-3)', marginTop: 3 }}>{row.desc}</span>
+                          )}
+                        </div>
+                        <div style={{ textAlign: 'center', background: bgA, border: borderA, padding: '8px 10px', borderRadius: 8, color: colA, fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: row.better === 'A' ? 600 : 400 }}>
+                          {row.valA} {row.better === 'A' && '✓'}
+                        </div>
+                        <div style={{ textAlign: 'center', background: bgB, border: borderB, padding: '8px 10px', borderRadius: 8, color: colB, fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: row.better === 'B' ? 600 : 400 }}>
+                          {row.valB} {row.better === 'B' && '✓'}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })()}
+        </section>
       </section>
     </main>
   )
