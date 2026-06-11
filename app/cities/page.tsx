@@ -33,17 +33,17 @@ function slugifyCity(city: string) {
 // Color based on relative position in the price range
 function barColor(price: number, max: number): string {
   const p = price / max
-  if (p < 0.15) return '#34a85a'
-  if (p < 0.35) return '#5bbf7a'
-  if (p < 0.60) return '#c4890f'
-  if (p < 0.82) return '#d9682a'
-  return '#b83418'
+  if (p < 0.15) return '#76a98c'
+  if (p < 0.35) return '#76a98c'
+  if (p < 0.60) return '#c8a862'
+  if (p < 0.82) return '#c8a862'
+  return '#c0674e'
 }
 
 function burdenColor(pct: number): string {
-  if (pct <= 45) return '#34a85a'
-  if (pct <= 65) return '#c4890f'
-  return '#c04030'
+  if (pct <= 45) return '#76a98c'
+  if (pct <= 65) return '#c8a862'
+  return '#c0674e'
 }
 
 export default function CitiesPage() {
@@ -162,7 +162,7 @@ export default function CitiesPage() {
             {!isMobile && (
               <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
                 {regions.map(r => (
-                  <button key={r} onClick={() => setSelectedRegion(r)} style={{ padding:'4px 10px', borderRadius:20, fontSize:12, cursor:'pointer', border: selectedRegion===r ? '0.5px solid var(--color-accent)' : '0.5px solid var(--color-border)', background: selectedRegion===r ? 'rgba(217,104,42,.12)' : 'var(--color-surface)', color: selectedRegion===r ? 'var(--color-accent)' : 'var(--color-text-3)', fontFamily:'var(--font-body)' }}>
+                  <button key={r} onClick={() => setSelectedRegion(r)} style={{ padding:'4px 10px', borderRadius:20, fontSize:12, cursor:'pointer', border: selectedRegion===r ? '0.5px solid var(--color-accent)' : '0.5px solid var(--color-border)', background: selectedRegion===r ? 'var(--color-accent-dim)' : 'var(--color-surface)', color: selectedRegion===r ? 'var(--color-accent)' : 'var(--color-text-3)', fontFamily:'var(--font-body)' }}>
                     {r}
                   </button>
                 ))}

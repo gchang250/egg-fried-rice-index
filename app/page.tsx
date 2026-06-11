@@ -142,6 +142,7 @@ const BTN_GHOST: CSSProperties = {
 export default function Home() {
   const [cities,  setCities]  = useState<CityRow[]>([])
   const [tip,     setTip]     = useState<Tip | null>(null)
+  const [sel,     setSel]     = useState<CityRow | null>(null)
   const [boardIn, setBoardIn] = useState(false)
 
   const mapRef    = useRef<SVGSVGElement>(null)
@@ -223,17 +224,7 @@ export default function Home() {
           setTip({ city: c.city, country: c.country ?? '', price: c.price_cad, burden: c.rentBurden, bowls: c.bowlsAfterRent, x: me.clientX, y: me.clientY })
         })
         g.addEventListener('mouseleave', () => setTip(null))
-      })
-      // floor / ceiling callouts
-      const floor = cities[0], ceil = cities[cities.length - 1]
-      ;[floor, ceil].forEach((d, k) => {
-        if (!d?.latitude || !d?.longitude) return
-        const [gx, gy] = proj(d.latitude, d.longitude)
-        const ly = gy - 32, lx = gx + (k === 0 ? 14 : 18)
-        svg.appendChild(svgE('line', { x1: String(gx), y1: String(gy - 6), x2: String(lx), y2: String(ly + 6), stroke: colorFor(d.price_cad), 'stroke-opacity': '.5' }))
-        const t = svgE('text', { x: String(lx + 4), y: String(ly + 4), 'font-family': 'Geist Mono, monospace', 'font-size': '10', 'letter-spacing': '1.5', fill: colorFor(d.price_cad) })
-        t.textContent = `${d.city.toUpperCase()} ${fmt(d.price_cad)} · ${k === 0 ? 'FLOOR' : 'CEILING'}`
-        svg.appendChild(t)
+        g.addEventListener('click', () => { setTip(null); setSel(c) })
       })
     }
     draw()
@@ -273,6 +264,7 @@ export default function Home() {
           setTip({ city: c.city, country: c.country ?? '', price: c.price_cad, burden: c.rentBurden, bowls: c.bowlsAfterRent, x: me.clientX, y: me.clientY })
         })
         g.addEventListener('mouseleave', () => setTip(null))
+        g.addEventListener('click', () => { setTip(null); setSel(c) })
       })
       ;[['FLOOR', cities[0], 'start'], ['CEILING', cities[cities.length - 1], 'end']].forEach(([label, d, anchor]) => {
         const fx = x((d as CityRow).price_cad)
@@ -342,6 +334,7 @@ export default function Home() {
           setTip({ city: c.city, country: c.country ?? '', price: c.price_cad, burden: c.rentBurden, bowls: c.bowlsAfterRent, x: me.clientX, y: me.clientY })
         })
         g.addEventListener('mouseleave', () => setTip(null))
+        g.addEventListener('click', () => { setTip(null); setSel(c) })
       })
     }
     draw()
@@ -359,9 +352,18 @@ export default function Home() {
     return () => io.disconnect()
   }, [])
 
+  /* ── Esc closes the city panel ─────────────────────────────────── */
+  useEffect(() => {
+    if (!sel) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSel(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [sel])
+
   /* ── Derived data ──────────────────────────────────────────────── */
   const pmin     = cities[0]?.price_cad ?? 2.51
   const pmax     = cities[cities.length - 1]?.price_cad ?? 21.88
+  const maxBowls = cities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
   const spread   = cities.length >= 2 ? pmax / pmin : 8.8
   const cheapTop = cities.slice(0, 8)
   const priceTop = [...cities].slice(-8).reverse()
@@ -372,6 +374,8 @@ export default function Home() {
         .grain{cursor:pointer}
         .grain ellipse,.grain circle{transform-box:fill-box;transform-origin:center;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
         .grain:hover ellipse,.grain:hover circle{transform:scale(1.5)!important}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes drawerIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
         .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
         .reveal.in{opacity:1;transform:none}
         @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
@@ -398,8 +402,8 @@ export default function Home() {
           </h1>
 
           <p style={{ maxWidth: '54ch', color: '#8d8d96', fontSize: 17, fontWeight: 300, lineHeight: 1.65, margin: '0 0 44px' }}>
-            A bowl of egg fried rice costs <strong style={{ color: '#ece9e2', fontWeight: 400 }}>CA$2.51</strong> in one city and{' '}
-            <strong style={{ color: '#ece9e2', fontWeight: 400 }}>CA$21.88</strong> in another.
+            A bowl of egg fried rice costs <strong style={{ color: '#ece9e2', fontWeight: 400 }}>{fmt(pmin)}</strong> in one city and{' '}
+            <strong style={{ color: '#ece9e2', fontWeight: 400 }}>{fmt(pmax)}</strong> in another.
             The index tracks that gap and what restaurant pricing quietly reveals about rent, wages, and who can afford to live where.
           </p>
 
@@ -746,7 +750,7 @@ export default function Home() {
               <div>A food-based affordability index. Free, forever.</div>
             </div>
             <div style={{ display: 'flex', gap: 28 }}>
-              {[['Cities','/cities'],['Reports','/reports'],['Submit','/submit'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
+              {[['Cities','/cities'],['Explore','/explore'],['Reports','/reports'],['Submit','/submit'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
                 <a key={h} href={h} style={{ ...MONO, fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#8d8d96', textDecoration: 'none' }}>{l}</a>
               ))}
             </div>
@@ -756,6 +760,84 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ════════════════════════════════════════════════════════════
+          CITY PANEL — click a grain on any chart
+      ════════════════════════════════════════════════════════════ */}
+      {sel && (() => {
+        const pos = pmax > pmin ? Math.max(0, Math.min(1, (sel.price_cad - pmin) / (pmax - pmin))) : 0
+        const burdenCol = sel.rentBurden == null ? '#8d8d96' : sel.rentBurden > 70 ? '#c0674e' : sel.rentBurden > 50 ? '#c8a862' : '#76a98c'
+        const slug = sel.city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+        return (
+          <>
+            <div onClick={() => setSel(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.55)', zIndex: 95, animation: 'fadeIn .25s ease' }} />
+            <aside style={{ position: 'fixed', top: 0, right: 0, height: '100vh', width: 'min(404px,100vw)', background: '#0d0d10', borderLeft: '1px solid #222228', zIndex: 96, overflowY: 'auto', boxShadow: '-30px 0 70px rgba(0,0,0,.55)', animation: 'drawerIn .34s cubic-bezier(.4,0,.2,1)' }}>
+              <div style={{ padding: '30px 30px 44px' }}>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 26 }}>
+                  <div>
+                    <div style={{ fontSize: 30, marginBottom: 10 }}>{sel.flag ?? '🌍'}</div>
+                    <h2 style={{ fontSize: 30, fontWeight: 300, letterSpacing: '-.02em', margin: 0, color: '#ece9e2' }}>{sel.city}</h2>
+                    <p style={{ ...LABEL, marginTop: 9 }}>{[sel.region, sel.country].filter(Boolean).join(' · ')}</p>
+                  </div>
+                  <button onClick={() => setSel(null)} aria-label="Close" style={{ background: 'none', border: '1px solid #222228', borderRadius: 8, width: 32, height: 32, flexShrink: 0, cursor: 'pointer', color: '#8d8d96', fontSize: 13, lineHeight: 1 }}>✕</button>
+                </div>
+
+                <div style={{ borderTop: '1px solid #1a1a1f', paddingTop: 22, marginBottom: 30 }}>
+                  <div style={LABEL}>Baseline bowl</div>
+                  <div style={{ fontSize: 54, fontWeight: 200, color: '#c8a862', letterSpacing: '-.03em', lineHeight: 1, marginTop: 10 }}>{fmt(sel.price_cad)}</div>
+                </div>
+
+                {/* price position on the global range */}
+                <div style={{ marginBottom: 30 }}>
+                  <div style={LABEL}>Where it lands</div>
+                  <div style={{ position: 'relative', height: 8, borderRadius: 5, marginTop: 16, background: 'linear-gradient(90deg,#76a98c,#c8a862 55%,#c0674e)' }}>
+                    <div style={{ position: 'absolute', top: '50%', left: `${pos * 100}%`, transform: 'translate(-50%,-50%)', width: 16, height: 16, borderRadius: '50%', background: '#ece9e2', border: '3px solid #0d0d10', boxShadow: '0 0 0 1px #c8a862' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11 }}>
+                    <span style={{ ...LABEL, fontSize: 9.5 }}>{fmt(pmin)} cheapest</span>
+                    <span style={{ ...LABEL, fontSize: 9.5 }}>priciest {fmt(pmax)}</span>
+                  </div>
+                </div>
+
+                {/* rent burden */}
+                {sel.rentBurden != null && (
+                  <div style={{ marginBottom: 26 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                      <span style={LABEL}>Rent burden</span>
+                      <span style={{ ...MONO, fontSize: 15, color: burdenCol }}>{sel.rentBurden}%</span>
+                    </div>
+                    <div style={{ height: 8, borderRadius: 5, background: '#1a1a1f', marginTop: 13, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${Math.min(100, sel.rentBurden)}%`, background: burdenCol, borderRadius: 5 }} />
+                    </div>
+                    <p style={{ ...LABEL, fontSize: 9, marginTop: 10, letterSpacing: '.1em' }}>Share of an average monthly paycheck</p>
+                  </div>
+                )}
+
+                {/* bowls after rent */}
+                {sel.bowlsAfterRent != null && maxBowls > 0 && (
+                  <div style={{ marginBottom: 30 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                      <span style={LABEL}>Bowls left after rent</span>
+                      <span style={{ ...MONO, fontSize: 15, color: '#c8a862' }}>{sel.bowlsAfterRent} 🍚</span>
+                    </div>
+                    <div style={{ height: 8, borderRadius: 5, background: '#1a1a1f', marginTop: 13, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${Math.min(100, sel.bowlsAfterRent / maxBowls * 100)}%`, background: '#76a98c', borderRadius: 5 }} />
+                    </div>
+                    <p style={{ ...LABEL, fontSize: 9, marginTop: 10, letterSpacing: '.1em' }}>A month&apos;s bowls once rent is paid</p>
+                  </div>
+                )}
+
+                {sel.blurb && <p style={{ fontSize: 13.5, color: '#a8a8b0', lineHeight: 1.7, margin: '2px 0 28px' }}>{sel.blurb}</p>}
+
+                <a href={`/cities/${slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, ...MONO, fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: '#c8a862', textDecoration: 'none', borderBottom: '1px solid rgba(200,168,98,.4)', paddingBottom: 4 }}>
+                  Full city profile →
+                </a>
+              </div>
+            </aside>
+          </>
+        )
+      })()}
 
       {/* ════════════════════════════════════════════════════════════
           TOOLTIP

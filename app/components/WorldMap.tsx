@@ -14,20 +14,20 @@ export type MapCity = {
 }
 
 export function dotColor(p: number | null): string {
-  if (!p || p <= 0) return '#44443e'
-  if (p < 5)  return '#3db870'
-  if (p < 9)  return '#7fc05a'
-  if (p < 14) return '#c4890f'
-  if (p < 18) return '#d9682a'
-  return '#c0392b'
+  if (!p || p <= 0) return '#55555e'
+  if (p < 5)  return '#76a98c'
+  if (p < 9)  return '#76a98c'
+  if (p < 14) return '#c8a862'
+  if (p < 18) return '#c8a862'
+  return '#c0674e'
 }
 
 export const LEGEND = [
-  { color: '#3db870', label: '< CA$5' },
-  { color: '#7fc05a', label: 'CA$5–9' },
-  { color: '#c4890f', label: 'CA$9–14' },
-  { color: '#d9682a', label: 'CA$14–18' },
-  { color: '#c0392b', label: 'CA$18+' },
+  { color: '#76a98c', label: '< CA$5' },
+  { color: '#76a98c', label: 'CA$5–9' },
+  { color: '#c8a862', label: 'CA$9–14' },
+  { color: '#c8a862', label: 'CA$14–18' },
+  { color: '#c0674e', label: 'CA$18+' },
 ]
 
 export interface WorldMapHandle { reset: () => void }
@@ -86,7 +86,7 @@ const WorldMap = forwardRef<WorldMapHandle, Props>(function WorldMap({ onSelect,
     zoomRef.current = zoom
     svg.call(zoom)
 
-    g.append('rect').attr('width', W).attr('height', H).attr('fill', '#0b1510')
+    g.append('rect').attr('width', W).attr('height', H).attr('fill', '#0a0a0c')
 
     d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then((world: unknown) => {
       const w = world as any
@@ -94,7 +94,7 @@ const WorldMap = forwardRef<WorldMapHandle, Props>(function WorldMap({ onSelect,
         .data((topojson.feature(w, w.objects.countries) as unknown as { features: object[] }).features)
         .enter().append('path')
         .attr('d', path as unknown as string)
-        .attr('fill', '#152018').attr('stroke', '#1e3024').attr('stroke-width', 0.5)
+        .attr('fill', '#15151a').attr('stroke', '#1e1e24').attr('stroke-width', 0.5)
 
       cities.forEach(city => {
         const pt = proj([+city.longitude!, +city.latitude!] as [number, number])
@@ -109,7 +109,7 @@ const WorldMap = forwardRef<WorldMapHandle, Props>(function WorldMap({ onSelect,
 
         grp.append('text').attr('class', 'clbl')
           .attr('x', x + 9).attr('y', y + 3.5).attr('font-size', 9)
-          .attr('fill', '#8a8680').attr('font-family', 'Bricolage Grotesque, system-ui, sans-serif')
+          .attr('fill', '#8a8680').attr('font-family', 'Geist, system-ui, sans-serif')
           .attr('pointer-events', 'none').attr('opacity', 0)
           .text(city.city)
 

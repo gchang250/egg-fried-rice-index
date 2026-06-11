@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { X, Menu } from 'lucide-react'
 
 const LINKS = [
+  ['Explore',     '/explore'],
   ['Cities',      '/cities'],
   ['Reports',     '/reports'],
   ['Submit',      '/submit'],

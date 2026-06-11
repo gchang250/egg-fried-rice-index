@@ -438,11 +438,6 @@ export default function AdminPage() {
   if (!loggedIn) {
     return (
       <main style={pageStyle}>
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
-
         <div style={loginCardStyle}>
           <p style={eyebrowStyle}>Admin</p>
 
@@ -483,11 +478,6 @@ export default function AdminPage() {
 
   return (
     <main style={pageStyle}>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
-        rel="stylesheet"
-      />
-
       <nav style={navStyle}>
         <a href="/" style={brandStyle}>
           fried rice <span style={{ color: '#C25E1E' }}>index</span>
@@ -671,7 +661,7 @@ export default function AdminPage() {
                               onChange={(e) => isEditing
                                 ? setEditDraft({ ...draft!, price_cad: e.target.value })
                                 : setConfirmedPrices((prev) => ({ ...prev, [request.id]: e.target.value }))}
-                              style={{ padding: '0.35rem 0.5rem', border: '0.5px solid #e5e3da', borderRadius: 8, fontFamily: 'DM Sans, sans-serif', fontSize: 14, width: 100 }}
+                              style={{ padding: '0.35rem 0.5rem', border: '0.5px solid #e5e3da', borderRadius: 8, fontFamily: 'var(--font-body)', fontSize: 14, width: 100 }}
                             />
                           </div>
                           <p>
@@ -1070,7 +1060,7 @@ function formatDate(value: string | null) {
 }
 
 const pageStyle: CSSProperties = {
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   background: '#FAFAF8',
   minHeight: '100vh',
   color: '#1a1a18',
@@ -1085,7 +1075,7 @@ const navStyle: CSSProperties = {
 }
 
 const brandStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 18,
   color: '#1a1a18',
   textDecoration: 'none',
@@ -1110,7 +1100,7 @@ const eyebrowStyle: CSSProperties = {
 }
 
 const titleStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 42,
   lineHeight: 1.05,
   letterSpacing: -1,
@@ -1131,7 +1121,7 @@ const inputStyle: CSSProperties = {
   border: '0.5px solid #e5e3da',
   borderRadius: 10,
   background: '#fff',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
   color: '#1a1a18',
 }
@@ -1142,7 +1132,7 @@ const primaryButtonStyle: CSSProperties = {
   padding: '0.75rem 1rem',
   background: '#C25E1E',
   color: '#fff',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
   cursor: 'pointer',
 }
@@ -1153,7 +1143,7 @@ const secondaryButtonStyle: CSSProperties = {
   padding: '0.65rem 0.9rem',
   background: '#fff',
   color: '#1a1a18',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 13,
   cursor: 'pointer',
 }
@@ -1164,7 +1154,7 @@ const dangerButtonStyle: CSSProperties = {
   padding: '0.75rem 1rem',
   background: '#fff',
   color: '#9b2c2c',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
   cursor: 'pointer',
 }
@@ -1200,13 +1190,13 @@ const dashboardCardStyle: CSSProperties = {
   borderRadius: 18,
   padding: '1.5rem',
   cursor: 'pointer',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   textDecoration: 'none',
   color: 'inherit',
 }
 
 const dashboardTitleStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 28,
   color: '#1a1a18',
 }
@@ -1235,7 +1225,7 @@ const requestTypeStyle: CSSProperties = {
 }
 
 const requestTitleStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 28,
   margin: '0 0 1rem',
 }
@@ -1263,7 +1253,7 @@ const inlineInputStyle: CSSProperties = {
   padding: '0.25rem 0.5rem',
   border: '0.5px solid #e5e3da',
   borderRadius: 6,
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
   color: '#1a1a18',
   background: '#fff',

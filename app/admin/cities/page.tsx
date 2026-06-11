@@ -248,7 +248,6 @@ export default function AdminCitiesPage() {
   if (!password) {
     return (
       <main style={pageStyle}>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
         <div style={loginCardStyle}>
           <p style={eyebrowStyle}>Admin</p>
           <h1 style={titleStyle}>Sign in.</h1>
@@ -347,8 +346,6 @@ export default function AdminCitiesPage() {
 
   return (
     <main style={pageStyle}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-
       <nav style={navStyle}>
         <a href="/" style={brandStyle}>fried rice <span style={{ color: '#C25E1E' }}>index</span></a>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -462,7 +459,7 @@ export default function AdminCitiesPage() {
 }
 
 const pageStyle: CSSProperties = {
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   background: '#FAFAF8',
   minHeight: '100vh',
   color: '#1a1a18',
@@ -479,7 +476,7 @@ const navStyle: CSSProperties = {
 }
 
 const brandStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 18,
   color: '#1a1a18',
   textDecoration: 'none',
@@ -510,7 +507,7 @@ const eyebrowStyle: CSSProperties = {
 }
 
 const titleStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 42,
   lineHeight: 1.05,
   letterSpacing: -1,
@@ -529,7 +526,7 @@ const inputStyle: CSSProperties = {
   border: '0.5px solid #e5e3da',
   borderRadius: 10,
   background: '#fff',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
   color: '#1a1a18',
   boxSizing: 'border-box',
@@ -542,7 +539,7 @@ const primaryButtonStyle: CSSProperties = {
   padding: '0.65rem 1rem',
   background: '#C25E1E',
   color: '#fff',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 14,
   cursor: 'pointer',
 }
@@ -553,7 +550,7 @@ const secondaryButtonStyle: CSSProperties = {
   padding: '0.65rem 0.9rem',
   background: '#fff',
   color: '#1a1a18',
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: 13,
   cursor: 'pointer',
 }
@@ -583,7 +580,7 @@ const panelStyle: CSSProperties = {
 }
 
 const panelTitleStyle: CSSProperties = {
-  fontFamily: 'DM Serif Display, serif',
+  fontFamily: 'var(--font-display)',
   fontSize: 28,
   margin: '0 0 1.25rem',
 }

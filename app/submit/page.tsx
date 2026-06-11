@@ -110,9 +110,9 @@ export default function SubmitPage() {
         </p>
 
         {success && (
-          <div style={{ background: 'var(--color-surface)', border: '0.5px solid #3db870', borderRadius: 10, padding: '1rem 1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <ArrowRight size={14} color="#3db870" />
-            <span style={{ fontSize: 14, color: '#3db870' }}>Submitted. We&apos;ll review it and add it to the index if approved.</span>
+          <div style={{ background: 'var(--color-surface)', border: '0.5px solid #76a98c', borderRadius: 10, padding: '1rem 1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <ArrowRight size={14} color="#76a98c" />
+            <span style={{ fontSize: 14, color: '#76a98c' }}>Submitted. We&apos;ll review it and add it to the index if approved.</span>
           </div>
         )}
         {message && (
