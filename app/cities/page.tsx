@@ -63,6 +63,16 @@ export default function CitiesPage() {
   const [compareB, setCompareB]           = useState('')
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const a = params.get('compareA')
+      const b = params.get('compareB')
+      if (a) setCompareA(a)
+      if (b) setCompareB(b)
+    }
+  }, [])
+
+  useEffect(() => {
     fetch('/api/exchange-rates').then(r => r.json()).then(d => { if (d?.CAD) setRates(d) }).catch(() => {})
   }, [])
 
