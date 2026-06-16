@@ -11,6 +11,35 @@ const FALLBACK_RATES: Record<string, number> = {
   SAR: 2.74, PHP: 41.2, MYR: 3.18, MXN: 14.6, ARS: 720.0,
   KRW: 1001.0, INR: 60.8, AED: 2.68,
 }
+
+// IMF World Economic Outlook 2024 — implied PPP conversion rates
+// (local currency units per international dollar)
+// Source: IMF WEO April 2024 Table A.4 / World Bank ICP 2021 extrapolated
+const PPP_FACTORS: Record<string, number> = {
+  USD: 1.000, CAD: 1.251, EUR: 0.768, GBP: 0.711, AUD: 1.527,
+  JPY: 107.9, CNY: 4.351, KRW: 903.0, SGD: 1.115, HKD: 6.010,
+  INR: 25.74, PKR: 94.5, AED: 2.270, SAR: 2.380, EGP: 7.25,
+  RUB: 26.3,  TRY: 7.80,  MXN: 10.3,  ARS: 200.0, IRR: 65000.0,
+}
+
+// Local currency for each tracked city
+const CITY_CURRENCY: Record<string, string> = {
+  'New York': 'USD', 'Los Angeles': 'USD', 'Chicago': 'USD',
+  'Houston': 'USD', 'Phoenix': 'USD', 'Philadelphia': 'USD', 'Miami': 'USD',
+  'Toronto': 'CAD', 'Vancouver': 'CAD', 'Montreal': 'CAD',
+  'Calgary': 'CAD', 'Edmonton': 'CAD',
+  'Mexico City': 'MXN', 'Buenos Aires': 'ARS',
+  'London': 'GBP', 'Paris': 'EUR', 'Amsterdam': 'EUR',
+  'Moscow': 'RUB', 'Istanbul': 'TRY',
+  'Tokyo': 'JPY', 'Osaka': 'JPY',
+  'Beijing': 'CNY', 'Shanghai': 'CNY', 'Suzhou': 'CNY',
+  'Chengdu': 'CNY', 'Chongqing': 'CNY', 'Wuhan': 'CNY',
+  'Seoul': 'KRW', 'Hong Kong': 'HKD', 'Singapore': 'SGD',
+  'Mumbai': 'INR', 'New Delhi': 'INR', 'Kolkata': 'INR',
+  'Karachi': 'PKR',
+  'Dubai': 'AED', 'Riyadh': 'SAR', 'Cairo': 'EGP', 'Tehran': 'IRR',
+  'Sydney': 'AUD', 'Melbourne': 'AUD',
+}
 const symbols: Record<string, string> = {
   CAD: 'CA$', USD: 'US$', EUR: '€', CHF: 'Fr', GBP: '£', JPY: '¥', CNY: '¥',
   AUD: 'AU$', HKD: 'HK$', SGD: 'S$', SAR: '﷼', PHP: '₱', MYR: 'RM',
@@ -45,6 +74,12 @@ function barColor(price: number, max: number): string {
 function burdenColor(pct: number): string {
   if (pct <= 45) return '#76a98c'
   if (pct <= 65) return '#c8a862'
+  return '#c0674e'
+}
+
+function pppColor(intlPrice: number): string {
+  if (intlPrice < 5)  return '#76a98c'
+  if (intlPrice < 12) return '#c8a862'
   return '#c0674e'
 }
 
@@ -112,6 +147,20 @@ export default function CitiesPage() {
   const rentBurden = (c: CityRow): number | null => {
     if (!c.median_rent_1br_cad || !c.median_monthly_salary_cad || c.median_monthly_salary_cad <= 0) return null
     return Math.round((c.median_rent_1br_cad / c.median_monthly_salary_cad) * 100)
+  }
+
+  // Convert price_cad → local currency → IMF international dollars via PPP factor.
+  // Uses live exchange rates (local-per-CAD) fetched from /api/exchange-rates.
+  const pppPrice = (c: CityRow): number | null => {
+    if (!c.price_cad || c.price_cad <= 0) return null
+    const cur = CITY_CURRENCY[c.city]
+    if (!cur) return null
+    const pppFactor = PPP_FACTORS[cur]
+    if (!pppFactor) return null
+    const localPerCad = rates[cur] ?? FALLBACK_RATES[cur]
+    if (!localPerCad) return null
+    const localPrice = c.price_cad * localPerCad
+    return Math.round((localPrice / pppFactor) * 100) / 100
   }
 
   const cleanCities = cities.filter(c => c.price_cad != null && Number(c.price_cad) > 0)
@@ -218,8 +267,10 @@ export default function CitiesPage() {
         ) : (
           <div style={{ background:'var(--color-surface)', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
             {!isMobile && (
-              <div style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 1.3fr 0.7fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:9, textTransform:'uppercase', letterSpacing:'1.2px', color:'var(--color-text-3)' }}>
-                <div>Rank</div><div>City</div><div>Baseline</div><div>Relative cost</div><div>Rent burden</div><div>Quality</div><div>Updated</div>
+              <div style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 0.85fr 1.1fr 0.7fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:9, textTransform:'uppercase', letterSpacing:'1.2px', color:'var(--color-text-3)' }}>
+                <div>Rank</div><div>City</div><div>Baseline</div>
+                <div title="Price converted to IMF international dollars using PPP conversion factors (IMF WEO 2024). Accounts for real local purchasing power — not affected by wages or labor conditions.">PPP intl$</div>
+                <div>Relative cost</div><div>Rent burden</div><div>Quality</div><div>Updated</div>
               </div>
             )}
 
@@ -256,7 +307,7 @@ export default function CitiesPage() {
                 <a key={city.city} href={href}
                   onMouseEnter={() => setHoveredCity(city.city)}
                   onMouseLeave={() => setHoveredCity(null)}
-                  style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 1.3fr 0.7fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems:'center', textDecoration:'none', color:'inherit', background: hoveredCity===city.city ? 'var(--color-surface-2)' : 'var(--color-surface)', transition:'background 0.1s' }}>
+                  style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 0.85fr 1.1fr 0.7fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems:'center', textDecoration:'none', color:'inherit', background: hoveredCity===city.city ? 'var(--color-surface-2)' : 'var(--color-surface)', transition:'background 0.1s' }}>
 
                   <div style={{ fontSize:12, color:'var(--color-text-3)' }}>#{rank}</div>
 
@@ -271,6 +322,18 @@ export default function CitiesPage() {
                   </div>
 
                   <div style={{ fontFamily:'var(--font-display)', fontSize:18, color:'var(--color-accent)', fontWeight:400 }}>{formatPrice(city.price_cad)}</div>
+
+                  {(() => {
+                    const ppp = pppPrice(city)
+                    return ppp !== null ? (
+                      <div>
+                        <span style={{ fontFamily:'var(--font-display)', fontSize:16, color: pppColor(ppp), fontWeight:400 }}>
+                          ${ppp.toFixed(2)}
+                        </span>
+                        <p style={{ fontSize:9, color:'var(--color-text-4)', margin:'3px 0 0', letterSpacing:'0.5px' }}>intl$</p>
+                      </div>
+                    ) : <span style={{ fontSize:13, color:'var(--color-text-4)' }}>-</span>
+                  })()}
 
                   <div>
                     <div style={{ height:4, borderRadius:2, background:'var(--color-border)', overflow:'hidden', maxWidth:160 }}>
@@ -358,6 +421,9 @@ export default function CitiesPage() {
             const bowlsA = salA && rentA && priceA > 0 ? Math.round((salA - rentA) / priceA) : null
             const bowlsB = salB && rentB && priceB > 0 ? Math.round((salB - rentB) / priceB) : null
 
+            const pppA = pppPrice(cityDataA)
+            const pppB = pppPrice(cityDataB)
+
             const compRows = [
               {
                 label: 'Baseline Price',
@@ -365,6 +431,17 @@ export default function CitiesPage() {
                 valB: formatPrice(priceB),
                 better: priceA < priceB ? 'A' : priceA > priceB ? 'B' : 'draw',
                 desc: priceA < priceB ? `${cityDataA.city} is ${(priceB / priceA).toFixed(1)}× cheaper` : `${cityDataB.city} is ${(priceA / priceB).toFixed(1)}× cheaper`
+              },
+              {
+                label: 'PPP-adjusted price',
+                valA: pppA !== null ? `$${pppA.toFixed(2)} intl$` : '-',
+                valB: pppB !== null ? `$${pppB.toFixed(2)} intl$` : '-',
+                better: pppA !== null && pppB !== null ? (pppA < pppB ? 'A' : pppA > pppB ? 'B' : 'draw') : 'draw',
+                desc: pppA !== null && pppB !== null
+                  ? pppA < pppB
+                    ? `${cityDataA.city} is ${(pppB / pppA).toFixed(1)}× cheaper in real purchasing power`
+                    : `${cityDataB.city} is ${(pppA / pppB).toFixed(1)}× cheaper in real purchasing power`
+                  : 'IMF PPP data unavailable for one city'
               },
               {
                 label: 'Rent Burden',
