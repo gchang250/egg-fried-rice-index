@@ -55,7 +55,7 @@ export default async function ReportsPage() {
           Index reports.
         </h1>
         <p style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.65, maxWidth: 540, margin: '0 0 3rem' }}>
-          Monthly snapshots of all city data: exchange rates, full baselines, and written analysis. Published on the first Monday of each month. Five new cities added monthly from July 2026.
+          Monthly snapshots of Canadian community data, rent burdens, purchasing power trends, and detailed written analysis.
         </p>
 
         {reports.length === 0 ? (
@@ -77,33 +77,29 @@ export default async function ReportsPage() {
                         )}
                       </div>
                       <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1rem' }}>Published {date}</p>
-                      <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.7, margin: '0 0 1.25rem', maxWidth: 540 }}>
+                      <p style={{ fontSize: 13.5, color: 'var(--color-text-2)', lineHeight: 1.7, margin: '0 0 1.25rem', maxWidth: 540 }}>
                         {excerpt(r.analysis)}
                       </p>
 
                       <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
                         <div>
-                          <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Cities</p>
+                          <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Communities</p>
                           <p style={{ fontFamily: DISP, fontSize: 20, color: 'var(--color-text-1)', margin: 0, fontWeight: 400 }}>{r.city_count}</p>
                         </div>
                         <div>
                           <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Cheapest</p>
                           <p style={{ fontFamily: DISP, fontSize: 20, color: 'var(--color-green)', margin: 0, fontWeight: 400 }}>{fmt(r.cheapest_price_cad)}</p>
+                          <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '2px 0 0' }}>{r.cheapest_city}</p>
                         </div>
                         <div>
                           <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Priciest</p>
                           <p style={{ fontFamily: DISP, fontSize: 20, color: 'var(--color-text-1)', margin: 0, fontWeight: 400 }}>{fmt(r.priciest_price_cad)}</p>
+                          <p style={{ fontSize: 10, color: 'var(--color-text-3)', margin: '2px 0 0' }}>{r.priciest_city}</p>
                         </div>
                         <div>
                           <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>Spread</p>
                           <p style={{ fontFamily: DISP, fontSize: 20, color: 'var(--color-accent)', margin: 0, fontWeight: 400 }}>{r.spread_ratio}×</p>
                         </div>
-                        {r.new_cities.length > 0 && (
-                          <div>
-                            <p style={{ fontSize: 9, letterSpacing: '1.3px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 3px' }}>New cities</p>
-                            <p style={{ fontSize: 13, color: 'var(--color-text-2)', margin: 0 }}>{r.new_cities.join(', ')}</p>
-                          </div>
-                        )}
                       </div>
                     </div>
 
@@ -111,10 +107,6 @@ export default async function ReportsPage() {
                       <a href={`/reports/${r.month}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '.65rem 1.25rem', borderRadius: 8, background: 'var(--color-accent)', color: '#fff', textDecoration: 'none', fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap' }}>
                         Read report
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9,18 15,12 9,6"/></svg>
-                      </a>
-                      <a href={`/api/reports/${r.month}/download`} download style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '.65rem 1.25rem', borderRadius: 8, border: '0.5px solid var(--color-border)', color: 'var(--color-text-2)', textDecoration: 'none', fontSize: 13, whiteSpace: 'nowrap', background: 'var(--color-bg)' }}>
-                        Download PDF
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                       </a>
                     </div>
                   </div>
@@ -126,7 +118,7 @@ export default async function ReportsPage() {
 
         <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '0.5px solid var(--color-border)' }}>
           <p style={{ fontSize: 12, color: 'var(--color-text-3)', lineHeight: 1.7, maxWidth: 480 }}>
-            Reports include a full data snapshot as of publication date, exchange rates used for that month's calculations, and a written analysis of notable findings. CSV downloads contain all city data, restaurant-level entries, and rate documentation.
+            Reports include a full data snapshot as of publication date, including community baselines and a written analysis of notable purchasing power shifts.
           </p>
         </div>
       </section>

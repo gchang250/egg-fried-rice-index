@@ -18,6 +18,7 @@ type ExtractedDish = {
   local_price: number
   dish_category: 'basic' | 'vegetable' | 'meat_based' | 'seafood' | 'house_special' | 'premium'
   restaurant_name?: string
+  serving_note?: string
 }
 
 type Candidate = {
@@ -306,6 +307,17 @@ function isValidRestaurantName(name: string): boolean {
   if (/\b\d+\s+(best|top|great|must)\b|\bbest\b.{0,20}\b(restaurant|rice|spot)\b|guide to|where to eat/i.test(n)) return false
   // Must contain at least one letter
   if (!/[a-z]/i.test(name)) return false
+
+  // ── Hallucination patterns: reject AI-generated geographic descriptors ──────
+  // These are patterns Claude (and other LLMs) produce when inventing entries:
+  // e.g. "Haidian Student District", "Sanlitun Neighbourhood Chinese",
+  //      "Budget Chinese Restaurant", "Mid-range Delivery"
+  if (/\b(student district|neighbourhood chinese|neighborhood chinese|area chinese|district chinese)\b/i.test(n)) return false
+  if (/^(budget|mid-range|upscale|representative|local|casual)\s+(chinese|asian|thai|indian|korean|japanese)\s*(restaurant|stall|delivery|takeout|dining)?\s*$/i.test(n)) return false
+  // Pure geographic + cuisine with no specific name
+  if (/^[a-z\s]+(road|blvd|avenue|street|st)\s+(chinese|stall|restaurant|hawker)\s*$/i.test(n)) return false
+  if (/\b(area restaurant|lunch chinese|area chinese|cbd lunch|student area)\b/i.test(n)) return false
+
   return true
 }
 
@@ -528,14 +540,16 @@ Return ONLY a valid JSON array (no prose, no markdown fences). Each object:
   "restaurant_name": "exact restaurant name from the text",
   "dish_name": "exact dish name from the menu",
   "local_price": number (numeric only, e.g. 14.99),
-  "dish_category": "basic" | "vegetable" | "meat_based" | "seafood" | "house_special" | "premium"
+  "dish_category": "basic" | "vegetable" | "meat_based" | "seafood" | "house_special" | "premium",
+  "serving_note": "single" | "shared" | "unknown"
 }
 
-STRICT RULES — violating these means the entry must be omitted:
-1. dish_name MUST contain the words "fried rice" — do NOT include fried noodles, rice noodles, chow mein, lo mein, pad thai, bibimbap, sweet potato fries, or any dish that is not a fried rice dish
-2. restaurant_name MUST be a real, specific restaurant name found in the text — not "Unknown", "Various", or a delivery platform name
-3. The restaurant MUST appear to be located in ${cityLabel} — skip any restaurant that is clearly in a different city${region ? ` (e.g. do not include restaurants in a different region or state with the same city name)` : ''} or country
+STRICT RULES — violating any of these means the entry must be OMITTED entirely:
+1. dish_name MUST contain the words "fried rice" — do NOT include fried noodles, rice noodles, chow mein, lo mein, pad thai, bibimbap, sweet potato fries, or any dish that is not explicitly a fried rice dish
+2. restaurant_name MUST be a specific, named establishment found in the text — NOT "Unknown", "Various", a delivery platform name, a neighbourhood description, a street name, or a generic descriptor like "local restaurant" or "food court stall"
+3. The restaurant MUST be located in ${cityLabel} — skip any restaurant clearly in a different city${region ? ` (IMPORTANT: "${city}" exists in multiple places; only include restaurants confirmed to be in ${region}, ${country} — not a different state, province, or country with the same city name)` : ''} or country
 4. local_price must be a number between ${floor} and ${ceil}
+5. SERVING SIZE — This index tracks the price ONE person pays for their own serving of fried rice. If the menu indicates the dish is for sharing (e.g. "serves 2–3", "family size", "large plate to share"), OMIT it and set serving_note="shared". If you are uncertain and the price seems high, set serving_note="unknown".
 
 Category rules:
 - basic: plain egg fried rice, plain fried rice, no specific protein
@@ -567,20 +581,24 @@ If no qualifying fried rice dishes are found, return [].`
 
       return parsed
         .filter(
-          (item: { dish_name?: unknown; local_price?: unknown; dish_category?: unknown; restaurant_name?: unknown }) =>
-            typeof item.dish_name === 'string' &&
-            isValidFriedRiceDish(item.dish_name) &&
-            typeof item.local_price === 'number' &&
-            Number.isFinite(item.local_price) &&
-            item.local_price >= floor &&
-            item.local_price <= ceil
+          (item: { dish_name?: unknown; local_price?: unknown; dish_category?: unknown; restaurant_name?: unknown; serving_note?: unknown }) => {
+            if (typeof item.dish_name !== 'string') return false
+            if (!isValidFriedRiceDish(item.dish_name)) return false
+            if (typeof item.local_price !== 'number') return false
+            if (!Number.isFinite(item.local_price)) return false
+            if (item.local_price < floor || item.local_price > ceil) return false
+            // Drop entries the LLM flagged as shared/family portions
+            if (item.serving_note === 'shared') return false
+            return true
+          }
         )
-        .map((item: { dish_name: string; local_price: number; dish_category?: unknown; restaurant_name?: unknown }) => ({
+        .map((item: { dish_name: string; local_price: number; dish_category?: unknown; restaurant_name?: unknown; serving_note?: unknown }) => ({
           dish_name: item.dish_name,
           local_price: item.local_price,
           dish_category: normalizeCategory(String(item.dish_category ?? ''), item.dish_name),
           restaurant_name: typeof item.restaurant_name === 'string' && isValidRestaurantName(item.restaurant_name)
             ? item.restaurant_name : undefined,
+          serving_note: String(item.serving_note ?? 'unknown'),
         }))
     } catch (err) {
       const msg = String(err)
@@ -633,7 +651,11 @@ function buildCandidates(
       source_type: sourceTypeFromUrl(sourceUrl),
       source_url: sourceUrl,
       confidence_score: confidenceFromSource(sourceUrl),
-      notes: `Scraped via Claude parser. ${currency.code} ${dish.local_price} → CA$${priceCad}. Source: ${sourceUrl.slice(0, 120)}`,
+      notes: [
+        `Scraped via LLM parser. ${currency.code} ${dish.local_price} → CA$${priceCad}.`,
+        dish.serving_note === 'unknown' ? '⚠️ SERVING SIZE UNCONFIRMED — verify this is priced per person, not as a shared dish.' : '',
+        `Source: ${sourceUrl.slice(0, 120)}`,
+      ].filter(Boolean).join(' '),
     }
   })
 }

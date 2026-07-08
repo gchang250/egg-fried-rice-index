@@ -3,92 +3,11 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import NavBar from './components/NavBar'
 import { supabase } from '@/lib/supabase'
-
-/* ═══════════════════════════════════════════════════════════════════
-   WORLD MAP — RLE dot-matrix land mask
-   168 columns × 74 rows, lat 76°N → 56°S, natural earth derived
-═══════════════════════════════════════════════════════════════════ */
-const LAND = [
-  "1d.2,20.2,25.1,27.1,29.6,39.11,6e.3,7d.c,94.3,98.2",
-  "1a.4,22.1,25.4,2a.6,3a.10,6d.2,7a.11,8e.2,95.2",
-  "1a.9,25.3,2a.7,3a.10,6c.2,74.3,78.18,93.7",
-  "8.a,16.3,1d.8,26.3,2c.1,30.4,3a.f,5d.5,70.1,73.2c,a3.3",
-  "0.1,7.17,22.2,26.5,2c.2,30.1,32.3,3b.a,5b.c,69.1,6b.b,77.31",
-  "0.5,6.2,9.23,31.3,35.2,3b.8,49.1,4c.1,5a.a,65.1,67.1,69.3f",
-  "9.22,2c.2,30.6,3c.5,4a.3,59.5,5f.5,65.42",
-  "7.22,2d.1,33.2,3d.3,57.5,5e.4a",
-  "7.6,e.1a,30.4,3e.2,56.6,5e.3f,a0.4",
-  "8.4,13.15,2f.5,35.1,57.5,5f.37,9b.1,9f.1",
-  "a.1,c.1,16.13,30.7,51.2,58.1,5a.3,5e.37,9d.3",
-  "8.1,16.16,30.8,52.1,58.3,5e.36,9d.3",
-  "18.16,2f.b,50.1,53.1,57.40,9d.2",
-  "18.16,2f.b,4f.1,52.3,56.41,9d.1",
-  "18.1,1a.1b,39.1,51.1,55.42",
-  "1b.1b,38.3,52.43,96.1",
-  "1a.1c,53.f,63.2,66.5,6d.28,96.1",
-  "1a.1d,53.7,5b.6,65.5,6c.28,96.1",
-  "1a.19,50.5,59.1,5c.5,67.3,6c.25,92.1,95.2",
-  "1a.18,50.5,5a.2,5d.4,63.2,67.4,6d.24",
-  "1a.17,50.4,58.1,5b.1,5d.2,60.b,6d.1f,8f.1,95.1",
-  "1b.15,50.4,5a.1,5e.1,61.a,6d.1e,8c.1,8f.1,95.1",
-  "1b.16,54.5,65.27,8f.1,93.3",
-  "1c.14,51.8,65.27,91.3",
-  "1d.11,50.b,5d.2,64.29",
-  "1f.f,4f.3e",
-  "20.7,2d.1,4f.1c,6c.21",
-  "1f.1,21.6,2e.1,4e.16,65.6,6d.1,6f.1d",
-  "21.6,4d.17,65.7,70.1,73.19",
-  "22.4,4c.19,66.9,74.17,8c.1",
-  "23.3,2f.1,4c.19,66.a,75.8,7f.7,87.1",
-  "b.1,23.4,2a.1,4c.19,67.8,76.6,80.5,87.1",
-  "24.7,4c.1a,67.7,76.5,80.6,8c.1",
-  "26.5,4c.1a,68.4,76.4,80.1,82.4,8c.1",
-  "29.4,4c.1b,68.3,77.2,82.5,8c.1",
-  "2b.2,4c.1d,77.2,82.5,8c.1",
-  "2c.1,31.3,4d.1b,6a.2,77.2,84.2,8d.1",
-  "2d.b,4e.1e,78.2,82.1",
-  "30.9,4e.1d,79.1,82.1,8e.1",
-  "30.b,4f.5,56.15,83.1,8a.1",
-  "30.c,58.12,81.1,83.1,89.2",
-  "2f.d,58.11,82.3,88.3",
-  "2f.d,58.10,82.2,87.4",
-  "2e.11,58.f,83.2,87.3,8c.1,91.2",
-  "2f.13,59.e,84.1,89.1,8c.1,90.1,92.5",
-  "2e.15,5a.c,94.4,9a.1",
-  "2f.15,5a.c,86.3,95.4",
-  "2f.15,5a.c,8b.2,8e.1,96.1,98.1",
-  "30.13,5a.d,9f.1",
-  "30.12,5a.d,91.3,96.1",
-  "30.12,5a.d,6a.1,90.3,96.1",
-  "31.11,59.e,69.2,8e.6,96.2",
-  "33.f,59.c,69.2,8d.b",
-  "33.e,5a.a,69.2,8d.c",
-  "33.e,5a.a,68.3,8a.10",
-  "33.d,5b.a,68.2,89.11",
-  "33.b,5b.9,69.1,89.12",
-  "33.a,5b.8,89.12",
-  "33.a,5c.7,89.13",
-  "33.a,5c.6,8a.11",
-  "33.9,5d.5,8a.6,92.9",
-  "32.9,5d.3,8a.4,93.8",
-  "32.7,94.6",
-  "32.7,95.5,a5.1",
-  "32.5,a5.2",
-  "32.5,a4.1",
-  "31.5,98.1,a4.1",
-  "31.5,a2.2",
-  "31.3,a2.1",
-  "31.4",
-  "31.3",
-  "31.3,38.1",
-  "31.3",
-  "33.2",
-]
-const LAND_COLS = 168, LAND_ROWS = 74, LAT_TOP = 76.0, LAT_BOT = -56.0
+import * as d3 from 'd3'
 
 /* ═══════════════════════════════════════════════════════════════════
    Types & helpers
-═══════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════════ */
 type CityRow = {
   city: string
   country: string | null
@@ -101,54 +20,158 @@ type CityRow = {
   median_monthly_salary_cad: number | null
   blurb: string | null
   rentBurden:    number | null
-  bowlsAfterRent: number | null
+  bowlsAfterRent: number | null // renamed to plates left
 }
 
-type Tip = { city: string; country: string; price: number; burden: number | null; bowls: number | null; x: number; y: number }
+type Tip = { city: string; province: string; price: number; burden: number | null; plates: number | null; x: number; y: number }
 
-const NS = 'http://www.w3.org/2000/svg'
-const svgE = (tag: string, attrs: Record<string, string>) => {
-  const e = document.createElementNS(NS, tag)
-  Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v))
-  return e
-}
-const colorFor = (p: number) => p < 6 ? '#76a98c' : p < 13 ? '#c8a862' : '#c0674e'
+const colorFor = (p: number) => p < 9.5 ? 'var(--color-green)' : p < 12.5 ? 'var(--color-text-2)' : 'var(--color-accent)'
 const fmt = (n: number) => `CA$${n.toFixed(2)}`
+
+const PROVINCE_NAMES: Record<string, string> = {
+  ON: 'Ontario',
+  BC: 'British Columbia',
+  QC: 'Quebec',
+  AB: 'Alberta',
+  MB: 'Manitoba',
+  SK: 'Saskatchewan',
+  NS: 'Nova Scotia',
+  NB: 'New Brunswick',
+  NL: 'Newfoundland & Labrador',
+  PE: 'Prince Edward Island',
+  YT: 'Yukon',
+  NT: 'Northwest Territories',
+  NU: 'Nunavut'
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    Style constants
-═══════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════════ */
 const WRAP: CSSProperties  = { maxWidth: 1280, margin: '0 auto', padding: '0 32px' }
-const MONO: CSSProperties  = { fontFamily: "'Geist Mono', monospace" }
-const LABEL: CSSProperties = { ...MONO, fontSize: 10.5, fontWeight: 400, letterSpacing: '.22em', textTransform: 'uppercase', color: '#8d8d96' }
-const SEC: CSSProperties   = { padding: '130px 0' }
-const CARD: CSSProperties  = { border: '1px solid #1a1a1f', borderRadius: 18, background: '#101013', overflow: 'hidden' }
+const MONO: CSSProperties  = { fontFamily: "var(--font-mono)", fontSize: 11.5, letterSpacing: '0.05em' }
+const LABEL: CSSProperties = { fontSize: 11, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--color-text-3)', fontWeight: 600 }
+const SEC: CSSProperties   = { padding: '100px 0' }
+const CARD: CSSProperties  = { border: '1px solid var(--color-border)', borderRadius: 18, background: 'var(--color-surface)', overflow: 'hidden' }
 const BTN_GOLD: CSSProperties = {
   display: 'inline-flex', alignItems: 'center', gap: 10,
-  ...MONO, fontSize: 11.5, letterSpacing: '.16em', textTransform: 'uppercase',
-  padding: '15px 28px', borderRadius: 100, border: '1px solid transparent',
-  background: '#c8a862', color: '#171206', textDecoration: 'none', transition: '.22s',
+  fontFamily: 'var(--font-body)', fontSize: 13.5, letterSpacing: '.01em',
+  padding: '13px 26px', borderRadius: 8, border: 'none',
+  background: 'var(--color-accent)', color: '#fff', textDecoration: 'none', transition: '.2s',
+  fontWeight: 600,
+  cursor: 'pointer'
 }
 const BTN_GHOST: CSSProperties = {
   display: 'inline-flex', alignItems: 'center', gap: 10,
-  ...MONO, fontSize: 11.5, letterSpacing: '.16em', textTransform: 'uppercase',
-  padding: '15px 28px', borderRadius: 100, border: '1px solid #1e1e24',
-  color: '#ece9e2', textDecoration: 'none', transition: '.22s',
+  fontFamily: 'var(--font-body)', fontSize: 13.5, letterSpacing: '.01em',
+  padding: '13px 26px', borderRadius: 8, border: '1px solid var(--color-border)',
+  color: 'var(--color-text-1)', textDecoration: 'none', transition: '.2s',
+  cursor: 'pointer',
+  fontWeight: 600,
+  background: 'rgba(255,255,255,0.02)'
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   Component
-═══════════════════════════════════════════════════════════════════ */
-export default function Home() {
-  const [cities,  setCities]  = useState<CityRow[]>([])
-  const [tip,     setTip]     = useState<Tip | null>(null)
-  const [sel,     setSel]     = useState<CityRow | null>(null)
-  const [boardIn, setBoardIn] = useState(false)
+function DetailedPoutineIllustration() {
+  return (
+    <svg width="100%" height="280" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="poutineShadow" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000" floodOpacity="0.4" />
+        </filter>
+        <linearGradient id="gravyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#8d4a24" />
+          <stop offset="50%" stopColor="#673215" />
+          <stop offset="100%" stopColor="#431e0b" />
+        </linearGradient>
+        <linearGradient id="fryGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#f5cf6d" />
+          <stop offset="70%" stopColor="#eeb44f" />
+          <stop offset="100%" stopColor="#c38a22" />
+        </linearGradient>
+        <linearGradient id="bowlGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2c2a30" />
+          <stop offset="100%" stopColor="#131317" />
+        </linearGradient>
+      </defs>
 
-  const mapRef    = useRef<SVGSVGElement>(null)
-  const specRef   = useRef<SVGSVGElement>(null)
-  const scatRef   = useRef<SVGSVGElement>(null)
-  const boardRef  = useRef<HTMLDivElement>(null)
+      {/* Steam lines */}
+      <g stroke="var(--color-text-4)" strokeWidth="1.5" strokeLinecap="round" opacity="0.4">
+        <path d="M120 60 Q110 40 120 20 T110 2" fill="none" />
+        <path d="M160 55 Q170 35 160 15 T170 0" fill="none" />
+        <path d="M200 60 Q190 40 200 20 T190 2" fill="none" />
+      </g>
+
+      <g filter="url(#poutineShadow)">
+        {/* Bowl Background shadow rim */}
+        <ellipse cx="160" cy="210" rx="90" ry="26" fill="#000" opacity="0.4" />
+        
+        {/* Bowl Back Rim */}
+        <ellipse cx="160" cy="200" rx="80" ry="20" fill="#1b1a1f" stroke="#2c2a30" strokeWidth="1" />
+
+        {/* FRIES STACK */}
+        <g stroke="#8d5f14" strokeWidth="0.5">
+          {/* Layer 1: Back fries */}
+          <rect x="110" y="130" width="12" height="60" rx="2" transform="rotate(-40 110 130)" fill="url(#fryGrad)" />
+          <rect x="180" y="115" width="12" height="65" rx="2" transform="rotate(35 180 115)" fill="url(#fryGrad)" />
+          <rect x="140" y="120" width="13" height="62" rx="2" transform="rotate(-10 140 120)" fill="url(#fryGrad)" />
+          
+          {/* Layer 2: Mid fries */}
+          <rect x="130" y="105" width="12" height="65" rx="2" transform="rotate(15 130 105)" fill="url(#fryGrad)" />
+          <rect x="160" y="110" width="13" height="60" rx="2" transform="rotate(-25 160 110)" fill="url(#fryGrad)" />
+          <rect x="105" y="115" width="12" height="70" rx="2" transform="rotate(45 105 115)" fill="url(#fryGrad)" />
+
+          {/* GRAVY DRAUGHTS (Back layer) */}
+          <path d="M120 125 Q140 135 155 130 T190 120" stroke="url(#gravyGrad)" strokeWidth="7" strokeLinecap="round" fill="none" opacity="0.9" />
+          <path d="M100 150 C120 160 145 155 170 145" stroke="url(#gravyGrad)" strokeWidth="9" strokeLinecap="round" fill="none" opacity="0.9" />
+
+          {/* CHEESE CURDS (Mid layer) */}
+          <path d="M120 140 C110 140 105 148 115 152 C125 156 132 148 125 142 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
+          <path d="M175 132 C165 130 160 138 168 142 C176 146 185 140 180 135 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
+
+          {/* Layer 3: Front fries */}
+          <rect x="120" y="90" width="13" height="70" rx="2" transform="rotate(-5 120 90)" fill="url(#fryGrad)" />
+          <rect x="155" y="95" width="12" height="65" rx="2" transform="rotate(20 155 95)" fill="url(#fryGrad)" />
+          <rect x="135" y="100" width="12" height="68" rx="2" transform="rotate(-30 135 100)" fill="url(#fryGrad)" />
+
+          {/* GRAVY SPLASHES (Front layer) */}
+          <path d="M110 110 Q130 105 150 115 T190 110" stroke="url(#gravyGrad)" strokeWidth="8" strokeLinecap="round" fill="none" />
+          <path d="M130 95 Q145 110 160 100" stroke="url(#gravyGrad)" strokeWidth="5" strokeLinecap="round" fill="none" />
+          <path d="M90 135 Q125 140 150 128 T210 135" stroke="url(#gravyGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+          <path d="M172 125 L174 150 Q176 156 173 158" stroke="url(#gravyGrad)" strokeWidth="5" strokeLinecap="round" fill="none" />
+
+          {/* CHEESE CURDS (Front Layer) */}
+          <path d="M102 115 C95 115 90 122 98 128 C106 134 112 126 106 120 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
+          <path d="M150 105 C142 102 135 112 144 118 C153 124 160 114 154 108 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
+          <path d="M130 145 C122 143 118 151 126 155 C134 159 140 151 134 146 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
+          <path d="M162 150 C155 147 150 155 158 161 C166 167 172 159 166 153 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
+        </g>
+
+        {/* Green Scallion Garnish */}
+        <g stroke="#3e8e41" strokeWidth="1.5" fill="none">
+          <circle cx="118" cy="105" r="2" />
+          <circle cx="168" cy="98" r="1.8" />
+          <circle cx="140" cy="135" r="2" />
+          <circle cx="108" cy="138" r="2" />
+        </g>
+
+        {/* Bowl Front panel */}
+        <path d="M 78 196 C 78 196 78 224 160 224 C 242 224 242 196 242 196 C 242 196 230 248 160 248 C 90 248 78 196 78 196 Z" fill="url(#bowlGrad)" stroke="#2c2a30" strokeWidth="1.2" />
+        <path d="M 82 198 C 82 198 90 220 160 220 C 230 220 238 198 238 198" stroke="#3d3c45" strokeWidth="0.8" fill="none" />
+      </g>
+    </svg>
+  )
+}
+
+export default function Home() {
+  const [cities, setCities]   = useState<CityRow[]>([])
+  const [tip, setTip]         = useState<Tip | null>(null)
+  const [sel, setSel]         = useState<CityRow | null>(null)
+  const [boardIn, setBoardIn] = useState(false)
+  const [mapLoading, setMapLoading] = useState(true)
+
+  const mapRef   = useRef<SVGSVGElement>(null)
+  const specRef  = useRef<SVGSVGElement>(null)
+  const scatRef  = useRef<SVGSVGElement>(null)
+  const boardRef = useRef<HTMLDivElement>(null)
 
   /* ── Fetch cities ──────────────────────────────────────────────── */
   useEffect(() => {
@@ -173,109 +196,202 @@ export default function Home() {
       })
   }, [])
 
-  /* ── World map ─────────────────────────────────────────────────── */
+  /* ── Canada map ────────────────────────────────────────────────── */
   useEffect(() => {
-    const svg = mapRef.current
-    if (!svg || !cities.length) return
-    const draw = () => {
-      svg.innerHTML = ''
-      const W = svg.clientWidth || 1200
-      const cell = W / LAND_COLS, H = cell * LAND_ROWS
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
-      svg.style.height = 'auto'
-      const proj = (lat: number, lon: number): [number, number] => [
-        (lon + 180) / 360 * W,
-        (LAT_TOP - lat) / (LAT_TOP - LAT_BOT) * H,
-      ]
-      const dots = svgE('g', { fill: '#26262d' })
-      LAND.forEach((row, ry) => {
-        if (!row) return
-        row.split(',').forEach(run => {
-          const [sh, lh] = run.split('.')
-          const s = parseInt(sh, 16), l = parseInt(lh, 16)
-          for (let i = 0; i < l; i++) {
-            dots.appendChild(svgE('circle', {
-              cx: String((s + i + 0.5) * cell),
-              cy: String((ry + 0.5) * cell),
-              r:  String(Math.max(1.1, cell * 0.22)),
-            }))
-          }
-        })
+    const svgEl = mapRef.current
+    if (!svgEl || !cities.length) return
+    setMapLoading(true)
+
+    d3.json('/canada.geojson').then((geojson: any) => {
+      setMapLoading(false)
+      svgEl.innerHTML = ''
+      
+      const W = svgEl.clientWidth || 1000
+      const H = 450
+      svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`)
+
+      const svg = d3.select(svgEl)
+      const g = svg.append('g')
+
+      const projection = d3.geoConicConformal()
+        .center([0, 62])
+        .rotate([96, 0])
+        .parallels([49, 77])
+        .scale(W * 0.72)
+        .translate([W / 2, H / 2 + 50])
+
+      const pathGen = d3.geoPath().projection(projection)
+
+      const defs = svg.append('defs')
+      const shadowFilter = defs.append('filter')
+        .attr('id', 'landShadow')
+        .attr('x', '-10%').attr('y', '-10%')
+        .attr('width', '120%').attr('height', '120%')
+      
+      shadowFilter.append('feDropShadow')
+        .attr('dx', '0')
+        .attr('dy', '3')
+        .attr('stdDeviation', '3')
+        .attr('flood-color', '#000000')
+        .attr('flood-opacity', '0.65')
+
+      // Draw Canada Outline
+      g.append('g')
+        .selectAll('path')
+        .data(geojson.features)
+        .enter()
+        .append('path')
+        .attr('d', pathGen as any)
+        .attr('fill', 'var(--color-surface)')
+        .attr('stroke', 'var(--color-border)')
+        .attr('stroke-width', 0.65)
+        .attr('filter', 'url(#landShadow)')
+
+      // Plot communities as glowing dots
+      cities.forEach((city, idx) => {
+        if (city.longitude == null || city.latitude == null) return
+        const coords = projection([city.longitude, city.latitude])
+        if (!coords) return
+        const [cx, cy] = coords
+
+        const dotG = g.append('g')
+          .attr('class', 'grain')
+          .attr('transform', `translate(${cx},${cy})`)
+          .on('click', () => setSel(city))
+          .on('mousemove', (ev) => {
+            setTip({
+              city: city.city,
+              province: city.region ?? '',
+              price: city.price_cad,
+              burden: city.rentBurden,
+              plates: city.bowlsAfterRent,
+              x: ev.clientX,
+              y: ev.clientY
+            })
+          })
+          .on('mouseleave', () => setTip(null))
+
+        // Ripple glow
+        dotG.append('circle')
+          .attr('r', 9)
+          .attr('fill', colorFor(city.price_cad))
+          .attr('opacity', 0.12)
+          .attr('class', 'city-aura')
+
+        // Central dot
+        dotG.append('circle')
+          .attr('r', 4.5)
+          .attr('fill', colorFor(city.price_cad))
+          .attr('stroke', '#09090b')
+          .attr('stroke-width', 0.8)
+          .attr('class', 'city-dot')
       })
-      svg.appendChild(dots)
-      const sorted = [...cities].sort((a, b) => (a.latitude ?? 0) - (b.latitude ?? 0))
-      sorted.forEach((c, idx) => {
-        if (!c.latitude || !c.longitude) return
-        const [gx, gy] = proj(c.latitude, c.longitude)
-        const col = colorFor(c.price_cad)
-        svg.appendChild(svgE('circle', { cx: String(gx), cy: String(gy), r: String(cell * 1.6), fill: col, opacity: '0.07' }))
-        const g = svgE('g', { class: 'grain', transform: `translate(${gx},${gy})` }) as SVGGElement
-        const grain = svgE('ellipse', {
-          rx: String(Math.max(5, cell * 0.85)), ry: String(Math.max(2.8, cell * 0.47)),
-          fill: col, opacity: '0',
-          transform: `rotate(${(idx * 37) % 70 - 35})`,
-          stroke: '#0a0a0c', 'stroke-width': '1',
-        })
-        g.appendChild(grain)
-        svg.appendChild(g)
-        grain.animate([{ opacity: 0 }, { opacity: .95 }], { duration: 500, delay: 200 + idx * 45, fill: 'forwards', easing: 'ease-out' })
-        g.addEventListener('mousemove', (ev: Event) => {
-          const me = ev as MouseEvent
-          setTip({ city: c.city, country: c.country ?? '', price: c.price_cad, burden: c.rentBurden, bowls: c.bowlsAfterRent, x: me.clientX, y: me.clientY })
-        })
-        g.addEventListener('mouseleave', () => setTip(null))
-        g.addEventListener('click', () => { setTip(null); setSel(c) })
-      })
-    }
-    draw()
-    const ro = new ResizeObserver(() => { clearTimeout((svg as any)._t); (svg as any)._t = setTimeout(draw, 180) })
-    ro.observe(svg)
-    return () => ro.disconnect()
+    })
   }, [cities])
 
-  /* ── Spectrum strip plot ───────────────────────────────────────── */
+  /* ── Price Spectrum ────────────────────────────────────────────── */
   useEffect(() => {
     const svg = specRef.current
     if (!svg || !cities.length) return
-    const PMIN = cities[0].price_cad, PMAX = cities[cities.length - 1].price_cad
+
     const draw = () => {
       svg.innerHTML = ''
-      const W = svg.clientWidth || 1100, H = 230, px = 20, axY = H - 44
+      const W = svg.clientWidth || 1100
+      const H = 200
       svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
-      const x = (p: number) => px + ((p - PMIN) / (PMAX - PMIN)) * (W - px * 2)
-      svg.appendChild(svgE('line', { x1: String(px), x2: String(W - px), y1: String(axY), y2: String(axY), stroke: '#222228' }))
-      for (let t = 2; t <= 22; t += 2) {
+      
+      const axY = H - 55
+      const padding = { l: 40, r: 40 }
+      const minVal = cities[0].price_cad
+      const maxVal = cities[cities.length - 1].price_cad
+      
+      const x = d3.scaleLinear()
+        .domain([minVal, maxVal])
+        .range([padding.l, W - padding.r])
+
+      // Axis Line
+      d3.select(svg).append('line')
+        .attr('x1', padding.l).attr('x2', W - padding.r)
+        .attr('y1', axY).attr('y2', axY)
+        .attr('stroke', 'var(--color-border)')
+        .attr('stroke-width', 1)
+
+      // Tick markers
+      const ticks = x.ticks(10)
+      ticks.forEach(t => {
         const tx = x(t)
-        svg.appendChild(svgE('line', { x1: String(tx), x2: String(tx), y1: String(axY - 3), y2: String(axY + 3), stroke: '#2a2a31' }))
-        const txt = svgE('text', { x: String(tx), y: String(axY + 24), 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': '9.5', fill: '#55555e', 'letter-spacing': '1' })
-        txt.textContent = '$' + t
-        svg.appendChild(txt)
-      }
-      cities.forEach((c, idx) => {
-        const gx = x(c.price_cad), jitter = ((idx * 73) % 5 - 2) * 15, gy = axY - 44 + jitter
-        svg.appendChild(svgE('line', { x1: String(gx), x2: String(gx), y1: String(gy), y2: String(axY - 1), stroke: colorFor(c.price_cad), 'stroke-opacity': '.12' }))
-        const g = svgE('g', { class: 'grain', transform: `translate(${gx},${gy})` }) as SVGGElement
-        const grain = svgE('ellipse', { rx: '7.5', ry: '4', fill: colorFor(c.price_cad), opacity: '0', transform: `rotate(${(idx * 37) % 70 - 35})` })
-        g.appendChild(grain)
-        svg.appendChild(g)
-        grain.animate([{ opacity: 0 }, { opacity: .92 }], { duration: 420, delay: idx * 32, fill: 'forwards', easing: 'ease-out' })
-        g.addEventListener('mousemove', (ev: Event) => {
-          const me = ev as MouseEvent
-          setTip({ city: c.city, country: c.country ?? '', price: c.price_cad, burden: c.rentBurden, bowls: c.bowlsAfterRent, x: me.clientX, y: me.clientY })
-        })
-        g.addEventListener('mouseleave', () => setTip(null))
-        g.addEventListener('click', () => { setTip(null); setSel(c) })
+        d3.select(svg).append('line')
+          .attr('x1', tx).attr('x2', tx).attr('y1', axY).attr('y2', axY + 6)
+          .attr('stroke', 'var(--color-border)')
+          .attr('stroke-width', 0.8)
+        
+        d3.select(svg).append('text')
+          .attr('x', tx).attr('y', axY + 18).attr('text-anchor', 'middle')
+          .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
+          .attr('fill', 'var(--color-text-3)').text(fmt(t))
       })
-      ;[['FLOOR', cities[0], 'start'], ['CEILING', cities[cities.length - 1], 'end']].forEach(([label, d, anchor]) => {
-        const fx = x((d as CityRow).price_cad)
-        const t = svgE('text', { x: String(fx), y: '22', 'text-anchor': anchor as string, 'font-family': 'Geist Mono, monospace', 'font-size': '10', 'letter-spacing': '1.5', fill: colorFor((d as CityRow).price_cad) })
-        t.textContent = `${(d as CityRow).city.toUpperCase()} ${fmt((d as CityRow).price_cad)} · ${label}`
-        svg.appendChild(t)
-        svg.appendChild(svgE('line', { x1: String(fx), x2: String(fx), y1: '30', y2: String(axY - 2), stroke: colorFor((d as CityRow).price_cad), 'stroke-opacity': '.3', 'stroke-dasharray': '2 5' }))
+
+      // Plot communities on spectrum
+      cities.forEach((c, idx) => {
+        const cx = x(c.price_cad)
+        const cy = axY - 24 - ((idx * 14) % 65)
+        
+        const g = d3.select(svg).append('g')
+          .attr('class', 'grain')
+          .attr('transform', `translate(${cx},${cy})`)
+          .on('click', () => setSel(c))
+          .on('mousemove', (ev) => {
+            setTip({
+              city: c.city,
+              province: c.region ?? '',
+              price: c.price_cad,
+              burden: c.rentBurden,
+              plates: c.bowlsAfterRent,
+              x: ev.clientX,
+              y: ev.clientY
+            })
+          })
+          .on('mouseleave', () => setTip(null))
+
+        // Vertical drop line
+        g.append('line')
+          .attr('x1', 0).attr('x2', 0)
+          .attr('y1', 4).attr('y2', axY - cy)
+          .attr('stroke', 'var(--color-border)')
+          .attr('stroke-width', 0.6)
+          .attr('stroke-opacity', 0.3)
+
+        // Drop stylized cheese-curd point
+        g.append('circle')
+          .attr('r', 5)
+          .attr('fill', colorFor(c.price_cad))
+          .attr('opacity', 0.95)
+
+        svg.appendChild(g.node()!)
+      })
+
+      // Extremes labels
+      const extremes: Array<[string, CityRow, string]> = [
+        ['CHEAPEST', cities[0], 'start'],
+        ['PRICIEST', cities[cities.length - 1], 'end']
+      ]
+      extremes.forEach(([label, d, anchor]) => {
+        const fx = x(d.price_cad)
+        const txt = d3.create('svg:text')
+          .attr('x', fx).attr('y', 20).attr('text-anchor', anchor)
+          .attr('font-family', 'var(--font-mono)').attr('font-size', '10')
+          .attr('letter-spacing', '1.5').attr('fill', colorFor(d.price_cad))
+          .text(`${d.city.toUpperCase()} ${fmt(d.price_cad)} · ${label}`).node()!
+        svg.appendChild(txt)
+        svg.appendChild(d3.create('svg:line')
+          .attr('x1', fx).attr('x2', fx).attr('y1', 28).attr('y2', axY - 2)
+          .attr('stroke', colorFor(d.price_cad)).attr('stroke-opacity', '.25')
+          .attr('stroke-dasharray', '2 4').node()!)
       })
     }
+    
     draw()
-    const ro = new ResizeObserver(() => { clearTimeout((svg as any)._t); (svg as any)._t = setTimeout(draw, 180) })
+    const ro = new ResizeObserver(() => draw())
     ro.observe(svg)
     return () => ro.disconnect()
   }, [cities])
@@ -287,72 +403,119 @@ export default function Home() {
     const data = cities.filter(c => c.rentBurden != null && c.bowlsAfterRent != null) as (CityRow & { rentBurden: number; bowlsAfterRent: number })[]
     if (!data.length) return
     const PMIN = cities[0].price_cad, PMAX = cities[cities.length - 1].price_cad
-    const NOTABLE = ['London','Karachi','Hong Kong','Singapore','Buenos Aires','Vancouver','Los Angeles','Tokyo']
+    const NOTABLE = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Edmonton', 'Halifax', 'Winnipeg', 'Iqaluit', 'Yellowknife', 'Fort McMurray', 'Sherbrooke']
+    
     const draw = () => {
       svg.innerHTML = ''
-      const W = svg.clientWidth || 1100, H = 480, m = { t: 28, r: 28, b: 56, l: 72 }
+      const W = svg.clientWidth || 1100, H = 450, m = { t: 30, r: 30, b: 50, l: 60 }
       svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
+      
       const bVals = data.map(c => c.rentBurden), yVals = data.map(c => c.bowlsAfterRent)
       const bmin = Math.min(...bVals), bmax = Math.max(...bVals)
       const ymax = Math.max(...yVals)
       const xS = (v: number) => m.l + (v - bmin) / (bmax - bmin) * (W - m.l - m.r)
       const yS = (v: number) => H - m.b - (Math.min(v, ymax) / ymax) * (H - m.t - m.b)
-      const step = Math.max(10, Math.round((bmax - bmin) / 5 / 5) * 5)
+
+      // X grid
+      const step = 5
       for (let v = Math.ceil(bmin / step) * step; v <= bmax; v += step) {
-        svg.appendChild(svgE('line', { x1: String(xS(v)), x2: String(xS(v)), y1: String(m.t), y2: String(H - m.b), stroke: '#1a1a1f', 'stroke-dasharray': '1 6' }))
-        const t = svgE('text', { x: String(xS(v)), y: String(H - m.b + 22), 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': '9.5', fill: '#55555e', 'letter-spacing': '1' })
-        t.textContent = v + '%'
+        svg.appendChild(d3.create('svg:line')
+          .attr('x1', xS(v)).attr('x2', xS(v)).attr('y1', m.t).attr('y2', H - m.b)
+          .attr('stroke', 'var(--color-border)').attr('stroke-dasharray', '1 4').node()!)
+        const t = d3.create('svg:text')
+          .attr('x', xS(v)).attr('y', H - m.b + 18).attr('text-anchor', 'middle')
+          .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
+          .attr('fill', 'var(--color-text-3)').text(v + '%').node()!
         svg.appendChild(t)
       }
-      const yStep = Math.max(50, Math.ceil(ymax / 6 / 50) * 50)
+
+      // Y grid
+      const yStep = 50
       for (let v = 0; v <= ymax; v += yStep) {
-        svg.appendChild(svgE('line', { x1: String(m.l), x2: String(W - m.r), y1: String(yS(v)), y2: String(yS(v)), stroke: '#1a1a1f', 'stroke-dasharray': '1 6' }))
-        const t = svgE('text', { x: String(m.l - 12), y: String(yS(v) + 3.5), 'text-anchor': 'end', 'font-family': 'Geist Mono, monospace', 'font-size': '9.5', fill: '#55555e', 'letter-spacing': '1' })
-        t.textContent = String(v)
+        svg.appendChild(d3.create('svg:line')
+          .attr('x1', m.l).attr('x2', W - m.r).attr('y1', yS(v)).attr('y2', yS(v))
+          .attr('stroke', 'var(--color-border)').attr('stroke-dasharray', '1 4').node()!)
+        const t = d3.create('svg:text')
+          .attr('x', m.l - 10).attr('y', yS(v) + 3).attr('text-anchor', 'end')
+          .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
+          .attr('fill', 'var(--color-text-3)').text(String(v)).node()!
         svg.appendChild(t)
       }
-      const xt = svgE('text', { x: String((m.l + W - m.r) / 2), y: String(H - 10), 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': '9.5', fill: '#55555e', 'letter-spacing': '1.5' })
-      xt.textContent = 'Rent burden — share of average paycheck'
+
+      // X/Y Titles
+      const xt = d3.create('svg:text')
+        .attr('x', (m.l + W - m.r) / 2).attr('y', H - 10).attr('text-anchor', 'middle')
+        .attr('font-family', 'var(--font-body)').attr('font-size', '10')
+        .attr('fill', 'var(--color-text-2)').attr('letter-spacing', '1').attr('font-weight', 600)
+        .text('RENT BURDEN (1BR RENT AS % OF LOCAL MEDIAN INCOME)').node()!
       svg.appendChild(xt)
-      const yt = svgE('text', { transform: `translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': '9.5', fill: '#55555e', 'letter-spacing': '1.5' })
-      yt.textContent = 'Bowls affordable after rent / month'
+
+      const yt = d3.create('svg:text')
+        .attr('transform', `translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle')
+        .attr('font-family', 'var(--font-body)').attr('font-size', '10')
+        .attr('fill', 'var(--color-text-2)').attr('letter-spacing', '1').attr('font-weight', 600)
+        .text('AFFORDABLE POUTINES AFTER RENT / MONTH').node()!
       svg.appendChild(yt)
-      data.forEach((c, idx) => {
+
+      // Plot data points
+      data.forEach((c) => {
         const gx = xS(c.rentBurden), gy = yS(c.bowlsAfterRent)
-        const g = svgE('g', { class: 'grain', transform: `translate(${gx},${gy})` }) as SVGGElement
-        const rs = 5 + (c.price_cad - PMIN) / (PMAX - PMIN) * 8
-        const grain = svgE('ellipse', { rx: String(rs), ry: String(rs * 0.55), fill: colorFor(c.price_cad), opacity: '.9', stroke: '#0a0a0c', 'stroke-width': '1', transform: `rotate(${(idx * 41) % 70 - 35})` })
-        g.appendChild(grain)
-        svg.appendChild(g)
+        const rs = 4.5 + (c.price_cad - PMIN) / (PMAX - PMIN) * 6.5
+
+        const g = d3.create('svg:g')
+          .attr('class', 'grain')
+          .attr('transform', `translate(${gx},${gy})`)
+          .on('click', () => setSel(c))
+          .on('mousemove', (ev) => {
+            setTip({
+              city: c.city,
+              province: c.region ?? '',
+              price: c.price_cad,
+              burden: c.rentBurden,
+              plates: c.bowlsAfterRent,
+              x: ev.clientX,
+              y: ev.clientY
+            })
+          })
+          .on('mouseleave', () => setTip(null))
+
+        // Draw curd marker
+        g.append('circle')
+          .attr('r', rs)
+          .attr('fill', colorFor(c.price_cad))
+          .attr('opacity', 0.9)
+          .attr('stroke', '#09090b')
+          .attr('stroke-width', 0.8)
+
+        svg.appendChild(g.node()!)
+
         if (NOTABLE.includes(c.city)) {
-          const t = svgE('text', { x: String(gx + rs + 7), y: String(gy + 3.5), 'font-family': 'Geist Mono, monospace', 'font-size': '9.5', fill: '#8d8d96', 'letter-spacing': '1' })
-          t.textContent = c.city.toUpperCase()
+          const t = d3.create('svg:text')
+            .attr('x', gx + rs + 6).attr('y', gy + 3)
+            .attr('font-family', 'var(--font-mono)').attr('font-size', '9')
+            .attr('fill', 'var(--color-text-3)').attr('letter-spacing', '0.5')
+            .text(c.city.toUpperCase()).node()!
           svg.appendChild(t)
         }
-        g.addEventListener('mousemove', (ev: Event) => {
-          const me = ev as MouseEvent
-          setTip({ city: c.city, country: c.country ?? '', price: c.price_cad, burden: c.rentBurden, bowls: c.bowlsAfterRent, x: me.clientX, y: me.clientY })
-        })
-        g.addEventListener('mouseleave', () => setTip(null))
-        g.addEventListener('click', () => { setTip(null); setSel(c) })
       })
     }
+
     draw()
-    const ro = new ResizeObserver(() => { clearTimeout((svg as any)._t); (svg as any)._t = setTimeout(draw, 180) })
+    const ro = new ResizeObserver(() => draw())
     ro.observe(svg)
     return () => ro.disconnect()
   }, [cities])
 
-  /* ── Leaderboard reveal ────────────────────────────────────────── */
+  /* ── Leaderboard Intersection ─────────────────────────────────── */
   useEffect(() => {
     const el = boardRef.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setBoardIn(true); io.disconnect() } }, { threshold: 0.2 })
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setBoardIn(true); io.disconnect() } }, { threshold: 0.1 })
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [cities])
 
-  /* ── Esc closes the city panel ─────────────────────────────────── */
+  /* ── Escape key closes sidebar ───────────────────────────────── */
   useEffect(() => {
     if (!sel) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSel(null) }
@@ -360,268 +523,301 @@ export default function Home() {
     return () => window.removeEventListener('keydown', onKey)
   }, [sel])
 
-  /* ── Derived data ──────────────────────────────────────────────── */
-  const pmin     = cities[0]?.price_cad ?? 2.51
-  const pmax     = cities[cities.length - 1]?.price_cad ?? 21.88
-  const maxBowls = cities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
-  const spread   = cities.length >= 2 ? pmax / pmin : 8.8
+  /* ── Stats Calculations ────────────────────────────────────────── */
+  const pmin     = cities[0]?.price_cad ?? 7.50
+  const pmax     = cities[cities.length - 1]?.price_cad ?? 18.50
+  const spread   = cities.length >= 2 ? pmax / pmin : 2.4
+  const maxPlates = cities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
   const cheapTop = cities.slice(0, 8)
   const priceTop = [...cities].slice(-8).reverse()
 
   return (
-    <div style={{ background: '#0a0a0c', color: '#ece9e2', fontFamily: "'Geist', system-ui, sans-serif", overflowX: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
+    <div style={{ background: 'var(--color-bg)', color: 'var(--color-text-1)', fontFamily: "var(--font-body)", overflowX: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
       <style>{`
-        .grain{cursor:pointer}
-        .grain ellipse,.grain circle{transform-box:fill-box;transform-origin:center;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-        .grain:hover ellipse,.grain:hover circle{transform:scale(1.5)!important}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        @keyframes drawerIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
-        .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-        .reveal.in{opacity:1;transform:none}
-        @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
-        @media(max-width:760px){.stats-grid{grid-template-columns:1fr 1fr!important} .board-grid{grid-template-columns:1fr!important} .metrics-grid{grid-template-columns:1fr!important} .method-grid{grid-template-columns:1fr!important;gap:50px!important}}
-        @media(max-width:880px){.board-grid{grid-template-columns:1fr!important}.metrics-grid{grid-template-columns:1fr!important}}
+        .grain { cursor: pointer; }
+        .grain circle { transform-box: fill-box; transform-origin: center; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+        .grain:hover circle { transform: scale(1.4) !important; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+        h1, h2, h3, .heading-display { fontFamily: var(--font-display); }
+        @media(max-width: 900px) {
+          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .board-grid { grid-template-columns: 1fr !important; }
+          .metrics-grid { grid-template-columns: 1fr !important; }
+          .method-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
       `}</style>
 
       <NavBar fixed />
 
-      {/* ════════════════════════════════════════════════════════════
-          HERO
-      ════════════════════════════════════════════════════════════ */}
+      {/* HERO SECTION */}
       <header style={{ paddingTop: 110 }}>
         <div style={WRAP}>
-          {/* Eyebrow */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 34 }}>
-            <div style={{ width: 40, height: 1, background: '#c8a862', opacity: .6 }} />
-            <span style={{ ...LABEL, color: '#c8a862' }}>Forty cities · Food-based affordability index</span>
-          </div>
+          <div style={{ display: 'flex', gap: 40, alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1 1 540px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 30 }}>
+                <div style={{ width: 40, height: 1, background: 'var(--color-border)' }} />
+                <span style={LABEL}>Canada Edition · Food-based Affordability Index</span>
+              </div>
 
-          <h1 style={{ fontSize: 'clamp(44px,6.4vw,92px)', lineHeight: 1.02, letterSpacing: '-.025em', fontWeight: 200, maxWidth: '18ch', margin: '0 0 30px' }}>
-            One dish, priced in forty cities.<br />
-            <strong style={{ fontWeight: 500 }}>The cost of living, made legible.</strong>
-          </h1>
+              <h1 style={{ fontSize: 'clamp(38px, 5.2vw, 76px)', lineHeight: 1.05, letterSpacing: '-.025em', fontWeight: 200, maxWidth: '20ch', margin: '0 0 28px' }}>
+                One dish, priced across <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Canadian communities.</strong>
+              </h1>
 
-          <p style={{ maxWidth: '54ch', color: '#8d8d96', fontSize: 17, fontWeight: 300, lineHeight: 1.65, margin: '0 0 44px' }}>
-            A bowl of egg fried rice costs <strong style={{ color: '#ece9e2', fontWeight: 400 }}>{fmt(pmin)}</strong> in one city and{' '}
-            <strong style={{ color: '#ece9e2', fontWeight: 400 }}>{fmt(pmax)}</strong> in another.
-            The index tracks that gap and what restaurant pricing quietly reveals about rent, wages, and who can afford to live where.
-          </p>
+              <p style={{ maxWidth: '56ch', color: 'var(--color-text-2)', fontSize: 16.5, fontWeight: 300, lineHeight: 1.65, margin: '0 0 40px' }}>
+                A classic plate of poutine costs <strong style={{ color: 'var(--color-text-1)', fontWeight: 600 }}>{fmt(pmin)}</strong> in one community and{' '}
+                <strong style={{ color: 'var(--color-text-1)', fontWeight: 600 }}>{fmt(pmax)}</strong> in another.
+                The index evaluates local cost of living and housing burdens relative to local median wages.
+              </p>
 
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            <a href="/cities" style={BTN_GOLD}>Browse the index</a>
-            <a href="/methodology" style={BTN_GHOST}>Methodology</a>
-          </div>
-        </div>
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                <a href="/cities" style={BTN_GOLD}>Browse Communities</a>
+                <a href="/explore" style={BTN_GHOST}>Interactive Map</a>
+              </div>
+            </div>
 
-        {/* ── World map ──────────────────────────────────────────── */}
-        <div style={{ marginTop: 90 }}>
-          <div style={{ ...WRAP, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 22, flexWrap: 'wrap', gap: 10 }}>
-            <span style={{ ...LABEL, color: '#ece9e2' }}>The atlas — every indexed city</span>
-            <span style={LABEL}>Hover a grain · baseline price, CAD</span>
-          </div>
-          <div style={{ borderTop: '1px solid #1a1a1f', borderBottom: '1px solid #1a1a1f', background: 'radial-gradient(1200px 500px at 50% 0%, rgba(200,168,98,.04), transparent 65%)' }}>
-            <div style={{ ...WRAP, paddingTop: 34, paddingBottom: 34 }}>
-              <svg ref={mapRef} role="img" aria-label="World map of fried rice prices across 40 cities" style={{ display: 'block', width: '100%', height: 'auto' }} />
+            {/* Themed Poutine Illustration */}
+            <div style={{ flex: '1 1 320px', maxWidth: 360, display: 'flex', justifyContent: 'center' }} className="hero-graphic">
+              <DetailedPoutineIllustration />
             </div>
           </div>
         </div>
 
-        {/* ── Stats strip ────────────────────────────────────────── */}
-        <div style={{ ...WRAP, borderBottom: '1px solid #1a1a1f' }}>
-          <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
-            {[
-              { prefix: '',     val: cities.length || 40, dec: 0, suffix: '',  label: 'Cities indexed' },
-              { prefix: 'CA$', val: pmin,                 dec: 2, suffix: '',  label: 'Cheapest baseline' },
-              { prefix: 'CA$', val: pmax,                 dec: 2, suffix: '',  label: 'Most expensive' },
-              { prefix: '',     val: spread,              dec: 1, suffix: '×', label: 'Price spread' },
-            ].map((s, i) => (
-              <div key={s.label} style={{ padding: '42px 30px', borderLeft: i > 0 ? '1px solid #1a1a1f' : 'none', paddingLeft: i === 0 ? 0 : 30 }}>
-                <div style={{ fontWeight: 200, fontSize: 'clamp(30px,3.2vw,46px)', letterSpacing: '-.02em', fontVariantNumeric: 'tabular-nums' }}>
-                  {s.prefix && <span style={{ fontSize: '.45em', color: '#8d8d96', fontWeight: 300, letterSpacing: '.04em', verticalAlign: '.5em', marginRight: 2 }}>{s.prefix}</span>}
-                  {s.val.toFixed(s.dec)}
-                  {s.suffix && <span style={{ fontSize: '.45em', color: '#8d8d96', fontWeight: 300, letterSpacing: '.04em', verticalAlign: '.5em', marginLeft: 2 }}>{s.suffix}</span>}
+        {/* Dynamic Canada Map */}
+        <div style={{ marginTop: 80 }}>
+          <div style={{ ...WRAP, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 18, flexWrap: 'wrap', gap: 10 }}>
+            <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>The Canadian Index Map — {cities.length} Communities</span>
+            <span style={LABEL}>Hover a community point to inspect baseline price</span>
+          </div>
+          <div style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', background: 'radial-gradient(circle at 50% 50%, var(--color-surface), var(--color-bg))' }}>
+            <div style={{ ...WRAP, paddingTop: 20, paddingBottom: 20 }}>
+              {mapLoading && (
+                <div style={{ height: 450, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-3)', ...MONO, fontSize: 12 }}>
+                  LOADING CANADA ATLAS...
                 </div>
-                <div style={{ ...LABEL, marginTop: 10 }}>{s.label}</div>
+              )}
+              <svg ref={mapRef} style={{ display: mapLoading ? 'none' : 'block', width: '100%', height: 'auto' }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div style={{ ...WRAP, borderBottom: '1px solid var(--color-border)' }}>
+          <div className="stats-grid">
+            {[
+              { prefix: '', val: cities.length, dec: 0, suffix: '', label: 'Communities Indexed' },
+              { prefix: 'CA$', val: pmin, dec: 2, suffix: '', label: 'Lowest Baseline Poutine' },
+              { prefix: 'CA$', val: pmax, dec: 2, suffix: '', label: 'Highest Baseline Poutine' },
+              { prefix: '', val: spread, dec: 2, suffix: '×', label: 'Price Spread Ratio' },
+            ].map((s, i) => (
+              <div key={s.label} style={{ padding: '36px 20px', borderLeft: i > 0 ? '1px solid var(--color-border)' : 'none', paddingLeft: i === 0 ? 0 : 20 }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: '-.02em', fontVariantNumeric: 'tabular-nums' }}>
+                  {s.prefix && <span style={{ fontSize: '.45em', color: 'var(--color-text-3)', fontWeight: 300, verticalAlign: '.4em', marginRight: 2 }}>{s.prefix}</span>}
+                  {s.val.toFixed(s.dec)}
+                  {s.suffix && <span style={{ fontSize: '.45em', color: 'var(--color-text-3)', fontWeight: 300, verticalAlign: '.4em', marginLeft: 2 }}>{s.suffix}</span>}
+                </div>
+                <div style={{ ...LABEL, marginTop: 8 }}>{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </header>
 
-      {/* ════════════════════════════════════════════════════════════
-          SPECTRUM
-      ════════════════════════════════════════════════════════════ */}
+      {/* THE SPECTRUM */}
       <section style={SEC} id="spectrum">
         <div style={WRAP}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 64, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 50, flexWrap: 'wrap' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
-                <span style={{ ...LABEL, color: '#c8a862' }}>The spectrum</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+                <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+                <span style={LABEL}>The Price Axis</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(30px,3.8vw,52px)', letterSpacing: '-.02em', lineHeight: 1.08, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                Forty prices. <strong style={{ fontWeight: 500 }}>One axis.</strong>
+              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
+                Price Spectrum. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>One standard.</strong>
               </h2>
             </div>
-            <p style={{ maxWidth: '40ch', color: '#8d8d96', fontWeight: 300, fontSize: 15.5 }}>
-              Every indexed city placed on a single price line. The clustering is the story, and so are the outliers.
+            <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
+              Every community laid out relative to their baseline price. Prices represent local neighborhood median pricing, revealing local purchasing power.
             </p>
           </div>
-          <div style={{ ...CARD, padding: '40px 36px 28px' }}>
-            <svg ref={specRef} role="img" aria-label="Strip plot of fried rice prices across 40 cities" style={{ display: 'block', width: '100%', height: 230 }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 18, borderTop: '1px solid #1a1a1f', marginTop: 10, flexWrap: 'wrap', gap: 8 }}>
-              <span style={LABEL}>Baseline price, egg fried rice · CAD</span>
-              <span style={LABEL}>Median of local venues per city</span>
+          <div style={{ ...CARD, padding: '36px 30px 24px' }}>
+            <svg ref={specRef} style={{ display: 'block', width: '100%', height: 200 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 14, borderTop: '1px solid var(--color-border)', marginTop: 10, flexWrap: 'wrap', gap: 8 }}>
+              <span style={LABEL}>Baseline price, classic poutine · CAD</span>
+              <span style={LABEL}>Median of local scanned venues</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          WHAT WE TRACK
-      ════════════════════════════════════════════════════════════ */}
+      {/* METRICS INFORMATION */}
       <section style={{ ...SEC, paddingTop: 0 }} id="tracks">
         <div style={WRAP}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 64, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 50, flexWrap: 'wrap' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
-                <span style={{ ...LABEL, color: '#c8a862' }}>What the index tracks</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+                <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+                <span style={LABEL}>Metrics Guide</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(30px,3.8vw,52px)', letterSpacing: '-.02em', lineHeight: 1.08, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                Three numbers, <strong style={{ fontWeight: 500 }}>one dish.</strong>
+              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
+                Dissecting local <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>discretionary income.</strong>
               </h2>
             </div>
-            <p style={{ maxWidth: '40ch', color: '#8d8d96', fontWeight: 300, fontSize: 15.5 }}>
-              Macro indicators average away the lives of the people they describe. A bowl of fried rice doesn&apos;t.
+            <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
+              National indicators average away regional differences. We zoom into local neighborhoods to see what money really buys.
             </p>
           </div>
 
-          <div className="metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: '#1a1a1f', border: '1px solid #1a1a1f', borderRadius: 18, overflow: 'hidden' }}>
-            {/* M·01 — Baseline price */}
-            <div style={{ background: '#101013', padding: '44px 38px', position: 'relative' }}>
-              <span style={{ ...LABEL, position: 'absolute', top: 28, right: 30, color: '#55555e' }}>M·01</span>
-              <div style={{ height: 118, marginBottom: 30 }}>
-                <svg viewBox="0 0 280 118" width="100%" height="100%" aria-hidden="true">
-                  <line x1="14" y1="92" x2="266" y2="92" stroke="#222228"/>
-                  <text x="14" y="110" fontFamily="Geist Mono" fontSize="8.5" fill="#8d8d96" letterSpacing="1">$0</text>
-                  <text x="250" y="110" fontFamily="Geist Mono" fontSize="8.5" fill="#8d8d96" letterSpacing="1">$22</text>
-                  <ellipse cx="40"  cy="82" rx="8" ry="4.4" fill="#76a98c" transform="rotate(-16 40 82)"/>
-                  <ellipse cx="118" cy="68" rx="8" ry="4.4" fill="#c8a862" transform="rotate(8 118 68)"/>
-                  <ellipse cx="226" cy="40" rx="8" ry="4.4" fill="#c0674e" transform="rotate(-10 226 40)"/>
-                  <path d="M40 82 C 88 80, 96 70, 118 68 S 196 52, 226 40" stroke="#2c2c33" strokeDasharray="2 5" fill="none"/>
-                  <text x="226" y="24" fontFamily="Geist Mono" fontSize="9.5" fill="#c0674e" textAnchor="middle">{pmax > 0 ? fmt(pmax) : 'CA$21.88'}</text>
-                  <text x="40"  y="66" fontFamily="Geist Mono" fontSize="9.5" fill="#76a98c" textAnchor="middle">{pmin > 0 ? fmt(pmin) : 'CA$2.51'}</text>
+          <div className="metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: 'var(--color-border)', border: '1px solid var(--color-border)', borderRadius: 18, overflow: 'hidden' }}>
+            {/* Metric 1 */}
+            <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
+              <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·01</span>
+              <div style={{ height: 100, marginBottom: 20 }}>
+                <svg viewBox="0 0 280 100" width="100%" height="100%">
+                  <line x1="10" y1="80" x2="270" y2="80" stroke="var(--color-border)" strokeWidth="1"/>
+                  {/* Small baseline curd */}
+                  <g transform="translate(40, 70)">
+                    <rect x="-10" y="0" width="20" height="10" fill="var(--color-border)" rx="2"/>
+                    <rect x="-6" y="-7" width="2.5" height="7" rx="0.5" fill="var(--color-green)" transform="rotate(-15)"/>
+                    <rect x="2" y="-8" width="2.5" height="8" rx="0.5" fill="var(--color-green)" transform="rotate(10)"/>
+                    <circle cx="-1" cy="-2" r="1.5" fill="var(--color-text-1)"/>
+                  </g>
+                  <text x="40" y="44" fontFamily="var(--font-mono)" fontSize="9" fill="var(--color-green)" textAnchor="middle">{fmt(pmin)}</text>
+                  
+                  {/* Medium curd */}
+                  <g transform="translate(140, 68)">
+                    <rect x="-14" y="0" width="28" height="12" fill="var(--color-border)" rx="2"/>
+                    <rect x="-9" y="-10" width="3" height="10" rx="0.5" fill="var(--color-text-2)" transform="rotate(-10)"/>
+                    <rect x="0" y="-11" width="3" height="11" rx="0.5" fill="var(--color-text-2)" transform="rotate(5)"/>
+                    <rect x="6" y="-9" width="3" height="9" rx="0.5" fill="var(--color-text-2)" transform="rotate(15)"/>
+                    <circle cx="-4" cy="-3" r="2" fill="var(--color-text-1)"/>
+                    <circle cx="3" cy="-3" r="1.8" fill="var(--color-text-1)"/>
+                  </g>
+
+                  {/* Large curd */}
+                  <g transform="translate(230, 64)">
+                    <rect x="-18" y="0" width="36" height="16" fill="var(--color-accent)" rx="3"/>
+                    <rect x="-12" y="-13" width="3.5" height="13" rx="0.5" fill="var(--color-green)" transform="rotate(-20)"/>
+                    <rect x="-3" y="-15" width="3.5" height="15" rx="0.5" fill="var(--color-green)" transform="rotate(-5)"/>
+                    <rect x="5" y="-14" width="3.5" height="14" rx="0.5" fill="var(--color-green)" transform="rotate(15)"/>
+                    <rect x="10" y="-11" width="3.5" height="11" rx="0.5" fill="var(--color-green)" transform="rotate(30)"/>
+                    <circle cx="-7" cy="-4" r="2.5" fill="#fff"/>
+                    <circle cx="1" cy="-5" r="2.8" fill="#fff"/>
+                    <circle cx="7" cy="-4" r="2.2" fill="#fff"/>
+                    <path d="M-13 -2 Q0 -5 13 -2" stroke="#8d4a24" strokeWidth="2.5" fill="none"/>
+                  </g>
+                  <text x="230" y="24" fontFamily="var(--font-mono)" fontSize="9" fill="var(--color-accent)" textAnchor="middle">{fmt(pmax)}</text>
                 </svg>
               </div>
-              <h3 style={{ fontSize: 19, letterSpacing: '-.01em', marginBottom: 12, fontWeight: 500 }}>Baseline price</h3>
-              <p style={{ color: '#8d8d96', fontSize: 14.5, fontWeight: 300 }}>What you&apos;d pay at a regular local restaurant. The local rate, no tourist markup, no hotel surcharge.</p>
+              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Baseline Price</h3>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The median price of a standard classic poutine (fries, curds, gravy) at local, non-tourist diners in the community, measured in CAD.</p>
             </div>
 
-            {/* M·02 — Rent burden */}
-            <div style={{ background: '#101013', padding: '44px 38px', position: 'relative' }}>
-              <span style={{ ...LABEL, position: 'absolute', top: 28, right: 30, color: '#55555e' }}>M·02</span>
-              <div style={{ height: 118, marginBottom: 30 }}>
-                <svg viewBox="0 0 280 118" width="100%" height="100%" aria-hidden="true">
-                  <g transform="translate(140,114)">
-                    <path d="M -94 0 A 94 94 0 0 1 94 0" fill="none" stroke="#222228" strokeWidth="6"/>
-                    <path d="M -94 0 A 94 94 0 0 1 91 -23" fill="none" stroke="#c0674e" strokeWidth="6" strokeLinecap="round"/>
-                    <text x="0" y="-30" fontFamily="Geist" fontWeight="300" fontSize="30" fill="#ece9e2" textAnchor="middle">92%</text>
-                    <text x="0" y="-10" fontFamily="Geist Mono" fontSize="8" fill="#8d8d96" textAnchor="middle" letterSpacing="2">RENT · WORST CASE</text>
+            {/* Metric 2 */}
+            <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
+              <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·02</span>
+              <div style={{ height: 100, marginBottom: 20 }}>
+                <svg viewBox="0 0 280 100" width="100%" height="100%">
+                  {/* Semi-circle gauge */}
+                  <g transform="translate(140, 88)">
+                    <path d="M -70 0 A 70 70 0 0 1 70 0" fill="none" stroke="var(--color-border)" strokeWidth="8" strokeLinecap="round"/>
+                    <path d="M -70 0 A 70 70 0 0 1 56 -42" fill="none" stroke="var(--color-accent)" strokeWidth="8" strokeLinecap="round"/>
+                    <text x="0" y="-24" fontFamily="var(--font-display)" fontWeight="400" fontSize="28" fill="var(--color-text-1)" textAnchor="middle">56%</text>
+                    <text x="0" y="-8" fontFamily="var(--font-mono)" fontSize="7.5" fill="var(--color-accent)" textAnchor="middle" letterSpacing="1">MAX RENT BURDEN</text>
                   </g>
                 </svg>
               </div>
-              <h3 style={{ fontSize: 19, letterSpacing: '-.01em', marginBottom: 12, fontWeight: 500 }}>Rent burden</h3>
-              <p style={{ color: '#8d8d96', fontSize: 14.5, fontWeight: 300 }}>How much of the average paycheck goes to rent before a dollar is spent on food. In some indexed cities, it&apos;s most of it.</p>
+              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Rent Burden</h3>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>1BR median rent as a percentage of the average local monthly paycheck. Highlights how severe housing costs drain earnings.</p>
             </div>
 
-            {/* M·03 — Bowls after rent */}
-            <div style={{ background: '#101013', padding: '44px 38px', position: 'relative' }}>
-              <span style={{ ...LABEL, position: 'absolute', top: 28, right: 30, color: '#55555e' }}>M·03</span>
-              <div style={{ height: 118, marginBottom: 30 }}>
-                <svg viewBox="0 0 280 118" width="100%" height="100%" aria-hidden="true">
-                  {/* Cheap city row */}
-                  <text x="14" y="28" fontFamily="Geist Mono" fontSize="8" fill="#8d8d96" letterSpacing="2">KARACHI</text>
-                  {[...Array(12)].map((_, i) => (
-                    <ellipse key={i} cx={22 + i * 20} cy={42} rx="6.5" ry="3.6" transform={`rotate(${(i * 31) % 50 - 25} ${22 + i * 20} 42)`} fill="#76a98c" opacity=".9"/>
-                  ))}
-                  {/* Expensive city row */}
-                  <text x="14" y="76" fontFamily="Geist Mono" fontSize="8" fill="#8d8d96" letterSpacing="2">LONDON</text>
-                  {[...Array(3)].map((_, i) => (
-                    <ellipse key={i} cx={22 + i * 20} cy={90} rx="6.5" ry="3.6" transform={`rotate(${(i * 31) % 50 - 25} ${22 + i * 20} 90)`} fill="#c0674e" opacity=".9"/>
-                  ))}
-                  <text x="14" y="112" fontFamily="Geist Mono" fontSize="8" fill="#8d8d96" letterSpacing="1">ONE GRAIN = 1 BOWL OF DISPOSABLE INCOME</text>
+            {/* Metric 3 */}
+            <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
+              <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·03</span>
+              <div style={{ height: 100, marginBottom: 20 }}>
+                <svg viewBox="0 0 280 100" width="100%" height="100%">
+                  <text x="14" y="24" fontFamily="var(--font-mono)" fontSize="8.5" fill="var(--color-text-3)" letterSpacing="1.5">EDMONTON (ACCESSIBLE)</text>
+                  <g transform="translate(14, 30)">
+                    {[...Array(9)].map((_, i) => (
+                      <rect key={i} x={i * 18} y="2" width="14" height="6" rx="1.5" fill="var(--color-green)" stroke="#c38a22" strokeWidth="0.5"/>
+                    ))}
+                  </g>
+                  <text x="14" y="68" fontFamily="var(--font-mono)" fontSize="8.5" fill="var(--color-text-3)" letterSpacing="1.5">VANCOUVER (EXPENSIVE)</text>
+                  <g transform="translate(14, 74)">
+                    {[...Array(4)].map((_, i) => (
+                      <rect key={i} x={i * 18} y="2" width="14" height="6" rx="1.5" fill="var(--color-accent)" stroke="#8d5f14" strokeWidth="0.5"/>
+                    ))}
+                  </g>
                 </svg>
               </div>
-              <h3 style={{ fontSize: 19, letterSpacing: '-.01em', marginBottom: 12, fontWeight: 500 }}>Bowls after rent</h3>
-              <p style={{ color: '#8d8d96', fontSize: 14.5, fontWeight: 300 }}>Once rent is paid, how many bowls can a median earner afford per month? The most direct affordability signal in the index.</p>
+              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Poutines After Rent</h3>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>How many classic poutines a median worker can purchase with their remaining salary after paying local average 1BR rent.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          LEADERBOARD
-      ════════════════════════════════════════════════════════════ */}
+      {/* LEADERBOARDS */}
       <section style={{ ...SEC, paddingTop: 0 }} id="board">
         <div style={WRAP}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 64, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 50, flexWrap: 'wrap' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
-                <span style={{ ...LABEL, color: '#c8a862' }}>The leaderboard</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+                <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+                <span style={LABEL}>The Standings</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(30px,3.8vw,52px)', letterSpacing: '-.02em', lineHeight: 1.08, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                An {spread.toFixed(1)}× gap, <strong style={{ fontWeight: 500 }}>grain by grain.</strong>
+              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
+                Leaderboards. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Cheapest vs. Priciest.</strong>
               </h2>
             </div>
-            <p style={{ maxWidth: '40ch', color: '#8d8d96', fontWeight: 300, fontSize: 15.5 }}>
-              The same dish. The same portion. A price difference of over {Math.floor(spread)} times between the floor and the ceiling of the index.
+            <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
+              Comparing absolute pricing for a single baseline plate across Canada. Highly reflective of local commercial rents and operating costs.
             </p>
           </div>
 
-          <div ref={boardRef} className="board-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1a1a1f', border: '1px solid #1a1a1f', borderRadius: 18, overflow: 'hidden' }}>
+          <div ref={boardRef} className="board-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--color-border)', border: '1px solid var(--color-border)', borderRadius: 18, overflow: 'hidden' }}>
             {/* Cheapest */}
-            <div style={{ background: '#101013', padding: '40px 38px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 30 }}>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#76a98c' }} />
-                <span style={{ ...LABEL, color: '#ece9e2' }}>Lowest baselines · CAD</span>
+            <div style={{ background: 'var(--color-surface)', padding: '36px 30px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-green)' }} />
+                <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Lowest Baselines · CAD</span>
               </div>
               {cheapTop.map((c, i) => (
-                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid #1a1a1f' : 'none' }}>
-                  <span style={{ ...MONO, fontSize: 10, color: '#55555e', letterSpacing: '.1em' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontSize: 14.5 }}>
-                    {c.city}
-                    <small style={{ display: 'block', ...MONO, fontSize: 9.5, color: '#8d8d96', letterSpacing: '.12em', fontWeight: 300, marginTop: 2 }}>
-                      {c.country} · {c.bowlsAfterRent != null ? c.bowlsAfterRent.toLocaleString() + ' BOWLS AFTER RENT' : ''}
+                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                  <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontSize: 14.5, fontWeight: 500 }}>
+                    {c.city}, {c.region}
+                    <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
+                      {c.bowlsAfterRent != null ? c.bowlsAfterRent.toLocaleString() + ' poutines left after rent' : ''}
                     </small>
                   </span>
-                  <span style={{ position: 'relative', height: 22, width: 'min(34vw,280px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: '#76a98c', width: boardIn ? `${(c.price_cad / pmax * 100).toFixed(1)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 60}ms` }} />
-                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: '#101013', paddingLeft: 10, fontVariantNumeric: 'tabular-nums' }}>{fmt(c.price_cad)}</span>
+                  <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${(c.price_cad / pmax * 100).toFixed(1)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{fmt(c.price_cad)}</span>
                   </span>
                 </div>
               ))}
             </div>
 
             {/* Priciest */}
-            <div style={{ background: '#101013', padding: '40px 38px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 30 }}>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#c0674e' }} />
-                <span style={{ ...LABEL, color: '#ece9e2' }}>Highest baselines · CAD</span>
+            <div style={{ background: 'var(--color-surface)', padding: '36px 30px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-accent)' }} />
+                <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Highest Baselines · CAD</span>
               </div>
               {priceTop.map((c, i) => (
-                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid #1a1a1f' : 'none' }}>
-                  <span style={{ ...MONO, fontSize: 10, color: '#55555e', letterSpacing: '.1em' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontSize: 14.5 }}>
-                    {c.city}
-                    <small style={{ display: 'block', ...MONO, fontSize: 9.5, color: '#8d8d96', letterSpacing: '.12em', fontWeight: 300, marginTop: 2 }}>
-                      {c.country} · {c.bowlsAfterRent != null ? c.bowlsAfterRent.toLocaleString() + ' BOWLS AFTER RENT' : ''}
+                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                  <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontSize: 14.5, fontWeight: 500 }}>
+                    {c.city}, {c.region}
+                    <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
+                      {c.bowlsAfterRent != null ? c.bowlsAfterRent.toLocaleString() + ' poutines left after rent' : ''}
                     </small>
                   </span>
-                  <span style={{ position: 'relative', height: 22, width: 'min(34vw,280px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: '#c0674e', width: boardIn ? `${(c.price_cad / pmax * 100).toFixed(1)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 60}ms` }} />
-                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: '#101013', paddingLeft: 10, fontVariantNumeric: 'tabular-nums' }}>{fmt(c.price_cad)}</span>
+                  <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${(c.price_cad / pmax * 100).toFixed(1)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{fmt(c.price_cad)}</span>
                   </span>
                 </div>
               ))}
@@ -630,74 +826,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          SCATTER — Affordability map
-      ════════════════════════════════════════════════════════════ */}
+      {/* SCATTER PLOT */}
       <section style={{ ...SEC, paddingTop: 0 }} id="scatter">
         <div style={WRAP}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 64, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40, marginBottom: 50, flexWrap: 'wrap' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
-                <span style={{ ...LABEL, color: '#c8a862' }}>The affordability map</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+                <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+                <span style={LABEL}>The Affordability Map</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(30px,3.8vw,52px)', letterSpacing: '-.02em', lineHeight: 1.08, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                Rent eats first. <strong style={{ fontWeight: 500 }}>Then you do.</strong>
+              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
+                Rent burden <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>vs. poutines left.</strong>
               </h2>
             </div>
-            <p style={{ maxWidth: '40ch', color: '#8d8d96', fontWeight: 300, fontSize: 15.5 }}>
-              Each grain is a city. Further right, more of the average paycheck goes to rent. Higher up, more bowls remain.
+            <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
+              Visualizing local purchasing power. Communities further right spend more of their local salary on housing. Communities higher up have more disposable poutines left over.
             </p>
           </div>
-          <div style={{ ...CARD, padding: '40px 36px' }}>
-            <svg ref={scatRef} role="img" aria-label="Scatter plot of rent burden versus bowls affordable after rent, by city" style={{ display: 'block', width: '100%', height: 480 }} />
+          <div style={{ ...CARD, padding: '36px 30px' }}>
+            <svg ref={scatRef} style={{ display: 'block', width: '100%', height: 450 }} />
             <div style={{ display: 'flex', gap: 30, marginTop: 24, flexWrap: 'wrap' }}>
-              {[['#76a98c','Bowl under CA$6'],['#c8a862','CA$6 to CA$13'],['#c0674e','Over CA$13']].map(([col, label]) => (
+              {[['var(--color-green)','Baseline under CA$9.50'],['var(--color-text-2)','CA$9.50 to CA$12.50'],['var(--color-accent)','Over CA$12.50']].map(([col, label]) => (
                 <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ width: 16, height: 2, display: 'inline-block', background: col }} />
+                  <span style={{ width: 14, height: 2, display: 'inline-block', background: col }} />
                   <span style={LABEL}>{label}</span>
                 </span>
               ))}
-              <span style={{ ...LABEL, marginLeft: 'auto' }}>Grain size proportional to baseline price</span>
+              <span style={{ ...LABEL, marginLeft: 'auto' }}>Marker size proportional to baseline price</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          METHODOLOGY
-      ════════════════════════════════════════════════════════════ */}
-      <section style={{ ...SEC, borderTop: '1px solid #1a1a1f' }} id="method">
+      {/* METHODOLOGY SECTION SUMMARY */}
+      <section style={{ ...SEC, borderTop: '1px solid var(--color-border)' }} id="method">
         <div style={WRAP}>
-          <div className="method-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 90, alignItems: 'start' }}>
+          <div className="method-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
-                <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
-                <span style={{ ...LABEL, color: '#c8a862' }}>Methodology</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+                <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+                <span style={LABEL}>Scientific rigor</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(30px,3.8vw,52px)', letterSpacing: '-.02em', lineHeight: 1.08, fontWeight: 200, maxWidth: '22ch', margin: '0 0 22px' }}>
-                Boring on purpose. <strong style={{ fontWeight: 500 }}>Rigorous by design.</strong>
+              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: '0 0 20px' }}>
+                Boring on purpose. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Rigorous by design.</strong>
               </h2>
-              <p style={{ color: '#8d8d96', maxWidth: '48ch', fontWeight: 300, fontSize: 15 }}>
-                Novel indexes live or die on their discipline. Every price in the index passes the same four gates before it is published, and every rejected submission is logged.
+              <p style={{ color: 'var(--color-text-2)', maxWidth: '46ch', fontWeight: 300, fontSize: 14.5, lineHeight: 1.6 }}>
+                Novel indexes live and die on their structural integrity. We utilize CMHC housing databases, Statistics Canada census tables, and direct restaurant menu audits.
               </p>
-              <div style={{ display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' }}>
-                <a href="/methodology" style={BTN_GHOST}>Read the full methodology</a>
+              <div style={{ display: 'flex', gap: 16, marginTop: 30 }}>
+                <a href="/methodology" style={BTN_GHOST}>Read full methodology</a>
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {[
-                { n: '01', title: 'Standard dish definition', body: 'Plain egg fried rice, single portion, dine-in or equivalent takeout. No protein add-ons, no combo pricing.' },
-                { n: '02', title: 'Local-market sampling',    body: 'Prices come from regular neighbourhood restaurants. Median of multiple venues, tourist districts excluded.' },
-                { n: '03', title: 'Currency normalisation',  body: 'All prices converted to CAD at a fixed monthly reference rate, so cities compare on the same day\'s terms.' },
-                { n: '04', title: 'Cross-checks and review', body: 'Submissions are verified against independent sources before entering the index. Outliers are flagged, not averaged in.' },
+                { n: '01', title: 'Standardized Dish Portion', body: 'Standard baseline classic poutine (fresh-cut fries, cheese curds, gravy). No gourmet meat or luxury add-ons.' },
+                { n: '02', title: 'Local Audits Only', body: 'Sourced from local diners, chip trucks, and neighborhood poutineries outside high-cost tourist spots.' },
+                { n: '03', title: 'National Wage Normalization', body: 'Salaries and rents are normalized against local Statistics Canada data to calculate local purchasing power.' },
+                { n: '04', title: 'Source Verification', body: 'Each submitted restaurant entry is cross-checked against menu snapshots or food delivery menus for quality validation.' }
               ].map((step, i) => (
-                <div key={step.n} style={{ display: 'flex', gap: 26, padding: '26px 0', borderBottom: i < 3 ? '1px solid #1a1a1f' : 'none', paddingTop: i === 0 ? 6 : 26 }}>
-                  <span style={{ ...MONO, fontSize: 10.5, color: '#c8a862', paddingTop: 5, flexShrink: 0, letterSpacing: '.15em' }}>{step.n}</span>
+                <div key={step.title} style={{ display: 'flex', gap: 20, padding: '20px 0', borderBottom: i < 3 ? '1px solid var(--color-border)' : 'none', paddingTop: i === 0 ? 0 : 20 }}>
+                  <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)', paddingTop: 2 }}>{String(i + 1).padStart(2, '0')}</span>
                   <div>
-                    <h4 style={{ fontSize: 16.5, fontWeight: 500, marginBottom: 6 }}>{step.title}</h4>
-                    <p style={{ fontSize: 14, color: '#8d8d96', fontWeight: 300 }}>{step.body}</p>
+                    <h4 style={{ fontSize: 16, fontWeight: 600, marginBottom: 5 }}>{step.title}</h4>
+                    <p style={{ fontSize: 13.5, color: 'var(--color-text-2)', fontWeight: 300, lineHeight: 1.5 }}>{step.body}</p>
                   </div>
                 </div>
               ))}
@@ -706,132 +898,146 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          SUBMIT CTA
-      ════════════════════════════════════════════════════════════ */}
+      {/* SUBMIT CALL TO ACTION */}
       <section style={{ ...SEC, paddingTop: 0 }} id="submit">
         <div style={WRAP}>
-          <div style={{ border: '1px solid #1a1a1f', borderRadius: 22, background: 'radial-gradient(900px 400px at 50% -30%, rgba(200,168,98,.08), transparent 60%), #101013', padding: '90px 60px', textAlign: 'center' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, marginBottom: 18 }}>
-              <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
-              <span style={{ ...LABEL, color: '#c8a862' }}>Open data · community sourced</span>
-              <div style={{ width: 32, height: 1, background: '#c8a862', opacity: .6 }} />
+          <div style={{ border: '1px solid var(--color-border)', borderRadius: 22, background: 'var(--color-surface)', padding: '80px 40px', textAlign: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+              <svg width="64" height="64" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <circle cx="14" cy="14" r="13" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
+                <rect x="9" y="8" width="2" height="10" rx="0.5" transform="rotate(-15 9 8)" fill="var(--color-green)"/>
+                <rect x="12" y="6" width="2" height="12" rx="0.5" transform="rotate(5 12 6)" fill="var(--color-green)"/>
+                <rect x="15" y="7" width="2" height="11" rx="0.5" transform="rotate(-5 15 7)" fill="var(--color-green)"/>
+                <rect x="17" y="9" width="2" height="9" rx="0.5" transform="rotate(20 17 9)" fill="var(--color-green)"/>
+                <circle cx="11" cy="13" r="1.8" fill="var(--color-text-1)"/>
+                <circle cx="16" cy="12" r="1.6" fill="var(--color-text-1)"/>
+                <ellipse cx="13.5" cy="14.5" rx="2" ry="1.4" fill="var(--color-text-1)" transform="rotate(15 13.5 14.5)"/>
+                <path d="M 7 15 L 21 15 L 18 23 L 10 23 Z" fill="var(--color-accent)"/>
+                <path d="M 14 17.5 L 14.5 19 L 16 19 L 14.8 19.8 L 15.2 21.2 L 14 20.4 L 12.8 21.2 L 13.2 19.8 L 12 19 L 13.5 19 Z" fill="#ffffff" opacity="0.9"/>
+              </svg>
             </div>
-            <h2 style={{ fontSize: 'clamp(30px,3.8vw,52px)', letterSpacing: '-.02em', lineHeight: 1.08, fontWeight: 200, maxWidth: '22ch', margin: '0 auto 20px' }}>
-              Know what a bowl costs <strong style={{ fontWeight: 500 }}>where you live?</strong>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, marginBottom: 12 }}>
+              <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+              <span style={LABEL}>Help grow the index</span>
+              <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
+            </div>
+            <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: '0 auto 16px' }}>
+              Know what a plate costs <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>in your town?</strong>
             </h2>
-            <p style={{ maxWidth: '46ch', margin: '0 auto 44px', color: '#8d8d96', fontWeight: 300 }}>
-              The index grows one verified price at a time. Submit a price from your city and help map affordability for everyone.
+            <p style={{ maxWidth: '44ch', margin: '0 auto 36px', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
+              The index is community-driven. Submit pricing details from local diners in your community to build a stronger purchasing power map.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/submit"  style={BTN_GOLD}>Submit a price</a>
-              <a href="/reports" style={BTN_GHOST}>Latest report</a>
+              <a href="/submit" style={BTN_GOLD}>Submit a price</a>
+              <a href="/reports" style={BTN_GHOST}>Latest Reports</a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════
-          FOOTER
-      ════════════════════════════════════════════════════════════ */}
-      <footer style={{ borderTop: '1px solid #1a1a1f', padding: '64px 0 48px', color: '#8d8d96', fontSize: 14, fontWeight: 300 }}>
+      {/* FOOTER */}
+      <footer style={{ borderTop: '1px solid var(--color-border)', padding: '50px 0 40px', color: 'var(--color-text-3)', fontSize: 13.5, fontWeight: 300 }}>
         <div style={WRAP}>
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: 30, flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 500, fontSize: 14.5, color: '#ece9e2', marginBottom: 10 }}>
-                <svg width="18" height="18" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-                  <circle cx="13" cy="13" r="11.5" stroke="#c8a862" strokeWidth="1"/>
-                  <ellipse cx="10" cy="11.5" rx="3" ry="1.6" fill="#c8a862" transform="rotate(-22 10 11.5)"/>
-                  <ellipse cx="16" cy="14"   rx="3" ry="1.6" fill="#ece9e2" transform="rotate(16 16 14)"/>
-                  <ellipse cx="11.5" cy="16.5" rx="3" ry="1.6" fill="#76a98c" transform="rotate(-6 11.5 16.5)"/>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 600, fontSize: 14, color: 'var(--color-text-1)', marginBottom: 10 }}>
+                <svg width="18" height="18" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                  <circle cx="14" cy="14" r="13" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
+                  <rect x="9" y="8" width="2" height="10" rx="0.5" transform="rotate(-15 9 8)" fill="var(--color-green)"/>
+                  <rect x="12" y="6" width="2" height="12" rx="0.5" transform="rotate(5 12 6)" fill="var(--color-green)"/>
+                  <rect x="15" y="7" width="2" height="11" rx="0.5" transform="rotate(-5 15 7)" fill="var(--color-green)"/>
+                  <rect x="17" y="9" width="2" height="9" rx="0.5" transform="rotate(20 17 9)" fill="var(--color-green)"/>
+                  <circle cx="11" cy="13" r="1.8" fill="var(--color-text-1)"/>
+                  <circle cx="16" cy="12" r="1.6" fill="var(--color-text-1)"/>
+                  <ellipse cx="13.5" cy="14.5" rx="2" ry="1.4" fill="var(--color-text-1)" transform="rotate(15 13.5 14.5)"/>
+                  <path d="M 7 15 L 21 15 L 18 23 L 10 23 Z" fill="var(--color-accent)"/>
                 </svg>
-                The Fried Rice Index
+                The Canadian Poutine Index
               </div>
-              <div>A food-based affordability index. Free, forever.</div>
+              <div>Mapping purchasing power through everyday food. Free, forever.</div>
             </div>
-            <div style={{ display: 'flex', gap: 28 }}>
-              {[['Cities','/cities'],['Explore','/explore'],['Reports','/reports'],['Submit','/submit'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
-                <a key={h} href={h} style={{ ...MONO, fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#8d8d96', textDecoration: 'none' }}>{l}</a>
+            <div style={{ display: 'flex', gap: 24 }}>
+              {[['Communities','/cities'],['Explore','/explore'],['Reports','/reports'],['Submit','/submit'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
+                <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
               ))}
             </div>
           </div>
-          <div style={{ marginTop: 34, ...MONO, fontSize: 10, letterSpacing: '.12em', color: '#4c4c54', textTransform: 'uppercase' }}>
-            &copy; 2026 The Fried Rice Index · Built in Surrey, BC · efr-index.vercel.app
+          <div style={{ marginTop: 30, fontSize: 11, color: 'var(--color-text-4)' }}>
+            &copy; 2026 The Canadian Poutine Index · poutine-index.vercel.app
           </div>
         </div>
       </footer>
 
-      {/* ════════════════════════════════════════════════════════════
-          CITY PANEL — click a grain on any chart
-      ════════════════════════════════════════════════════════════ */}
+      {/* CITY DRAWER PANEL */}
       {sel && (() => {
         const pos = pmax > pmin ? Math.max(0, Math.min(1, (sel.price_cad - pmin) / (pmax - pmin))) : 0
-        const burdenCol = sel.rentBurden == null ? '#8d8d96' : sel.rentBurden > 70 ? '#c0674e' : sel.rentBurden > 50 ? '#c8a862' : '#76a98c'
+        const burdenCol = sel.rentBurden == null ? 'var(--color-text-3)' : sel.rentBurden > 50 ? 'var(--color-accent)' : sel.rentBurden > 35 ? 'var(--color-text-1)' : 'var(--color-green)'
         const slug = sel.city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+        const provName = sel.region ? PROVINCE_NAMES[sel.region] || sel.region : ''
         return (
           <>
-            <div onClick={() => setSel(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.55)', zIndex: 95, animation: 'fadeIn .25s ease' }} />
-            <aside style={{ position: 'fixed', top: 0, right: 0, height: '100vh', width: 'min(404px,100vw)', background: '#0d0d10', borderLeft: '1px solid #222228', zIndex: 96, overflowY: 'auto', boxShadow: '-30px 0 70px rgba(0,0,0,.55)', animation: 'drawerIn .34s cubic-bezier(.4,0,.2,1)' }}>
-              <div style={{ padding: '30px 30px 44px' }}>
+            <div onClick={() => setSel(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.6)', zIndex: 95, animation: 'fadeIn .25s ease' }} />
+            <aside style={{ position: 'fixed', top: 0, right: 0, height: '100vh', width: 'min(400px,100vw)', background: 'var(--color-surface)', borderLeft: '1px solid var(--color-border)', zIndex: 96, overflowY: 'auto', boxShadow: '-20px 0 60px rgba(0,0,0,.6)', animation: 'drawerIn .3s cubic-bezier(.4,0,.2,1)' }}>
+              <div style={{ padding: '30px 24px 40px' }}>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 26 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
                   <div>
-                    <div style={{ fontSize: 30, marginBottom: 10 }}>{sel.flag ?? '🌍'}</div>
-                    <h2 style={{ fontSize: 30, fontWeight: 300, letterSpacing: '-.02em', margin: 0, color: '#ece9e2' }}>{sel.city}</h2>
-                    <p style={{ ...LABEL, marginTop: 9 }}>{[sel.region, sel.country].filter(Boolean).join(' · ')}</p>
+                    <div style={{ fontSize: 24, marginBottom: 8 }}>🇨🇦</div>
+                    <h2 style={{ fontSize: 28, fontWeight: 300, letterSpacing: '-.02em', margin: 0, color: 'var(--color-text-1)', fontFamily: 'var(--font-display)' }}>{sel.city}</h2>
+                    <p style={{ ...LABEL, marginTop: 6 }}>{provName ? `${provName} (${sel.region})` : sel.region} · Canada</p>
                   </div>
-                  <button onClick={() => setSel(null)} aria-label="Close" style={{ background: 'none', border: '1px solid #222228', borderRadius: 8, width: 32, height: 32, flexShrink: 0, cursor: 'pointer', color: '#8d8d96', fontSize: 13, lineHeight: 1 }}>✕</button>
+                  <button onClick={() => setSel(null)} aria-label="Close" style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, width: 32, height: 32, flexShrink: 0, cursor: 'pointer', color: 'var(--color-text-3)', fontSize: 13 }}>✕</button>
                 </div>
 
-                <div style={{ borderTop: '1px solid #1a1a1f', paddingTop: 22, marginBottom: 30 }}>
-                  <div style={LABEL}>Baseline bowl</div>
-                  <div style={{ fontSize: 54, fontWeight: 200, color: '#c8a862', letterSpacing: '-.03em', lineHeight: 1, marginTop: 10 }}>{fmt(sel.price_cad)}</div>
+                <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 20, marginBottom: 24 }}>
+                  <div style={LABEL}>Baseline Poutine Price</div>
+                  <div style={{ fontSize: 44, fontWeight: 500, color: 'var(--color-accent)', letterSpacing: '-.03em', lineHeight: 1, marginTop: 8, fontFamily: 'var(--font-display)' }}>{fmt(sel.price_cad)}</div>
                 </div>
 
-                {/* price position on the global range */}
-                <div style={{ marginBottom: 30 }}>
-                  <div style={LABEL}>Where it lands</div>
-                  <div style={{ position: 'relative', height: 8, borderRadius: 5, marginTop: 16, background: 'linear-gradient(90deg,#76a98c,#c8a862 55%,#c0674e)' }}>
-                    <div style={{ position: 'absolute', top: '50%', left: `${pos * 100}%`, transform: 'translate(-50%,-50%)', width: 16, height: 16, borderRadius: '50%', background: '#ece9e2', border: '3px solid #0d0d10', boxShadow: '0 0 0 1px #c8a862' }} />
+                {/* lands marker */}
+                <div style={{ marginBottom: 24 }}>
+                  <div style={LABEL}>Lands in Canada Spectrum</div>
+                  <div style={{ position: 'relative', height: 8, borderRadius: 5, marginTop: 14, background: 'linear-gradient(90deg,var(--color-green),var(--color-text-2) 55%,var(--color-accent))' }}>
+                    <div style={{ position: 'absolute', top: '50%', left: `${pos * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: '50%', background: 'var(--color-text-1)', border: '3px solid var(--color-surface)' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11 }}>
-                    <span style={{ ...LABEL, fontSize: 9.5 }}>{fmt(pmin)} cheapest</span>
-                    <span style={{ ...LABEL, fontSize: 9.5 }}>priciest {fmt(pmax)}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10 }}>
+                    <span style={{ ...LABEL, fontSize: 9 }}>{fmt(pmin)} lowest</span>
+                    <span style={{ ...LABEL, fontSize: 9 }}>highest {fmt(pmax)}</span>
                   </div>
                 </div>
 
-                {/* rent burden */}
+                {/* Rent burden */}
                 {sel.rentBurden != null && (
-                  <div style={{ marginBottom: 26 }}>
+                  <div style={{ marginBottom: 20 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                      <span style={LABEL}>Rent burden</span>
-                      <span style={{ ...MONO, fontSize: 15, color: burdenCol }}>{sel.rentBurden}%</span>
+                      <span style={LABEL}>Rent Burden</span>
+                      <span style={{ ...MONO, fontSize: 14, color: burdenCol }}>{sel.rentBurden}%</span>
                     </div>
-                    <div style={{ height: 8, borderRadius: 5, background: '#1a1a1f', marginTop: 13, overflow: 'hidden' }}>
+                    <div style={{ height: 6, borderRadius: 5, background: 'var(--color-bg)', marginTop: 10, overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${Math.min(100, sel.rentBurden)}%`, background: burdenCol, borderRadius: 5 }} />
                     </div>
-                    <p style={{ ...LABEL, fontSize: 9, marginTop: 10, letterSpacing: '.1em' }}>Share of an average monthly paycheck</p>
+                    <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>Share of median local gross paycheck spent on 1BR rent</p>
                   </div>
                 )}
 
-                {/* bowls after rent */}
-                {sel.bowlsAfterRent != null && maxBowls > 0 && (
-                  <div style={{ marginBottom: 30 }}>
+                {/* Poutines affordable after rent */}
+                {sel.bowlsAfterRent != null && maxPlates > 0 && (
+                  <div style={{ marginBottom: 24 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                      <span style={LABEL}>Bowls left after rent</span>
-                      <span style={{ ...MONO, fontSize: 15, color: '#c8a862' }}>{sel.bowlsAfterRent} 🍚</span>
+                      <span style={LABEL}>Poutines Left After Rent</span>
+                      <span style={{ ...MONO, fontSize: 14, color: 'var(--color-green)' }}>{sel.bowlsAfterRent} 🍟</span>
                     </div>
-                    <div style={{ height: 8, borderRadius: 5, background: '#1a1a1f', marginTop: 13, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${Math.min(100, sel.bowlsAfterRent / maxBowls * 100)}%`, background: '#76a98c', borderRadius: 5 }} />
+                    <div style={{ height: 6, borderRadius: 5, background: 'var(--color-bg)', marginTop: 10, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${Math.min(100, sel.bowlsAfterRent / maxPlates * 100)}%`, background: 'var(--color-green)', borderRadius: 5 }} />
                     </div>
-                    <p style={{ ...LABEL, fontSize: 9, marginTop: 10, letterSpacing: '.1em' }}>A month&apos;s bowls once rent is paid</p>
+                    <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>Number of meals remaining after paying housing costs</p>
                   </div>
                 )}
 
-                {sel.blurb && <p style={{ fontSize: 13.5, color: '#a8a8b0', lineHeight: 1.7, margin: '2px 0 28px' }}>{sel.blurb}</p>}
+                {sel.blurb && <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: '20px 0' }}>{sel.blurb}</p>}
 
-                <a href={`/cities/${slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, ...MONO, fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: '#c8a862', textDecoration: 'none', borderBottom: '1px solid rgba(200,168,98,.4)', paddingBottom: 4 }}>
-                  Full city profile →
+                <a href={`/cities/${slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--color-accent)', textDecoration: 'none', borderBottom: '1px solid rgba(217,56,58,.3)', paddingBottom: 2, fontWeight: 600 }}>
+                  See detailed profile →
                 </a>
               </div>
             </aside>
@@ -839,32 +1045,30 @@ export default function Home() {
         )
       })()}
 
-      {/* ════════════════════════════════════════════════════════════
-          TOOLTIP
-      ════════════════════════════════════════════════════════════ */}
+      {/* TOOLTIP */}
       {tip && (
         <div style={{
           position: 'fixed', zIndex: 90, pointerEvents: 'none',
-          left: typeof window !== 'undefined' ? Math.min(window.innerWidth - 264, Math.max(8, tip.x + 16)) : tip.x + 16,
-          top:  typeof window !== 'undefined' ? Math.max(8, tip.y - 100) : tip.y - 100,
-          background: '#0d0d10', border: '1px solid #222228', borderRadius: 10,
-          padding: '12px 15px', ...MONO, fontSize: 11.5, lineHeight: 1.7,
-          boxShadow: '0 16px 44px rgba(0,0,0,.6)', maxWidth: 250,
+          left: Math.min(typeof window !== 'undefined' ? window.innerWidth - 220 : 1000, tip.x + 12),
+          top:  tip.y - 85,
+          background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 8,
+          padding: '10px 12px', ...MONO, fontSize: 11.5, lineHeight: 1.6,
+          boxShadow: '0 10px 30px rgba(0,0,0,.5)', maxWidth: 200,
         }}>
-          <div style={{ fontWeight: 500, color: '#ece9e2', letterSpacing: '.04em', marginBottom: 4 }}>
-            {tip.city}, {tip.country}
+          <div style={{ fontWeight: 600, color: 'var(--color-text-1)', marginBottom: 2 }}>
+            {tip.city}, {tip.province}
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 22, color: '#8d8d96' }}>
-            <span>baseline</span><b style={{ color: '#c8a862', fontWeight: 400 }}>{fmt(tip.price)}</b>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
+            <span>Price:</span><b style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{fmt(tip.price)}</b>
           </div>
           {tip.burden != null && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 22, color: '#8d8d96' }}>
-              <span>rent burden</span><b style={{ color: '#c8a862', fontWeight: 400 }}>{tip.burden}%</b>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
+              <span>Rent Burden:</span><b style={{ color: 'var(--color-text-1)', fontWeight: 500 }}>{tip.burden}%</b>
             </div>
           )}
-          {tip.bowls != null && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 22, color: '#8d8d96' }}>
-              <span>bowls after rent</span><b style={{ color: '#c8a862', fontWeight: 400 }}>{tip.bowls}</b>
+          {tip.plates != null && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
+              <span>Leftover:</span><b style={{ color: 'var(--color-green)', fontWeight: 600 }}>{tip.plates}</b>
             </div>
           )}
         </div>

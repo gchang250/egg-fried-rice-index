@@ -1,81 +1,86 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════
-   FRIED RICE INDEX — Canteen theme
+   THE CANADIAN POUTINE INDEX — Chalet / Bistro theme
    Token structure: --color-{role}  |  --font-{role}
    Contrast notes verified against WCAG AA (4.5:1 for text, 3:1 UI)
-═══════════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
   /* ── Surfaces ───────────────────────────────────────────────────── */
-  --color-bg:           #0a0a0c;
-  --color-surface:      #101013;
-  --color-surface-2:    #15151a;
-  --color-border:       #1e1e24;
+  --color-bg:           #faf8f5;   /* warm cream paper (matching Civics Studio) */
+  --color-surface:      #ffffff;   /* white                            */
+  --color-surface-2:    #f3efe6;   /* soft warm grey/beige             */
+  --color-border:       #e5e0d4;   /* beige border                     */
 
   /* ── Foreground ─────────────────────────────────────────────────── */
-  --color-text-1:       #ece9e2;
-  --color-text-2:       #a8a8b0;
-  --color-text-3:       #8d8d96;
-  --color-text-4:       #55555e;
+  --color-text-1:       #111f36;   /* deep navy (matching Civics Studio) */
+  --color-text-2:       #4a4740;   /* timber grey                      */
+  --color-text-3:       #7a776c;   /* soft sand                        */
+  --color-text-4:       #c2beb4;   /* light paper decorative           */
 
-  /* ── Brand accent (champagne gold) ─────────────────────────────── */
-  --color-accent:       #c8a862;
-  --color-accent-dim:   rgba(200, 168, 98, 0.10);
-  --color-accent-glow:  rgba(200, 168, 98, 0.18);
+  /* ── Brand accent (Brick Red / Crimson) ─────────────────────────── */
+  --color-accent:       #8b1e1e;   /* brick red from Civics Studio      */
+  --color-accent-dim:   rgba(139, 30, 30, 0.06);
+  --color-accent-glow:  rgba(139, 30, 30, 0.12);
 
-  /* ── Status ─────────────────────────────────────────────────────── */
-  --color-green:        #76a98c;   /* jade — affordable end            */
-  --color-red:          #c0674e;   /* copper — expensive end           */
-  --color-amber:        #c8a862;   /* same as accent                   */
+  /* ── Status / Affordability mapping ─────────────────────────────── */
+  --color-green:        #eeb44f;   /* cheese curd gold — affordable end */
+  --color-red:          #8b1e1e;   /* brick red — expensive end         */
+  --color-amber:        #8b1e1e;   /* same as accent                   */
 
-  /* ── Named color aliases ────────────────────────────────────────── */
-  --gold:               #c8a862;
-  --jade:               #76a98c;
-  --copper:             #c0674e;
-  --line:               #222228;
-  --line-soft:          #1a1a1f;
+  --color-nav-bg:       rgba(250, 248, 245, 0.82);
 
-  /* ── Typography ─────────────────────────────────────────────────── */
-  --font-display: 'Geist', system-ui, sans-serif;
-  --font-body:    'Geist', system-ui, sans-serif;
-  --font-mono:    'Geist Mono', ui-monospace, monospace;
+  /* ── Typography ────────────────────────────────────────────────── */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
 }
 
-/* ── Light theme (add .light to <html> to activate) ─────────────────── */
-.light {
-  --color-bg:           #f4f1eb;
-  --color-surface:      #ffffff;
-  --color-surface-2:    #eae6de;
-  --color-border:       rgba(0, 0, 0, 0.09);
+/* ── Dark theme ─────────────────────────────────────────────────────── */
+.dark {
+  --color-bg:           #09090b;   /* rich deep warm-black             */
+  --color-surface:      #0e0e12;   /* warm timber charcoal             */
+  --color-surface-2:    #131318;   /* warm charcoal hover              */
+  --color-border:       #1e1d1d;   /* dark crimson-tinted border       */
 
-  --color-text-1:       #1a1a16;   /* 17.0:1 ✓  */
-  --color-text-2:       #4a4844;   /*  8.2:1 ✓  */
-  --color-text-3:       #78766e;   /*  4.6:1 ✓  */
-  --color-text-4:       #c0bdb6;   /* decorative */
+  --color-text-1:       #faf8f5;   /* warm white                       */
+  --color-text-2:       #b3b0a9;   /* warm grey                        */
+  --color-text-3:       #8a8781;   /* muted warm grey                  */
+  --color-text-4:       #4f4d48;   /* deep slate                       */
 
-  --color-accent:       #c25a22;   /*  4.7:1 ✓ on light bg */
-  --color-accent-dim:   rgba(194, 90, 34, 0.10);
-  --color-accent-glow:  rgba(194, 90, 34, 0.18);
+  --color-accent:       #d9383a;   /* vibrant crimson                  */
+  --color-accent-dim:   rgba(217, 56, 58, 0.08);
+  --color-accent-glow:  rgba(217, 56, 58, 0.16);
+
+  --color-green:        #eeb44f;   /* cheese curd gold                 */
+  --color-red:          #b85c37;   /* gravy brown                      */
+  --color-amber:        #d9383a;
+
+  --color-nav-bg:       rgba(9, 9, 11, 0.82);
 }
 
-/* ── High-contrast theme (accessibility, add .hc to <html>) ─────────── */
+/* ── High-contrast theme ────────────────────────────────────────────── */
 .hc {
-  --color-text-1:       #ffffff;
-  --color-text-2:       #e0dcdc;
-  --color-text-3:       #b0acac;
-  --color-accent:       #ff8840;
+  --color-text-1:       #111f36;
+  --color-text-2:       #313d4f;
+  --color-text-3:       #4e5b6f;
+  --color-accent:       #8b1e1e;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
    Global resets & base styles
-═══════════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -100,34 +105,30 @@ body {
   border-radius: 4px;
 }
 
-/* ── Overhaul Styles & Glassmorphism ────────────────────────────────── */
+/* ── Glassmorphism & Panel Styling ───────────────────────────────────── */
 .glass-panel {
-  background: rgba(16, 16, 19, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-border);
 }
 
-.light .glass-panel {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+.dark .glass-panel {
+  background: rgba(14, 14, 18, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-border);
 }
 
 .glow-hover {
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 .glow-hover:hover {
-  border-color: rgba(200, 168, 98, 0.45) !important;
-  box-shadow: 0 4px 24px rgba(200, 168, 98, 0.08);
-  transform: translateY(-2px);
+  border-color: rgba(139, 30, 30, 0.3) !important;
 }
 
-.light .glow-hover:hover {
-  border-color: rgba(194, 90, 34, 0.4) !important;
-  box-shadow: 0 4px 24px rgba(194, 90, 34, 0.06);
-  transform: translateY(-2px);
+.dark .glow-hover:hover {
+  border-color: rgba(217, 56, 58, 0.25) !important;
 }
 
 /* Animations */
@@ -148,4 +149,3 @@ body {
 .animate-fade-in {
   animation: fadeIn 0.25s ease-out forwards;
 }
-

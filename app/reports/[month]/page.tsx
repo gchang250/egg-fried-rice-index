@@ -22,10 +22,10 @@ type CitySnap = {
   market_entry_count: number | null; data_quality_label: string | null
 }
 
-// Palette mirrors app/globals.css: jade (affordable) / gold (accent) / copper (expensive)
-const JADE = '#76a98c'
-const GOLD = '#c8a862'
-const COPPER = '#c0674e'
+// Palette mirrors app/globals.css: green (affordable) / text-2 / accent (expensive)
+const JADE = '#eeb44f'
+const GOLD = '#b3b0a9'
+const COPPER = '#d9383a'
 
 function burdenColor(pct: number) {
   if (pct <= 45) return JADE
@@ -195,7 +195,7 @@ export default async function ReportPage({ params }: PageProps) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
           <div>
-            <p style={{ fontSize: 11, letterSpacing: '2.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Fried Rice Index</p>
+            <p style={{ fontSize: 11, letterSpacing: '2.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Poutine Index</p>
             <h1 style={{ fontFamily: DISP, fontSize: 'clamp(34px,5vw,56px)', fontWeight: 400, lineHeight: 1, letterSpacing: -1.5, margin: '0 0 0.5rem' }}>
               {report.title}
             </h1>
@@ -487,10 +487,10 @@ export default async function ReportPage({ params }: PageProps) {
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 3rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
             <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>
-              Salary affordability: bowls of fried rice per month after rent
+              Salary affordability: poutines per month after rent
             </p>
             <p style={{ fontSize: 12, color: 'var(--color-text-3)', margin: '0 0 1.5rem' }}>
-              Disposable income (salary − rent) ÷ baseline price. {bowlsAfterRent.length} cities · negative = rent exceeds salary.
+              Disposable income (salary − rent) ÷ baseline price. {bowlsAfterRent.length} communities · negative = rent exceeds salary.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '0.35rem 2.5rem' }}>
               {bowlsAfterRent.map((item) => {
@@ -564,7 +564,7 @@ export default async function ReportPage({ params }: PageProps) {
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem 5rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2.5rem' }}>
           <p style={{ fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 1.25rem' }}>
-            City data snapshot: {report.city_count} cities, ranked cheapest to most expensive
+            Community data snapshot: {report.city_count} communities, ranked cheapest to most expensive
           </p>
 
           <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, overflowX: 'auto', overflowY: 'hidden' }}>

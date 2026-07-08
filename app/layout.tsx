@@ -4,29 +4,29 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: {
-    default: 'The Fried Rice Index',
-    template: '%s | The Fried Rice Index',
+    default: 'Canadian Poutine Index',
+    template: '%s | Canadian Poutine Index',
   },
   description:
-    'A food-based affordability index comparing fried rice prices, variety, and restaurant market patterns across cities.',
+    'A food-based affordability index comparing classic poutine prices, rent burdens, and local purchasing power across Canadian communities.',
   keywords: [
-    'Fried Rice Index', 'food price index', 'cost of living',
-    'urban affordability', 'purchasing power', 'restaurant prices',
-    'macroeconomics', 'food economics',
+    'Canadian Poutine Index', 'Poutine Index', 'food price index', 'cost of living Canada',
+    'community affordability', 'purchasing power Canada', 'restaurant prices',
+    'macroeconomics', 'food economics', 'CMHC rent', 'Statistics Canada',
   ],
   openGraph: {
-    title: 'The Fried Rice Index',
+    title: 'Canadian Poutine Index',
     description:
-      'Compare fried rice prices across cities and explore what restaurant pricing reveals about affordability, variety, and urban economies.',
+      'Compare classic poutine prices across Canadian communities and explore what restaurant pricing reveals about affordability, housing, and purchasing power.',
     url: 'https://efr-index.vercel.app',
-    siteName: 'The Fried Rice Index',
+    siteName: 'Canadian Poutine Index',
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'The Fried Rice Index',
+    title: 'Canadian Poutine Index',
     description:
-      'Compare fried rice prices across cities and explore what restaurant pricing reveals about affordability, variety, and urban economies.',
+      'Compare classic poutine prices across Canadian communities and explore what restaurant pricing reveals about affordability, housing, and purchasing power.',
   },
 }
 
@@ -36,10 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Geist — editorial sans, weights 200–600 */}
-        {/* Geist Mono — monospaced companion */}
+        {/* Fraunces (serif for titles) and Plus Jakarta Sans (sans-serif for body) */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:wght@200..800&family=JetBrains+Mono:wght@300..500&display=swap"
           rel="stylesheet"
         />
       </head>

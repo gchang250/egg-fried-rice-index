@@ -57,7 +57,6 @@ export type RestaurantRow = {
   local_price: number | null
   local_currency: string | null
   price_cad: number | null
-  source_url: string | null
   confidence_score: number | null
   notes: string | null
   date_accessed: string | null
@@ -221,7 +220,7 @@ function stddev(vals: number[]) {
 function ScoreBar({ score, label }: { score: number | null; label: string }) {
   if (score == null) return <p style={metaValStyle}>-</p>
   const pct   = Math.min(100, Math.max(0, score))
-  const color = pct >= 70 ? '#2d7a4f' : pct >= 50 ? '#b5730a' : '#c0392b'
+  const color = pct >= 70 ? 'var(--color-green)' : pct >= 50 ? 'var(--color-text-2)' : 'var(--color-accent)'
   const grade = pct >= 80 ? 'Excellent' : pct >= 65 ? 'Good' : pct >= 50 ? 'Moderate' : 'Below avg'
   return (
     <div>
@@ -241,13 +240,13 @@ function ScoreBar({ score, label }: { score: number | null; label: string }) {
 function Badge({ value }: { value: string | null }) {
   if (!value) return <span style={metaValStyle}>-</span>
   const styles: Record<string, React.CSSProperties> = {
-    native:   { background: '#eaf4ed', color: '#2d7a4f', border: '0.5px solid #c3e0cc' },
-    high:     { background: '#eaf4ed', color: '#2d7a4f', border: '0.5px solid #c3e0cc' },
-    medium:   { background: '#fef8ec', color: '#b5730a', border: '0.5px solid #f0dca0' },
-    low:      { background: '#fff0e8', color: '#c25e1e', border: '0.5px solid #f5cdb0' },
-    easy:     { background: '#eaf4ed', color: '#2d7a4f', border: '0.5px solid #c3e0cc' },
-    moderate: { background: '#fef8ec', color: '#b5730a', border: '0.5px solid #f0dca0' },
-    complex:  { background: '#fff0e8', color: '#c25e1e', border: '0.5px solid #f5cdb0' },
+    native:   { background: 'var(--color-accent-dim)', color: 'var(--color-accent)', border: '0.5px solid var(--color-border)' },
+    high:     { background: 'var(--color-accent-dim)', color: 'var(--color-accent)', border: '0.5px solid var(--color-border)' },
+    medium:   { background: 'var(--color-surface-2)', color: 'var(--color-text-2)', border: '0.5px solid var(--color-border)' },
+    low:      { background: 'var(--color-surface-2)', color: 'var(--color-text-3)', border: '0.5px solid var(--color-border)', opacity: 0.8 },
+    easy:     { background: 'var(--color-accent-dim)', color: 'var(--color-accent)', border: '0.5px solid var(--color-border)' },
+    moderate: { background: 'var(--color-surface-2)', color: 'var(--color-text-2)', border: '0.5px solid var(--color-border)' },
+    complex:  { background: 'var(--color-surface-2)', color: 'var(--color-text-3)', border: '0.5px solid var(--color-border)', opacity: 0.8 },
   }
   const labels: Record<string, string> = {
     native: 'Native', high: 'High', medium: 'Medium', low: 'Limited',
@@ -451,7 +450,7 @@ export default function CityPageContent({
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'stretch' }}>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', flex: '1 1 500px', alignItems: 'flex-start' }}>
             <PriceCard
-              label="Baseline fried rice"
+              label="Baseline poutine"
               value={convert(bowlPrice, currency, rates)}
               sub={`${city.data_quality_label ?? 'Pending'} · ${city.baseline_entry_count ?? blEntries.length} sources`}
               accent
@@ -481,7 +480,7 @@ export default function CityPageContent({
             <h2 style={h2}>What does it cost to live here?</h2>
             <p style={lead}>
               Prices shown in <strong>{sym} {currency}</strong>.
-              Bowl ratios are currency-neutral. One bowl in {city.city} = <strong>{convert(bowlPrice, currency, rates)}</strong>.
+              Poutine ratios are currency-neutral. One poutine in {city.city} = <strong>{convert(bowlPrice, currency, rates)}</strong>.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.median_rent_1br_cad != null && (
@@ -501,7 +500,7 @@ export default function CityPageContent({
                 const isDeficit = diff < 0
                 return (
                   <LivingCard
-                    label={isDeficit ? 'Rent exceeds median salary' : 'Bowls left after rent'}
+                    label={isDeficit ? 'Rent exceeds median salary' : 'Poutines left after rent'}
                     bowlCount={isDeficit ? `−${Math.abs(parseInt(bowlsAfterRent))}` : bowlsAfterRent}
                     amount={convert(Math.abs(diff), currency, rates)}
                     sub={isDeficit
@@ -561,13 +560,13 @@ export default function CityPageContent({
         </section>
       )}
 
-      {/* ── Fried rice market ───────────────────────────────────────────── */}
+      {/* ── Poutine market ───────────────────────────────────────────── */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
-          <h2 style={h2}>Fried rice market</h2>
+          <h2 style={h2}>Poutine market</h2>
           <p style={lead}>
             {restaurants.length} approved entries in {city.city}. Prices shown in {sym} {currency}.
-            Baseline entries (basic + vegetable) set the index price.
+            Baseline entries (classic poutine) set the index price.
           </p>
           <RestaurantTable rows={restaurants} bowlPrice={bowlPrice} currency={currency} rates={rates} />
         </div>
@@ -625,14 +624,14 @@ function PriceCard({ label, value, sub, accent = false, wide = false }: {
 function LivingCard({ label, bowlCount, amount, sub, highlight = false, deficit = false }: {
   label: string; bowlCount: string; amount: string; sub?: string; highlight?: boolean; deficit?: boolean
 }) {
-  const bg     = deficit ? 'rgba(192,103,78,0.10)' : highlight ? 'rgba(200,168,98,0.10)' : 'var(--color-surface)'
-  const border = deficit ? 'rgba(192,103,78,0.30)' : highlight ? 'rgba(200,168,98,0.30)' : 'var(--color-border)'
-  const numColor = deficit ? 'var(--color-red)' : highlight ? 'var(--color-accent)' : 'var(--color-text-1)'
+  const bg     = deficit ? 'rgba(217,56,58,0.06)' : highlight ? 'rgba(238,180,79,0.06)' : 'var(--color-surface)'
+  const border = deficit ? 'rgba(217,56,58,0.20)' : highlight ? 'rgba(238,180,79,0.20)' : 'var(--color-border)'
+  const numColor = deficit ? 'var(--color-accent)' : highlight ? 'var(--color-green)' : 'var(--color-text-1)'
   return (
     <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 14, padding: '1.1rem' }}>
-      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.4rem' }}>{label}</p>
+      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>{label}</p>
       <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: numColor, margin: 0, lineHeight: 1 }}>
-        {deficit ? '−' : ''}{bowlCount} <span style={{ fontSize: 18 }}>🍚</span>
+        {deficit ? '−' : ''}{bowlCount} <span style={{ fontSize: 18 }}>🍟</span>
       </p>
       <p style={{ fontSize: 12, color: '#5a5a52', margin: '0.35rem 0 0' }}>{amount} / month</p>
       {sub && <p style={{ fontSize: 11, color: '#3a3a32', margin: '0.2rem 0 0' }}>{sub}</p>}
@@ -665,8 +664,8 @@ function RestaurantTable({ rows, bowlPrice, currency, rates }: {
       <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
         <thead>
           <tr>
-            {['Restaurant', 'Dish', 'Category', 'Tier', 'Local price', `Price (${sym})`, 'In bowls 🍚', 'Baseline', 'Conf.', 'Source'].map(h => (
-              <th key={h} style={{ textAlign: 'left', padding: '0.7rem 0.9rem', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1px', color: '#3a3a32', borderBottom: '0.5px solid var(--color-border)', whiteSpace: 'nowrap' }}>{h}</th>
+            {['Restaurant', 'Dish', 'Category', 'Tier', 'Local price', `Price (${sym})`, 'In poutines 🍟', 'Baseline', 'Conf.'].map(h => (
+              <th key={h} style={{ textAlign: 'left', padding: '0.7rem 0.9rem', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--color-text-3)', borderBottom: '0.5px solid var(--color-border)', whiteSpace: 'nowrap' }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -688,11 +687,6 @@ function RestaurantTable({ rows, bowlPrice, currency, rates }: {
                   : <span style={{ color: '#2a2a22' }}>No</span>}
               </td>
               <td style={td}>{row.confidence_score != null ? `${Math.round(row.confidence_score <= 1 ? row.confidence_score * 100 : row.confidence_score)}%` : '-'}</td>
-              <td style={td}>
-                {row.source_url
-                  ? <a href={ensureProtocol(row.source_url)} target="_blank" rel="noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'none', fontSize: 12 }}>View ↗</a>
-                  : '-'}
-              </td>
             </tr>
           ))}
         </tbody>
