@@ -29,7 +29,7 @@ const CITIES: CityData[] = [
   {
     city: 'Toronto',
     province: 'ON',
-    population: '6202225',
+    population: '7110000',
     latitude: 43.6532,
     longitude: -79.3832,
     median_rent: 2500,
@@ -46,7 +46,7 @@ const CITIES: CityData[] = [
   {
     city: 'Vancouver',
     province: 'BC',
-    population: '2642825',
+    population: '3090000',
     latitude: 49.2827,
     longitude: -123.1207,
     median_rent: 2700,
@@ -63,7 +63,7 @@ const CITIES: CityData[] = [
   {
     city: 'Montreal',
     province: 'QC',
-    population: '4291732',
+    population: '4597837',
     latitude: 45.5017,
     longitude: -73.5673,
     median_rent: 1750,
@@ -80,7 +80,7 @@ const CITIES: CityData[] = [
   {
     city: 'Calgary',
     province: 'AB',
-    population: '1306784',
+    population: '1840000',
     latitude: 51.0447,
     longitude: -114.0719,
     median_rent: 1800,
@@ -97,7 +97,7 @@ const CITIES: CityData[] = [
   {
     city: 'Edmonton',
     province: 'AB',
-    population: '1010899',
+    population: '1690000',
     latitude: 53.5461,
     longitude: -113.4938,
     median_rent: 1400,
@@ -114,7 +114,7 @@ const CITIES: CityData[] = [
   {
     city: 'Ottawa',
     province: 'ON',
-    population: '1017449',
+    population: '1700014',
     latitude: 45.4215,
     longitude: -75.6972,
     median_rent: 1950,
@@ -131,7 +131,7 @@ const CITIES: CityData[] = [
   {
     city: 'Winnipeg',
     province: 'MB',
-    population: '749607',
+    population: '870032',
     latitude: 49.8951,
     longitude: -97.1384,
     median_rent: 1250,
@@ -148,7 +148,7 @@ const CITIES: CityData[] = [
   {
     city: 'Halifax',
     province: 'NS',
-    population: '439819',
+    population: '544834',
     latitude: 44.6488,
     longitude: -63.5752,
     median_rent: 1850,
@@ -165,7 +165,7 @@ const CITIES: CityData[] = [
   {
     city: 'Victoria',
     province: 'BC',
-    population: '397237',
+    population: '448561',
     latitude: 48.4284,
     longitude: -123.3656,
     median_rent: 2000,
@@ -182,7 +182,7 @@ const CITIES: CityData[] = [
   {
     city: 'Quebec City',
     province: 'QC',
-    population: '549484',
+    population: '903607',
     latitude: 46.8139,
     longitude: -71.2080,
     median_rent: 1300,
@@ -199,7 +199,7 @@ const CITIES: CityData[] = [
   {
     city: 'Hamilton',
     province: 'ON',
-    population: '569353',
+    population: '871143',
     latitude: 43.2557,
     longitude: -79.8711,
     median_rent: 1750,
@@ -216,7 +216,7 @@ const CITIES: CityData[] = [
   {
     city: 'London',
     province: 'ON',
-    population: '422324',
+    population: '633002',
     latitude: 42.9849,
     longitude: -81.2453,
     median_rent: 1650,
@@ -233,7 +233,7 @@ const CITIES: CityData[] = [
   {
     city: 'Kitchener-Waterloo',
     province: 'ON',
-    population: '575847',
+    population: '701568',
     latitude: 43.4516,
     longitude: -80.4925,
     median_rent: 1800,
@@ -250,7 +250,7 @@ const CITIES: CityData[] = [
   {
     city: 'St. John\'s',
     province: 'NL',
-    population: '110525',
+    population: '243478',
     latitude: 47.5615,
     longitude: -52.7126,
     median_rent: 1250,
@@ -267,7 +267,7 @@ const CITIES: CityData[] = [
   {
     city: 'Saskatoon',
     province: 'SK',
-    population: '266141',
+    population: '373636',
     latitude: 52.1332,
     longitude: -106.6700,
     median_rent: 1300,
@@ -284,7 +284,7 @@ const CITIES: CityData[] = [
   {
     city: 'Regina',
     province: 'SK',
-    population: '226404',
+    population: '277358',
     latitude: 50.4501,
     longitude: -104.6189,
     median_rent: 1200,
@@ -301,7 +301,7 @@ const CITIES: CityData[] = [
   {
     city: 'Charlottetown',
     province: 'PE',
-    population: '36094',
+    population: '85000',
     latitude: 46.2382,
     longitude: -63.1311,
     median_rent: 1400,
@@ -318,7 +318,7 @@ const CITIES: CityData[] = [
   {
     city: 'Fredericton',
     province: 'NB',
-    population: '58220',
+    population: '125303',
     latitude: 45.9636,
     longitude: -66.6431,
     median_rent: 1350,
@@ -335,7 +335,7 @@ const CITIES: CityData[] = [
   {
     city: 'Moncton',
     province: 'NB',
-    population: '108620',
+    population: '196143',
     latitude: 46.0878,
     longitude: -64.7782,
     median_rent: 1300,
@@ -352,7 +352,7 @@ const CITIES: CityData[] = [
   {
     city: 'Sudbury',
     province: 'ON',
-    population: '161531',
+    population: '194278',
     latitude: 46.4917,
     longitude: -80.9930,
     median_rent: 1400,
@@ -369,7 +369,7 @@ const CITIES: CityData[] = [
   {
     city: 'Whitehorse',
     province: 'YT',
-    population: '25085',
+    population: '32000',
     latitude: 60.7212,
     longitude: -135.0568,
     median_rent: 1950,
@@ -386,7 +386,7 @@ const CITIES: CityData[] = [
   {
     city: 'Yellowknife',
     province: 'NT',
-    population: '19568',
+    population: '22000',
     latitude: 62.4540,
     longitude: -114.3718,
     median_rent: 2100,
@@ -403,7 +403,7 @@ const CITIES: CityData[] = [
   {
     city: 'Iqaluit',
     province: 'NU',
-    population: '7429',
+    population: '8200',
     latitude: 63.7467,
     longitude: -68.5170,
     median_rent: 2800,
@@ -420,7 +420,7 @@ const CITIES: CityData[] = [
   {
     city: 'Fort McMurray',
     province: 'AB',
-    population: '66573',
+    population: '72000',
     latitude: 56.7268,
     longitude: -111.3797,
     median_rent: 1350,
@@ -437,7 +437,7 @@ const CITIES: CityData[] = [
   {
     city: 'Windsor',
     province: 'ON',
-    population: '229660',
+    population: '269614',
     latitude: 42.3149,
     longitude: -83.0364,
     median_rent: 1450,
@@ -454,7 +454,7 @@ const CITIES: CityData[] = [
   {
     city: 'Kelowna',
     province: 'BC',
-    population: '142146',
+    population: '254605',
     latitude: 49.8874,
     longitude: -119.4960,
     median_rent: 1900,
@@ -471,7 +471,7 @@ const CITIES: CityData[] = [
   {
     city: 'Sherbrooke',
     province: 'QC',
-    population: '172950',
+    population: '243911',
     latitude: 45.4010,
     longitude: -71.8930,
     median_rent: 1050,
@@ -488,7 +488,7 @@ const CITIES: CityData[] = [
   {
     city: 'Kingston',
     province: 'ON',
-    population: '132485',
+    population: '193466',
     latitude: 44.2312,
     longitude: -76.4860,
     median_rent: 1650,
