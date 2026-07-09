@@ -318,6 +318,14 @@ export default function Explore() {
 
     // Load Canada GeoJSON
     d3.json('/canada.geojson').then((canada: any) => {
+      // Create clip path for Canada land mass to keep boundaries on land
+      const clip = defs.append('clipPath').attr('id', 'canada-clip')
+      clip.selectAll('path')
+        .data(canada.features)
+        .enter()
+        .append('path')
+        .attr('d', pathGen as any)
+
       // Draw Canada Provinces
       g.append('g')
         .selectAll('path')
@@ -329,6 +337,31 @@ export default function Explore() {
         .attr('stroke', 'var(--color-border)')
         .attr('stroke-width', 0.6)
         .attr('filter', 'url(#landShadow)')
+
+      // Draw Regional Division Boundaries (Voronoi tessellation)
+      const validPoints: [number, number][] = []
+      filteredCities.forEach(city => {
+        if (city.longitude === null || city.latitude === null) return
+        const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
+        if (projected) validPoints.push(projected as [number, number])
+      })
+
+      if (validPoints.length > 0) {
+        const delaunay = d3.Delaunay.from(validPoints)
+        const voronoi = delaunay.voronoi([0, 0, W, H])
+        g.append('g')
+          .attr('clip-path', 'url(#canada-clip)')
+          .selectAll('path')
+          .data(validPoints.map((_, i) => voronoi.renderCell(i)))
+          .enter()
+          .append('path')
+          .attr('d', d => d)
+          .attr('fill', 'none')
+          .attr('stroke', 'var(--color-border)')
+          .attr('stroke-width', 0.8)
+          .attr('stroke-dasharray', '3 4')
+          .attr('opacity', 0.75)
+      }
 
       filteredCities.forEach(city => {
         if (city.longitude === null || city.latitude === null) return
