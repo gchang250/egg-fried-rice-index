@@ -636,7 +636,6 @@ export default function Home() {
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/cities" style={BTN_GOLD}>Browse Ridings</a>
-              <a href="/reports" style={BTN_GHOST}>Latest Reports</a>
             </div>
           </div>
         </div>
@@ -654,7 +653,7 @@ export default function Home() {
               <div>Mapping socio-economic data across federal ridings. Free, forever.</div>
             </div>
             <div style={{ display: 'flex', gap: 24 }}>
-              {[['Ridings','/cities'],['Explore','/explore'],['Reports','/reports'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
+              {[['Ridings','/cities'],['Explore','/explore'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
                 <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
               ))}
             </div>

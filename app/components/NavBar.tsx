@@ -6,7 +6,6 @@ import { X, Menu } from 'lucide-react'
 const LINKS = [
   ['Explore',     '/explore'],
   ['Ridings',     '/cities'],
-  ['Reports',     '/reports'],
   ['About',       '/about'],
   ['Methodology', '/methodology'],
 ] as const
