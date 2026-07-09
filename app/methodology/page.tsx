@@ -2,16 +2,15 @@ import { BookOpen } from 'lucide-react'
 import NavBar from '@/app/components/NavBar'
 
 const SECTIONS = [
-  { num: '01', title: 'What the index measures', body: ['The Canadian Poutine Index is built from restaurant menu data. It compares classic poutine prices across Canadian communities and studies what those prices reveal about local affordability, rent burdens, and macroeconomic conditions.', "It is a narrower, more tangible indicator than CPI or average wage baskets: one standardized restaurant dish, transparent about what it represents and its limitations."] },
-  { num: '02', title: 'Why poutine?', body: ["Poutine is Canada's quintessential casual dish, widely available in almost every province and territory from local diners to roadside chip trucks. It is simple, standardized (fresh-cut fries, cheese curds, gravy), and extremely sensitive to local operating costs.", 'A classic poutine reflects local commercial rents, labor costs, supply chain lines, dairy/cheese curd wholesale costs, utilities, and provincial taxes. It provides a concrete point of comparison.'] },
-  { num: '03', title: 'Dish classification', body: ['The index collects all poutine dishes but groups them before processing. Categories: Classic (standard portion of fries, curds, gravy), Side (half portions), Gourmet (with standard meat toppings like pulled pork, bacon, or mushrooms), and Premium (luxury lobster, foie gras, or specialty toppings). We separate these to ensure comparing like-for-like.'] },
-  { num: '04', title: 'Baseline vs. market price', body: ['The baseline community price uses only Classic entries, which represent the closest comparison point for everyday, affordable meals.', 'The full market profile includes gourmet and premium categories and is used to study local variety and price spreads.'] },
-  { num: '05', title: 'Data collection', body: ['Prices are gathered from official menus, online ordering systems, menu photographs, chip truck boards, delivery apps, scraper-assisted searches, and community submissions. Each entry must list: restaurant name, city, province, dish name, price, source URL, date accessed, and confidence score.'] },
-  { num: '06', title: 'Source reliability & confidence', body: ['Official dine-in menu: 95%. Official online ordering page: 90%. Recent menu photo: 85%. Third-party menu site: 70%. Delivery app: 60%. Scores are adjusted for delivery markup and stale data.'] },
-  { num: '07', title: 'Community-level calculations', body: ['The baseline price for a community is the median of approved baseline entries. The market average uses a mean of all tracked entries. We also compute the absolute range (min to max), and data quality labels based on sample sizes.'] },
-  { num: '08', title: 'Housing & Wage normalization', body: ['To gauge purchasing power, we pull local median household income (from Statistics Canada census updates) and local median 1BR rental costs (from the Canada Mortgage and Housing Corporation - CMHC). This lets us compute the rent burden and remaining disposable income in "poutines per month".'] },
-  { num: '09', title: 'Data quality labels', body: ['Preliminary: 1–2 restaurant entries. Moderate: 3–5. High confidence: 6+ entries with high source quality.'] },
-  { num: '10', title: 'Limitations', body: ["The index focuses on a single restaurant meal. It does not account for groceries, utilities, transit, or individual tax brackets. It is a focused indicator of local discretionary purchasing power and is honest about its limits."] },
+  { num: '01', title: 'What the index measures', body: ['The CanPol Index measures local cost of living and housing rent burdens across Canadian federal electoral ridings.', 'By focusing on local-level salaries and rents rather than provincial or national aggregates, it highlights the economic realities faced by residents in different regions.'] },
+  { num: '02', title: 'Sourcing Median Income', body: ['Local median individual employment income is sourced directly from Statistics Canada census subdivision logs.', 'These figures are updated to reflect recent estimates, providing an accurate baseline of median gross earnings in each riding.'] },
+  { num: '03', title: 'Sourcing Median 1BR Rent', body: ['Monthly rental costs represent the median price of a standard 1BR apartment in the local market.', 'These figures are compiled from the Canada Mortgage and Housing Corporation (CMHC) annual rental market surveys.'] },
+  { num: '04', title: 'Rent Burden Calculations', body: ['Rent Burden is calculated as: (Median Monthly 1BR Rent / Median Monthly Gross Income) * 100.', 'This is a currency-neutral percentage that reveals what portion of a median gross paycheck is consumed by housing costs. A burden of 30% or less is generally considered affordable.'] },
+  { num: '05', title: 'Disposable Income Calculations', body: ['Disposable Income is computed as: Median Monthly Gross Income - Median Monthly 1BR Rent.', 'This reflects the remaining cash in CAD available to a median individual for all other living expenses (food, taxes, transportation, utilities, and savings).'] },
+  { num: '06', title: 'Electoral Riding Mapping', body: ['To project this data onto Canada\'s federal electoral map, census subdivisions (CSDs) and census metropolitan areas (CMAs) are mapped directly to their corresponding riding boundaries.', 'For urban centers with multiple ridings, regional aggregates or weighted averages are applied. The index targets mapping all 343 federal ridings under the 2023 Representation Order.'] },
+  { num: '07', title: 'Tax Bracket Pressures', body: ['Combined marginal tax brackets represent the combined federal and provincial income tax rate for the local median income tier.', 'This highlights how regional tax differences affect take-home purchasing power.'] },
+  { num: '08', title: 'Infrastructure & Liveability', body: ['Safety, healthcare wait times, and high-speed internet connectivity parameters are included to evaluate regional quality of life.', 'These metrics are sourced from municipal records, provincial health reports, and speed-test aggregates.'] },
+  { num: '09', title: 'Limitations', body: ['The index focuses specifically on a single individual earning a median wage and renting a 1BR apartment.', 'It does not replace comprehensive consumer basket surveys or account for households with multiple earners, families with children, or home ownership dynamics.'] },
 ]
 
 export default function MethodologyPage() {
@@ -26,11 +25,11 @@ export default function MethodologyPage() {
         </div>
 
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 400, lineHeight: 1.05, letterSpacing: -1.5, color: 'var(--color-text-1)', margin: '0 0 1.5rem' }}>
-          How the Canadian Poutine<br />Index is calculated.
+          How the CanPol Index<br />is calculated.
         </h1>
 
         <p style={{ fontSize: 16, color: 'var(--color-text-2)', lineHeight: 1.7, maxWidth: 640, marginBottom: '3.5rem' }}>
-          The index compares restaurant poutine prices across Canadian communities and tracks what those prices reveal about affordability, housing rent burdens, and local purchasing power.
+          The index maps Statistics Canada income tables and CMHC housing rental databases directly onto Canadian federal ridings to compute rent burden, disposable income, and socio-economic standings.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', border: '0.5px solid var(--color-border)', borderRadius: 12, overflow: 'hidden' }}>

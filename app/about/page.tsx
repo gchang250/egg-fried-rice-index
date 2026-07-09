@@ -5,29 +5,29 @@ const CARDS = [
   {
     title: 'Why this exists',
     body: [
-      "Cost of living is often described through abstract macroeconomic metrics: CPI, rental market indices, average salary surveys. They are critical, but they don't capture daily financial realities.",
-      "The Canadian Poutine Index begins with a concrete, tangible anchor: the price of a standard classic poutine (fresh-cut fries, cheese curds, and gravy) at a local neighborhood diner or chip truck. That single number says a lot about a community's economic landscape."
+      "Cost of living is often described through abstract national macroeconomic metrics: CPI, average wage baskets, or national housing reports. While valuable, these national figures hide significant local realities.",
+      "The CanPol Index evaluates these pressures at the level of individual communities and federal ridings. By comparing local median wages against CMHC rental data, we highlight the true socio-economic pressures that citizens face in their daily lives."
     ],
   },
   {
     title: 'What the index does',
     body: [
-      "It gathers menu-level poutine pricing, organizes entries by community, compares prices to Statistics Canada wages and CMHC housing rent datasets, and outputs regional affordability metrics.",
-      "By categorizing dishes by tier (budget, mid-tier, high-end, premium) and calculating baseline medians, we keep the index comparison rigorous and accurate."
+      "It compiles median 1BR rental costs and median individual monthly salaries directly for major communities representing Canada's federal ridings.",
+      "By calculating the exact Rent Burden (the percentage of local wages spent on a single housing unit), the index provides a pure, currency-neutral indicator of regional affordability and discretionary purchasing power."
     ],
   },
   {
-    title: 'What the index is not',
+    title: 'Sourcing & Rigor',
     body: [
-      "It is not a comprehensive cost-of-living index. It does not replace detailed basket surveys, CPI reports, or complete tax calculations.",
-      "It is a transparent, focused cost-of-food indicator. Its strength lies in being relatable, easy to visualize, and honest about its boundaries."
+      "The index does not use speculative estimates or ad-hoc data. All values are sourced directly from Statistics Canada census logs, Canada Mortgage and Housing Corporation (CMHC) market profiles, and official provincial tax schedules.",
+      "Liveability indicators (safety, healthcare wait times, internet speeds) are pulled from standardized community surveys to ensure consistent comparative integrity."
     ],
   },
   {
     title: 'Where the project is going',
     body: [
-      "The index is expanding to map smaller municipalities, rural towns, and northern settlements across all ten provinces and three territories.",
-      "Our goal is to build an open-source, community-sourced dataset that sheds light on regional disparities and purchasing power across Canada."
+      "The CanPol Index is expanding to map cost of living and tax pressures across all 343 Canadian federal electoral ridings under the 2023 Representation Order.",
+      "Our goal is to build a completely open-source, community-audited economic atlas that provides voters and researchers with local economic clarity."
     ],
   },
 ]
@@ -45,11 +45,11 @@ export default function AboutPage() {
         </div>
 
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 400, lineHeight: 1.05, letterSpacing: -1.5, color: 'var(--color-text-1)', margin: '0 0 1.5rem' }}>
-          A simple dish,<br />a sharper way to compare Canadian communities.
+          Local wages, local rents.<br />Socio-economic clarity across Canadian ridings.
         </h1>
 
         <p style={{ fontSize: 16, color: 'var(--color-text-2)', lineHeight: 1.7, maxWidth: 640, marginBottom: '3.5rem' }}>
-          The Canadian Poutine Index tracks classic poutine prices across communities to study cost of living, regional rent burdens, and local purchasing power.
+          The CanPol Index tracks cost of living, regional tax bracket pressure, and housing rent burdens across Canada's geographic federal ridings to study local purchasing power.
         </p>
 
         {/* Cards */}
@@ -67,52 +67,31 @@ export default function AboutPage() {
           ))}
         </div>
 
-        {/* Anatomy of Poutine Index */}
+        {/* The Pillars of CanPol Index */}
         <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-text-1)', marginBottom: '1.5rem', fontWeight: 400 }}>
-            The Anatomy of a Poutine Index
+            The Core Index Pillars
           </h2>
           <p style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.7, marginBottom: '2rem' }}>
-            A standard plate of poutine is an exceptional cost-of-living proxy because its core ingredients track key sectors of local and national supply chains:
+            The index evaluates local economic realities through three primary, non-overlapping pillars:
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="12" y="6" width="6" height="36" rx="1.5" fill="var(--color-green)" transform="rotate(-15 12 6)"/>
-                  <rect x="22" y="4" width="6" height="40" rx="1.5" fill="var(--color-green)" transform="rotate(5 22 4)"/>
-                  <rect x="30" y="8" width="6" height="34" rx="1.5" fill="var(--color-green)" transform="rotate(20 30 8)"/>
-                </svg>
-              </div>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem' }}>The Potatoes (Fries)</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>01. Housing Burden</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Tracks agricultural labor, crop yields, oil imports, and the utility/energy costs required to run commercial fryers.
+                Compares local median gross wages to median 1BR rental costs. Sourced directly from CMHC housing market reports.
               </p>
             </div>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 20 C10 20 8 30 18 34 C28 38 34 26 24 22 Z" fill="#faf8f2" stroke="var(--color-border)" strokeWidth="1.5"/>
-                  <path d="M32 24 C28 22 24 30 30 34 C36 38 40 30 34 26 Z" fill="#faf8f2" stroke="var(--color-border)" strokeWidth="1.5"/>
-                  <circle cx="24" cy="14" r="5" fill="#faf8f2" stroke="var(--color-border)" strokeWidth="1.5"/>
-                </svg>
-              </div>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem' }}>The Cheese Curds</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>02. Income & Taxes</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Reflects dairy farm supply chains, marketing board price mandates, transport logistics, and cold storage refrigeration.
+                Maps local median wages and provincial marginal combined tax rates, highlighting regional taxation differences.
               </p>
             </div>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 12 28 C 12 34 36 34 36 28 C 36 22 42 24 44 20 C 32 14 18 16 12 28 Z" fill="#8d4a24" stroke="var(--color-border)" strokeWidth="1"/>
-                  <path d="M 14 28 C 6 28 6 20 14 20" stroke="var(--color-border)" strokeWidth="1.5" fill="none"/>
-                  <path d="M 44 20 Q 32 28 28 42" stroke="#8d4a24" strokeWidth="4" strokeLinecap="round" fill="none"/>
-                </svg>
-              </div>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem' }}>The Gravy</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>03. Infrastructure Quality</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Measures kitchen preparation labor, cooking gas/heating costs, stock seasoning supply, and commercial kitchen overheads.
+                Evaluates liveability factors including safety indices, average healthcare wait times, and high-speed internet connectivity.
               </p>
             </div>
           </div>
@@ -123,7 +102,7 @@ export default function AboutPage() {
             Read the methodology <ArrowRight size={14} />
           </a>
           <a href="/cities" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '.7rem 1.4rem', borderRadius: 8, border: '0.5px solid var(--color-border)', color: 'var(--color-text-2)', textDecoration: 'none', fontSize: 14, fontWeight: 600, background: 'rgba(255,255,255,0.02)' }}>
-            Browse communities
+            Browse ridings
           </a>
         </div>
       </div>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import NavBar from '@/app/components/NavBar'
 
 export type HistoryPoint = {
@@ -9,8 +8,6 @@ export type HistoryPoint = {
   date: string
   price_cad: number
 }
-
-// ── Types (exported so page.tsx can import them) ──────────────────────────────
 
 export type CityRow = {
   city: string
@@ -21,7 +18,7 @@ export type CityRow = {
   climate: string | null
   blurb: string | null
   price_cad: number | null
-  price_source: string | null
+  price_source: string | null // representing political party
   price_updated_at: string | null
   confidence_score: number | null
   baseline_median_cad: number | null
@@ -62,41 +59,14 @@ export type RestaurantRow = {
   date_accessed: string | null
 }
 
-// ── Currency data ─────────────────────────────────────────────────────────────
-// Rates = units of foreign currency per 1 CAD.
-// Derived from the seed-script exchange rates so that converting price_cad back
-// to a city's local currency returns the original local price (no rounding drift).
-// Seed rates (X_TO_CAD) → display rate = 1 / X_TO_CAD.
 export const RATES: Record<string, number> = {
-  // Americas
-  CAD: 1,       USD: 0.719,  // 1/1.39
-  MXN: 13.89,   // 1/0.072
-  BRL: 3.6,     ARS: 909,    // 1/0.0011
-  COP: 3100,
-  // Europe
-  GBP: 0.568,   // 1/1.76
-  EUR: 0.663,   // 1/1.51
-  CHF: 0.66,    RUB: 66.7,  // 1/0.015
-  TRY: 27.0,    // 1/0.037
-  // East Asia
-  JPY: 115.1,   // 1/0.00869
-  CNY: 4.926,   // 1/0.203
-  HKD: 5.72,    // 1/0.1748
-  SGD: 0.926,   // 1/1.08
-  KRW: 1099,    // 1/0.00091
-  TWD: 23.4,
-  // South Asia
-  INR: 60.6,    // 1/0.0165
-  PKR: 277.8,   // 1/0.0036
-  // Oceania
-  AUD: 1.136,   // 1/0.88
-  NZD: 1.23,
-  // Middle East / Africa
-  AED: 2.639,   // 1/0.379
-  SAR: 2.703,   // 1/0.370
-  QAR: 2.66,    KWD: 0.225,
-  EGP: 35.71,   // 1/0.028
-  ZAR: 13.2,
+  CAD: 1,       USD: 0.719,  MXN: 13.89,   BRL: 3.6,
+  ARS: 909,     COP: 3100,   GBP: 0.568,   EUR: 0.663,
+  CHF: 0.66,    RUB: 66.7,   TRY: 27.0,    JPY: 115.1,
+  CNY: 4.926,   HKD: 5.72,   SGD: 0.926,   KRW: 1099,
+  TWD: 23.4,    INR: 60.6,   PKR: 277.8,   AUD: 1.136,
+  NZD: 1.23,    AED: 2.639,  SAR: 2.703,   QAR: 2.66,
+  KWD: 0.225,   EGP: 35.71,  ZAR: 13.2,
 }
 
 export const SYMBOLS: Record<string, string> = {
@@ -118,35 +88,16 @@ const CURRENCY_GROUPS = [
   { label: 'Africa',       codes: ['ZAR'] },
 ]
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
 function convert(cadAmount: number | null | undefined, currency: string, ratesDict: Record<string, number> = RATES): string {
   if (cadAmount == null || !Number.isFinite(cadAmount)) return '-'
   const rate = ratesDict[currency] ?? RATES[currency] ?? 1
   const sym  = SYMBOLS[currency] ?? `${currency} `
   const val  = cadAmount * rate
-  // Large amounts (¥, ₩, ₨, ARS…) get 0 decimals; small amounts get 2
   const digits = val >= 100 ? 0 : 2
   return `${sym}${val.toLocaleString(undefined, {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   })}`
-}
-
-function fmtLocal(price: number | null, currency: string | null): string {
-  if (price == null || !currency) return '-'
-  const sym    = SYMBOLS[currency] ?? `${currency} `
-  const digits = price >= 100 ? 0 : 2
-  return `${sym}${price.toLocaleString(undefined, {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  })}`
-}
-
-function bowls(amount: number | null, bowlPrice: number | null): string {
-  if (!amount || !bowlPrice || bowlPrice === 0) return '-'
-  const n = amount / bowlPrice
-  return n < 10 ? n.toFixed(1) : Math.round(n).toLocaleString()
 }
 
 function fmtDate(s: string | null | undefined) {
@@ -177,45 +128,6 @@ function SourceLink({ value }: { value: string | null | undefined }) {
   }
   return <span>{value}</span>
 }
-
-function fmtConf(v: number | null) {
-  if (v == null) return '-'
-  return `${Math.round(v <= 1 ? v * 100 : v)}%`
-}
-
-function fmtCat(v: string | null) {
-  const m: Record<string, string> = {
-    basic: 'Basic', vegetable: 'Vegetable', meat_based: 'Meat-based',
-    seafood: 'Seafood', house_special: 'House special', premium: 'Premium',
-  }
-  return v ? (m[v] ?? v.replace(/_/g, ' ')) : '-'
-}
-
-function fmtTier(v: string | null) {
-  const m: Record<string, string> = {
-    low_tier: 'Budget', mid_tier: 'Mid-range', high_end: 'High-end', premium: 'Premium',
-  }
-  return v ? (m[v] ?? v.replace(/_/g, ' ')) : '-'
-}
-
-function median(vals: number[]) {
-  if (!vals.length) return null
-  const s = [...vals].sort((a, b) => a - b)
-  const m = Math.floor(s.length / 2)
-  return s.length % 2 === 1 ? s[m] : (s[m - 1] + s[m]) / 2
-}
-
-function avg(vals: number[]) {
-  return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
-}
-
-function stddev(vals: number[]) {
-  if (vals.length < 2) return null
-  const mean = vals.reduce((a, b) => a + b, 0) / vals.length
-  return Math.sqrt(vals.reduce((s, v) => s + (v - mean) ** 2, 0) / (vals.length - 1))
-}
-
-// ── Sub-components ────────────────────────────────────────────────────────────
 
 function ScoreBar({ score, label }: { score: number | null; label: string }) {
   if (score == null) return <p style={metaValStyle}>-</p>
@@ -263,111 +175,11 @@ function Badge({ value }: { value: string | null }) {
   )
 }
 
-// ── Historical Price Chart component ──────────────────────────────────────────
-
-function HistoricalPriceChart({ history, currency, rates }: {
-  history: HistoryPoint[]; currency: string; rates: Record<string, number>
-}) {
-  if (history.length === 0) return null;
-
-  const rate = rates[currency] ?? 1
-  const sym = SYMBOLS[currency] ?? 'CA$'
-  
-  const points = history.map(pt => ({
-    ...pt,
-    price: pt.price_cad * rate
-  }))
-  
-  const prices = points.map(p => p.price)
-  const minP = Math.min(...prices) * 0.9
-  const maxP = Math.max(...prices) * 1.1
-  const pDiff = maxP - minP === 0 ? 1 : maxP - minP
-
-  const W = 600
-  const H = 200
-  const padding = { top: 22, right: 30, bottom: 30, left: 50 }
-  
-  const getX = (idx: number) => padding.left + (idx / (points.length - 1 || 1)) * (W - padding.left - padding.right)
-  const getY = (price: number) => H - padding.bottom - ((price - minP) / pDiff) * (H - padding.top - padding.bottom)
-
-  let pathD = ""
-  points.forEach((pt, i) => {
-    const x = getX(i)
-    const y = getY(pt.price)
-    if (i === 0) pathD = `M ${x} ${y}`
-    else pathD += ` L ${x} ${y}`
-  })
-
-  let areaD = ""
-  if (points.length > 1) {
-    areaD = `${pathD} L ${getX(points.length - 1)} ${H - padding.bottom} L ${getX(0)} ${H - padding.bottom} Z`
-  }
-
-  return (
-    <div className="glass-panel" style={{ borderRadius: 18, padding: '1.5rem', flex: '1 1 340px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 230 }}>
-      <div>
-        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 12px' }}>
-          Historical Price Trend
-        </p>
-      </div>
-      {points.length < 2 ? (
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-3)', fontSize: 12.5, fontFamily: 'var(--font-body)', textAlign: 'center', padding: '0 1rem' }}>
-          Price history tracking started {points[0]?.date ?? 'recently'}. Baseline price is currently stable.
-        </div>
-      ) : (
-        <div style={{ position: 'relative', width: '100%', flex: 1, display: 'flex', alignItems: 'center' }}>
-          <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 'auto', display: 'block' }}>
-            <defs>
-              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0.00" />
-              </linearGradient>
-            </defs>
-            
-            {/* Grid lines */}
-            <line x1={padding.left} y1={getY(minP / 0.9)} x2={W - padding.right} y2={getY(minP / 0.9)} stroke="var(--color-border)" strokeWidth={0.5} strokeDasharray="2 4" />
-            <line x1={padding.left} y1={getY((minP / 0.9 + maxP / 1.1) / 2)} x2={W - padding.right} y2={getY((minP / 0.9 + maxP / 1.1) / 2)} stroke="var(--color-border)" strokeWidth={0.5} strokeDasharray="2 4" />
-            <line x1={padding.left} y1={getY(maxP / 1.1)} x2={W - padding.right} y2={getY(maxP / 1.1)} stroke="var(--color-border)" strokeWidth={0.5} strokeDasharray="2 4" />
-
-            {/* Gradient Area under line */}
-            <path d={areaD} fill="url(#chartGrad)" />
-
-            {/* Line Path */}
-            <path d={pathD} fill="none" stroke="var(--color-accent)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-
-            {/* Dots and Labels */}
-            {points.map((pt, i) => {
-              const x = getX(i)
-              const y = getY(pt.price)
-              return (
-                <g key={pt.month} style={{ cursor: 'pointer' }}>
-                  <title>{pt.date}: {sym}{pt.price.toFixed(2)}</title>
-                  <circle cx={x} cy={y} r={4.5} fill="var(--color-bg)" stroke="var(--color-accent)" strokeWidth={2.5} />
-                  <text x={x} y={y - 10} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={10} fill="var(--color-text-1)" fontWeight={500}>
-                    {sym}{pt.price.toFixed(2)}
-                  </text>
-                  <text x={x} y={H - 8} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={9} fill="var(--color-text-3)">
-                    {pt.date}
-                  </text>
-                </g>
-              )
-            })}
-          </svg>
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ── Main component ────────────────────────────────────────────────────────────
-
 export default function CityPageContent({
   city,
-  restaurants,
-  history = [],
 }: {
   city: CityRow
-  restaurants: RestaurantRow[]
+  restaurants?: RestaurantRow[]
   history?: HistoryPoint[]
 }) {
   const [currency, setCurrency] = useState('CAD')
@@ -380,16 +192,6 @@ export default function CityPageContent({
       .catch(() => {})
   }, [])
 
-  const blEntries = restaurants.filter(r => r.included_in_baseline)
-  const allPrices = restaurants.map(r => r.price_cad).filter((p): p is number => p != null)
-  const blPrices  = blEntries.map(r => r.price_cad).filter((p): p is number => p != null)
-
-  const bowlPrice = city.price_cad ?? city.baseline_median_cad ?? median(blPrices)
-  const mktAvg    = city.market_average_cad ?? avg(allPrices)
-  const mktMin    = city.market_min_cad ?? (allPrices.length ? Math.min(...allPrices) : null)
-  const mktMax    = city.market_max_cad ?? (allPrices.length ? Math.max(...allPrices) : null)
-  const sd        = stddev(allPrices)
-
   const french_speaking_pct = city.median_rent_local
   const provincial_tax_bracket = city.english_proficiency
   const healthcare_wait = city.visa_ease
@@ -401,18 +203,22 @@ export default function CityPageContent({
     provincial_tax_bracket != null ||
     healthcare_wait != null
 
-  const bowlsRent      = bowls(city.median_rent_1br_cad, bowlPrice)
-  const bowlsSalary    = bowls(city.median_monthly_salary_cad, bowlPrice)
-  const bowlsTech      = bowls(city.tech_salary_cad, bowlPrice)
-  const bowlsAfterRent = (city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && bowlPrice)
-    ? bowls(city.median_monthly_salary_cad - city.median_rent_1br_cad, bowlPrice)
-    : '-'
   const rentBurden = (city.median_rent_1br_cad != null && city.median_monthly_salary_cad != null && city.median_monthly_salary_cad > 0)
     ? `${Math.round((city.median_rent_1br_cad / city.median_monthly_salary_cad) * 100)}%`
     : '-'
 
   const sym = SYMBOLS[currency] ?? currency
   const exchangeRateMonth = new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+
+  const partyColor = (party: string | null) => {
+    const p = party?.toLowerCase() || ''
+    if (p.includes('liberal')) return 'var(--color-red)'
+    if (p.includes('conservative')) return '#1E88E5'
+    if (p.includes('ndp')) return '#FB8C00'
+    if (p.includes('bloc')) return '#4FC3F7'
+    if (p.includes('green')) return '#4CAF50'
+    return 'var(--color-text-2)'
+  }
 
   return (
     <main style={{ fontFamily: 'var(--font-body)', background: 'var(--color-bg)', minHeight: '100vh', color: 'var(--color-text-1)' }}>
@@ -423,7 +229,7 @@ export default function CityPageContent({
       <section style={{ padding: '3rem 2rem 2rem', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
           <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: 0 }}>
-            City profile
+            Riding profile
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 12, color: '#3a3a32' }}>View in</span>
@@ -451,33 +257,30 @@ export default function CityPageContent({
           {city.population ? ` · ${Number(city.population).toLocaleString()} people` : ''}
         </p>
         <p style={{ fontSize: 15, color: '#7a7a70', lineHeight: 1.75, maxWidth: 700, margin: '0 0 2rem' }}>
-          {city.blurb ?? 'City context coming soon.'}
+          {city.blurb ?? 'Riding socio-economic context coming soon.'}
         </p>
 
-        {/* Stat cards & historical price chart */}
+        {/* Top summary cards */}
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'stretch' }}>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', flex: '1 1 500px', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', flex: '1 1 100%', alignItems: 'flex-start' }}>
             <PriceCard
-              label="Baseline poutine"
-              value={convert(bowlPrice, currency, rates)}
-              sub={`${city.data_quality_label ?? 'Pending'} · ${city.baseline_entry_count ?? blEntries.length} sources`}
+              label="Rent Burden"
+              value={rentBurden}
+              sub="Wage percentage spent on rent"
               accent
             />
             <PriceCard
-              label="Market average"
-              value={convert(mktAvg, currency, rates)}
-              sub={`${city.market_entry_count ?? restaurants.length} entries tracked`}
+              label="Disposable Income"
+              value={convert(city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null ? city.median_monthly_salary_cad - city.median_rent_1br_cad : null, currency, rates)}
+              sub="Remaining monthly wage after rent"
             />
             <PriceCard
-              label="Price range"
-              value={mktMin != null && mktMax != null
-                ? `${convert(mktMin, currency, rates)}–${convert(mktMax, currency, rates)}`
-                : '-'}
-              sub={sd != null ? `±${convert(sd, currency, rates)} std dev` : 'All approved entries'}
-              wide
+              label="Representing Party"
+              value={city.price_source ?? 'Unknown'}
+              sub="Electoral representation"
+              color={partyColor(city.price_source)}
             />
           </div>
-          <HistoricalPriceChart history={history} currency={currency} rates={rates} />
         </div>
       </section>
 
@@ -485,22 +288,21 @@ export default function CityPageContent({
       {hasLiving && (
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
-            <h2 style={h2}>What does it cost to live here?</h2>
+            <h2 style={h2}>Economic metrics</h2>
             <p style={lead}>
-              Prices shown in <strong>{sym} {currency}</strong>.
-              Poutine ratios are currency-neutral. One poutine in {city.city} = <strong>{convert(bowlPrice, currency, rates)}</strong>.
+              Living costs shown in <strong>{sym} {currency}</strong>. Sourced from CMHC housing market updates and Statistics Canada census logs.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.median_rent_1br_cad != null && (
-                <LivingCard label="Typical monthly rent (1BR)" bowlCount={bowlsRent}
+                <LivingCard label="Typical monthly rent (1BR)"
                   amount={convert(city.median_rent_1br_cad, currency, rates)} sub={city.rent_data_source ?? undefined} />
               )}
               {city.median_monthly_salary_cad != null && (
-                <LivingCard label="Median monthly salary" bowlCount={bowlsSalary}
+                <LivingCard label="Median monthly salary"
                   amount={convert(city.median_monthly_salary_cad, currency, rates)} sub={city.salary_data_source ?? undefined} />
               )}
               {city.tech_salary_cad != null && (
-                <LivingCard label="Tech / knowledge worker salary" bowlCount={bowlsTech}
+                <LivingCard label="Tech / knowledge worker salary"
                   amount={convert(city.tech_salary_cad, currency, rates)} sub="Median gross monthly" />
               )}
               {city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && (() => {
@@ -508,11 +310,10 @@ export default function CityPageContent({
                 const isDeficit = diff < 0
                 return (
                   <LivingCard
-                    label={isDeficit ? 'Rent exceeds median salary' : 'Poutines left after rent'}
-                    bowlCount={isDeficit ? `−${Math.abs(parseInt(bowlsAfterRent))}` : bowlsAfterRent}
+                    label={isDeficit ? 'Rent exceeds median salary' : 'Monthly Disposable Income'}
                     amount={convert(Math.abs(diff), currency, rates)}
                     sub={isDeficit
-                      ? `Rent burden: ${rentBurden}. Median wage cannot cover city rent.`
+                      ? `Rent burden: ${rentBurden}. Median wage cannot cover local rent.`
                       : `Rent burden: ${rentBurden} of median salary`}
                     highlight
                     deficit={isDeficit}
@@ -529,13 +330,13 @@ export default function CityPageContent({
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
             <h2 style={h2}>Liveability</h2>
-            <p style={lead}>Key quality-of-life and practical indicators for Canadian residents.</p>
+            <p style={lead}>Key quality-of-life and practical indicators for local residents.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.safety_index != null && (
-                <MetaCard label="Safety"><ScoreBar score={city.safety_index} label="Numbeo Crime Index (inverted)" /></MetaCard>
+                <MetaCard label="Safety"><ScoreBar score={city.safety_index} label="Crime Index (inverted)" /></MetaCard>
               )}
               {city.healthcare_index != null && (
-                <MetaCard label="Healthcare Quality"><ScoreBar score={city.healthcare_index} label="Numbeo Healthcare Index" /></MetaCard>
+                <MetaCard label="Healthcare Quality"><ScoreBar score={city.healthcare_index} label="Local Healthcare Survey" /></MetaCard>
               )}
               {french_speaking_pct != null && (
                 <MetaCard label="Language Profile">
@@ -554,10 +355,10 @@ export default function CityPageContent({
                 </MetaCard>
               )}
               {healthcare_wait != null && (
-                <MetaCard label="Healthcare Wait Time">
+                <MetaCard label="Healthcare Access">
                   <Badge value={healthcare_wait} />
                   <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
-                    Provincial ER & specialist access delay
+                    ER & specialist provincial wait times
                   </p>
                 </MetaCard>
               )}
@@ -566,7 +367,6 @@ export default function CityPageContent({
                   <p style={metaValStyle}>{city.avg_internet_mbps} <span style={{ fontSize: 14, color: '#9b9b90' }}>Mbps</span></p>
                   <p style={{ fontSize: 11, color: '#9b9b90', margin: '4px 0 0' }}>
                     {city.avg_internet_mbps >= 200 ? 'Excellent' : city.avg_internet_mbps >= 100 ? 'Good' : city.avg_internet_mbps >= 50 ? 'Average' : 'Below avg'}
-                    {' · Ookla Speedtest Global Index'}
                   </p>
                 </MetaCard>
               )}
@@ -575,29 +375,15 @@ export default function CityPageContent({
         </section>
       )}
 
-      {/* ── Poutine market ───────────────────────────────────────────── */}
-      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
-        <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
-          <h2 style={h2}>Poutine market</h2>
-          <p style={lead}>
-            {restaurants.length} approved entries in {city.city}. Prices shown in {sym} {currency}.
-            Baseline entries (classic poutine) set the index price.
-          </p>
-          <RestaurantTable rows={restaurants} bowlPrice={bowlPrice} currency={currency} rates={rates} />
-        </div>
-      </section>
-
       {/* ── Data notes ──────────────────────────────────────────────────── */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 3rem' }}>
         <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
           <h2 style={h2}>Data notes</h2>
           <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
             {[
-              { label: 'Price source',   value: city.price_source,          isSource: true },
               { label: 'Salary source',  value: city.salary_data_source,    isSource: true },
               { label: 'Rent source',    value: city.rent_data_source,      isSource: true },
               { label: 'Last updated',   value: fmtDate(city.price_updated_at), isSource: false },
-              { label: 'Confidence',     value: fmtConf(city.confidence_score), isSource: false },
               { label: 'Climate',        value: city.climate,               isSource: false },
               { label: 'Population',     value: city.population ? Number(city.population).toLocaleString() : null, isSource: false },
             ].filter(({ value }) => value).map(({ label, value, isSource }) => (
@@ -607,9 +393,8 @@ export default function CityPageContent({
               </p>
             ))}
             <p style={{ fontSize: 12, color: '#3a3a32', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
-              All monetary values stored in CAD and converted client-side at {exchangeRateMonth} exchange rates.
-              Salary and rent figures represent median values for the metropolitan area.
-              Liveability scores follow Numbeo methodology (0–100 scale).
+              All monetary values stored in CAD and converted client-side.
+              Salary and rent figures represent median values for the metropolitan area representing this riding.
             </p>
           </div>
         </div>
@@ -621,91 +406,44 @@ export default function CityPageContent({
 
 // ── Small components ──────────────────────────────────────────────────────────
 
-function PriceCard({ label, value, sub, accent = false, wide = false }: {
-  label: string; value: string; sub: string; accent?: boolean; wide?: boolean
+function PriceCard({ label, value, sub, accent = false, color }: {
+  label: string; value: string; sub: string; accent?: boolean; color?: string
 }) {
+  const valColor = color ?? (accent ? 'var(--color-accent)' : 'var(--color-text-1)')
   return (
     <div style={{
       background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 18,
-      padding: '1.5rem 1.75rem', minWidth: wide ? 220 : 180,
+      padding: '1.5rem 1.75rem', flex: '1 1 200px',
     }}>
       <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.5rem' }}>{label}</p>
-      <p style={{ fontFamily: 'var(--font-display)', fontSize: accent ? 44 : 32, color: accent ? 'var(--color-accent)' : 'var(--color-text-1)', margin: 0, lineHeight: 1 }}>{value}</p>
+      <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: valColor, margin: 0, lineHeight: 1.1, fontWeight: 400 }}>{value}</p>
       <p style={{ fontSize: 12, color: '#4a4a42', margin: '0.4rem 0 0' }}>{sub}</p>
     </div>
   )
 }
 
-function LivingCard({ label, bowlCount, amount, sub, highlight = false, deficit = false }: {
-  label: string; bowlCount: string; amount: string; sub?: string; highlight?: boolean; deficit?: boolean
+function LivingCard({ label, amount, sub, highlight = false, deficit = false }: {
+  label: string; amount: string; sub?: string; highlight?: boolean; deficit?: boolean
 }) {
   const bg     = deficit ? 'rgba(217,56,58,0.06)' : highlight ? 'rgba(238,180,79,0.06)' : 'var(--color-surface)'
   const border = deficit ? 'rgba(217,56,58,0.20)' : highlight ? 'rgba(238,180,79,0.20)' : 'var(--color-border)'
   const numColor = deficit ? 'var(--color-accent)' : highlight ? 'var(--color-green)' : 'var(--color-text-1)'
   return (
-    <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 14, padding: '1.1rem' }}>
-      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.4rem' }}>{label}</p>
-      <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: numColor, margin: 0, lineHeight: 1 }}>
-        {deficit ? '−' : ''}{bowlCount} <span style={{ fontSize: 18 }}>🍟</span>
+    <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 14, padding: '1.5rem 1.25rem' }}>
+      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>{label}</p>
+      <p style={{ fontFamily: 'var(--font-display)', fontSize: 26, color: numColor, margin: '0 0 0.25rem', lineHeight: 1.1 }}>
+        {deficit ? '−' : ''}{amount}
       </p>
-      <p style={{ fontSize: 12, color: '#5a5a52', margin: '0.35rem 0 0' }}>{amount} / month</p>
-      {sub && <p style={{ fontSize: 11, color: '#3a3a32', margin: '0.2rem 0 0' }}>{sub}</p>}
+      {sub && <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: 0 }}>{sub}</p>}
     </div>
   )
 }
 
 function MetaCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, padding: '1.1rem' }}>
+    <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, padding: '1.1rem', flex: '1 1 220px' }}>
       <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.6rem' }}>{label}</p>
       {children}
-    </div>
-  )
-}
-
-function RestaurantTable({ rows, bowlPrice, currency, rates }: {
-  rows: RestaurantRow[]; bowlPrice: number | null; currency: string; rates: Record<string, number>
-}) {
-  const sym = SYMBOLS[currency] ?? currency
-  if (!rows.length) {
-    return (
-      <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, padding: '1rem', marginTop: '1rem' }}>
-        <p style={{ fontSize: 14, color: '#3a3a32', margin: 0 }}>No approved entries yet.</p>
-      </div>
-    )
-  }
-  return (
-    <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, overflowX: 'auto', marginTop: '1rem' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
-        <thead>
-          <tr>
-            {['Restaurant', 'Dish', 'Category', 'Tier', 'Local price', `Price (${sym})`, 'In poutines 🍟', 'Baseline', 'Conf.'].map(h => (
-              <th key={h} style={{ textAlign: 'left', padding: '0.7rem 0.9rem', fontSize: 9, textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--color-text-3)', borderBottom: '0.5px solid var(--color-border)', whiteSpace: 'nowrap' }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(row => (
-            <tr key={row.id} style={{ background: row.included_in_baseline ? 'rgba(118,169,140,0.10)' : 'var(--color-surface)' }}>
-              <td style={td}>{row.restaurant_name ?? '-'}</td>
-              <td style={td}>{row.dish_name ?? '-'}</td>
-              <td style={td}>{fmtCat(row.dish_category)}</td>
-              <td style={td}>{fmtTier(row.tier)}</td>
-              <td style={{ ...td, whiteSpace: 'nowrap' }}>{fmtLocal(row.local_price, row.local_currency)}</td>
-              <td style={{ ...td, whiteSpace: 'nowrap', fontWeight: 500, color: 'var(--color-text-1)' }}>{convert(row.price_cad, currency, rates)}</td>
-              <td style={{ ...td, color: 'var(--color-accent)', fontWeight: 500 }}>
-                {row.price_cad != null && bowlPrice ? (row.price_cad / bowlPrice).toFixed(1) : '-'}
-              </td>
-              <td style={td}>
-                {row.included_in_baseline
-                  ? <span style={{ color: 'var(--color-green)', fontWeight: 500 }}>Yes</span>
-                  : <span style={{ color: '#2a2a22' }}>No</span>}
-              </td>
-              <td style={td}>{row.confidence_score != null ? `${Math.round(row.confidence_score <= 1 ? row.confidence_score * 100 : row.confidence_score)}%` : '-'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   )
 }
@@ -719,9 +457,5 @@ const lead: React.CSSProperties = {
   fontSize: 13, color: '#4a4a42', lineHeight: 1.6, margin: 0, maxWidth: 700,
 }
 const metaValStyle: React.CSSProperties = {
-  fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-text-1)', margin: 0,
-}
-const td: React.CSSProperties = {
-  padding: '0.8rem 0.9rem', fontSize: 13, color: '#8a8a82',
-  borderBottom: '0.5px solid var(--color-border)', verticalAlign: 'top',
+  fontFamily: 'var(--font-display)', fontSize: 26, margin: 0, color: 'var(--color-text-1)', lineHeight: 1.1, fontWeight: 400,
 }

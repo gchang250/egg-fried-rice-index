@@ -1,13 +1,33 @@
+import fs from 'fs'
+import path from 'path'
 import { createClient } from '@supabase/supabase-js'
+
+// Load environment variables from .env.local
+try {
+  const envPath = path.resolve(process.cwd(), '.env.local')
+  if (fs.existsSync(envPath)) {
+    const envFile = fs.readFileSync(envPath, 'utf-8')
+    envFile.split('\n').forEach(line => {
+      const parts = line.split('=')
+      if (parts.length >= 2) {
+        const key = parts[0].trim()
+        const val = parts.slice(1).join('=').trim().replace(/^['"]|['"]$/g, '')
+        process.env[key] = val
+      }
+    })
+  }
+} catch (e) {
+  console.warn('Could not load .env.local:', e)
+}
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
 const NOW = new Date().toISOString()
 
-interface CityData {
+interface CitySeed {
   city: string
   province: string
   population: string
@@ -23,30 +43,14 @@ interface CityData {
   climate: string
   salary_source: string
   rent_source: string
+  party: string
 }
 
-const CITIES: CityData[] = [
-  {
-    city: 'Toronto',
-    province: 'ON',
-    population: '7110000',
-    latitude: 43.6532,
-    longitude: -79.3832,
-    median_rent: 2500,
-    median_salary: 4900,
-    tech_salary: 7600,
-    safety_index: 60,
-    healthcare_index: 72,
-    internet_speed: 145,
-    blurb: "Canada's largest city and financial capital. Toronto features a fast-paced, highly competitive food scene and premium cost-of-living index numbers.",
-    climate: "Humid continental — cold winters, hot humid summers",
-    salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
-  },
+const CITIES: CitySeed[] = [
   {
     city: 'Vancouver',
     province: 'BC',
-    population: '3090000',
+    population: '2642825',
     latitude: 49.2827,
     longitude: -123.1207,
     median_rent: 2700,
@@ -55,10 +59,11 @@ const CITIES: CityData[] = [
     safety_index: 58,
     healthcare_index: 74,
     internet_speed: 152,
-    blurb: "Framed by the Pacific Ocean and Coastal Mountains, Vancouver is a high-cost coastal gateway with a strong focus on fresh, artisanal, and specialty dining.",
+    blurb: "Framed by the Pacific Ocean and Coastal Mountains, Vancouver is a high-cost coastal gateway representing several highly contested urban ridings.",
     climate: "Temperate oceanic — mild, rainy winters, warm dry summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Montreal',
@@ -72,10 +77,11 @@ const CITIES: CityData[] = [
     safety_index: 70,
     healthcare_index: 68,
     internet_speed: 130,
-    blurb: "The cultural hub of French Canada. Montreal is the undisputed epicenter of poutine culture, blending historic diner tradition with affordable, creative gastronomy.",
+    blurb: "The cultural hub of French Canada. Montreal features a dense layout of federal ridings spanning downtown, historic harbor sectors, and bilingual boroughs.",
     climate: "Humid continental — cold snowy winters, warm humid summers",
     salary_source: "Institut de la statistique du Québec 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Liberal"
   },
   {
     city: 'Calgary',
@@ -89,10 +95,11 @@ const CITIES: CityData[] = [
     safety_index: 63,
     healthcare_index: 73,
     internet_speed: 138,
-    blurb: "Positioned at the base of the Rocky Mountains, Calgary offers high wages, lower tax rates, and a rapidly expanding culinary and craft beer market.",
+    blurb: "Positioned at the base of the Rocky Mountains, Calgary is a major energy sector hub with historically strong conservative riding representation.",
     climate: "Semi-arid continental — dry cold winters, warm sunny summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Conservative"
   },
   {
     city: 'Edmonton',
@@ -106,10 +113,11 @@ const CITIES: CityData[] = [
     safety_index: 52,
     healthcare_index: 70,
     internet_speed: 125,
-    blurb: "Alberta's capital city, situated along the North Saskatchewan River. Edmonton represents one of the most accessible and stable major metro markets in Canada.",
+    blurb: "Alberta's capital city. Edmonton represents a diverse industrial and public-sector core, featuring notable progressive riding hotspots in the city center.",
     climate: "Humid continental — long cold winters, warm pleasant summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "NDP"
   },
   {
     city: 'Ottawa',
@@ -123,10 +131,11 @@ const CITIES: CityData[] = [
     safety_index: 72,
     healthcare_index: 76,
     internet_speed: 140,
-    blurb: "Canada's national capital. Sitting right across the river from Quebec, Ottawa has a strong hybrid poutine culture supported by local street-side chip trucks.",
+    blurb: "Canada's national capital. Ottawa is the center of federal administration and parliamentary politics, divided into major urban and suburban ridings.",
     climate: "Humid continental — cold snowy winters, warm humid summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Winnipeg',
@@ -140,10 +149,11 @@ const CITIES: CityData[] = [
     safety_index: 45,
     healthcare_index: 62,
     internet_speed: 110,
-    blurb: "The historic gateway to the Canadian Prairies. Winnipeg maintains a diverse manufacturing base and offers a highly accessible cost of living.",
+    blurb: "The historic gateway to the Canadian Prairies. Winnipeg maintains a diverse manufacturing base and is a key electoral battleground.",
     climate: "Extreme continental — very cold dry winters, hot summers",
     salary_source: "Manitoba Bureau of Statistics 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "NDP"
   },
   {
     city: 'Halifax',
@@ -157,10 +167,11 @@ const CITIES: CityData[] = [
     safety_index: 61,
     healthcare_index: 70,
     internet_speed: 125,
-    blurb: "The major economic hub of Atlantic Canada. Halifax is an historic port city with a vibrant university community and a booming local seafood and pub scene.",
+    blurb: "The major economic hub of Atlantic Canada. Halifax is a vibrant ocean-front port city hosting critical East Coast federal ridings.",
     climate: "Humid continental / Maritime — wet snowy winters, pleasant warm summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Victoria',
@@ -174,10 +185,11 @@ const CITIES: CityData[] = [
     safety_index: 65,
     healthcare_index: 75,
     internet_speed: 135,
-    blurb: "The capital of British Columbia, located on the southern tip of Vancouver Island. Known for historic architecture, gardens, and a high concentration of retirees.",
+    blurb: "The capital of British Columbia, located on Vancouver Island. Known for tourism, public-sector offices, and strong progressive voter bases.",
     climate: "Warm-summer Mediterranean — mild wet winters, dry warm summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "NDP"
   },
   {
     city: 'Quebec City',
@@ -191,10 +203,11 @@ const CITIES: CityData[] = [
     safety_index: 82,
     healthcare_index: 77,
     internet_speed: 120,
-    blurb: "One of North America's oldest cities. Quebec City has a highly fortified historic center and an intensely passionate local poutine culture led by native chains.",
+    blurb: "One of North America's oldest cities. Quebec City has a strong regional identity and is key to provincial and federal political trends.",
     climate: "Humid continental — cold snowy winters, warm pleasant summers",
     salary_source: "Institut de la statistique du Québec 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Bloc Québécois"
   },
   {
     city: 'Hamilton',
@@ -208,10 +221,11 @@ const CITIES: CityData[] = [
     safety_index: 54,
     healthcare_index: 68,
     internet_speed: 130,
-    blurb: "Historically Canada's steel capital, now a growing hub for healthcare, education, and creative sectors fleeing Toronto's cost of living.",
+    blurb: "Historically Canada's industrial steel capital. Hamilton is home to active labor unions and distinct working-class federal ridings.",
     climate: "Humid continental — cold winters, warm humid summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "NDP"
   },
   {
     city: 'London',
@@ -225,10 +239,11 @@ const CITIES: CityData[] = [
     safety_index: 56,
     healthcare_index: 71,
     internet_speed: 125,
-    blurb: "A major university, regional healthcare, and financial services hub in Southwestern Ontario, offering a classic park-filled suburban layout.",
+    blurb: "A major university, regional healthcare, and financial services hub in Southwestern Ontario, split across several bellwether ridings.",
     climate: "Humid continental — cold snowy winters, hot humid summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Kitchener-Waterloo',
@@ -242,10 +257,11 @@ const CITIES: CityData[] = [
     safety_index: 61,
     healthcare_index: 73,
     internet_speed: 135,
-    blurb: "The heart of Canada's tech triangle. KW hosts leading tech firms and universities, creating high median incomes and a modern, vibrant dining ecosystem.",
+    blurb: "The heart of Canada's tech triangle. KW hosts leading universities and software firms, representing growing suburban-urban ridings.",
     climate: "Humid continental — cold snowy winters, warm humid summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'St. John\'s',
@@ -259,10 +275,11 @@ const CITIES: CityData[] = [
     safety_index: 64,
     healthcare_index: 68,
     internet_speed: 110,
-    blurb: "The colorful, historic capital of Newfoundland. St. John's is famous for high wind speeds, steep streets, pub culture, and fresh, rugged seafood dynamics.",
+    blurb: "The historic capital of Newfoundland. St. John's features a rich Maritime economy and highly active East Coast electoral campaigns.",
     climate: "Subpolar oceanic — cool snowy winters, mild wet summers",
     salary_source: "Newfoundland Statistics 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Liberal"
   },
   {
     city: 'Saskatoon',
@@ -276,10 +293,11 @@ const CITIES: CityData[] = [
     safety_index: 48,
     healthcare_index: 65,
     internet_speed: 118,
-    blurb: "The 'Bridge City' of Saskatchewan, centered around agricultural research, mining corporate offices, and a highly active prairie diner scene.",
+    blurb: "The 'Bridge City' of Saskatchewan, centered around agricultural research, mining corporate offices, and central prairie ridings.",
     climate: "Dry continental — long cold winters, short warm summers",
     salary_source: "Saskatchewan Bureau of Stats 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Conservative"
   },
   {
     city: 'Regina',
@@ -293,10 +311,11 @@ const CITIES: CityData[] = [
     safety_index: 46,
     healthcare_index: 63,
     internet_speed: 115,
-    blurb: "Saskatchewan's capital city. Regina supports a stable, public-sector government economy alongside rich manufacturing and agricultural business.",
+    blurb: "Saskatchewan's capital city. Regina supports public sector government operations alongside rich agricultural commercial enterprises.",
     climate: "Dry continental — long cold winters, short warm summers",
     salary_source: "Saskatchewan Bureau of Stats 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Conservative"
   },
   {
     city: 'Charlottetown',
@@ -310,10 +329,11 @@ const CITIES: CityData[] = [
     safety_index: 73,
     healthcare_index: 68,
     internet_speed: 110,
-    blurb: "The historic cradle of Confederation and PEI's capital. Famous for agriculture, tourism, red sand beaches, and excellent local potato and seafood sources.",
+    blurb: "The historic cradle of Confederation and PEI's capital. Centered around agricultural research, tourism, and Maritime local ridings.",
     climate: "Humid continental / Maritime — cold snowy winters, warm pleasant summers",
     salary_source: "PEI Bureau of Statistics 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Liberal"
   },
   {
     city: 'Fredericton',
@@ -327,10 +347,11 @@ const CITIES: CityData[] = [
     safety_index: 68,
     healthcare_index: 65,
     internet_speed: 115,
-    blurb: "The leafy capital of New Brunswick. Fredericton hosts major universities, public-sector headquarters, and a growing IT and micro-brewing community.",
+    blurb: "The capital of New Brunswick. Fredericton hosts public-sector headquarters and a growing IT and research community.",
     climate: "Humid continental — cold snowy winters, warm humid summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Liberal"
   },
   {
     city: 'Moncton',
@@ -344,10 +365,11 @@ const CITIES: CityData[] = [
     safety_index: 55,
     healthcare_index: 66,
     internet_speed: 120,
-    blurb: "A fast-growing, bilingual distribution and transportation hub in the Maritime provinces, offering affordable housing and a growing retail base.",
+    blurb: "A fast-growing bilingual transport and distribution hub in the Maritime provinces, representing key East Coast ridings.",
     climate: "Humid continental — cold snowy winters, warm pleasant summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Liberal"
   },
   {
     city: 'Sudbury',
@@ -361,10 +383,11 @@ const CITIES: CityData[] = [
     safety_index: 53,
     healthcare_index: 70,
     internet_speed: 115,
-    blurb: "The major mining and scientific center of Northern Ontario, characterized by hundreds of lakes and a highly stable natural resources economy.",
+    blurb: "The major mining and scientific center of Northern Ontario, with a highly stable natural resources riding profile.",
     climate: "Humid continental / Subarctic — long cold winters, warm pleasant summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Whitehorse',
@@ -378,10 +401,11 @@ const CITIES: CityData[] = [
     safety_index: 60,
     healthcare_index: 71,
     internet_speed: 95,
-    blurb: "The capital of Yukon, nestled in the wilderness along the Alaska Highway. Features high public-sector wages, active tourism, and high shipping-driven utility costs.",
+    blurb: "The capital of Yukon, representing the entire territory as a single federal electoral riding.",
     climate: "Subarctic — long cold winters, short warm summers",
     salary_source: "Yukon Bureau of Statistics 2025",
-    rent_source: "Yukon Housing Q1 2026"
+    rent_source: "Yukon Housing Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Yellowknife',
@@ -395,10 +419,11 @@ const CITIES: CityData[] = [
     safety_index: 56,
     healthcare_index: 68,
     internet_speed: 85,
-    blurb: "Capital of the Northwest Territories. Positioned on the Great Slave Lake, Yellowknife supports gold and diamond mining administrative sectors alongside government offices.",
+    blurb: "Capital of the Northwest Territories, representing the territorial federal riding.",
     climate: "Subarctic — extreme freezing winters, short mild summers",
     salary_source: "NWT Bureau of Statistics 2025",
-    rent_source: "NWT Housing Q1 2026"
+    rent_source: "NWT Housing Q1 2026",
+    party: "Liberal"
   },
   {
     city: 'Iqaluit',
@@ -412,10 +437,11 @@ const CITIES: CityData[] = [
     safety_index: 72,
     healthcare_index: 55,
     internet_speed: 45,
-    blurb: "The capital of Nunavut on Baffin Island. Iqaluit is highly remote, relying entirely on sea-lift shipping and flights, yielding extremely high living and supply costs.",
+    blurb: "The capital of Nunavut on Baffin Island, representing the northernmost federal electoral riding in Canada.",
     climate: "Tundra climate — long freezing winters, short cold summers",
     salary_source: "Nunavut Bureau of Statistics 2025",
-    rent_source: "Nunavut Housing Corp 2026"
+    rent_source: "Nunavut Housing Corp 2026",
+    party: "Liberal"
   },
   {
     city: 'Fort McMurray',
@@ -429,10 +455,11 @@ const CITIES: CityData[] = [
     safety_index: 60,
     healthcare_index: 68,
     internet_speed: 110,
-    blurb: "The heart of Alberta's oil sands economy. Features exceptionally high median household incomes combined with relatively affordable prairie housing.",
+    blurb: "The heart of Alberta's oil sands economy, representing the high-income riding of Fort McMurray—Cold Lake.",
     climate: "Subarctic climate — long freezing winters, short warm summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Alberta Rent Reports 2026"
+    rent_source: "Alberta Rent Reports 2026",
+    party: "Conservative"
   },
   {
     city: 'Windsor',
@@ -446,10 +473,11 @@ const CITIES: CityData[] = [
     safety_index: 52,
     healthcare_index: 70,
     internet_speed: 120,
-    blurb: "Canada's southernmost city, sitting right across the Detroit River from the US. Windsor is an historic automotive manufacturing hub.",
+    blurb: "Canada's southernmost city, sitting right across the Detroit River from the US. Windsor features manufacturing-focused federal ridings.",
     climate: "Humid continental — cold winters, hot humid summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "NDP"
   },
   {
     city: 'Kelowna',
@@ -466,7 +494,8 @@ const CITIES: CityData[] = [
     blurb: "Located in the Okanagan Valley, Kelowna is a major tourist and agricultural center known for vineyards, lakes, and high recreational housing demand.",
     climate: "Humid continental / Semi-arid — cold winters, hot dry summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Conservative"
   },
   {
     city: 'Sherbrooke',
@@ -480,10 +509,11 @@ const CITIES: CityData[] = [
     safety_index: 74,
     healthcare_index: 71,
     internet_speed: 115,
-    blurb: "A major university city in the Eastern Townships of Quebec. Sherbrooke offers an exceptional student-driven economy and highly affordable rental housing.",
+    blurb: "A major university city in the Eastern Townships of Quebec, hosting progressive francophone riding profiles.",
     climate: "Humid continental — cold snowy winters, warm pleasant summers",
     salary_source: "Institut de la statistique du Québec 2025",
-    rent_source: "CMHC 2026"
+    rent_source: "CMHC 2026",
+    party: "Bloc Québécois"
   },
   {
     city: 'Kingston',
@@ -497,158 +527,12 @@ const CITIES: CityData[] = [
     safety_index: 66,
     healthcare_index: 75,
     internet_speed: 125,
-    blurb: "The 'Limestone City', sitting at the mouth of the St. Lawrence River. Home to Queen's University and Royal Military College, offering rich local heritage.",
+    blurb: "The 'Limestone City', sitting at the mouth of the St. Lawrence River. Home to Queen's University, representing a historic Ontario riding.",
     climate: "Humid continental — cold snowy winters, warm pleasant summers",
     salary_source: "Statistics Canada 2025",
-    rent_source: "Rentals.ca Q1 2026"
+    rent_source: "Rentals.ca Q1 2026",
+    party: "Liberal"
   }
-]
-
-interface RestaurantSeed {
-  city: string
-  restaurant_name: string
-  dish_name: string
-  dish_category: 'basic' | 'vegetable' | 'meat_based' | 'seafood' | 'house_special' | 'premium'
-  price_cad: number
-  tier: 'low_tier' | 'mid_tier' | 'high_end' | 'premium'
-}
-
-const RESTAURANTS: RestaurantSeed[] = [
-  // Toronto
-  { city: 'Toronto', restaurant_name: 'Smoke\'s Poutinerie', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 9.99, tier: 'low_tier' },
-  { city: 'Toronto', restaurant_name: 'Nom Nom Nom Poutine', dish_name: 'Traditional Classic', dish_category: 'basic', price_cad: 11.50, tier: 'low_tier' },
-  { city: 'Toronto', restaurant_name: 'Poutini\'s House of Poutine', dish_name: 'Traditional Poutine', dish_category: 'basic', price_cad: 12.00, tier: 'low_tier' },
-  { city: 'Toronto', restaurant_name: 'Fancy Fries Bistro', dish_name: 'Veggie Gravy Special', dish_category: 'vegetable', price_cad: 13.00, tier: 'mid_tier' },
-  { city: 'Toronto', restaurant_name: 'Smoke\'s Poutinerie', dish_name: 'Bacon Double Cheeseburger Poutine', dish_category: 'meat_based', price_cad: 14.99, tier: 'mid_tier' },
-  { city: 'Toronto', restaurant_name: 'Bannock Restaurant', dish_name: 'Duck Confit Poutine', dish_category: 'house_special', price_cad: 21.00, tier: 'mid_tier' },
-  { city: 'Toronto', restaurant_name: 'The Keg Steakhouse', dish_name: 'Lobster & Steak Poutine', dish_category: 'premium', price_cad: 32.00, tier: 'high_end' },
-
-  // Vancouver
-  { city: 'Vancouver', restaurant_name: 'Fritz European Fry House', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 10.50, tier: 'low_tier' },
-  { city: 'Vancouver', restaurant_name: 'La Belle Patate', dish_name: 'Traditional Regular', dish_category: 'basic', price_cad: 12.50, tier: 'low_tier' },
-  { city: 'Vancouver', restaurant_name: 'Mean Poutine', dish_name: 'Philly Steak Poutine', dish_category: 'meat_based', price_cad: 15.99, tier: 'mid_tier' },
-  { city: 'Vancouver', restaurant_name: 'Belgian Fries', dish_name: 'Vegetarian Classic', dish_category: 'vegetable', price_cad: 13.50, tier: 'mid_tier' },
-  { city: 'Vancouver', restaurant_name: 'Edible Canada', dish_name: 'Smoked Duck Poutine', dish_category: 'premium', price_cad: 24.00, tier: 'high_end' },
-
-  // Montreal
-  { city: 'Montreal', restaurant_name: 'La Banquise', dish_name: 'La Classique', dish_category: 'basic', price_cad: 8.50, tier: 'low_tier' },
-  { city: 'Montreal', restaurant_name: 'Ma Poule Mouillée', dish_name: 'Portuguese Chicken Poutine', dish_category: 'meat_based', price_cad: 14.50, tier: 'low_tier' },
-  { city: 'Montreal', restaurant_name: 'Poutineville', dish_name: 'La Poutineville (Crispy Potatoes)', dish_category: 'house_special', price_cad: 13.95, tier: 'mid_tier' },
-  { city: 'Montreal', restaurant_name: 'Patati Patata', dish_name: 'Patatine (Small Classic)', dish_category: 'basic', price_cad: 7.00, tier: 'low_tier' },
-  { city: 'Montreal', restaurant_name: 'Au Pied de Cochon', dish_name: 'Foie Gras Poutine', dish_category: 'premium', price_cad: 34.00, tier: 'premium' },
-
-  // Calgary
-  { city: 'Calgary', restaurant_name: 'The Big Cheese Poutinerie', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 10.00, tier: 'low_tier' },
-  { city: 'Calgary', restaurant_name: 'Myhre\'s Deli', dish_name: 'Montreal Smoked Meat Poutine', dish_category: 'meat_based', price_cad: 14.95, tier: 'low_tier' },
-  { city: 'Calgary', restaurant_name: 'The Big Cheese Poutinerie', dish_name: 'Veggie Classic', dish_category: 'vegetable', price_cad: 11.50, tier: 'mid_tier' },
-  { city: 'Calgary', restaurant_name: 'Charcut Roast House', dish_name: 'Duck Fat Poutine with Curds', dish_category: 'house_special', price_cad: 19.00, tier: 'high_end' },
-
-  // Edmonton
-  { city: 'Edmonton', restaurant_name: 'La Ronde Restaurant', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 11.00, tier: 'low_tier' },
-  { city: 'Edmonton', restaurant_name: 'The Cheese Factory', dish_name: 'Traditional Cheese Poutine', dish_category: 'basic', price_cad: 9.95, tier: 'low_tier' },
-  { city: 'Edmonton', restaurant_name: 'The Next Act', dish_name: 'Pulled Pork Poutine', dish_category: 'meat_based', price_cad: 15.50, tier: 'mid_tier' },
-  { city: 'Edmonton', restaurant_name: 'Highlevel Diner', dish_name: 'Vegetarian Gravy Poutine', dish_category: 'vegetable', price_cad: 12.50, tier: 'mid_tier' },
-
-  // Ottawa
-  { city: 'Ottawa', restaurant_name: 'Elgin Street Diner', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 10.95, tier: 'low_tier' },
-  { city: 'Ottawa', restaurant_name: 'Fritomania', dish_name: 'Traditional Poutine', dish_category: 'basic', price_cad: 8.50, tier: 'low_tier' },
-  { city: 'Ottawa', restaurant_name: 'S&G Fries', dish_name: 'Classic Chip Truck Poutine', dish_category: 'basic', price_cad: 9.00, tier: 'low_tier' },
-  { city: 'Ottawa', restaurant_name: '3 Brothers Shawarma', dish_name: 'Chicken Shawarma Poutine', dish_category: 'house_special', price_cad: 13.99, tier: 'mid_tier' },
-
-  // Winnipeg
-  { city: 'Winnipeg', restaurant_name: 'Le Garage Cafe', dish_name: 'La Classique', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-  { city: 'Winnipeg', restaurant_name: 'Stella\'s', dish_name: 'Vegetarian Poutine', dish_category: 'vegetable', price_cad: 12.00, tier: 'mid_tier' },
-  { city: 'Winnipeg', restaurant_name: 'Peasant Cookery', dish_name: 'House Smoked Bacon Poutine', dish_category: 'meat_based', price_cad: 15.00, tier: 'mid_tier' },
-
-  // Halifax
-  { city: 'Halifax', restaurant_name: 'Willy\'s Fresh Cut', dish_name: 'Traditional Classic', dish_category: 'basic', price_cad: 8.99, tier: 'low_tier' },
-  { city: 'Halifax', restaurant_name: 'Cheese Curds Gourmet', dish_name: 'Classic Curds Poutine', dish_category: 'basic', price_cad: 10.25, tier: 'low_tier' },
-  { city: 'Halifax', restaurant_name: 'Willy\'s Fresh Cut', dish_name: 'Montreal Smoked Meat Poutine', dish_category: 'meat_based', price_cad: 12.99, tier: 'mid_tier' },
-  { city: 'Halifax', restaurant_name: 'The Bicycle Thief', dish_name: 'Jumbo Lobster Poutine', dish_category: 'seafood', price_cad: 26.00, tier: 'high_end' },
-
-  // Victoria
-  { city: 'Victoria', restaurant_name: 'La Belle Patate', dish_name: 'Classic Small', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-  { city: 'Victoria', restaurant_name: 'Fritz European Fry House', dish_name: 'Traditional Poutine', dish_category: 'basic', price_cad: 11.50, tier: 'low_tier' },
-  { city: 'Victoria', restaurant_name: 'L\'Authentique', dish_name: 'Poutine Galvaude (Chicken & Peas)', dish_category: 'house_special', price_cad: 14.50, tier: 'mid_tier' },
-
-  // Quebec City
-  { city: 'Quebec City', restaurant_name: 'Chez Ashton', dish_name: 'La Poutine Classique', dish_category: 'basic', price_cad: 9.00, tier: 'low_tier' },
-  { city: 'Quebec City', restaurant_name: 'Snack Bar Saint-Jean', dish_name: 'Poutine Reguliere', dish_category: 'basic', price_cad: 8.50, tier: 'low_tier' },
-  { city: 'Quebec City', restaurant_name: 'Le Chic Shack', dish_name: 'La Forestiere (Wild Mushroom & Truffle)', dish_category: 'premium', price_cad: 17.50, tier: 'high_end' },
-  { city: 'Quebec City', restaurant_name: 'Chez Ashton', dish_name: 'Poutine Double Saucisse', dish_category: 'meat_based', price_cad: 12.50, tier: 'low_tier' },
-
-  // Hamilton
-  { city: 'Hamilton', restaurant_name: 'The Brain', dish_name: 'Classic Diner Poutine', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-  { city: 'Hamilton', restaurant_name: 'Charred Rotisserie', dish_name: 'Piri Piri Chicken Poutine', dish_category: 'meat_based', price_cad: 13.99, tier: 'mid_tier' },
-
-  // London
-  { city: 'London', restaurant_name: 'Smoke\'s Poutinerie', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 9.99, tier: 'low_tier' },
-  { city: 'London', restaurant_name: 'Prince Al\'s Diner', dish_name: 'Classic Shoestring Poutine', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-
-  // Kitchener-Waterloo
-  { city: 'Kitchener-Waterloo', restaurant_name: 'The Lancaster Smokehouse', dish_name: 'Smoked Brisket Poutine', dish_category: 'meat_based', price_cad: 15.00, tier: 'mid_tier' },
-  { city: 'Kitchener-Waterloo', restaurant_name: 'Ethel\'s Lounge', dish_name: 'Classic Pub Poutine', dish_category: 'basic', price_cad: 10.00, tier: 'low_tier' },
-
-  // St. John's
-  { city: 'St. John\'s', restaurant_name: 'Ziggy Peelgood\'s', dish_name: 'Classic Chip Wagon Poutine', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-  { city: 'St. John\'s', restaurant_name: 'Fabulous Foods', dish_name: 'Traditional Turkey & Dressing Poutine', dish_category: 'house_special', price_cad: 12.50, tier: 'low_tier' },
-
-  // Saskatoon
-  { city: 'Saskatoon', restaurant_name: 'Amigos Cantina', dish_name: 'Classic Fries & Curds', dish_category: 'basic', price_cad: 9.75, tier: 'low_tier' },
-  { city: 'Saskatoon', restaurant_name: 'Broadway Cafe', dish_name: 'Traditional Poutine', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-
-  // Regina
-  { city: 'Regina', restaurant_name: 'Coney Island Poutine', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 9.99, tier: 'low_tier' },
-  { city: 'Regina', restaurant_name: 'Bushwakker Brewing', dish_name: 'Stout Gravy Poutine', dish_category: 'house_special', price_cad: 13.50, tier: 'mid_tier' },
-
-  // Charlottetown
-  { city: 'Charlottetown', restaurant_name: 'Receiver Coffee', dish_name: 'PEI Potato Classic Poutine', dish_category: 'basic', price_cad: 10.00, tier: 'low_tier' },
-  { city: 'Charlottetown', restaurant_name: 'Chip Ship', dish_name: 'Maritime Lobster Poutine', dish_category: 'seafood', price_cad: 18.00, tier: 'mid_tier' },
-
-  // Fredericton
-  { city: 'Fredericton', restaurant_name: 'The Cabin Restaurant', dish_name: 'Classic Diner Poutine', dish_category: 'basic', price_cad: 9.00, tier: 'low_tier' },
-  { city: 'Fredericton', restaurant_name: 'Snooty Fox', dish_name: 'Guinness Gravy Poutine', dish_category: 'house_special', price_cad: 12.50, tier: 'mid_tier' },
-
-  // Moncton
-  { city: 'Moncton', restaurant_name: 'Moncton Keg', dish_name: 'Classic Steak Cut Poutine', dish_category: 'basic', price_cad: 10.50, tier: 'low_tier' },
-  { city: 'Moncton', restaurant_name: 'Chris Rock Tavern', dish_name: 'Classic Tavern Fries & Curds', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-
-  // Sudbury
-  { city: 'Sudbury', restaurant_name: 'Silver Bullet Fries', dish_name: 'Classic Roadside Poutine', dish_category: 'basic', price_cad: 8.95, tier: 'low_tier' },
-  { city: 'Sudbury', restaurant_name: 'Deluxe Hamburgers', dish_name: 'Traditional Gravy Poutine', dish_category: 'basic', price_cad: 8.50, tier: 'low_tier' },
-
-  // Whitehorse
-  { city: 'Whitehorse', restaurant_name: 'Klondike Rib & Salmon', dish_name: 'Yukon Gold Classic', dish_category: 'basic', price_cad: 13.50, tier: 'low_tier' },
-  { city: 'Whitehorse', restaurant_name: 'G&P Steakhouse', dish_name: 'Traditional Baked Poutine', dish_category: 'basic', price_cad: 12.95, tier: 'low_tier' },
-
-  // Yellowknife
-  { city: 'Yellowknife', restaurant_name: 'Wildcat Cafe', dish_name: 'Classic Arctic Poutine', dish_category: 'basic', price_cad: 14.50, tier: 'low_tier' },
-  { city: 'Yellowknife', restaurant_name: 'Bullock\'s Bistro', dish_name: 'Great Slave Fish Gravy Poutine', dish_category: 'seafood', price_cad: 21.00, tier: 'high_end' },
-
-  // Iqaluit
-  { city: 'Iqaluit', restaurant_name: 'Grind and Brew', dish_name: 'Classic Frozen-curd Poutine', dish_category: 'basic', price_cad: 18.50, tier: 'low_tier' },
-  { city: 'Iqaluit', restaurant_name: 'Frobisher Inn', dish_name: 'Tundra Bistro Poutine', dish_category: 'basic', price_cad: 17.50, tier: 'low_tier' },
-
-  // Fort McMurray
-  { city: 'Fort McMurray', restaurant_name: 'Wood Buffalo Brewing', dish_name: 'Classic Stout Poutine', dish_category: 'basic', price_cad: 11.99, tier: 'low_tier' },
-  { city: 'Fort McMurray', restaurant_name: 'The Tavern', dish_name: 'Bacon Gravy Poutine', dish_category: 'meat_based', price_cad: 14.50, tier: 'low_tier' },
-
-  // Windsor
-  { city: 'Windsor', restaurant_name: 'Frenchy\'s Poutinery', dish_name: 'Classic Curds', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' },
-  { city: 'Windsor', restaurant_name: 'Loose Goose Restopub', dish_name: 'Traditional Gravy Fries', dish_category: 'basic', price_cad: 9.00, tier: 'low_tier' },
-
-  // Kelowna
-  { city: 'Kelowna', restaurant_name: 'La Belle Patate', dish_name: 'Classic Poutine', dish_category: 'basic', price_cad: 10.00, tier: 'low_tier' },
-  { city: 'Kelowna', restaurant_name: 'Kelowna Beer Institute', dish_name: 'Spent Grain Beer Poutine', dish_category: 'house_special', price_cad: 13.50, tier: 'mid_tier' },
-
-  // Sherbrooke
-  { city: 'Sherbrooke', restaurant_name: 'Cantine Tin-Tin', dish_name: 'Poutine Classique Sauce Brune', dish_category: 'basic', price_cad: 7.75, tier: 'low_tier' },
-  { city: 'Sherbrooke', restaurant_name: 'Louis Luncheonette', dish_name: 'La Poutine Louis (Petite)', dish_category: 'basic', price_cad: 7.25, tier: 'low_tier' },
-  { city: 'Sherbrooke', restaurant_name: 'Poutineville', dish_name: 'Smoked Meat Poutine', dish_category: 'meat_based', price_cad: 12.95, tier: 'mid_tier' },
-
-  // Kingston
-  { city: 'Kingston', restaurant_name: 'Harper\'s Burger Bar', dish_name: 'Classic Hand-Cut Poutine', dish_category: 'basic', price_cad: 9.99, tier: 'low_tier' },
-  { city: 'Kingston', restaurant_name: 'The Toucan', dish_name: 'Traditional Pub Poutine', dish_category: 'basic', price_cad: 9.50, tier: 'low_tier' }
 ]
 
 async function run() {
@@ -671,20 +555,6 @@ async function run() {
   console.log('✓ Successfully wiped old database tables')
 
   console.log('\n--- Seeding Canadian communities ---')
-  
-  const tempPrices: Record<string, number> = {}
-  CITIES.forEach(c => {
-    const cityRest = RESTAURANTS.filter(r => r.city === c.city)
-    const baselines = cityRest.filter(r => r.dish_category === 'basic' || r.dish_category === 'vegetable')
-    const prices = baselines.map(r => r.price_cad).sort((a, b) => a - b)
-    if (prices.length > 0) {
-      const mid = Math.floor(prices.length / 2)
-      tempPrices[c.city] = prices.length % 2 === 1 ? prices[mid] : (prices[mid - 1] + prices[mid]) / 2
-    } else {
-      tempPrices[c.city] = 9.99
-    }
-    ;(c as any).computedPrice = tempPrices[c.city]
-  })
 
   const cityRows = CITIES.map(c => {
     let tax = 'Medium'
@@ -754,8 +624,9 @@ async function run() {
       median_rent_local: french,
       english_proficiency: tax,
       visa_ease: wait,
-      price_cad: (c as any).computedPrice,
-      baseline_median_cad: (c as any).computedPrice,
+      price_cad: null,
+      baseline_median_cad: null,
+      price_source: c.party, // Storing political party representation in price_source column
       population_source: 'Statistics Canada',
       population_updated_at: NOW,
       price_updated_at: NOW,
@@ -768,114 +639,45 @@ async function run() {
     console.error('Failed to insert cities:', insertCitiesErr)
     process.exit(1)
   }
-  console.log(`✓ Inserted ${cityRows.length} communities`)
-
-  console.log('\n--- Seeding restaurants ---')
-  const restaurantRows = RESTAURANTS.map(r => ({
-    city: r.city,
-    country: 'Canada',
-    restaurant_name: r.restaurant_name,
-    dish_name: r.dish_name,
-    dish_category: r.dish_category,
-    included_in_baseline: r.dish_category === 'basic' || r.dish_category === 'vegetable',
-    tier: r.tier,
-    local_price: r.price_cad,
-    local_currency: 'CAD',
-    exchange_rate_used: 1,
-    price_cad: r.price_cad,
-    source: `Manual seed / Web Crawl – verified 2026`,
-    source_type: 'official_menu',
-    source_url: `https://www.google.com/search?q=${encodeURIComponent(r.restaurant_name + ' ' + r.city)}`,
-    confidence_score: 0.90,
-    approved: true,
-    active: true,
-    date_accessed: NOW,
-    notes: `Manually indexed poutine menu prices in ${r.city}.`
-  }))
-
-  const { error: insertRestErr } = await supabase.from('restaurants').insert(restaurantRows)
-  if (insertRestErr) {
-    console.error('Failed to insert restaurants:', insertRestErr)
-    process.exit(1)
-  }
-  console.log(`✓ Inserted ${restaurantRows.length} restaurants`)
-
-  console.log('\n--- Calculating metrics for communities ---')
-  for (const c of CITIES) {
-    const cityRest = restaurantRows.filter(r => r.city === c.city)
-    const baselines = cityRest.filter(r => r.included_in_baseline)
-    const baselinePrices = baselines.map(r => r.price_cad).sort((a, b) => a - b)
-    const allPrices = cityRest.map(r => r.price_cad).sort((a, b) => a - b)
-
-    if (baselinePrices.length > 0) {
-      const mid = Math.floor(baselinePrices.length / 2)
-      const median = baselinePrices.length % 2 === 1
-        ? baselinePrices[mid]
-        : (baselinePrices[mid - 1] + baselinePrices[mid]) / 2
-
-      const mean = allPrices.reduce((sum, p) => sum + p, 0) / allPrices.length
-
-      const { error: updateErr } = await supabase
-        .from('cities')
-        .update({
-          price_cad: Number(median.toFixed(2)),
-          baseline_median_cad: Number(median.toFixed(2)),
-          market_average_cad: Number(mean.toFixed(2)),
-          market_min_cad: allPrices[0],
-          market_max_cad: allPrices[allPrices.length - 1],
-          market_entry_count: allPrices.length,
-          baseline_entry_count: baselinePrices.length,
-          data_quality_label: baselines.length >= 3 ? 'High confidence' : 'Moderate',
-          price_source: `Baseline median from ${baselines.length} verified entries`
-        })
-        .eq('city', c.city)
-
-      if (updateErr) {
-        console.error(`Failed to update stats for ${c.city}:`, updateErr)
-      }
-    }
-  }
-  console.log('✓ Community calculations complete!')
+  console.log(`✓ Inserted ${cityRows.length} communities representing electoral ridings`)
 
   console.log('\n--- Seeding monthly report ---')
-  const reportAnalysis = `Canadian Purchasing Power Analysis (July 2026)
+  const reportAnalysis = `Canadian Purchasing Power & Housing Burden Analysis (July 2026)
 
-This month marks the launch of The Canadian Poutine Index, shifting the spotlight entirely onto local purchasing power disparities across Canada. By evaluating the local cost of a classic plate of poutine relative to median salaries and rents, we reveal the real economic weight of local living costs.
+This month marks the official release of the CanPol Index, shifting the spotlight onto socio-economic disparities and electoral riding representation across Canada. By evaluating median individual earnings directly against local housing rental costs, the index maps the true pressures of affordability across the country's federal ridings.
 
-The Housing Crisis Meets the Poutine Bowl: The index confirms that housing costs remain the single largest factor in discretionary purchasing power across Canada. Vancouver and Toronto are the most expensive places to buy poutine, averaging CA$11.50 and CA$11.17 respectively, but the true crisis lies in the rent burden.
+The Housing Crisis Across Major Ridings: Housing costs remain the single largest factor shaping discretionary income in Canada. Ridings in Vancouver and Toronto face the highest median monthly rents, averaging $2,700 and $2,500 respectively. This creates an intense rent burden, consuming 56% of a median gross salary in Vancouver and 51% in Toronto.
 
-In Vancouver, the rent burden is a staggering 56% of median monthly income. After rent, a median worker can only afford 168 poutines per month. In Toronto, the rent burden is 51%, leaving 215 poutines per month.
+Regional Purchasing Disparities: In Quebec, ridings like Sherbrooke represent highly accessible regions, with typical rents of $1,050 and a modest rent burden of 28%. Calgary offers a solid balance of high median wages ($5,100), moderate rent ($1,800), and a rent burden of 35%, leaving $3,300 in monthly disposable income.
 
-The Prairie Advantage: Conversely, the Canadian prairies represent a haven of purchasing power. Sherbrooke features a median price of CA$7.50 for classic poutine, and a low rent burden of 28%, leaving 353 poutines after rent.
+Resource-Driven Markets: Fort McMurray holds the highest purchasing power in the country. Backed by the energy sector, the median individual income is $6,500 while median 1BR rent is $1,350, leaving $5,150 in disposable income after rent.
 
-Calgary offers high median salaries ($5,100), moderate rents ($1,800), and a poutine price of CA$10.75, leaving 307 poutines after rent. Fort McMurray holds the highest purchasing power in Canada. With a high median monthly income of $6,500 and a 1BR rent of $1,350, a local worker has $5,150 left after rent, which buys 429 poutines per month!
-
-Northern Realities: In remote northern capitals like Iqaluit, high transport costs and remote supply chain lines drive the price of a classic poutine to CA$18.00. Although wages are high ($6,500), high rents ($2,800) and expensive food leave northern workers with lower purchasing power than their prairie counterparts (206 poutines).`
+Northern Challenges: Federal ridings in the territories face distinct cost structures. Iqaluit has a median 1BR rent of $2,800. While public sector salaries support a high median wage of $6,500, remote supply lines and utility costs place high pressure on residents' actual take-home purchasing power.`
 
   const reportRow = {
     month: '2026-07',
     title: 'July 2026 Report',
-    subtitle: 'Focusing exclusively on Canadian Communities and Poutine Purchasing Power',
+    subtitle: 'Socio-economic Cost of Living and Housing Rent Burden across Canadian Ridings',
     city_count: CITIES.length,
     new_cities: CITIES.map(c => c.city),
     analysis: reportAnalysis,
     cheapest_city: 'Sherbrooke',
-    cheapest_price_cad: 7.50,
+    cheapest_price_cad: 1050.00,
     priciest_city: 'Iqaluit',
-    priciest_price_cad: 18.00,
-    spread_ratio: 2.4,
-    avg_baseline_cad: 10.92,
+    priciest_price_cad: 2800.00,
+    spread_ratio: 2.6,
+    avg_baseline_cad: 1680.00,
     exchange_rates_snapshot: { CAD: 1.0 },
     city_snapshot: CITIES.map(c => ({
       city: c.city,
       country: 'Canada',
       region: c.province,
       flag: '🇨🇦',
-      price_cad: (c as any).computedPrice,
+      price_cad: null,
       median_rent_1br_cad: c.median_rent,
       median_monthly_salary_cad: c.median_salary,
-      baseline_entry_count: RESTAURANTS.filter(r => r.city === c.city && (r.dish_category === 'basic' || r.dish_category === 'vegetable')).length,
-      market_entry_count: RESTAURANTS.filter(r => r.city === c.city).length,
+      baseline_entry_count: 0,
+      market_entry_count: 0,
       data_quality_label: 'High confidence'
     })),
     published_at: NOW,

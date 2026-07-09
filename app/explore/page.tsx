@@ -16,7 +16,7 @@ type City = {
   population: string | null
   blurb: string | null
   price_cad: number | null
-  price_source: string | null
+  price_source: string | null // representing political party
   price_updated_at: string | null
   confidence_score: number | null
   median_rent_1br_cad: number | null
@@ -24,13 +24,6 @@ type City = {
   safety_index: number | null
   healthcare_index: number | null
   avg_internet_mbps: number | null
-}
-
-function dotColor(priceCAD: number | null): string {
-  if (!priceCAD || priceCAD <= 0) return '#4f4d48'
-  if (priceCAD < 9.5) return '#eeb44f'
-  if (priceCAD < 12.5) return '#b3b0a9'
-  return '#d9383a'
 }
 
 const PROVINCE_NAMES: Record<string, string> = {
@@ -61,7 +54,6 @@ export default function Explore() {
   const [isMobile, setIsMobile]         = useState(false)
 
   // Filters State
-  const [priceRange, setPriceRange]     = useState(25)
   const [rentBurdenMax, setRentBurdenMax] = useState(100)
   const [provinceFilter, setProvinceFilter] = useState('All')
 
@@ -71,12 +63,13 @@ export default function Explore() {
   const [searchQuery, setSearchQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
 
-  const cvt = (cad: number) => `CA$${cad.toFixed(2)}`
+  const cvt = (cad: number) => `CA$${cad.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
 
   const legendTiers = [
-    { color: '#eeb44f', label: `Under ${cvt(9.50)}` },
-    { color: '#b3b0a9', label: `${cvt(9.50)} – ${cvt(12.50)}` },
-    { color: '#d9383a', label: `Over ${cvt(12.50)}` },
+    { color: 'rgba(229, 57, 53, 0.75)', label: 'Liberal Party' },
+    { color: 'rgba(30, 136, 229, 0.75)', label: 'Conservative Party' },
+    { color: 'rgba(251, 140, 0, 0.75)', label: 'New Democratic Party (NDP)' },
+    { color: 'rgba(79, 195, 247, 0.75)', label: 'Bloc Québécois' },
   ]
 
   const provincesList = useMemo(() => {
@@ -87,18 +80,16 @@ export default function Explore() {
 
   const filteredCities = useMemo(() => {
     return cities.filter(city => {
-      const price = city.price_cad ?? 0
       const rent = city.median_rent_1br_cad
       const salary = city.median_monthly_salary_cad
       const burden = rent && salary ? (rent / salary) * 100 : null
       
-      const matchPrice = price <= priceRange
       const matchRent = burden === null || burden <= rentBurdenMax
       const matchProvince = provinceFilter === 'All' || city.region === provinceFilter
       
-      return matchPrice && matchRent && matchProvince
+      return matchRent && matchProvince
     })
-  }, [cities, priceRange, rentBurdenMax, provinceFilter])
+  }, [cities, rentBurdenMax, provinceFilter])
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
@@ -135,10 +126,6 @@ export default function Explore() {
 
   // In-memory Rankings inside Canada
   const ranks = useMemo(() => {
-    const priceSorted = [...cities]
-      .filter(c => c.price_cad != null && c.price_cad > 0)
-      .sort((a, b) => (a.price_cad ?? 0) - (b.price_cad ?? 0))
-    
     const burdenSorted = [...cities]
       .filter(c => c.median_rent_1br_cad != null && c.median_monthly_salary_cad != null && c.median_monthly_salary_cad > 0)
       .sort((a, b) => {
@@ -148,17 +135,12 @@ export default function Explore() {
       })
 
     const leftoverSorted = [...cities]
-      .filter(c => c.price_cad != null && c.price_cad > 0 && c.median_rent_1br_cad != null && c.median_monthly_salary_cad != null)
+      .filter(c => c.median_rent_1br_cad != null && c.median_monthly_salary_cad != null)
       .sort((a, b) => {
         const leftA = (a.median_monthly_salary_cad ?? 0) - (a.median_rent_1br_cad ?? 0)
         const leftB = (b.median_monthly_salary_cad ?? 0) - (b.median_rent_1br_cad ?? 0)
-        const bowlsA = leftA / (a.price_cad ?? 1)
-        const bowlsB = leftB / (b.price_cad ?? 1)
-        return bowlsB - bowlsA
+        return leftB - leftA
       })
-
-    const priceRankMap: Record<string, number> = {}
-    priceSorted.forEach((c, idx) => { priceRankMap[c.city] = idx + 1 })
 
     const burdenRankMap: Record<string, number> = {}
     burdenSorted.forEach((c, idx) => { burdenRankMap[c.city] = idx + 1 })
@@ -167,26 +149,12 @@ export default function Explore() {
     leftoverSorted.forEach((c, idx) => { leftoverRankMap[c.city] = idx + 1 })
 
     return {
-      priceRank: priceRankMap,
       burdenRank: burdenRankMap,
       leftoverRank: leftoverRankMap,
-      totalPriceCount: priceSorted.length,
       totalBurdenCount: burdenSorted.length,
       totalLeftoverCount: leftoverSorted.length,
     }
   }, [cities])
-
-  // Similar Communities logic
-  const similarCities = useMemo(() => {
-    if (!selectedCity || !selectedCity.price_cad) return []
-    const basePrice = selectedCity.price_cad
-    return cities
-      .filter(c => c.city !== selectedCity.city && c.price_cad != null)
-      .map(c => ({ city: c, diff: Math.abs((c.price_cad ?? 0) - basePrice) }))
-      .sort((a, b) => a.diff - b.diff)
-      .slice(0, 3)
-      .map(item => item.city)
-  }, [selectedCity, cities])
 
   const suggestions = useMemo(() => {
     if (!searchQuery) return []
@@ -252,51 +220,30 @@ export default function Explore() {
       .parallels([49, 77])
       .scale(W * 0.8)
       .translate([W / 2, H / 2 + 50])
-      
+
     const pathGen = d3.geoPath().projection(projection)
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([1, 12])
-      .on('zoom', event => {
+      .translateExtent([[0, 0], [W, H]])
+      .on('zoom', (event) => {
         g.attr('transform', event.transform)
-        g.selectAll<SVGCircleElement, unknown>('.city-dot')
-          .attr('r', 5 / event.transform.k)
-          .attr('stroke-width', 1.2 / event.transform.k)
-        g.selectAll<SVGCircleElement, unknown>('.city-aura')
-          .attr('r', 10 / event.transform.k)
-        g.selectAll<SVGCircleElement, unknown>('.city-ripple')
-          .attr('stroke-width', 2 / event.transform.k)
-        g.selectAll<SVGTextElement, unknown>('.city-label')
-          .attr('font-size', 9 / event.transform.k)
-          .attr('x', function () {
-            const cx = parseFloat(d3.select(this.parentNode as SVGGElement).select('.city-dot').attr('cx'))
-            return cx + 9 / event.transform.k
-          })
-          .attr('y', function () {
-            const cy = parseFloat(d3.select(this.parentNode as SVGGElement).select('.city-dot').attr('cy'))
-            return cy + 3.5 / event.transform.k
-          })
-          .attr('opacity', event.transform.k >= 3 ? 1 : 0)
+        g.selectAll('path')
+          .attr('stroke-width', 0.8 / event.transform.k)
       })
 
-    zoomRef.current = zoom
     svg.call(zoom)
+    zoomRef.current = zoom
 
-    // Defs & shadows
-    svg.select('defs').remove()
     const defs = svg.append('defs')
 
-    defs.append('radialGradient')
+    const oceanGlow = defs.append('linearGradient')
       .attr('id', 'oceanGlow')
-      .attr('cx', '50%').attr('cy', '50%').attr('r', '75%')
-      .selectAll('stop')
-      .data([
-        { offset: '0%', color: 'var(--color-surface-2)' },
-        { offset: '100%', color: 'var(--color-bg)' }
-      ])
-      .enter().append('stop')
-      .attr('offset', d => d.offset)
-      .attr('stop-color', d => d.color)
+      .attr('x1', '0%').attr('y1', '0%')
+      .attr('x2', '100%').attr('y2', '100%')
+
+    oceanGlow.append('stop').attr('offset', '0%').attr('stop-color', '#0c0d12')
+    oceanGlow.append('stop').attr('offset', '100%').attr('stop-color', '#060709')
 
     const shadowFilter = defs.append('filter')
       .attr('id', 'landShadow')
@@ -340,140 +287,70 @@ export default function Explore() {
 
       // Draw Regional Division Boundaries (Voronoi tessellation)
       const validPoints: [number, number][] = []
+      const citiesWithProj: { city: City; proj: [number, number] }[] = []
       filteredCities.forEach(city => {
         if (city.longitude === null || city.latitude === null) return
         const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
-        if (projected) validPoints.push(projected as [number, number])
+        if (projected) {
+          validPoints.push(projected as [number, number])
+          citiesWithProj.push({ city, proj: projected as [number, number] })
+        }
       })
 
       if (validPoints.length > 0) {
         const delaunay = d3.Delaunay.from(validPoints)
         const voronoi = delaunay.voronoi([0, 0, W, H])
+
         g.append('g')
           .attr('clip-path', 'url(#canada-clip)')
           .selectAll('path')
-          .data(validPoints.map((_, i) => voronoi.renderCell(i)))
+          .data(citiesWithProj)
           .enter()
           .append('path')
-          .attr('d', d => d)
-          .attr('fill', 'none')
+          .attr('d', (d, i) => voronoi.renderCell(i))
+          .attr('fill', d => {
+            const party = d.city.price_source?.toLowerCase() || ''
+            if (party.includes('liberal')) return 'rgba(229, 57, 53, 0.35)'
+            if (party.includes('conservative')) return 'rgba(30, 136, 229, 0.35)'
+            if (party.includes('ndp')) return 'rgba(251, 140, 0, 0.35)'
+            if (party.includes('bloc')) return 'rgba(79, 195, 247, 0.35)'
+            if (party.includes('green')) return 'rgba(76, 175, 80, 0.35)'
+            return 'rgba(128, 128, 128, 0.2)'
+          })
           .attr('stroke', 'var(--color-border)')
           .attr('stroke-width', 0.8)
-          .attr('stroke-dasharray', '3 4')
-          .attr('opacity', 0.75)
-      }
-
-      filteredCities.forEach(city => {
-        if (city.longitude === null || city.latitude === null) return
-        const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
-        if (!projected) return
-        const [x, y] = projected
-        
-        const cityG = g.append('g')
           .style('cursor', 'pointer')
           .attr('pointer-events', 'all')
-          .on('click', () => zoomToCity(city))
-          .on('mouseover', (event) => {
-            setHoveredCity(city)
+          .on('click', (event, d) => {
+            zoomToCity(d.city)
+          })
+          .on('mouseover', (event, d) => {
+            setHoveredCity(d.city)
             setTooltipPos({ x: event.clientX, y: event.clientY })
+            d3.select(event.currentTarget)
+              .attr('stroke', '#fff')
+              .attr('stroke-width', 1.6)
+              .raise()
           })
           .on('mousemove', (event) => {
             setTooltipPos({ x: event.clientX, y: event.clientY })
           })
-          .on('mouseleave', () => {
+          .on('mouseleave', (event) => {
             setHoveredCity(null)
+            d3.select(event.currentTarget)
+              .attr('stroke', 'var(--color-border)')
+              .attr('stroke-width', 0.8)
           })
-
-        // Outer aura
-        cityG.append('circle')
-          .attr('class', 'city-aura')
-          .attr('cx', x).attr('cy', y)
-          .attr('r', 10)
-          .attr('fill', dotColor(city.price_cad))
-          .attr('opacity', 0.25)
-          .attr('pointer-events', 'none')
-
-        // Inner solid dot
-        cityG.append('circle')
-          .attr('class', 'city-dot')
-          .attr('cx', x).attr('cy', y)
-          .attr('r', 5)
-          .attr('fill', dotColor(city.price_cad))
-          .attr('stroke', '#060608')
-          .attr('stroke-width', 1.2)
-
-        // Pulsating ripple if selected
-        const isSelected = selectedCity && selectedCity.city === city.city
-        if (isSelected) {
-          cityG.append('circle')
-            .attr('class', 'city-ripple')
-            .attr('cx', x).attr('cy', y)
-            .attr('r', 5)
-            .attr('fill', 'none')
-            .attr('stroke', dotColor(city.price_cad))
-            .attr('stroke-width', 2)
-            .attr('opacity', 1)
-            .transition()
-            .duration(1500)
-            .ease(d3.easeLinear)
-            .attr('r', 25)
-            .attr('opacity', 0)
-            .on('end', function repeat() {
-              d3.select(this)
-                .attr('r', 5)
-                .attr('opacity', 1)
-                .transition()
-                .duration(1500)
-                .ease(d3.easeLinear)
-                .attr('r', 25)
-                .attr('opacity', 0)
-                .on('end', repeat)
-            })
-        }
-
-        // Text label
-        cityG.append('text')
-          .attr('class', 'city-label')
-          .attr('x', x + 9).attr('y', y + 3.5)
-          .attr('font-size', 9)
-          .attr('fill', '#d4cebe')
-          .attr('font-family', 'var(--font-mono)')
-          .attr('pointer-events', 'none')
-          .attr('opacity', 0)
-          .text(city.city)
-      })
+      }
 
       // Retain scale transformations during filter state redraws
       const transform = d3.zoomTransform(svgRef.current!)
       if (transform.k > 1) {
-        g.selectAll<SVGCircleElement, unknown>('.city-dot')
-          .attr('r', 5 / transform.k)
-          .attr('stroke-width', 1.2 / transform.k)
-        g.selectAll<SVGCircleElement, unknown>('.city-aura')
-          .attr('r', 10 / transform.k)
-        g.selectAll<SVGCircleElement, unknown>('.city-ripple')
-          .attr('stroke-width', 2 / transform.k)
-        g.selectAll<SVGTextElement, unknown>('.city-label')
-          .attr('font-size', 9 / transform.k)
-          .attr('x', function () {
-            const cx = parseFloat(d3.select(this.parentNode as SVGGElement).select('.city-dot').attr('cx'))
-            return cx + 9 / transform.k
-          })
-          .attr('y', function () {
-            const cy = parseFloat(d3.select(this.parentNode as SVGGElement).select('.city-dot').attr('cy'))
-            return cy + 3.5 / transform.k
-          })
-          .attr('opacity', transform.k >= 3 ? 1 : 0)
+        g.selectAll<SVGPathElement, unknown>('path')
+          .attr('stroke-width', 0.8 / transform.k)
       }
     })
   }, [expanded, cities, isMobile, filteredCities, selectedCity])
-
-  const drawerBowlsAfterRent = (city: City) => {
-    if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad || !city.price_cad) return null
-    const leftover = city.median_monthly_salary_cad - city.median_rent_1br_cad
-    if (leftover <= 0) return null
-    return Math.round(leftover / city.price_cad)
-  }
 
   const rentBurden = (city: City) => {
     if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad) return null
@@ -502,7 +379,7 @@ export default function Explore() {
           padding: '10px 14px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
           color: 'var(--color-text-1)',
-          minWidth: 160,
+          minWidth: 180,
           transform: 'translate3d(0,0,0)',
           animation: 'fadeIn 0.15s ease-out'
         }}>
@@ -514,19 +391,17 @@ export default function Explore() {
             {PROVINCE_NAMES[hoveredCity.region ?? ''] || hoveredCity.region}, Canada
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8, borderTop: '0.5px solid var(--color-border)', paddingTop: 6 }}>
-            <span style={{ fontSize: 11, color: 'var(--color-text-2)' }}>Poutine:</span>
-            <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--color-accent)' }}>
-              {hoveredCity.price_cad ? cvt(hoveredCity.price_cad) : 'Pending'}
+            <span style={{ fontSize: 11, color: 'var(--color-text-2)' }}>Represented by:</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-accent)' }}>
+              {hoveredCity.price_source ?? 'Unknown'}
             </span>
           </div>
-          {ranks.priceRank[hoveredCity.city] && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-              <span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>Canada Rank:</span>
-              <span style={{ fontSize: 10, fontWeight: 500, color: 'var(--color-green)' }}>
-                #{ranks.priceRank[hoveredCity.city]} of {ranks.totalPriceCount}
-              </span>
-            </div>
-          )}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+            <span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>Rent Burden:</span>
+            <span style={{ fontSize: 10, fontWeight: 500, color: 'var(--color-green)' }}>
+              {rentBurden(hoveredCity) ? `${rentBurden(hoveredCity)}%` : 'Pending'}
+            </span>
+          </div>
         </div>
       )}
 
@@ -547,9 +422,9 @@ export default function Explore() {
         boxShadow: selectedCity ? '-10px 0 40px rgba(0, 0, 0, 0.15)' : 'none',
       }}>
         {selectedCity && (() => {
-          const bowls = drawerBowlsAfterRent(selectedCity)
           const burden = rentBurden(selectedCity)
           const provName = selectedCity.region ? PROVINCE_NAMES[selectedCity.region] || selectedCity.region : ''
+          const disposableVal = selectedCity.median_monthly_salary_cad != null && selectedCity.median_rent_1br_cad != null ? selectedCity.median_monthly_salary_cad - selectedCity.median_rent_1br_cad : null
           return (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
@@ -571,32 +446,18 @@ export default function Explore() {
                 </button>
               </div>
 
-              {/* Baseline Price Section */}
+              {/* Political Party Representation Section */}
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Baseline poutine</p>
-                <p style={{ fontFamily: 'var(--font-display)', fontSize: 40, color: 'var(--color-accent)', margin: 0, lineHeight: 1 }}>
-                  {selectedCity.price_cad ? cvt(selectedCity.price_cad) : 'Pending'}
+                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Represented party</p>
+                <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: 'var(--color-accent)', margin: 0, lineHeight: 1 }}>
+                  {selectedCity.price_source ?? 'Unknown'}
                 </p>
-                {selectedCity.confidence_score && (
-                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
-                    {Math.round(selectedCity.confidence_score <= 1 ? selectedCity.confidence_score * 100 : selectedCity.confidence_score)}% confidence score
-                  </p>
-                )}
               </div>
 
               {/* Ranks Cards Section */}
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Canada Index Ranks</p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-                  {ranks.priceRank[selectedCity.city] ? (
-                    <div style={{ background: 'var(--color-surface)', borderRadius: 10, padding: '8px', textAlign: 'center', border: '0.5px solid var(--color-border)' }}>
-                      <p style={{ fontSize: 8.5, color: 'var(--color-text-3)', textTransform: 'uppercase', margin: '0 0 4px', letterSpacing: '0.5px' }}>Price Rank</p>
-                      <p style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--color-accent)', margin: 0, fontWeight: 500 }}>
-                        #{ranks.priceRank[selectedCity.city]}
-                      </p>
-                      <p style={{ fontSize: 8, color: 'var(--color-text-4)', margin: '2px 0 0' }}>of {ranks.totalPriceCount}</p>
-                    </div>
-                  ) : null}
+                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Affordability Ranks</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   {ranks.burdenRank[selectedCity.city] ? (
                     <div style={{ background: 'var(--color-surface)', borderRadius: 10, padding: '8px', textAlign: 'center', border: '0.5px solid var(--color-border)' }}>
                       <p style={{ fontSize: 8.5, color: 'var(--color-text-3)', textTransform: 'uppercase', margin: '0 0 4px', letterSpacing: '0.5px' }}>Rent burden</p>
@@ -608,7 +469,7 @@ export default function Explore() {
                   ) : null}
                   {ranks.leftoverRank[selectedCity.city] ? (
                     <div style={{ background: 'var(--color-surface)', borderRadius: 10, padding: '8px', textAlign: 'center', border: '0.5px solid var(--color-border)' }}>
-                      <p style={{ fontSize: 8.5, color: 'var(--color-text-3)', textTransform: 'uppercase', margin: '0 0 4px', letterSpacing: '0.5px' }}>Leftover poutines</p>
+                      <p style={{ fontSize: 8.5, color: 'var(--color-text-3)', textTransform: 'uppercase', margin: '0 0 4px', letterSpacing: '0.5px' }}>Disposable Income</p>
                       <p style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--color-accent)', margin: 0, fontWeight: 500 }}>
                         #{ranks.leftoverRank[selectedCity.city]}
                       </p>
@@ -648,8 +509,8 @@ export default function Explore() {
 
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
-                    <span style={{ color: 'var(--color-text-3)' }}>Poutines left after rent:</span>
-                    <span style={{ fontWeight: 600, color: 'var(--color-accent)' }}>{bowls ? `${bowls} 🍟` : 'N/A'}</span>
+                    <span style={{ color: 'var(--color-text-3)' }}>Disposable income:</span>
+                    <span style={{ fontWeight: 600, color: 'var(--color-green)' }}>{disposableVal ? cvt(disposableVal) : 'N/A'}</span>
                   </div>
                 </div>
               </div>
@@ -663,32 +524,9 @@ export default function Explore() {
                 </div>
               )}
 
-              {/* Similar Cities */}
-              {similarCities.length > 0 && (
-                <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem' }}>
-                  <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Similar price tier</p>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {similarCities.map(c => (
-                      <button
-                        key={c.city}
-                        onClick={() => zoomToCity(c)}
-                        style={{
-                          background: 'none', border: '0.5px solid var(--color-border)',
-                          borderRadius: 8, padding: '6px 12px', cursor: 'pointer',
-                          fontSize: 11.5, color: 'var(--color-text-2)', display: 'inline-flex',
-                          alignItems: 'center', gap: 4
-                        }}
-                      >
-                        🇨🇦 {c.city}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between' }}>
                 <a href={`/cities/${selectedCity.city.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} style={{ fontSize: 12.5, color: 'var(--color-accent)', textDecoration: 'none', fontWeight: 500 }}>
-                  Detailed profile & restaurants →
+                  Detailed profile & stats →
                 </a>
               </div>
             </>
@@ -794,18 +632,18 @@ export default function Explore() {
             </div>
 
             {/* Always Visible stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', borderTop: 'var(--color-border)', paddingTop: 10 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', borderTop: '0.5px solid var(--color-border)', paddingTop: 10 }}>
               <div>
-                <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Filtered count</span>
+                <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Filtered ridings</span>
                 <p style={{ fontSize: 16, margin: '2px 0 0', fontWeight: 500, color: 'var(--color-text-1)' }}>
                   {filteredCities.length} of {cities.length}
                 </p>
               </div>
               <div>
-                <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Avg baseline</span>
+                <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Avg rent burden</span>
                 <p style={{ fontSize: 16, margin: '2px 0 0', fontWeight: 500, color: 'var(--color-accent)' }}>
                   {filteredCities.length > 0
-                    ? cvt(filteredCities.reduce((s, c) => s + (c.price_cad ?? 0), 0) / filteredCities.length)
+                    ? `${Math.round(filteredCities.reduce((s, c) => s + (rentBurden(c) ?? 0), 0) / filteredCities.length)}%`
                     : 'N/A'
                   }
                 </p>
@@ -815,23 +653,6 @@ export default function Explore() {
             {/* Filter controls */}
             {expanded && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12, borderTop: '0.5px solid var(--color-border)', paddingTop: 12, animation: 'fadeIn 0.2s ease-out' }}>
-                {/* Max price slider */}
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
-                    <span style={{ color: 'var(--color-text-2)' }}>Max baseline price:</span>
-                    <span style={{ fontWeight: 600, color: 'var(--color-accent)' }}>{cvt(priceRange)}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="10"
-                    max="25"
-                    step="0.5"
-                    value={priceRange}
-                    onChange={e => setPriceRange(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: 'var(--color-accent)' }}
-                  />
-                </div>
-
                 {/* Max rent burden */}
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
@@ -891,11 +712,11 @@ export default function Explore() {
           padding: '10px 14px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
           display: 'flex', flexDirection: 'column', gap: 6
         }}>
-          <span style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: 2 }}>Baseline Price</span>
+          <span style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: 2 }}>Represented Party</span>
           {legendTiers.map(tier => (
             <div key={tier.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: tier.color }} />
-              <span style={{ fontSize: 11, color: 'var(--color-text-2)', fontFamily: 'var(--font-mono)' }}>{tier.label}</span>
+              <span style={{ fontSize: 11, color: 'var(--color-text-2)' }}>{tier.label}</span>
             </div>
           ))}
         </div>
