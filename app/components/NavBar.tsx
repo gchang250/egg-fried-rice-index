@@ -7,7 +7,6 @@ const LINKS = [
   ['Explore',     '/explore'],
   ['Ridings',     '/cities'],
   ['About',       '/about'],
-  ['Methodology', '/methodology'],
 ] as const
 
 type Props = { active?: string; fixed?: boolean }

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase-admin'
 
 const REPORT_VERSION = '1.0'
-const METHODOLOGY_URL = 'https://efr-index.vercel.app/methodology'
+const ABOUT_URL = 'https://efr-index.vercel.app/about'
 const PUBLISHER = 'Fried Rice Index (efr-index.vercel.app)'
 
 type DistributionStats = {
@@ -248,7 +248,7 @@ export async function GET() {
     lines.push(csvRow(['Publisher', PUBLISHER]))
     lines.push(csvRow(['Report version', REPORT_VERSION]))
     lines.push(csvRow(['Generated (UTC)', generatedAtDisplay]))
-    lines.push(csvRow(['Methodology', METHODOLOGY_URL]))
+    lines.push(csvRow(['About / Source info', ABOUT_URL]))
     lines.push(csvRow(['Currency', 'All prices in Canadian Dollars (CAD)']))
     lines.push(csvRow(['Market average method', '5% trimmed mean (top and bottom 5% excluded)']))
     lines.push(csvRow(['Std deviation basis', 'Sample std dev across all approved entries per city']))

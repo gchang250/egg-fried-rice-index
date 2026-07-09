@@ -333,7 +333,7 @@ export default function CityPageContent({
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
             <h2 style={h2}>Economic metrics</h2>
             <p style={lead}>
-              Living costs shown in <strong>{sym} {currency}</strong>. Income and rent are real government data, sourcing shown on each card. See the <a href="/methodology" style={{ color: 'var(--color-accent)' }}>methodology page</a> for details.
+              Living costs shown in <strong>{sym} {currency}</strong>. Income and rent are real government data, sourcing shown on each card.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {rent != null && (
@@ -411,7 +411,7 @@ export default function CityPageContent({
             ))}
             <p style={{ fontSize: 12, color: 'var(--color-text-2)', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
               All monetary values stored in CAD and converted client-side.
-              Rent and safety are applied by nearest surveyed metro, not measured per riding. See the <a href="/methodology" style={{ color: 'var(--color-accent)' }}>methodology page</a> for the full breakdown.
+              Rent and safety are applied by nearest surveyed metro, not measured per riding.
             </p>
           </div>
         </div>

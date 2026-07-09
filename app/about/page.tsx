@@ -91,9 +91,6 @@ export default function AboutPage() {
         </div>
 
         <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <a href="/methodology" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '.7rem 1.4rem', borderRadius: 8, background: 'var(--color-accent)', color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>
-            Read the methodology <ArrowRight size={14} />
-          </a>
           <a href="/cities" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '.7rem 1.4rem', borderRadius: 8, border: '0.5px solid var(--color-border)', color: 'var(--color-text-2)', textDecoration: 'none', fontSize: 14, fontWeight: 600, background: 'rgba(255,255,255,0.02)' }}>
             Browse ridings
           </a>

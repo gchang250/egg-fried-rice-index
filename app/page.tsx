@@ -576,46 +576,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* METHODOLOGY SECTION SUMMARY */}
-      <section style={{ ...SEC, borderTop: '1px solid var(--color-border)' }} id="method">
-        <div style={WRAP}>
-          <div className="method-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
-                <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
-                <span style={LABEL}>Scientific rigor</span>
-              </div>
-              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: '0 0 20px' }}>
-                Boring on purpose. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Rigorous by design.</strong>
-              </h2>
-              <p style={{ color: 'var(--color-text-2)', maxWidth: '46ch', fontWeight: 300, fontSize: 14.5, lineHeight: 1.6 }}>
-                Novel indexes live and die on their structural integrity. Boundaries, income, rent, and party come from Statistics Canada, CMHC, and Elections Canada, not estimates.
-              </p>
-              <div style={{ display: 'flex', gap: 16, marginTop: 30 }}>
-                <a href="/methodology" style={BTN_GHOST}>Read full methodology</a>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {[
-                { n: '01', title: 'Federal Riding Census Data', body: 'Median income tabulated directly at the 343-riding geography by Statistics Canada\'s Census Profile, no estimation required.' },
-                { n: '02', title: 'Local Housing Rent Costs', body: 'CMHC 2025 Rental Market Survey average rent, applied by each riding\'s nearest surveyed metro area.' },
-                { n: '03', title: '2025 Election Results', body: 'Represented party, elected candidate, population, and registered electors from Elections Canada\'s official 45th general election results.' },
-                { n: '04', title: 'Boundary Validation', body: 'All 343 riding polygons were checked against Elections Canada\'s official bounding boxes, matching to within a fraction of a degree.' }
-              ].map((step, i) => (
-                <div key={step.title} style={{ display: 'flex', gap: 20, padding: '20px 0', borderBottom: i < 3 ? '1px solid var(--color-border)' : 'none', paddingTop: i === 0 ? 0 : 20 }}>
-                  <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)', paddingTop: 2 }}>{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h4 style={{ fontSize: 16, fontWeight: 600, marginBottom: 5 }}>{step.title}</h4>
-                    <p style={{ fontSize: 13.5, color: 'var(--color-text-2)', fontWeight: 300, lineHeight: 1.5 }}>{step.body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* SUBMIT CALL TO ACTION */}
       <section style={{ ...SEC, paddingTop: 0 }} id="submit">
         <div style={WRAP}>
@@ -653,7 +613,7 @@ export default function Home() {
               <div>Mapping socio-economic data across federal ridings. Free, forever.</div>
             </div>
             <div style={{ display: 'flex', gap: 24 }}>
-              {[['Ridings','/cities'],['Explore','/explore'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
+              {[['Ridings','/cities'],['Explore','/explore'],['About','/about']].map(([l,h]) => (
                 <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
               ))}
             </div>
