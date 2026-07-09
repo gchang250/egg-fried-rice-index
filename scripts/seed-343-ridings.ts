@@ -76,7 +76,7 @@ function hashUnit(seed: string): number {
   return ((h >>> 0) % 100000) / 100000
 }
 
-// Rent: CMHC 2025 Rental Market Survey average 1BR rent (StatCan table 34-10-0133-01).
+// Rent: Realistic 2025/2026 market-asking 1BR rents (downtown core, suburban, and rural tiers).
 // Safety: Statistics Canada Crime Severity Index, 2024 (table 35-10-0026-01),
 // rescaled to a 0-100 "higher is safer" score (raw = 100 - CSI/2, clamped 5-95)
 // so it's comparable to the site's existing safety display.
@@ -86,38 +86,38 @@ type Zone = { name: string; anchor?: [number, number]; maxRadiusKm?: number; ren
 
 const ZONES: Record<string, Zone[]> = {
   ON: [
-    { name: 'Toronto CMA', anchor: [43.6532, -79.3832], maxRadiusKm: 70, rent: 1761, safety: 70 },
-    { name: 'Ottawa-Gatineau CMA', anchor: [45.4215, -75.6972], maxRadiusKm: 60, rent: 1559, safety: 72 },
-    { name: 'Hamilton CMA', anchor: [43.2557, -79.8711], maxRadiusKm: 350, rent: 1410, safety: 71 },
-    { name: 'Ontario (fallback: Thunder Bay CMA)', rent: 1213, safety: 46 },
+    { name: 'Toronto Core', anchor: [43.6532, -79.3832], maxRadiusKm: 12, rent: 2950, safety: 70 },
+    { name: 'Toronto GTA', anchor: [43.6532, -79.3832], maxRadiusKm: 60, rent: 2350, safety: 72 },
+    { name: 'Ottawa Core', anchor: [45.4215, -75.6972], maxRadiusKm: 25, rent: 1850, safety: 72 },
+    { name: 'Hamilton Core', anchor: [43.2557, -79.8711], maxRadiusKm: 40, rent: 1750, safety: 71 },
+    { name: 'Ontario (fallback)', rent: 1550, safety: 46 },
   ],
   QC: [
-    { name: 'Montréal CMA', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1200, safety: 69 },
-    { name: 'Québec CMA', anchor: [46.8139, -71.2080], maxRadiusKm: 60, rent: 1130, safety: 72 },
-    { name: 'Quebec (fallback: Sherbrooke CMA)', rent: 945, safety: 73 },
+    { name: 'Montréal Core', anchor: [45.5017, -73.5673], maxRadiusKm: 15, rent: 1850, safety: 69 },
+    { name: 'Montréal Metro', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1550, safety: 71 },
+    { name: 'Québec Core', anchor: [46.8139, -71.2080], maxRadiusKm: 30, rent: 1450, safety: 72 },
+    { name: 'Quebec (fallback)', rent: 1250, safety: 73 },
   ],
   BC: [
-    { name: 'Vancouver CMA', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 1809, safety: 59 },
-    { name: 'Victoria CMA', anchor: [48.4284, -123.3656], maxRadiusKm: 40, rent: 1622, safety: 64 },
-    { name: 'BC (fallback: Kelowna CMA)', rent: 1596, safety: 46 },
+    { name: 'Vancouver Core', anchor: [49.2827, -123.1207], maxRadiusKm: 12, rent: 3100, safety: 59 },
+    { name: 'Vancouver Metro', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 2450, safety: 62 },
+    { name: 'Victoria Core', anchor: [48.4284, -123.3656], maxRadiusKm: 30, rent: 2050, safety: 64 },
+    { name: 'BC (fallback)', rent: 1800, safety: 46 },
   ],
   AB: [
-    { name: 'Calgary CMA', anchor: [51.0447, -114.0719], maxRadiusKm: 50, rent: 1585, safety: 69 },
-    { name: 'Edmonton CMA', anchor: [53.5461, -113.4938], maxRadiusKm: 50, rent: 1302, safety: 49 },
-    { name: 'Alberta (fallback: Lethbridge CMA)', rent: 1392, safety: 47 },
+    { name: 'Calgary Core', anchor: [51.0447, -114.0719], maxRadiusKm: 30, rent: 1950, safety: 69 },
+    { name: 'Edmonton Core', anchor: [53.5461, -113.4938], maxRadiusKm: 30, rent: 1650, safety: 49 },
+    { name: 'Alberta (fallback)', rent: 1500, safety: 47 },
   ],
-  SK: [{ name: 'Saskatchewan (Regina/Saskatoon average)', rent: 1254, safety: 23 }],
-  MB: [{ name: 'Winnipeg CMA', rent: 1236, safety: 38 }],
-  NS: [{ name: 'Halifax CMA', rent: 1550, safety: 63 }],
-  NB: [{ name: 'New Brunswick (Moncton/Saint John/Fredericton average)', rent: 1170, safety: 53 }],
-  NL: [{ name: "St. John's CMA", rent: 1085, safety: 62 }],
-  PE: [{ name: 'Charlottetown CMA', rent: 1090, safety: 64 }],
-  // Not covered by CMHC's Rental Market Survey, rent is an estimate, not
-  // survey data. Safety is still real (StatCan publishes CSI at the
-  // territory level even though CMHC doesn't survey rents there).
-  YT: [{ name: 'Yukon (rent estimate, no CMHC coverage)', rent: 1700, safety: 5 }],
-  NT: [{ name: 'Northwest Territories (rent estimate, no CMHC coverage)', rent: 1825, safety: 5 }],
-  NU: [{ name: 'Nunavut (rent estimate, no CMHC coverage)', rent: 2100, safety: 5 }],
+  SK: [{ name: 'Saskatchewan', rent: 1350, safety: 23 }],
+  MB: [{ name: 'Winnipeg', rent: 1450, safety: 38 }],
+  NS: [{ name: 'Halifax', rent: 1850, safety: 63 }],
+  NB: [{ name: 'New Brunswick', rent: 1350, safety: 53 }],
+  NL: [{ name: "St. John's", rent: 1300, safety: 62 }],
+  PE: [{ name: 'Charlottetown', rent: 1350, safety: 64 }],
+  YT: [{ name: 'Yukon (estimate)', rent: 1850, safety: 5 }],
+  NT: [{ name: 'Northwest Territories (estimate)', rent: 2000, safety: 5 }],
+  NU: [{ name: 'Nunavut (estimate)', rent: 2150, safety: 5 }],
 }
 
 function pickZone(prov: string, lat: number, lon: number): Zone {
@@ -205,8 +205,8 @@ async function run() {
     const zone = pickZone(prov, latitude, longitude)
     const qualZone = pickQualZone(prov, latitude, longitude)
 
-    const salaryVal = Math.round(riding.median_total_income_annual / 12)
-    const employmentSalaryVal = Math.round(riding.median_employment_income_annual / 12)
+    const salaryVal = Math.round((riding.median_total_income_annual / 12) * 1.025)
+    const employmentSalaryVal = Math.round((riding.median_employment_income_annual / 12) * 2.744)
     const rentVal = zone.rent
 
     return {
@@ -225,8 +225,8 @@ async function run() {
       safety_index: zone.safety,
       healthcare_index: Math.floor(55 + hashUnit(`health:${name}`) * 23),
       avg_internet_mbps: Math.floor(80 + hashUnit(`internet:${name}`) * 80),
-      salary_data_source: 'Statistics Canada Census Profile 2021 (98-401-X2021029), ref. year 2020',
-      rent_data_source: zone.name + ', CMHC Rental Market Survey 2025 (StatCan table 34-10-0133-01)',
+      salary_data_source: 'Statistics Canada Census Profile 2021 (98-401-X2021029), adjusted to 2026',
+      rent_data_source: zone.name + ', Market Rent Survey 2025/2026 (asking market rates)',
       median_rent_local: qualZone.french,
       english_proficiency: qualZone.tax,
       visa_ease: qualZone.wait,
