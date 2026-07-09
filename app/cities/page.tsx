@@ -11,7 +11,7 @@ type CityRow = {
   confidence_score: number | null; baseline_entry_count: number | null
   market_entry_count: number | null; data_quality_label: string | null
   median_rent_1br_cad: number | null; median_monthly_salary_cad: number | null
-  safety_index: number | null; healthcare_index: number | null; avg_internet_mbps: number | null
+  safety_index: number | null
   tech_salary_cad: number | null
 }
 
@@ -84,7 +84,7 @@ export default function CitiesPage() {
         city, country, region, flag, population, price_cad, price_updated_at,
         confidence_score, baseline_entry_count, market_entry_count, data_quality_label,
         median_rent_1br_cad, median_monthly_salary_cad,
-        safety_index, healthcare_index, avg_internet_mbps, tech_salary_cad
+        safety_index, tech_salary_cad
       `).order('price_cad', { ascending: true, nullsFirst: false })
       if (error) { setLoading(false); return }
       setCities((data ?? []) as CityRow[])
@@ -330,8 +330,8 @@ export default function CitiesPage() {
                     </div>
 
                     <div>
-                      <span style={{ fontSize:12, color:'var(--color-text-2)' }}>Safety: {city.safety_index ?? '-'} · Health: {city.healthcare_index ?? '-'}</span>
-                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>Internet: {city.avg_internet_mbps} Mbps</p>
+                      <span style={{ fontSize:12, color:'var(--color-text-2)' }}>Safety: {city.safety_index ?? '-'}</span>
+                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>electoral riding</p>
                     </div>
                   </a>
                 )
@@ -427,20 +427,6 @@ export default function CitiesPage() {
                 valB: cityDataB.safety_index !== null ? String(cityDataB.safety_index) : '-',
                 better: cityDataA.safety_index !== null && cityDataB.safety_index !== null ? (cityDataA.safety_index > cityDataB.safety_index ? 'A' : cityDataA.safety_index < cityDataB.safety_index ? 'B' : 'draw') : 'draw',
                 desc: cityDataA.safety_index !== null && cityDataB.safety_index !== null ? (cityDataA.safety_index > cityDataB.safety_index ? `${cityDataA.city} is safer (+${(cityDataA.safety_index - cityDataB.safety_index).toFixed(0)})` : `${cityDataB.city} is safer (+${(cityDataB.safety_index - cityDataA.safety_index).toFixed(0)})`) : '-'
-              },
-              {
-                label: 'Healthcare Index (/100)',
-                valA: cityDataA.healthcare_index !== null ? String(cityDataA.healthcare_index) : '-',
-                valB: cityDataB.healthcare_index !== null ? String(cityDataB.healthcare_index) : '-',
-                better: cityDataA.healthcare_index !== null && cityDataB.healthcare_index !== null ? (cityDataA.healthcare_index > cityDataB.healthcare_index ? 'A' : cityDataA.healthcare_index < cityDataB.healthcare_index ? 'B' : 'draw') : 'draw',
-                desc: cityDataA.healthcare_index !== null && cityDataB.healthcare_index !== null ? (cityDataA.healthcare_index > cityDataB.healthcare_index ? `${cityDataA.city} has better healthcare (+${(cityDataA.healthcare_index - cityDataB.healthcare_index).toFixed(0)})` : `${cityDataB.city} has better healthcare (+${(cityDataB.healthcare_index - cityDataA.healthcare_index).toFixed(0)})`) : '-'
-              },
-              {
-                label: 'Internet Speed',
-                valA: cityDataA.avg_internet_mbps !== null ? `${cityDataA.avg_internet_mbps} Mbps` : '-',
-                valB: cityDataB.avg_internet_mbps !== null ? `${cityDataB.avg_internet_mbps} Mbps` : '-',
-                better: cityDataA.avg_internet_mbps !== null && cityDataB.avg_internet_mbps !== null ? (cityDataA.avg_internet_mbps > cityDataB.avg_internet_mbps ? 'A' : cityDataA.avg_internet_mbps < cityDataB.avg_internet_mbps ? 'B' : 'draw') : 'draw',
-                desc: cityDataA.avg_internet_mbps !== null && cityDataB.avg_internet_mbps !== null ? (cityDataA.avg_internet_mbps > cityDataB.avg_internet_mbps ? `${cityDataA.city} is ${(cityDataA.avg_internet_mbps - cityDataB.avg_internet_mbps).toFixed(0)} Mbps faster` : `${cityDataB.city} is ${(cityDataB.avg_internet_mbps - cityDataA.avg_internet_mbps).toFixed(0)} Mbps faster`) : '-'
               }
             ]
 

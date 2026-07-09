@@ -4,7 +4,7 @@ import NavBar from '@/app/components/NavBar'
 const SECTIONS = [
   { num: '01', title: 'What the index measures', body: ['CanPol Index compares local rent against local income across all 343 Canadian federal ridings. Rent burden is the share of monthly income a one-bedroom rental consumes. Disposable income is what is left over after paying that rent.'] },
   { num: '02', title: "What's real", body: ['Riding boundaries and centroids come from Elections Canada. Median income comes from Statistics Canada\'s 2021 Census Profile, tabulated at the exact riding level. Represented party, population, and registered electors come from Elections Canada\'s official 2025 election results. Rent is CMHC\'s 2025 survey data, applied by each riding\'s nearest surveyed metro area (CMHC does not survey every riding individually). The safety score is Statistics Canada\'s Crime Severity Index, also applied by nearest surveyed area.'] },
-  { num: '03', title: "What's still estimated", body: ['Healthcare wait times and internet speed have no real per-riding source yet and remain illustrative. French-language share and the tax-bracket label are rough, zone-level estimates rather than riding-specific measurements.'] },
+  { num: '03', title: "What's still estimated", body: ['French-language share and the tax-bracket label are rough, zone-level estimates rather than riding-specific measurements.'] },
   { num: '04', title: 'How the numbers work', body: ['Rent burden = monthly rent ÷ monthly income. Disposable income = monthly income minus monthly rent. Income is gross (before tax), so disposable income runs a bit high, best read as a relative comparison between ridings rather than an exact budget.', 'The Family Homeowner profile scales rent to 1.65x and swaps in median employment income instead of total income, a modelling assumption, not a separate measurement.'] },
   { num: '05', title: 'Limitations', body: ['The index models one situation: a single earner renting a one-bedroom unit. It doesn\'t capture families, multiple earners, or ownership costs. Rent is assigned by nearest surveyed metro rather than measured per riding, and address search matches to the nearest riding centroid rather than an exact legal boundary.'] },
 ]
@@ -25,7 +25,7 @@ export default function MethodologyPage() {
         </h1>
 
         <p style={{ fontSize: 16, color: 'var(--color-text-2)', lineHeight: 1.7, maxWidth: 620, marginBottom: '3.5rem' }}>
-          Boundaries, income, rent, represented party, population, and safety are real government data. Healthcare wait times and internet speed are still estimates.
+          Boundaries, income, rent, represented party, population, and safety are real government data. French-language share and regional tax-bracket tiers are estimated.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', border: '0.5px solid var(--color-border)', borderRadius: 12, overflow: 'hidden' }}>

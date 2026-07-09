@@ -12,9 +12,7 @@ const indicatorCategories = [
   { value: 'median_rent_1br',    label: 'Median 1BR Rent (monthly CAD)' },
   { value: 'median_gross_wage',  label: 'Median Income (monthly CAD)' },
   { value: 'prov_tax_bracket',   label: 'Provincial Tax Bracket Pressure' },
-  { value: 'healthcare_wait',    label: 'Healthcare Wait Time Tier' },
   { value: 'safety_index',       label: 'Safety Index (/100)' },
-  { value: 'avg_internet_speed', label: 'Average Internet Speed (Mbps)' },
 ]
 
 function Field({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {

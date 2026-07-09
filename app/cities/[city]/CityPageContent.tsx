@@ -36,10 +36,8 @@ export type CityRow = {
   tech_salary_cad: number | null
   tech_salary_local: number | null
   safety_index: number | null
-  healthcare_index: number | null
   english_proficiency: string | null
   visa_ease: string | null
-  avg_internet_mbps: number | null
   salary_data_source: string | null
   rent_data_source: string | null
 }
@@ -193,9 +191,8 @@ export default function CityPageContent({
       .catch(() => {})
   }, [])
 
-  const french_speaking_pct = city.median_rent_local
   const provincial_tax_bracket = city.english_proficiency
-  const healthcare_wait = city.visa_ease
+  const french_speaking_pct = city.median_rent_local
 
   let displayPopulation: number | null = city.population ? Number(city.population) : null
   let displayVoters: number | null = null
@@ -217,10 +214,8 @@ export default function CityPageContent({
 
   const hasLiving     = rent != null || salary != null
   const hasLiveability= city.safety_index != null ||
-    city.healthcare_index != null ||
     french_speaking_pct != null ||
-    provincial_tax_bracket != null ||
-    healthcare_wait != null
+    provincial_tax_bracket != null
 
   const rentBurden = (rent != null && salary != null && salary > 0)
     ? `${Math.round((rent / salary) * 100)}%`
@@ -384,9 +379,6 @@ export default function CityPageContent({
               {city.safety_index != null && (
                 <MetaCard label="Safety"><ScoreBar score={city.safety_index} label="Crime Index (inverted)" /></MetaCard>
               )}
-              {city.healthcare_index != null && (
-                <MetaCard label="Healthcare Quality"><ScoreBar score={city.healthcare_index} label="Estimated, not surveyed" /></MetaCard>
-              )}
               {french_speaking_pct != null && (
                 <MetaCard label="Language Profile">
                   <p style={metaValStyle}>{french_speaking_pct}%</p>
@@ -400,22 +392,6 @@ export default function CityPageContent({
                   <Badge value={provincial_tax_bracket} />
                   <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
                     Combined marginal bracket pressure
-                  </p>
-                </MetaCard>
-              )}
-              {healthcare_wait != null && (
-                <MetaCard label="Healthcare Access">
-                  <Badge value={healthcare_wait} />
-                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
-                    ER & specialist provincial wait times
-                  </p>
-                </MetaCard>
-              )}
-              {city.avg_internet_mbps != null && (
-                <MetaCard label="Internet speed">
-                  <p style={metaValStyle}>{city.avg_internet_mbps} <span style={{ fontSize: 14, color: 'var(--color-text-3)' }}>Mbps</span></p>
-                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '4px 0 0' }}>
-                    {city.avg_internet_mbps >= 200 ? 'Excellent' : city.avg_internet_mbps >= 100 ? 'Good' : city.avg_internet_mbps >= 50 ? 'Average' : 'Below avg'}
                   </p>
                 </MetaCard>
               )}
@@ -444,7 +420,7 @@ export default function CityPageContent({
             ))}
             <p style={{ fontSize: 12, color: 'var(--color-text-2)', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
               All monetary values stored in CAD and converted client-side.
-              Rent and safety are applied by nearest surveyed metro, not measured per riding. Healthcare-wait and internet-speed figures are still synthetic. See the <a href="/methodology" style={{ color: 'var(--color-accent)' }}>methodology page</a> for the full breakdown.
+              Rent and safety are applied by nearest surveyed metro, not measured per riding. See the <a href="/methodology" style={{ color: 'var(--color-accent)' }}>methodology page</a> for the full breakdown.
             </p>
           </div>
         </div>

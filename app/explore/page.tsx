@@ -23,8 +23,6 @@ type City = {
   median_rent_1br_cad: number | null
   median_monthly_salary_cad: number | null
   safety_index: number | null
-  healthcare_index: number | null
-  avg_internet_mbps: number | null
   tech_salary_cad: number | null
 }
 
@@ -221,7 +219,7 @@ export default function Explore() {
           population, blurb, price_cad,
           price_source, price_updated_at, confidence_score,
           median_rent_1br_cad, median_monthly_salary_cad,
-          safety_index, healthcare_index, avg_internet_mbps, tech_salary_cad
+          safety_index, tech_salary_cad
         `)
         .order('city', { ascending: true })
 

@@ -20,14 +20,7 @@ const CARDS = [
     title: 'Data status',
     body: [
       "Riding boundaries, median income, represented party, population, registered electors, and the safety score are all real, sourced government data from Elections Canada and Statistics Canada.",
-      "Rent is real CMHC 2025 survey data applied by nearest surveyed metro, since CMHC surveys metro areas rather than individual ridings. Healthcare-wait and internet-speed figures remain synthetic, see the methodology page for the full breakdown."
-    ],
-  },
-  {
-    title: 'Where the project is going',
-    body: [
-      "All 343 Canadian federal electoral ridings under the 2023 Representation Order are mapped with real boundaries, real income, real rent, real 2025 election results, and a real safety score.",
-      "The next step is finding a real per-riding source for the two indicators still synthetic: healthcare wait times and internet speed."
+      "Rent is real CMHC 2025 survey data applied by nearest surveyed metro, since CMHC surveys metro areas rather than individual ridings."
     ],
   },
 ]
@@ -89,9 +82,9 @@ export default function AboutPage() {
               </p>
             </div>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>03. Infrastructure Quality</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>03. Safety Quality</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Real Statistics Canada crime severity data for safety. Healthcare wait times and internet connectivity are still modelled, pending a real per-riding source.
+                Real Statistics Canada Crime Severity Index data for safety (applied by nearest surveyed metro).
               </p>
             </div>
           </div>
