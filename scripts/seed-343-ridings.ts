@@ -87,37 +87,37 @@ type Zone = { name: string; anchor?: [number, number]; maxRadiusKm?: number; ren
 const ZONES: Record<string, Zone[]> = {
   ON: [
     { name: 'Toronto Core', anchor: [43.6532, -79.3832], maxRadiusKm: 12, rent: 2950, safety: 70 },
-    { name: 'Toronto GTA', anchor: [43.6532, -79.3832], maxRadiusKm: 60, rent: 2350, safety: 72 },
-    { name: 'Ottawa Core', anchor: [45.4215, -75.6972], maxRadiusKm: 25, rent: 1850, safety: 72 },
-    { name: 'Hamilton Core', anchor: [43.2557, -79.8711], maxRadiusKm: 40, rent: 1750, safety: 71 },
-    { name: 'Ontario (fallback)', rent: 1550, safety: 46 },
+    { name: 'Toronto GTA', anchor: [43.6532, -79.3832], maxRadiusKm: 60, rent: 2150, safety: 72 },
+    { name: 'Ottawa Core', anchor: [45.4215, -75.6972], maxRadiusKm: 25, rent: 1750, safety: 72 },
+    { name: 'Hamilton Core', anchor: [43.2557, -79.8711], maxRadiusKm: 40, rent: 1550, safety: 71 },
+    { name: 'Ontario (fallback)', rent: 1350, safety: 46 },
   ],
   QC: [
-    { name: 'Montréal Core', anchor: [45.5017, -73.5673], maxRadiusKm: 15, rent: 1850, safety: 69 },
-    { name: 'Montréal Metro', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1550, safety: 71 },
-    { name: 'Québec Core', anchor: [46.8139, -71.2080], maxRadiusKm: 30, rent: 1450, safety: 72 },
-    { name: 'Quebec (fallback)', rent: 1250, safety: 73 },
+    { name: 'Montréal Core', anchor: [45.5017, -73.5673], maxRadiusKm: 15, rent: 1750, safety: 69 },
+    { name: 'Montréal Metro', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1350, safety: 71 },
+    { name: 'Québec Core', anchor: [46.8139, -71.2080], maxRadiusKm: 30, rent: 1250, safety: 72 },
+    { name: 'Quebec (fallback)', rent: 950, safety: 73 },
   ],
   BC: [
     { name: 'Vancouver Core', anchor: [49.2827, -123.1207], maxRadiusKm: 12, rent: 3100, safety: 59 },
-    { name: 'Vancouver Metro', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 2450, safety: 62 },
-    { name: 'Victoria Core', anchor: [48.4284, -123.3656], maxRadiusKm: 30, rent: 2050, safety: 64 },
-    { name: 'BC (fallback)', rent: 1800, safety: 46 },
+    { name: 'Vancouver Metro', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 2250, safety: 62 },
+    { name: 'Victoria Core', anchor: [48.4284, -123.3656], maxRadiusKm: 30, rent: 1850, safety: 64 },
+    { name: 'BC (fallback)', rent: 1500, safety: 46 },
   ],
   AB: [
-    { name: 'Calgary Core', anchor: [51.0447, -114.0719], maxRadiusKm: 30, rent: 1950, safety: 69 },
-    { name: 'Edmonton Core', anchor: [53.5461, -113.4938], maxRadiusKm: 30, rent: 1650, safety: 49 },
-    { name: 'Alberta (fallback)', rent: 1500, safety: 47 },
+    { name: 'Calgary Core', anchor: [51.0447, -114.0719], maxRadiusKm: 30, rent: 1850, safety: 69 },
+    { name: 'Edmonton Core', anchor: [53.5461, -113.4938], maxRadiusKm: 30, rent: 1450, safety: 49 },
+    { name: 'Alberta (fallback)', rent: 1250, safety: 47 },
   ],
-  SK: [{ name: 'Saskatchewan', rent: 1350, safety: 23 }],
-  MB: [{ name: 'Winnipeg', rent: 1450, safety: 38 }],
-  NS: [{ name: 'Halifax', rent: 1850, safety: 63 }],
-  NB: [{ name: 'New Brunswick', rent: 1350, safety: 53 }],
-  NL: [{ name: "St. John's", rent: 1300, safety: 62 }],
-  PE: [{ name: 'Charlottetown', rent: 1350, safety: 64 }],
-  YT: [{ name: 'Yukon (estimate)', rent: 1850, safety: 5 }],
-  NT: [{ name: 'Northwest Territories (estimate)', rent: 2000, safety: 5 }],
-  NU: [{ name: 'Nunavut (estimate)', rent: 2150, safety: 5 }],
+  SK: [{ name: 'Saskatchewan', rent: 1100, safety: 23 }],
+  MB: [{ name: 'Winnipeg', rent: 1200, safety: 38 }],
+  NS: [{ name: 'Halifax', rent: 1650, safety: 63 }],
+  NB: [{ name: 'New Brunswick', rent: 1100, safety: 53 }],
+  NL: [{ name: "St. John's", rent: 1100, safety: 62 }],
+  PE: [{ name: 'Charlottetown', rent: 1150, safety: 64 }],
+  YT: [{ name: 'Yukon (estimate)', rent: 1600, safety: 5 }],
+  NT: [{ name: 'Northwest Territories (estimate)', rent: 1750, safety: 5 }],
+  NU: [{ name: 'Nunavut (estimate)', rent: 1950, safety: 5 }],
 }
 
 function pickZone(prov: string, lat: number, lon: number): Zone {
@@ -206,7 +206,7 @@ async function run() {
     const qualZone = pickQualZone(prov, latitude, longitude)
 
     const salaryVal = Math.round((riding.median_total_income_annual / 12) * 1.025)
-    const employmentSalaryVal = Math.round((riding.median_employment_income_annual / 12) * 2.744)
+    const employmentSalaryVal = Math.round((riding.median_employment_income_annual / 12) * 2.433)
     const rentVal = zone.rent
 
     return {
