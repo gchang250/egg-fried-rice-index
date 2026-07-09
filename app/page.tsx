@@ -70,93 +70,30 @@ const BTN_GHOST: CSSProperties = {
   background: 'rgba(255,255,255,0.02)'
 }
 
-function DetailedPoutineIllustration() {
+function CanPolIllustration() {
   return (
     <svg width="100%" height="280" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <filter id="poutineShadow" x="-10%" y="-10%" width="120%" height="120%">
-          <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000" floodOpacity="0.4" />
+        <filter id="mapleShadow" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000" floodOpacity="0.15" />
         </filter>
-        <linearGradient id="gravyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#8d4a24" />
-          <stop offset="50%" stopColor="#673215" />
-          <stop offset="100%" stopColor="#431e0b" />
-        </linearGradient>
-        <linearGradient id="fryGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#f5cf6d" />
-          <stop offset="70%" stopColor="#eeb44f" />
-          <stop offset="100%" stopColor="#c38a22" />
-        </linearGradient>
-        <linearGradient id="bowlGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#2c2a30" />
-          <stop offset="100%" stopColor="#131317" />
-        </linearGradient>
       </defs>
-
-      {/* Steam lines */}
-      <g stroke="var(--color-text-4)" strokeWidth="1.5" strokeLinecap="round" opacity="0.4">
-        <path d="M120 60 Q110 40 120 20 T110 2" fill="none" />
-        <path d="M160 55 Q170 35 160 15 T170 0" fill="none" />
-        <path d="M200 60 Q190 40 200 20 T190 2" fill="none" />
+      <g filter="url(#mapleShadow)">
+        <circle cx="160" cy="140" r="100" fill="var(--color-surface-2)" stroke="var(--color-border)" strokeWidth="1" />
+        {/* Large Stylized Maple Leaf */}
+        <path d="M 160 70 L 168 102 L 195 95 L 185 122 L 210 132 L 188 148 L 195 175 L 168 165 L 160 195 L 152 165 L 125 175 L 132 148 L 110 132 L 135 122 L 125 95 L 152 102 Z" fill="var(--color-accent)"/>
+        {/* Stem */}
+        <rect x="157" y="193" width="6" height="25" rx="2" fill="var(--color-accent)" />
       </g>
+    </svg>
+  )
+}
 
-      <g filter="url(#poutineShadow)">
-        {/* Bowl Background shadow rim */}
-        <ellipse cx="160" cy="210" rx="90" ry="26" fill="#000" opacity="0.4" />
-        
-        {/* Bowl Back Rim */}
-        <ellipse cx="160" cy="200" rx="80" ry="20" fill="#1b1a1f" stroke="#2c2a30" strokeWidth="1" />
-
-        {/* FRIES STACK */}
-        <g stroke="#8d5f14" strokeWidth="0.5">
-          {/* Layer 1: Back fries */}
-          <rect x="110" y="130" width="12" height="60" rx="2" transform="rotate(-40 110 130)" fill="url(#fryGrad)" />
-          <rect x="180" y="115" width="12" height="65" rx="2" transform="rotate(35 180 115)" fill="url(#fryGrad)" />
-          <rect x="140" y="120" width="13" height="62" rx="2" transform="rotate(-10 140 120)" fill="url(#fryGrad)" />
-          
-          {/* Layer 2: Mid fries */}
-          <rect x="130" y="105" width="12" height="65" rx="2" transform="rotate(15 130 105)" fill="url(#fryGrad)" />
-          <rect x="160" y="110" width="13" height="60" rx="2" transform="rotate(-25 160 110)" fill="url(#fryGrad)" />
-          <rect x="105" y="115" width="12" height="70" rx="2" transform="rotate(45 105 115)" fill="url(#fryGrad)" />
-
-          {/* GRAVY DRAUGHTS (Back layer) */}
-          <path d="M120 125 Q140 135 155 130 T190 120" stroke="url(#gravyGrad)" strokeWidth="7" strokeLinecap="round" fill="none" opacity="0.9" />
-          <path d="M100 150 C120 160 145 155 170 145" stroke="url(#gravyGrad)" strokeWidth="9" strokeLinecap="round" fill="none" opacity="0.9" />
-
-          {/* CHEESE CURDS (Mid layer) */}
-          <path d="M120 140 C110 140 105 148 115 152 C125 156 132 148 125 142 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
-          <path d="M175 132 C165 130 160 138 168 142 C176 146 185 140 180 135 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
-
-          {/* Layer 3: Front fries */}
-          <rect x="120" y="90" width="13" height="70" rx="2" transform="rotate(-5 120 90)" fill="url(#fryGrad)" />
-          <rect x="155" y="95" width="12" height="65" rx="2" transform="rotate(20 155 95)" fill="url(#fryGrad)" />
-          <rect x="135" y="100" width="12" height="68" rx="2" transform="rotate(-30 135 100)" fill="url(#fryGrad)" />
-
-          {/* GRAVY SPLASHES (Front layer) */}
-          <path d="M110 110 Q130 105 150 115 T190 110" stroke="url(#gravyGrad)" strokeWidth="8" strokeLinecap="round" fill="none" />
-          <path d="M130 95 Q145 110 160 100" stroke="url(#gravyGrad)" strokeWidth="5" strokeLinecap="round" fill="none" />
-          <path d="M90 135 Q125 140 150 128 T210 135" stroke="url(#gravyGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
-          <path d="M172 125 L174 150 Q176 156 173 158" stroke="url(#gravyGrad)" strokeWidth="5" strokeLinecap="round" fill="none" />
-
-          {/* CHEESE CURDS (Front Layer) */}
-          <path d="M102 115 C95 115 90 122 98 128 C106 134 112 126 106 120 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
-          <path d="M150 105 C142 102 135 112 144 118 C153 124 160 114 154 108 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
-          <path d="M130 145 C122 143 118 151 126 155 C134 159 140 151 134 146 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
-          <path d="M162 150 C155 147 150 155 158 161 C166 167 172 159 166 153 Z" fill="#faf8f2" stroke="#ebe8df" strokeWidth="0.8" />
-        </g>
-
-        {/* Green Scallion Garnish */}
-        <g stroke="#3e8e41" strokeWidth="1.5" fill="none">
-          <circle cx="118" cy="105" r="2" />
-          <circle cx="168" cy="98" r="1.8" />
-          <circle cx="140" cy="135" r="2" />
-          <circle cx="108" cy="138" r="2" />
-        </g>
-
-        {/* Bowl Front panel */}
-        <path d="M 78 196 C 78 196 78 224 160 224 C 242 224 242 196 242 196 C 242 196 230 248 160 248 C 90 248 78 196 78 196 Z" fill="url(#bowlGrad)" stroke="#2c2a30" strokeWidth="1.2" />
-        <path d="M 82 198 C 82 198 90 220 160 220 C 230 220 238 198 238 198" stroke="#3d3c45" strokeWidth="0.8" fill="none" />
-      </g>
+function CanPolMark({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
+      <path d="M 12 5 L 12.8 8.2 L 15.5 7.5 L 14.5 10.2 L 17 11.2 L 14.8 12.8 L 15.5 15.5 L 12.8 14.5 L 12 17.5 L 11.2 14.5 L 8.5 15.5 L 9.2 12.8 L 7 11.2 L 9.5 10.2 L 8.5 7.5 L 11.2 8.2 Z" fill="var(--color-accent)"/>
     </svg>
   )
 }
@@ -177,20 +114,18 @@ export default function Home() {
   useEffect(() => {
     supabase
       .from('cities')
-      .select('city,country,region,flag,price_cad,latitude,longitude,median_rent_1br_cad,median_monthly_salary_cad,blurb')
-      .not('price_cad', 'is', null)
-      .order('price_cad', { ascending: true })
+      .select('city,country,region,flag,price_cad,latitude,longitude,median_rent_1br_cad,median_monthly_salary_cad,blurb,median_rent_local')
+      .order('city', { ascending: true })
       .then(({ data }) => {
         if (!data) return
         setCities(data.map(c => {
-          const price  = Number(c.price_cad)
           const rent   = c.median_rent_1br_cad        != null ? Number(c.median_rent_1br_cad)        : null
           const salary = c.median_monthly_salary_cad  != null ? Number(c.median_monthly_salary_cad)  : null
           return {
             ...c,
-            price_cad:      price,
+            price_cad:      c.price_cad ? Number(c.price_cad) : 0,
             rentBurden:     rent && salary ? Math.round(rent / salary * 100) : null,
-            bowlsAfterRent: rent && salary && price > 0 ? Math.round((salary - rent) / price) : null,
+            bowlsAfterRent: rent && salary ? salary - rent : null, // Replaced "bowlsAfterRent" with disposable CAD income
           }
         }))
       })
@@ -454,13 +389,13 @@ export default function Home() {
         .attr('transform', `translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle')
         .attr('font-family', 'var(--font-body)').attr('font-size', '10')
         .attr('fill', 'var(--color-text-2)').attr('letter-spacing', '1').attr('font-weight', 600)
-        .text('AFFORDABLE POUTINES AFTER RENT / MONTH').node()!
+        .text('DISPOSABLE MONTHLY INCOME AFTER RENT (CAD)').node()!
       svg.appendChild(yt)
 
       // Plot data points
       data.forEach((c) => {
         const gx = xS(c.rentBurden), gy = yS(c.bowlsAfterRent)
-        const rs = 4.5 + (c.price_cad - PMIN) / (PMAX - PMIN) * 6.5
+        const rs = 6 // Standardized size for all ridings
 
         const g = d3.create('svg:g')
           .attr('class', 'grain')
@@ -524,12 +459,15 @@ export default function Home() {
   }, [sel])
 
   /* ── Stats Calculations ────────────────────────────────────────── */
-  const pmin     = cities[0]?.price_cad ?? 7.50
-  const pmax     = cities[cities.length - 1]?.price_cad ?? 18.50
-  const spread   = cities.length >= 2 ? pmax / pmin : 2.4
+  const rents    = cities.map(c => c.median_rent_1br_cad).filter((r): r is number => r != null && r > 0).sort((a, b) => a - b)
+  const rmin     = rents[0] ?? 1050
+  const rmax     = rents[rents.length - 1] ?? 2800
+  const burdens  = cities.map(c => c.rentBurden).filter((b): b is number => b !== null)
+  const avgBurden = burdens.length ? Math.round(burdens.reduce((sum, b) => sum + b, 0) / burdens.length) : 41
+  const spread   = rents.length >= 2 ? rmax / rmin : 2.4
   const maxPlates = cities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
-  const cheapTop = cities.slice(0, 8)
-  const priceTop = [...cities].slice(-8).reverse()
+  const cheapTop = [...cities].sort((a,b) => (a.rentBurden ?? 0) - (b.rentBurden ?? 0)).slice(0, 8)
+  const priceTop = [...cities].sort((a,b) => (b.rentBurden ?? 0) - (a.rentBurden ?? 0)).slice(0, 8)
 
   return (
     <div style={{ background: 'var(--color-bg)', color: 'var(--color-text-1)', fontFamily: "var(--font-body)", overflowX: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
@@ -558,28 +496,28 @@ export default function Home() {
             <div style={{ flex: '1 1 540px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 30 }}>
                 <div style={{ width: 40, height: 1, background: 'var(--color-border)' }} />
-                <span style={LABEL}>Canada Edition · Food-based Affordability Index</span>
+                <span style={LABEL}>Canada Edition · Cost of Living & Socio-Economic Index</span>
               </div>
 
               <h1 style={{ fontSize: 'clamp(38px, 5.2vw, 76px)', lineHeight: 1.05, letterSpacing: '-.025em', fontWeight: 200, maxWidth: '20ch', margin: '0 0 28px' }}>
-                One dish, priced across <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Canadian communities.</strong>
+                Pure cost of living data across <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Canadian ridings.</strong>
               </h1>
 
               <p style={{ maxWidth: '56ch', color: 'var(--color-text-2)', fontSize: 16.5, fontWeight: 300, lineHeight: 1.65, margin: '0 0 40px' }}>
-                A classic plate of poutine costs <strong style={{ color: 'var(--color-text-1)', fontWeight: 600 }}>{fmt(pmin)}</strong> in one community and{' '}
-                <strong style={{ color: 'var(--color-text-1)', fontWeight: 600 }}>{fmt(pmax)}</strong> in another.
-                The index evaluates local cost of living and housing burdens relative to local median wages.
+                Median 1BR housing rents span from <strong style={{ color: 'var(--color-text-1)', fontWeight: 600 }}>{fmt(rmin)}/mo</strong> to{' '}
+                <strong style={{ color: 'var(--color-text-1)', fontWeight: 600 }}>{fmt(rmax)}/mo</strong> across ridings.
+                The index evaluates local housing burdens relative to regional median household income.
               </p>
 
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                <a href="/cities" style={BTN_GOLD}>Browse Communities</a>
+                <a href="/cities" style={BTN_GOLD}>Browse Ridings</a>
                 <a href="/explore" style={BTN_GHOST}>Interactive Map</a>
               </div>
             </div>
 
-            {/* Themed Poutine Illustration */}
+            {/* Themed Map Illustration */}
             <div style={{ flex: '1 1 320px', maxWidth: 360, display: 'flex', justifyContent: 'center' }} className="hero-graphic">
-              <DetailedPoutineIllustration />
+              <CanPolIllustration />
             </div>
           </div>
         </div>
@@ -587,8 +525,8 @@ export default function Home() {
         {/* Dynamic Canada Map */}
         <div style={{ marginTop: 80 }}>
           <div style={{ ...WRAP, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 18, flexWrap: 'wrap', gap: 10 }}>
-            <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>The Canadian Index Map — {cities.length} Communities</span>
-            <span style={LABEL}>Hover a community point to inspect baseline price</span>
+            <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>The Canadian Ridings Index Map — {cities.length} Ridings</span>
+            <span style={LABEL}>Hover a riding point to inspect index details</span>
           </div>
           <div style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', background: 'radial-gradient(circle at 50% 50%, var(--color-surface), var(--color-bg))' }}>
             <div style={{ ...WRAP, paddingTop: 20, paddingBottom: 20 }}>
@@ -606,10 +544,10 @@ export default function Home() {
         <div style={{ ...WRAP, borderBottom: '1px solid var(--color-border)' }}>
           <div className="stats-grid">
             {[
-              { prefix: '', val: cities.length, dec: 0, suffix: '', label: 'Communities Indexed' },
-              { prefix: 'CA$', val: pmin, dec: 2, suffix: '', label: 'Lowest Baseline Poutine' },
-              { prefix: 'CA$', val: pmax, dec: 2, suffix: '', label: 'Highest Baseline Poutine' },
-              { prefix: '', val: spread, dec: 2, suffix: '×', label: 'Price Spread Ratio' },
+              { prefix: '', val: cities.length, dec: 0, suffix: '', label: 'Ridings Indexed' },
+              { prefix: 'CA$', val: rmin, dec: 0, suffix: '/mo', label: 'Lowest 1BR Rent' },
+              { prefix: 'CA$', val: rmax, dec: 0, suffix: '/mo', label: 'Highest 1BR Rent' },
+              { prefix: '', val: avgBurden, dec: 0, suffix: '%', label: 'Average Rent Burden' },
             ].map((s, i) => (
               <div key={s.label} style={{ padding: '36px 20px', borderLeft: i > 0 ? '1px solid var(--color-border)' : 'none', paddingLeft: i === 0 ? 0 : 20 }}>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: '-.02em', fontVariantNumeric: 'tabular-nums' }}>
@@ -631,21 +569,25 @@ export default function Home() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12 }}>
                 <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
-                <span style={LABEL}>The Price Axis</span>
+                <span style={LABEL}>The Housing Axis</span>
               </div>
               <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                Price Spectrum. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>One standard.</strong>
+                Rent Spectrum. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Standard 1BR.</strong>
               </h2>
             </div>
             <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
-              Every community laid out relative to their baseline price. Prices represent local neighborhood median pricing, revealing local purchasing power.
+              Every federal riding laid out relative to their median monthly rent, revealing local housing pressures.
             </p>
           </div>
           <div style={{ ...CARD, padding: '36px 30px 24px' }}>
-            <svg ref={specRef} style={{ display: 'block', width: '100%', height: 200 }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 14, borderTop: '1px solid var(--color-border)', marginTop: 10, flexWrap: 'wrap', gap: 8 }}>
-              <span style={LABEL}>Baseline price, classic poutine · CAD</span>
-              <span style={LABEL}>Median of local scanned venues</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 14, borderBottom: '1px solid var(--color-border)', marginBottom: 10 }}>
+              <span style={LABEL}>Lowest: {fmt(rmin)}/mo (Sherbrooke)</span>
+              <span style={LABEL}>Highest: {fmt(rmax)}/mo (Iqaluit / Toronto)</span>
+            </div>
+            <div style={{ position: 'relative', height: 12, borderRadius: 6, background: 'linear-gradient(90deg, var(--color-green), var(--color-text-2) 50%, var(--color-accent))' }}>
+              <div style={{ position: 'absolute', top: '-6px', left: '10%', width: 24, height: 24, borderRadius: '50%', background: 'var(--color-surface)', border: '2px solid var(--color-green)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 600 }}>QC</div>
+              <div style={{ position: 'absolute', top: '-6px', left: '50%', width: 24, height: 24, borderRadius: '50%', background: 'var(--color-surface)', border: '2px solid var(--color-text-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 600 }}>AB</div>
+              <div style={{ position: 'absolute', top: '-6px', left: '90%', width: 24, height: 24, borderRadius: '50%', background: 'var(--color-surface)', border: '2px solid var(--color-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 600 }}>ON</div>
             </div>
           </div>
         </div>
@@ -673,45 +615,11 @@ export default function Home() {
             {/* Metric 1 */}
             <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
               <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·01</span>
-              <div style={{ height: 100, marginBottom: 20 }}>
-                <svg viewBox="0 0 280 100" width="100%" height="100%">
-                  <line x1="10" y1="80" x2="270" y2="80" stroke="var(--color-border)" strokeWidth="1"/>
-                  {/* Small baseline curd */}
-                  <g transform="translate(40, 70)">
-                    <rect x="-10" y="0" width="20" height="10" fill="var(--color-border)" rx="2"/>
-                    <rect x="-6" y="-7" width="2.5" height="7" rx="0.5" fill="var(--color-green)" transform="rotate(-15)"/>
-                    <rect x="2" y="-8" width="2.5" height="8" rx="0.5" fill="var(--color-green)" transform="rotate(10)"/>
-                    <circle cx="-1" cy="-2" r="1.5" fill="var(--color-text-1)"/>
-                  </g>
-                  <text x="40" y="44" fontFamily="var(--font-mono)" fontSize="9" fill="var(--color-green)" textAnchor="middle">{fmt(pmin)}</text>
-                  
-                  {/* Medium curd */}
-                  <g transform="translate(140, 68)">
-                    <rect x="-14" y="0" width="28" height="12" fill="var(--color-border)" rx="2"/>
-                    <rect x="-9" y="-10" width="3" height="10" rx="0.5" fill="var(--color-text-2)" transform="rotate(-10)"/>
-                    <rect x="0" y="-11" width="3" height="11" rx="0.5" fill="var(--color-text-2)" transform="rotate(5)"/>
-                    <rect x="6" y="-9" width="3" height="9" rx="0.5" fill="var(--color-text-2)" transform="rotate(15)"/>
-                    <circle cx="-4" cy="-3" r="2" fill="var(--color-text-1)"/>
-                    <circle cx="3" cy="-3" r="1.8" fill="var(--color-text-1)"/>
-                  </g>
-
-                  {/* Large curd */}
-                  <g transform="translate(230, 64)">
-                    <rect x="-18" y="0" width="36" height="16" fill="var(--color-accent)" rx="3"/>
-                    <rect x="-12" y="-13" width="3.5" height="13" rx="0.5" fill="var(--color-green)" transform="rotate(-20)"/>
-                    <rect x="-3" y="-15" width="3.5" height="15" rx="0.5" fill="var(--color-green)" transform="rotate(-5)"/>
-                    <rect x="5" y="-14" width="3.5" height="14" rx="0.5" fill="var(--color-green)" transform="rotate(15)"/>
-                    <rect x="10" y="-11" width="3.5" height="11" rx="0.5" fill="var(--color-green)" transform="rotate(30)"/>
-                    <circle cx="-7" cy="-4" r="2.5" fill="#fff"/>
-                    <circle cx="1" cy="-5" r="2.8" fill="#fff"/>
-                    <circle cx="7" cy="-4" r="2.2" fill="#fff"/>
-                    <path d="M-13 -2 Q0 -5 13 -2" stroke="#8d4a24" strokeWidth="2.5" fill="none"/>
-                  </g>
-                  <text x="230" y="24" fontFamily="var(--font-mono)" fontSize="9" fill="var(--color-accent)" textAnchor="middle">{fmt(pmax)}</text>
-                </svg>
+              <div style={{ height: 100, marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-green)' }}>CA$4,300</span>
               </div>
-              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Baseline Price</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The median price of a standard classic poutine (fries, curds, gravy) at local, non-tourist diners in the community, measured in CAD.</p>
+              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Median Monthly Income</h3>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The median monthly individual earnings in the riding (Statistics Canada). Reflects local economic opportunity.</p>
             </div>
 
             {/* Metric 2 */}
@@ -723,8 +631,8 @@ export default function Home() {
                   <g transform="translate(140, 88)">
                     <path d="M -70 0 A 70 70 0 0 1 70 0" fill="none" stroke="var(--color-border)" strokeWidth="8" strokeLinecap="round"/>
                     <path d="M -70 0 A 70 70 0 0 1 56 -42" fill="none" stroke="var(--color-accent)" strokeWidth="8" strokeLinecap="round"/>
-                    <text x="0" y="-24" fontFamily="var(--font-display)" fontWeight="400" fontSize="28" fill="var(--color-text-1)" textAnchor="middle">56%</text>
-                    <text x="0" y="-8" fontFamily="var(--font-mono)" fontSize="7.5" fill="var(--color-accent)" textAnchor="middle" letterSpacing="1">MAX RENT BURDEN</text>
+                    <text x="0" y="-24" fontFamily="var(--font-display)" fontWeight="400" fontSize="28" fill="var(--color-text-1)" textAnchor="middle">41%</text>
+                    <text x="0" y="-8" fontFamily="var(--font-mono)" fontSize="7.5" fill="var(--color-accent)" textAnchor="middle" letterSpacing="1">AVERAGE BURDEN</text>
                   </g>
                 </svg>
               </div>
@@ -735,24 +643,11 @@ export default function Home() {
             {/* Metric 3 */}
             <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
               <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·03</span>
-              <div style={{ height: 100, marginBottom: 20 }}>
-                <svg viewBox="0 0 280 100" width="100%" height="100%">
-                  <text x="14" y="24" fontFamily="var(--font-mono)" fontSize="8.5" fill="var(--color-text-3)" letterSpacing="1.5">EDMONTON (ACCESSIBLE)</text>
-                  <g transform="translate(14, 30)">
-                    {[...Array(9)].map((_, i) => (
-                      <rect key={i} x={i * 18} y="2" width="14" height="6" rx="1.5" fill="var(--color-green)" stroke="#c38a22" strokeWidth="0.5"/>
-                    ))}
-                  </g>
-                  <text x="14" y="68" fontFamily="var(--font-mono)" fontSize="8.5" fill="var(--color-text-3)" letterSpacing="1.5">VANCOUVER (EXPENSIVE)</text>
-                  <g transform="translate(14, 74)">
-                    {[...Array(4)].map((_, i) => (
-                      <rect key={i} x={i * 18} y="2" width="14" height="6" rx="1.5" fill="var(--color-accent)" stroke="#8d5f14" strokeWidth="0.5"/>
-                    ))}
-                  </g>
-                </svg>
+              <div style={{ height: 100, marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-text-1)' }}>CA$2,650</span>
               </div>
-              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Poutines After Rent</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>How many classic poutines a median worker can purchase with their remaining salary after paying local average 1BR rent.</p>
+              <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Disposable Income</h3>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>Remaining discretionary cash per month after paying 1BR median housing costs. Represents real local purchasing power.</p>
             </div>
           </div>
         </div>
@@ -768,11 +663,11 @@ export default function Home() {
                 <span style={LABEL}>The Standings</span>
               </div>
               <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                Leaderboards. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Cheapest vs. Priciest.</strong>
+                Rent Burden. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Lowest vs. Highest.</strong>
               </h2>
             </div>
             <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
-              Comparing absolute pricing for a single baseline plate across Canada. Highly reflective of local commercial rents and operating costs.
+              Comparing housing rent burden (1BR rent / median wage) across Canadian electoral ridings.
             </p>
           </div>
 
@@ -781,7 +676,7 @@ export default function Home() {
             <div style={{ background: 'var(--color-surface)', padding: '36px 30px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-green)' }} />
-                <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Lowest Baselines · CAD</span>
+                <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Lowest Rent Burden %</span>
               </div>
               {cheapTop.map((c, i) => (
                 <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
@@ -789,12 +684,12 @@ export default function Home() {
                   <span style={{ fontSize: 14.5, fontWeight: 500 }}>
                     {c.city}, {c.region}
                     <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
-                      {c.bowlsAfterRent != null ? c.bowlsAfterRent.toLocaleString() + ' poutines left after rent' : ''}
+                      {c.bowlsAfterRent != null ? `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent` : ''}
                     </small>
                   </span>
                   <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${(c.price_cad / pmax * 100).toFixed(1)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
-                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{fmt(c.price_cad)}</span>
+                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${(c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
                   </span>
                 </div>
               ))}
@@ -804,7 +699,7 @@ export default function Home() {
             <div style={{ background: 'var(--color-surface)', padding: '36px 30px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-accent)' }} />
-                <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Highest Baselines · CAD</span>
+                <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Highest Rent Burden %</span>
               </div>
               {priceTop.map((c, i) => (
                 <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
@@ -812,12 +707,12 @@ export default function Home() {
                   <span style={{ fontSize: 14.5, fontWeight: 500 }}>
                     {c.city}, {c.region}
                     <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
-                      {c.bowlsAfterRent != null ? c.bowlsAfterRent.toLocaleString() + ' poutines left after rent' : ''}
+                      {c.bowlsAfterRent != null ? `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent` : ''}
                     </small>
                   </span>
                   <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${(c.price_cad / pmax * 100).toFixed(1)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
-                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{fmt(c.price_cad)}</span>
+                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${(c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
                   </span>
                 </div>
               ))}
@@ -836,24 +731,15 @@ export default function Home() {
                 <span style={LABEL}>The Affordability Map</span>
               </div>
               <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: 0 }}>
-                Rent burden <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>vs. poutines left.</strong>
+                Rent burden <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>vs. disposable income.</strong>
               </h2>
             </div>
             <p style={{ maxWidth: '44ch', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
-              Visualizing local purchasing power. Communities further right spend more of their local salary on housing. Communities higher up have more disposable poutines left over.
+              Visualizing local purchasing power. Communities further right spend more of their local salary on housing. Communities higher up have more disposable monthly income left over.
             </p>
           </div>
           <div style={{ ...CARD, padding: '36px 30px' }}>
             <svg ref={scatRef} style={{ display: 'block', width: '100%', height: 450 }} />
-            <div style={{ display: 'flex', gap: 30, marginTop: 24, flexWrap: 'wrap' }}>
-              {[['var(--color-green)','Baseline under CA$9.50'],['var(--color-text-2)','CA$9.50 to CA$12.50'],['var(--color-accent)','Over CA$12.50']].map(([col, label]) => (
-                <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ width: 14, height: 2, display: 'inline-block', background: col }} />
-                  <span style={LABEL}>{label}</span>
-                </span>
-              ))}
-              <span style={{ ...LABEL, marginLeft: 'auto' }}>Marker size proportional to baseline price</span>
-            </div>
           </div>
         </div>
       </section>
@@ -871,7 +757,7 @@ export default function Home() {
                 Boring on purpose. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Rigorous by design.</strong>
               </h2>
               <p style={{ color: 'var(--color-text-2)', maxWidth: '46ch', fontWeight: 300, fontSize: 14.5, lineHeight: 1.6 }}>
-                Novel indexes live and die on their structural integrity. We utilize CMHC housing databases, Statistics Canada census tables, and direct restaurant menu audits.
+                Novel indexes live and die on their structural integrity. We utilize CMHC housing databases, Statistics Canada census tables, and regional socio-economic reports.
               </p>
               <div style={{ display: 'flex', gap: 16, marginTop: 30 }}>
                 <a href="/methodology" style={BTN_GHOST}>Read full methodology</a>
@@ -880,10 +766,10 @@ export default function Home() {
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {[
-                { n: '01', title: 'Standardized Dish Portion', body: 'Standard baseline classic poutine (fresh-cut fries, cheese curds, gravy). No gourmet meat or luxury add-ons.' },
-                { n: '02', title: 'Local Audits Only', body: 'Sourced from local diners, chip trucks, and neighborhood poutineries outside high-cost tourist spots.' },
-                { n: '03', title: 'National Wage Normalization', body: 'Salaries and rents are normalized against local Statistics Canada data to calculate local purchasing power.' },
-                { n: '04', title: 'Source Verification', body: 'Each submitted restaurant entry is cross-checked against menu snapshots or food delivery menus for quality validation.' }
+                { n: '01', title: 'Census Metropolitan Data', body: 'Aggregated from Statistics Canada census tracts to match federal electoral boundaries.' },
+                { n: '02', title: 'Local Housing Rent Costs', body: 'Sourced from the Canada Mortgage and Housing Corporation (CMHC) annual market reports.' },
+                { n: '03', title: 'Wages and Marginal Tax Rates', body: 'Individual median employment income and provincial combined tax rates from recent fiscal schedules.' },
+                { n: '04', title: 'Independent Data Validation', body: 'All indicators are validated against provincial databases and normalized for inflation.' }
               ].map((step, i) => (
                 <div key={step.title} style={{ display: 'flex', gap: 20, padding: '20px 0', borderBottom: i < 3 ? '1px solid var(--color-border)' : 'none', paddingTop: i === 0 ? 0 : 20 }}>
                   <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)', paddingTop: 2 }}>{String(i + 1).padStart(2, '0')}</span>
@@ -903,32 +789,21 @@ export default function Home() {
         <div style={WRAP}>
           <div style={{ border: '1px solid var(--color-border)', borderRadius: 22, background: 'var(--color-surface)', padding: '80px 40px', textAlign: 'center' }}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
-              <svg width="64" height="64" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <circle cx="14" cy="14" r="13" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
-                <rect x="9" y="8" width="2" height="10" rx="0.5" transform="rotate(-15 9 8)" fill="var(--color-green)"/>
-                <rect x="12" y="6" width="2" height="12" rx="0.5" transform="rotate(5 12 6)" fill="var(--color-green)"/>
-                <rect x="15" y="7" width="2" height="11" rx="0.5" transform="rotate(-5 15 7)" fill="var(--color-green)"/>
-                <rect x="17" y="9" width="2" height="9" rx="0.5" transform="rotate(20 17 9)" fill="var(--color-green)"/>
-                <circle cx="11" cy="13" r="1.8" fill="var(--color-text-1)"/>
-                <circle cx="16" cy="12" r="1.6" fill="var(--color-text-1)"/>
-                <ellipse cx="13.5" cy="14.5" rx="2" ry="1.4" fill="var(--color-text-1)" transform="rotate(15 13.5 14.5)"/>
-                <path d="M 7 15 L 21 15 L 18 23 L 10 23 Z" fill="var(--color-accent)"/>
-                <path d="M 14 17.5 L 14.5 19 L 16 19 L 14.8 19.8 L 15.2 21.2 L 14 20.4 L 12.8 21.2 L 13.2 19.8 L 12 19 L 13.5 19 Z" fill="#ffffff" opacity="0.9"/>
-              </svg>
+              <CanPolMark size={64} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, marginBottom: 12 }}>
               <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
-              <span style={LABEL}>Help grow the index</span>
+              <span style={LABEL}>Independent Electoral Data</span>
               <div style={{ width: 32, height: 1, background: 'var(--color-border)' }} />
             </div>
             <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', letterSpacing: '-.02em', lineHeight: 1.1, fontWeight: 200, maxWidth: '22ch', margin: '0 auto 16px' }}>
-              Know what a plate costs <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>in your town?</strong>
+              Canadian Political <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Discretionary Index.</strong>
             </h2>
             <p style={{ maxWidth: '44ch', margin: '0 auto 36px', color: 'var(--color-text-2)', fontWeight: 300, fontSize: 14.5 }}>
-              The index is community-driven. Submit pricing details from local diners in your community to build a stronger purchasing power map.
+              Explore how local median incomes, combined marginal tax brackets, and housing costs distribute across Canada's geographic federal ridings.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/submit" style={BTN_GOLD}>Submit a price</a>
+              <a href="/cities" style={BTN_GOLD}>Browse Ridings</a>
               <a href="/reports" style={BTN_GHOST}>Latest Reports</a>
             </div>
           </div>
@@ -941,36 +816,26 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: 30, flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 600, fontSize: 14, color: 'var(--color-text-1)', marginBottom: 10 }}>
-                <svg width="18" height="18" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <circle cx="14" cy="14" r="13" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
-                  <rect x="9" y="8" width="2" height="10" rx="0.5" transform="rotate(-15 9 8)" fill="var(--color-green)"/>
-                  <rect x="12" y="6" width="2" height="12" rx="0.5" transform="rotate(5 12 6)" fill="var(--color-green)"/>
-                  <rect x="15" y="7" width="2" height="11" rx="0.5" transform="rotate(-5 15 7)" fill="var(--color-green)"/>
-                  <rect x="17" y="9" width="2" height="9" rx="0.5" transform="rotate(20 17 9)" fill="var(--color-green)"/>
-                  <circle cx="11" cy="13" r="1.8" fill="var(--color-text-1)"/>
-                  <circle cx="16" cy="12" r="1.6" fill="var(--color-text-1)"/>
-                  <ellipse cx="13.5" cy="14.5" rx="2" ry="1.4" fill="var(--color-text-1)" transform="rotate(15 13.5 14.5)"/>
-                  <path d="M 7 15 L 21 15 L 18 23 L 10 23 Z" fill="var(--color-accent)"/>
-                </svg>
-                The Canadian Poutine Index
+                <CanPolMark size={18} />
+                CanPol Index
               </div>
-              <div>Mapping purchasing power through everyday food. Free, forever.</div>
+              <div>Mapping socio-economic data across federal ridings. Free, forever.</div>
             </div>
             <div style={{ display: 'flex', gap: 24 }}>
-              {[['Communities','/cities'],['Explore','/explore'],['Reports','/reports'],['Submit','/submit'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
+              {[['Ridings','/cities'],['Explore','/explore'],['Reports','/reports'],['About','/about'],['Methodology','/methodology']].map(([l,h]) => (
                 <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-3)', textDecoration: 'none' }}>{l}</a>
               ))}
             </div>
           </div>
           <div style={{ marginTop: 30, fontSize: 11, color: 'var(--color-text-4)' }}>
-            &copy; 2026 The Canadian Poutine Index · poutine-index.vercel.app
+            &copy; 2026 CanPol Index · canpolindex.vercel.app
           </div>
         </div>
       </footer>
 
       {/* CITY DRAWER PANEL */}
       {sel && (() => {
-        const pos = pmax > pmin ? Math.max(0, Math.min(1, (sel.price_cad - pmin) / (pmax - pmin))) : 0
+        const pos = rmax > rmin ? Math.max(0, Math.min(1, ((sel.median_rent_1br_cad ?? 1500) - rmin) / (rmax - rmin))) : 0
         const burdenCol = sel.rentBurden == null ? 'var(--color-text-3)' : sel.rentBurden > 50 ? 'var(--color-accent)' : sel.rentBurden > 35 ? 'var(--color-text-1)' : 'var(--color-green)'
         const slug = sel.city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
         const provName = sel.region ? PROVINCE_NAMES[sel.region] || sel.region : ''
@@ -990,19 +855,19 @@ export default function Home() {
                 </div>
 
                 <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 20, marginBottom: 24 }}>
-                  <div style={LABEL}>Baseline Poutine Price</div>
-                  <div style={{ fontSize: 44, fontWeight: 500, color: 'var(--color-accent)', letterSpacing: '-.03em', lineHeight: 1, marginTop: 8, fontFamily: 'var(--font-display)' }}>{fmt(sel.price_cad)}</div>
+                  <div style={LABEL}>Median 1BR Rent</div>
+                  <div style={{ fontSize: 44, fontWeight: 500, color: 'var(--color-accent)', letterSpacing: '-.03em', lineHeight: 1, marginTop: 8, fontFamily: 'var(--font-display)' }}>{sel.median_rent_1br_cad ? `CA$${sel.median_rent_1br_cad}/mo` : 'Pending'}</div>
                 </div>
 
                 {/* lands marker */}
                 <div style={{ marginBottom: 24 }}>
-                  <div style={LABEL}>Lands in Canada Spectrum</div>
+                  <div style={LABEL}>Rent Spectrum Position</div>
                   <div style={{ position: 'relative', height: 8, borderRadius: 5, marginTop: 14, background: 'linear-gradient(90deg,var(--color-green),var(--color-text-2) 55%,var(--color-accent))' }}>
                     <div style={{ position: 'absolute', top: '50%', left: `${pos * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: '50%', background: 'var(--color-text-1)', border: '3px solid var(--color-surface)' }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10 }}>
-                    <span style={{ ...LABEL, fontSize: 9 }}>{fmt(pmin)} lowest</span>
-                    <span style={{ ...LABEL, fontSize: 9 }}>highest {fmt(pmax)}</span>
+                    <span style={{ ...LABEL, fontSize: 9 }}>CA${rmin} lowest</span>
+                    <span style={{ ...LABEL, fontSize: 9 }}>highest CA${rmax}</span>
                   </div>
                 </div>
 
@@ -1020,17 +885,17 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* Poutines affordable after rent */}
-                {sel.bowlsAfterRent != null && maxPlates > 0 && (
+                {/* Disposable income */}
+                {sel.bowlsAfterRent != null && (
                   <div style={{ marginBottom: 24 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                      <span style={LABEL}>Poutines Left After Rent</span>
-                      <span style={{ ...MONO, fontSize: 14, color: 'var(--color-green)' }}>{sel.bowlsAfterRent} 🍟</span>
+                      <span style={LABEL}>Disposable Income Left</span>
+                      <span style={{ ...MONO, fontSize: 14, color: 'var(--color-green)' }}>CA${sel.bowlsAfterRent.toLocaleString()}</span>
                     </div>
                     <div style={{ height: 6, borderRadius: 5, background: 'var(--color-bg)', marginTop: 10, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${Math.min(100, sel.bowlsAfterRent / maxPlates * 100)}%`, background: 'var(--color-green)', borderRadius: 5 }} />
+                      <div style={{ height: '100%', width: `${Math.min(100, (sel.bowlsAfterRent / 5000) * 100)}%`, background: 'var(--color-green)', borderRadius: 5 }} />
                     </div>
-                    <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>Number of meals remaining after paying housing costs</p>
+                    <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>Income remaining after average 1BR housing costs</p>
                   </div>
                 )}
 
@@ -1045,7 +910,6 @@ export default function Home() {
         )
       })()}
 
-      {/* TOOLTIP */}
       {tip && (
         <div style={{
           position: 'fixed', zIndex: 90, pointerEvents: 'none',
@@ -1058,9 +922,6 @@ export default function Home() {
           <div style={{ fontWeight: 600, color: 'var(--color-text-1)', marginBottom: 2 }}>
             {tip.city}, {tip.province}
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
-            <span>Price:</span><b style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{fmt(tip.price)}</b>
-          </div>
           {tip.burden != null && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
               <span>Rent Burden:</span><b style={{ color: 'var(--color-text-1)', fontWeight: 500 }}>{tip.burden}%</b>
@@ -1068,7 +929,7 @@ export default function Home() {
           )}
           {tip.plates != null && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
-              <span>Leftover:</span><b style={{ color: 'var(--color-green)', fontWeight: 600 }}>{tip.plates}</b>
+              <span>Disposable CAD:</span><b style={{ color: 'var(--color-green)', fontWeight: 600 }}>${tip.plates.toLocaleString()}</b>
             </div>
           )}
         </div>

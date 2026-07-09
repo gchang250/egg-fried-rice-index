@@ -111,8 +111,18 @@ export default function CitiesPage() {
     return remaining > 0 ? Math.round(remaining / c.price_cad) : 0
   }
 
-  const cleanCities = cities.filter(c => c.price_cad != null && Number(c.price_cad) > 0)
-  const maxPrice = cleanCities.length ? (cleanCities[cleanCities.length - 1].price_cad ?? 25) : 25
+  const cleanCities = useMemo(() => {
+    return cities.filter(c => c.median_rent_1br_cad != null && c.median_monthly_salary_cad != null)
+      .map(c => {
+        const rent = Number(c.median_rent_1br_cad)
+        const salary = Number(c.median_monthly_salary_cad)
+        const burden = Math.round((rent / salary) * 100)
+        const disposable = salary - rent
+        return { ...c, burden, disposable }
+      })
+      .sort((a, b) => a.burden - b.burden)
+  }, [cities])
+
   const cheapest = cleanCities[0]
   const priciest = cleanCities[cleanCities.length - 1]
 
@@ -140,26 +150,26 @@ export default function CitiesPage() {
 
         <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:'0.75rem' }}>
           <Building2 size={14} color="var(--color-text-3)" />
-          <span style={{ fontSize:11, color:'var(--color-text-3)' }}>Canada Communities</span>
+          <span style={{ fontSize:11, color:'var(--color-text-3)' }}>Canadian Federal Ridings</span>
         </div>
         <h1 style={{ fontFamily:'var(--font-display)', fontSize: isMobile ? 32 : 44, lineHeight:1.05, letterSpacing: isMobile ? -0.5 : -1, margin:'0 0 0.75rem', color:'var(--color-text-1)', fontWeight:400 }}>
-          Poutine index by community.
+          Cost of living & housing burden by riding.
         </h1>
         <p style={{ fontSize:14, color:'var(--color-text-2)', lineHeight:1.6, maxWidth:560, marginBottom:'2rem' }}>
-          Ranked cheapest to most expensive in Canada. Baseline represents the median price of verified basic servings in local neighborhoods.
+          Ranked by lowest rent burden. Metrics highlight the percentage of local median income consumed by a standard 1BR rental unit.
         </p>
 
         {/* Stat cards */}
         <div style={{ display:'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4,1fr)', gap:'1px', marginBottom:'2rem', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
           {[
-            { label:'Communities indexed', val:String(cleanCities.length) },
-            { label:'Cheapest community', val: cheapest ? cheapest.city : '-', sub: cheapest ? `${PROVINCE_NAMES[cheapest.region ?? '']} (${formatPrice(cheapest.price_cad)})` : null },
-            { label:'Most expensive', val: priciest ? priciest.city : '-', sub: priciest ? `${PROVINCE_NAMES[priciest.region ?? '']} (${formatPrice(priciest.price_cad)})` : null },
-            { label:'National price spread', val: cheapest && priciest ? `${((priciest.price_cad??1)/(cheapest.price_cad??1)).toFixed(1)}×` : '-', sub:'cheapest vs priciest' },
+            { label:'Ridings indexed', val:String(cleanCities.length) },
+            { label:'Lowest rent burden', val: cheapest ? cheapest.city : '-', sub: cheapest ? `${PROVINCE_NAMES[cheapest.region ?? '']} (${cheapest.burden}%)` : null },
+            { label:'Highest rent burden', val: priciest ? priciest.city : '-', sub: priciest ? `${PROVINCE_NAMES[priciest.region ?? '']} (${priciest.burden}%)` : null },
+            { label:'National average burden', val: cleanCities.length ? `${Math.round(cleanCities.reduce((sum, c) => sum + c.burden, 0) / cleanCities.length)}%` : '-', sub:'average across Canada' },
           ].map(s => (
             <div key={s.label} style={{ background:'var(--color-surface)', padding:'1.1rem 1.5rem' }}>
               <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0 0 0.4rem' }}>{s.label}</p>
-              <p style={{ fontFamily:'var(--font-display)', fontSize:s.label==='Communities indexed'||s.label==='National price spread'?28:17, color:'var(--color-text-1)', margin:'0 0 0.2rem', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', fontWeight:400 }}>{s.val}</p>
+              <p style={{ fontFamily:'var(--font-display)', fontSize:s.label==='Ridings indexed'||s.label==='National average burden'?28:17, color:'var(--color-text-1)', margin:'0 0 0.2rem', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', fontWeight:400 }}>{s.val}</p>
               {s.sub && <p style={{ fontSize:12, color:'var(--color-accent)', margin:0 }}>{s.sub}</p>}
             </div>
           ))}
@@ -208,107 +218,86 @@ export default function CitiesPage() {
         )}
 
         {loading ? (
-          <p style={{ color:'var(--color-text-3)', padding:'2rem 0' }}>Loading communities…</p>
+          <p style={{ color:'var(--color-text-3)', padding:'2rem 0' }}>Loading ridings…</p>
         ) : (
           <div style={{ background:'var(--color-surface)', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
             {!isMobile && (
-              <div style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 0.9fr 1.1fr 0.75fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:11, color:'var(--color-text-3)' }}>
-                <div>Rank</div><div>Community</div><div>Baseline</div>
-                <div>Rent/Salary</div>
-                <div>Relative cost</div><div>Rent burden</div><div>Poutines left</div><div>Data quality</div>
+              <div style={{ display:'grid', gridTemplateColumns:'62px 2fr 1fr 1fr 1fr 1fr 1.2fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:11, color:'var(--color-text-3)' }}>
+                <div>Rank</div><div>Riding / Community</div><div>Median Rent (1BR)</div>
+                <div>Median Income</div>
+                <div>Rent Burden</div><div>Disposable Income</div><div>Quality Metrics</div>
               </div>
             )}
 
-            {filtered.length === 0 && (
+            {filtered.length === 0 ? (
               <div style={{ padding:'2rem 1rem', color:'var(--color-text-3)', fontSize:14, textAlign:'center' }}>No communities match your search.</div>
-            )}
+            ) : (
+              filtered.map((city, index) => {
+                const href = `/cities/${slugifyCity(city.city)}`
+                const burden = city.burden
+                const disposable = city.disposable
+                const rank = index + 1
+                const isLast = index === filtered.length - 1
+                const provName = city.region ? PROVINCE_NAMES[city.region] || city.region : ''
 
-            {filtered.map((city, index) => {
-              const href = `/cities/${slugifyCity(city.city)}`
-              const burden = rentBurden(city)
-              const bowls = bowlsAfterRent(city)
-              const rank = cleanCities.indexOf(city) + 1
-              const isLast = index === filtered.length - 1
-              const provName = city.region ? PROVINCE_NAMES[city.region] || city.region : ''
-
-              return isMobile ? (
-                <a key={city.city} href={href} style={{ display:'block', padding:'1rem 1.25rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', textDecoration:'none', color:'inherit' }}>
-                  <div style={{ display:'flex', justifyContent:'space-between', gap:'1rem', alignItems:'flex-start' }}>
-                    <div style={{ flex:1 }}>
-                      <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0 0 0.2rem' }}>#{rank} in Canada</p>
-                      <h2 style={{ fontFamily:'var(--font-display)', fontSize:20, margin:0, color:'var(--color-text-1)', fontWeight:400 }}>
-                        {city.city}
-                      </h2>
-                      <p style={{ fontSize:12, color:'var(--color-text-3)', margin:'0.2rem 0 0' }}>{provName}</p>
-                      {burden !== null && <p style={{ fontSize:12, margin:'0.35rem 0 0', color: burdenColor(burden) }}>{burden}% rent burden · {bowls} poutines left</p>}
-                    </div>
-                    <div style={{ textAlign:'right' }}>
-                      <div style={{ fontFamily:'var(--font-display)', fontSize:20, color:'var(--color-accent)', whiteSpace:'nowrap', fontWeight:400 }}>{formatPrice(city.price_cad)}</div>
-                      <div style={{ marginTop:6, width:80, height:3, borderRadius:2, background:'var(--color-border)' }}>
-                        <div style={{ height:'100%', width:`${((city.price_cad??0)/maxPrice)*100}%`, background:barColor(city.price_cad??0,maxPrice), borderRadius:2 }} />
+                return isMobile ? (
+                  <a key={city.city} href={href} style={{ display:'block', padding:'1rem 1.25rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', textDecoration:'none', color:'inherit' }}>
+                    <div style={{ display:'flex', justifyContent:'space-between', gap:'1rem', alignItems:'flex-start' }}>
+                      <div style={{ flex:1 }}>
+                        <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0 0 0.2rem' }}>#{rank} in Canada</p>
+                        <h2 style={{ fontFamily:'var(--font-display)', fontSize:20, margin:0, color:'var(--color-text-1)', fontWeight:400 }}>
+                          {city.city}
+                        </h2>
+                        <p style={{ fontSize:12, color:'var(--color-text-3)', margin:'0.2rem 0 0' }}>{provName}</p>
+                        <p style={{ fontSize:12, margin:'0.35rem 0 0', color: burdenColor(burden) }}>{burden}% rent burden · ${disposable.toLocaleString()} disposable</p>
+                      </div>
+                      <div style={{ textAlign:'right' }}>
+                        <div style={{ fontFamily:'var(--font-display)', fontSize:20, color:'var(--color-accent)', whiteSpace:'nowrap', fontWeight:400 }}>${city.median_rent_1br_cad}/mo</div>
                       </div>
                     </div>
-                  </div>
-                </a>
-              ) : (
-                <a key={city.city} href={href}
-                  onMouseEnter={() => setHoveredCity(city.city)}
-                  onMouseLeave={() => setHoveredCity(null)}
-                  style={{ display:'grid', gridTemplateColumns:'52px 2fr 0.85fr 0.9fr 1.1fr 0.75fr 0.9fr 0.8fr', gap:'0.75rem', padding:'0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems:'center', textDecoration:'none', color:'inherit', background: hoveredCity===city.city ? 'var(--color-surface-2)' : 'var(--color-surface)', transition:'background 0.1s' }}>
+                  </a>
+                ) : (
+                  <a key={city.city} href={href}
+                    onMouseEnter={() => setHoveredCity(city.city)}
+                    onMouseLeave={() => setHoveredCity(null)}
+                    style={{ display:'grid', gridTemplateColumns:'62px 2fr 1fr 1fr 1fr 1fr 1.2fr', gap:'0.75rem', padding:'0.8rem 1rem', borderBottom: isLast ? 'none' : '0.5px solid var(--color-border)', alignItems:'center', textDecoration:'none', color:'inherit', background: hoveredCity===city.city ? 'var(--color-surface-2)' : 'var(--color-surface)', transition:'background 0.1s' }}>
 
-                  <div style={{ fontSize:12, color:'var(--color-text-3)' }}>#{rank}</div>
+                    <div style={{ fontSize:12, color:'var(--color-text-3)' }}>#{rank}</div>
 
-                  <div>
-                    <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                      <span style={{ fontSize:16, lineHeight:1 }}>🇨🇦</span>
-                      <span style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-text-1)', fontWeight:400 }}>{city.city}</span>
+                    <div>
+                      <div style={{ display:'flex', alignItems: 'center', gap:8 }}>
+                        <span style={{ fontSize:16, lineHeight:1 }}>🇨🇦</span>
+                        <span style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-text-1)', fontWeight:400 }}>{city.city}</span>
+                      </div>
+                      <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0.15rem 0 0' }}>
+                        {provName}{city.population ? ` · Pop. ${Number(city.population).toLocaleString()}` : ''}
+                      </p>
                     </div>
-                    <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0.15rem 0 0' }}>
-                      {provName}{city.population ? ` · Pop. ${Number(city.population).toLocaleString()}` : ''}
-                    </p>
-                  </div>
 
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-accent)', fontWeight:400 }}>{formatPrice(city.price_cad)}</div>
+                    <div style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-accent)', fontWeight:400 }}>${city.median_rent_1br_cad}/mo</div>
 
-                  <div style={{ fontSize:12, color:'var(--color-text-2)', fontFamily:'var(--font-mono)' }}>
-                    ${city.median_rent_1br_cad}/${city.median_monthly_salary_cad}
-                  </div>
-
-                  <div>
-                    <div style={{ height:4, borderRadius:2, background:'var(--color-border)', overflow:'hidden', maxWidth:160 }}>
-                      <div style={{ height:'100%', width:`${((city.price_cad??0)/maxPrice)*100}%`, background:barColor(city.price_cad??0,maxPrice), borderRadius:2 }} />
+                    <div style={{ fontSize:14, color:'var(--color-text-2)', fontFamily:'var(--font-mono)' }}>
+                      ${city.median_monthly_salary_cad}/mo
                     </div>
-                    <p style={{ fontSize:10, color:'var(--color-text-3)', margin:'4px 0 0' }}>
-                      {priciest && city.price_cad && priciest.price_cad && city.city !== priciest.city
-                        ? `${(priciest.price_cad/city.price_cad).toFixed(1)}× cheaper than ${priciest.city}` : city.city === priciest?.city ? 'Most expensive' : ''}
-                    </p>
-                  </div>
 
-                  <div>
-                    {burden !== null ? (
-                      <>
-                        <span style={{ fontSize:13, fontWeight:500, color:burdenColor(burden) }}>{burden}%</span>
-                        <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>of paycheck</p>
-                      </>
-                    ) : <span style={{ fontSize:13, color:'var(--color-text-4)' }}>-</span>}
-                  </div>
+                    <div>
+                      <span style={{ fontSize:13, fontWeight:500, color:burdenColor(burden) }}>{burden}%</span>
+                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>of gross paycheck</p>
+                    </div>
 
-                  <div>
-                    {bowls !== null ? (
-                      <>
-                        <span style={{ fontSize:13, fontWeight:500, color:'var(--color-green)' }}>{bowls}</span>
-                        <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>poutines left</p>
-                      </>
-                    ) : <span style={{ fontSize:13, color:'var(--color-text-4)' }}>-</span>}
-                  </div>
+                    <div>
+                      <span style={{ fontSize:13, fontWeight:500, color:'var(--color-green)' }}>${disposable.toLocaleString()}</span>
+                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>after rent</p>
+                    </div>
 
-                  <div>
-                    <span style={{ fontSize:12, color:'var(--color-text-2)' }}>{city.data_quality_label ?? '-'}</span>
-                    <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>{city.baseline_entry_count ?? '-'} BL · {city.market_entry_count ?? '-'} total</p>
-                  </div>
-                </a>
-              )
-            })}
+                    <div>
+                      <span style={{ fontSize:12, color:'var(--color-text-2)' }}>Safety: {city.safety_index ?? '-'} · Health: {city.healthcare_index ?? '-'}</span>
+                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>Internet: {city.avg_internet_mbps} Mbps</p>
+                    </div>
+                  </a>
+                )
+              })
+            )}
           </div>
         )}
 
@@ -322,23 +311,23 @@ export default function CitiesPage() {
             Compare Communities Side-by-Side.
           </h2>
           <p style={{ fontSize: 14, color: 'var(--color-text-2)', lineHeight: 1.6, maxWidth: 560, marginBottom: '2rem' }}>
-            Select two Canadian communities to compare baseline poutine prices, rent burdens, purchasing power, and local liveability.
+            Select two Canadian electoral ridings to compare incomes, housing rent burdens, and other key socio-economic indices.
           </p>
 
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
             <div style={{ flex: 1, minWidth: 220 }}>
-              <label style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', marginBottom: 6 }}>Base Community</label>
+              <label style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', marginBottom: 6 }}>Base Riding</label>
               <select value={compareA} onChange={e => setCompareA(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-text-1)', cursor: 'pointer' }}>
-                <option value="">Select a community...</option>
+                <option value="">Select a riding...</option>
                 {cleanCities.map(c => (
                   <option key={c.city} value={c.city}>🇨🇦 {c.city} ({c.region})</option>
                 ))}
               </select>
             </div>
             <div style={{ flex: 1, minWidth: 220 }}>
-              <label style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', marginBottom: 6 }}>Comparison Community</label>
+              <label style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', marginBottom: 6 }}>Comparison Riding</label>
               <select value={compareB} onChange={e => setCompareB(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-text-1)', cursor: 'pointer' }}>
-                <option value="">Select a community...</option>
+                <option value="">Select a riding...</option>
                 {cleanCities.map(c => (
                   <option key={c.city} value={c.city}>🇨🇦 {c.city} ({c.region})</option>
                 ))}
@@ -351,9 +340,6 @@ export default function CitiesPage() {
             const cityDataB = cleanCities.find(c => c.city === compareB)
             
             if (!cityDataA || !cityDataB) return null
-
-            const priceA = cityDataA.price_cad ?? 0
-            const priceB = cityDataB.price_cad ?? 0
             
             const rentA = cityDataA.median_rent_1br_cad
             const rentB = cityDataB.median_rent_1br_cad
@@ -361,47 +347,40 @@ export default function CitiesPage() {
             const salA = cityDataA.median_monthly_salary_cad
             const salB = cityDataB.median_monthly_salary_cad
             
-            const burdenValA = rentA && salA ? Math.round((rentA / salA) * 100) : null
-            const burdenValB = rentB && salB ? Math.round((rentB / salB) * 100) : null
+            const burdenValA = cityDataA.burden
+            const burdenValB = cityDataB.burden
             
-            const bowlsValA = bowlsAfterRent(cityDataA)
-            const bowlsValB = bowlsAfterRent(cityDataB)
+            const dispA = cityDataA.disposable
+            const dispB = cityDataB.disposable
 
             const compRows = [
               {
-                label: 'Baseline Poutine Price',
-                valA: formatPrice(priceA),
-                valB: formatPrice(priceB),
-                better: priceA < priceB ? 'A' : priceA > priceB ? 'B' : 'draw',
-                desc: priceA < priceB ? `${cityDataA.city} is ${(priceB / priceA).toFixed(1)}× cheaper` : `${cityDataB.city} is ${(priceA / priceB).toFixed(1)}× cheaper`
-              },
-              {
                 label: 'Median Monthly Income',
-                valA: salA ? formatPrice(salA) : '-',
-                valB: salB ? formatPrice(salB) : '-',
+                valA: salA ? `$${salA.toLocaleString()}/mo` : '-',
+                valB: salB ? `$${salB.toLocaleString()}/mo` : '-',
                 better: salA && salB ? (salA > salB ? 'A' : salA < salB ? 'B' : 'draw') : 'draw',
-                desc: salA && salB ? (salA > salB ? `${cityDataA.city} is higher by $${salA - salB}` : `${cityDataB.city} is higher by $${salB - salA}`) : '-'
+                desc: salA && salB ? (salA > salB ? `${cityDataA.city} is higher by $${(salA - salB).toLocaleString()}` : `${cityDataB.city} is higher by $${(salB - salA).toLocaleString()}`) : '-'
               },
               {
                 label: 'Median 1BR Rent',
-                valA: rentA ? formatPrice(rentA) : '-',
-                valB: rentB ? formatPrice(rentB) : '-',
+                valA: rentA ? `$${rentA.toLocaleString()}/mo` : '-',
+                valB: rentB ? `$${rentB.toLocaleString()}/mo` : '-',
                 better: rentA && rentB ? (rentA < rentB ? 'A' : rentA > rentB ? 'B' : 'draw') : 'draw',
-                desc: rentA && rentB ? (rentA < rentB ? `${cityDataA.city} is cheaper by $${rentB - rentA}` : `${cityDataB.city} is cheaper by $${rentA - rentB}`) : '-'
+                desc: rentA && rentB ? (rentA < rentB ? `${cityDataA.city} is cheaper by $${(rentB - rentA).toLocaleString()}` : `${cityDataB.city} is cheaper by $${(rentA - rentB).toLocaleString()}`) : '-'
               },
               {
                 label: 'Rent Burden (Housing cost/income)',
-                valA: burdenValA !== null ? `${burdenValA}%` : '-',
-                valB: burdenValB !== null ? `${burdenValB}%` : '-',
-                better: burdenValA !== null && burdenValB !== null ? (burdenValA < burdenValB ? 'A' : burdenValA > burdenValB ? 'B' : 'draw') : 'draw',
-                desc: burdenValA !== null && burdenValB !== null ? (burdenValA < burdenValB ? `${cityDataA.city} is ${burdenValB - burdenValA}% lower` : `${cityDataB.city} is ${burdenValA - burdenValB}% lower`) : '-'
+                valA: `${burdenValA}%`,
+                valB: `${burdenValB}%`,
+                better: burdenValA < burdenValB ? 'A' : burdenValA > burdenValB ? 'B' : 'draw',
+                desc: burdenValA < burdenValB ? `${cityDataA.city} is ${burdenValB - burdenValA}% lower` : `${cityDataB.city} is ${burdenValA - burdenValB}% lower`
               },
               {
-                label: 'Poutines Affordable After Rent',
-                valA: bowlsValA !== null ? `${bowlsValA} 🍟` : '-',
-                valB: bowlsValB !== null ? `${bowlsValB} 🍟` : '-',
-                better: bowlsValA !== null && bowlsValB !== null ? (bowlsValA > bowlsValB ? 'A' : bowlsValA < bowlsValB ? 'B' : 'draw') : 'draw',
-                desc: bowlsValA !== null && bowlsValB !== null ? (bowlsValA > bowlsValB ? `${cityDataA.city} has ${bowlsValA - bowlsValB} more poutines` : `${cityDataB.city} has ${bowlsValB - bowlsValA} more poutines`) : '-'
+                label: 'Disposable Monthly Income After Rent',
+                valA: `$${dispA.toLocaleString()}`,
+                valB: `$${dispB.toLocaleString()}`,
+                better: dispA > dispB ? 'A' : dispA < dispB ? 'B' : 'draw',
+                desc: dispA > dispB ? `${cityDataA.city} has $${(dispA - dispB).toLocaleString()} more` : `${cityDataB.city} has $${(dispB - dispA).toLocaleString()} more`
               },
               {
                 label: 'Safety Index (/100)',

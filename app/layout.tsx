@@ -4,29 +4,29 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Canadian Poutine Index',
-    template: '%s | Canadian Poutine Index',
+    default: 'CanPol Index',
+    template: '%s | CanPol Index',
   },
   description:
-    'A food-based affordability index comparing classic poutine prices, rent burdens, and local purchasing power across Canadian communities.',
+    'Cost of living, housing rent burdens, and socio-economic metrics across Canadian federal electoral ridings.',
   keywords: [
-    'Canadian Poutine Index', 'Poutine Index', 'food price index', 'cost of living Canada',
-    'community affordability', 'purchasing power Canada', 'restaurant prices',
-    'macroeconomics', 'food economics', 'CMHC rent', 'Statistics Canada',
+    'CanPol Index', 'Canadian Political Index', 'cost of living Canada', 'electoral ridings',
+    'community affordability', 'purchasing power Canada', 'housing index',
+    'macroeconomics', 'CMHC rent', 'Statistics Canada',
   ],
   openGraph: {
-    title: 'Canadian Poutine Index',
+    title: 'CanPol Index',
     description:
-      'Compare classic poutine prices across Canadian communities and explore what restaurant pricing reveals about affordability, housing, and purchasing power.',
-    url: 'https://efr-index.vercel.app',
-    siteName: 'Canadian Poutine Index',
+      'Compare cost of living, monthly salaries, and housing rent burdens across Canadian federal electoral ridings.',
+    url: 'https://canpolindex.vercel.app',
+    siteName: 'CanPol Index',
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'Canadian Poutine Index',
+    title: 'CanPol Index',
     description:
-      'Compare classic poutine prices across Canadian communities and explore what restaurant pricing reveals about affordability, housing, and purchasing power.',
+      'Compare cost of living, monthly salaries, and housing rent burdens across Canadian federal electoral ridings.',
   },
 }
 

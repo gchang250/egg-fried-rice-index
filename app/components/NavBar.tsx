@@ -5,34 +5,20 @@ import { X, Menu } from 'lucide-react'
 
 const LINKS = [
   ['Explore',     '/explore'],
-  ['Communities', '/cities'],
+  ['Ridings',     '/cities'],
   ['Reports',     '/reports'],
-  ['Submit',      '/submit'],
   ['About',       '/about'],
   ['Methodology', '/methodology'],
 ] as const
 
 type Props = { active?: string; fixed?: boolean }
 
-/* Stylized Poutine Carton SVG mark */
-function PoutineMark({ size = 22 }: { size?: number }) {
+/* Stylized Maple Leaf SVG mark */
+function CanPolMark({ size = 22 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      {/* Background circle */}
-      <circle cx="14" cy="14" r="13" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
-      {/* Fries (golden rectangular shapes in cheese-curd gold) */}
-      <rect x="9" y="8" width="2" height="10" rx="0.5" transform="rotate(-15 9 8)" fill="var(--color-green)"/>
-      <rect x="12" y="6" width="2" height="12" rx="0.5" transform="rotate(5 12 6)" fill="var(--color-green)"/>
-      <rect x="15" y="7" width="2" height="11" rx="0.5" transform="rotate(-5 15 7)" fill="var(--color-green)"/>
-      <rect x="17" y="9" width="2" height="9" rx="0.5" transform="rotate(20 17 9)" fill="var(--color-green)"/>
-      {/* Cheese curds (creamy white circles/ellipses) */}
-      <circle cx="11" cy="13" r="1.8" fill="var(--color-text-1)"/>
-      <circle cx="16" cy="12" r="1.6" fill="var(--color-text-1)"/>
-      <ellipse cx="13.5" cy="14.5" rx="2" ry="1.4" fill="var(--color-text-1)" transform="rotate(15 13.5 14.5)"/>
-      {/* Poutine cup/carton front panel in Crimson red */}
-      <path d="M 7 15 L 21 15 L 18 23 L 10 23 Z" fill="var(--color-accent)"/>
-      {/* Minimalist maple leaf emblem on cup */}
-      <path d="M 14 17.5 L 14.5 19 L 16 19 L 14.8 19.8 L 15.2 21.2 L 14 20.4 L 12.8 21.2 L 13.2 19.8 L 12 19 L 13.5 19 Z" fill="#ffffff" opacity="0.9"/>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" stroke="var(--color-border)" strokeWidth="0.8" fill="var(--color-surface)"/>
+      <path d="M 12 5 L 12.8 8.2 L 15.5 7.5 L 14.5 10.2 L 17 11.2 L 14.8 12.8 L 15.5 15.5 L 12.8 14.5 L 12 17.5 L 11.2 14.5 L 8.5 15.5 L 9.2 12.8 L 7 11.2 L 9.5 10.2 L 8.5 7.5 L 11.2 8.2 Z" fill="var(--color-accent)"/>
     </svg>
   )
 }
@@ -61,8 +47,8 @@ export default function NavBar({ active, fixed = false }: Props) {
           fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 14.5,
           letterSpacing: '.02em', color: 'var(--color-text-1)', textDecoration: 'none',
         }}>
-          <PoutineMark />
-          The Canadian Poutine Index
+          <CanPolMark />
+          CanPol Index
         </a>
 
         {/* Desktop links */}
@@ -80,19 +66,8 @@ export default function NavBar({ active, fixed = false }: Props) {
           ))}
         </div>
 
-        {/* Pill CTA */}
-        <a href="/submit" style={{
-          fontFamily: 'var(--font-body)', fontSize: 13,
-          border: '1px solid var(--color-border)',
-          padding: '8px 16px', borderRadius: 7,
-          color: 'var(--color-text-2)', textDecoration: 'none',
-          transition: 'border-color .2s, color .2s',
-          whiteSpace: 'nowrap',
-          fontWeight: 600,
-          background: 'var(--color-accent-dim)'
-        }} className="nb-cta nb-d">
-          Submit a price
-        </a>
+        {/* Placeholder spacer */}
+        <div style={{ width: 10 }} className="nb-d" />
 
         {/* Mobile hamburger */}
         <button onClick={() => setOpen(true)} className="nb-m" style={{
@@ -112,8 +87,8 @@ export default function NavBar({ active, fixed = false }: Props) {
             borderBottom: '1px solid var(--color-border)',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 600, fontSize: 14.5 }}>
-              <PoutineMark />
-              The Canadian Poutine Index
+              <CanPolMark />
+              CanPol Index
             </div>
             <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-2)' }}>
               <X size={20} />
@@ -134,7 +109,6 @@ export default function NavBar({ active, fixed = false }: Props) {
 
       <style>{`
         @media(max-width:920px){.nb-d{display:none!important}.nb-m{display:block!important}}
-        .nb-cta:hover{border-color:var(--color-accent)!important;color:var(--color-text-1)!important;background:var(--color-accent-dim)!important}
       `}</style>
     </>
   )
