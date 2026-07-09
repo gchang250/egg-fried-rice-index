@@ -448,10 +448,10 @@ export default function Home() {
             <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
               <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·01</span>
               <div style={{ height: 100, marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-green)' }}>CA$4,300</span>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-green)' }}>CA$3,550</span>
               </div>
               <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Median Monthly Income</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The real median monthly individual income in the riding, from Statistics Canada's 2021 Census Profile.</p>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The real national median monthly individual income in Canada, updated to reflect current Statistics Canada benchmarks.</p>
             </div>
 
             {/* Metric 2 */}
@@ -462,24 +462,24 @@ export default function Home() {
                   {/* Semi-circle gauge */}
                   <g transform="translate(140, 88)">
                     <path d="M -70 0 A 70 70 0 0 1 70 0" fill="none" stroke="var(--color-border)" strokeWidth="8" strokeLinecap="round"/>
-                    <path d="M -70 0 A 70 70 0 0 1 56 -42" fill="none" stroke="var(--color-accent)" strokeWidth="8" strokeLinecap="round"/>
-                    <text x="0" y="-24" fontFamily="var(--font-display)" fontWeight="400" fontSize="28" fill="var(--color-text-1)" textAnchor="middle">41%</text>
+                    <path d="M -70 0 A 70 70 0 0 1 38 -59" fill="none" stroke="var(--color-accent)" strokeWidth="8" strokeLinecap="round"/>
+                    <text x="0" y="-24" fontFamily="var(--font-display)" fontWeight="400" fontSize="28" fill="var(--color-text-1)" textAnchor="middle">34%</text>
                     <text x="0" y="-8" fontFamily="var(--font-mono)" fontSize="7.5" fill="var(--color-accent)" textAnchor="middle" letterSpacing="1">AVERAGE BURDEN</text>
                   </g>
                 </svg>
               </div>
               <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Rent Burden</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>1BR median rent as a percentage of the average local monthly paycheck. Highlights how severe housing costs drain earnings.</p>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The true national average household rent burden is 33–35%. For single individuals renting a standard 1BR unit, this burden escalates significantly.</p>
             </div>
 
             {/* Metric 3 */}
             <div style={{ background: 'var(--color-surface)', padding: '36px 30px', position: 'relative' }}>
               <span style={{ ...LABEL, position: 'absolute', top: 24, right: 24, color: 'var(--color-text-3)' }}>M·03</span>
               <div style={{ height: 100, marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-text-1)' }}>CA$2,650</span>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-text-1)' }}>CA$1,626</span>
               </div>
               <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Disposable Income</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>Remaining discretionary cash per month after paying 1BR median housing costs. Represents real local purchasing power.</p>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>Remaining discretionary cash per month after paying 1BR median housing costs on a median monthly paycheck. Represents real single renter purchasing power.</p>
             </div>
           </div>
         </div>
