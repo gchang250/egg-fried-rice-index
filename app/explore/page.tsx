@@ -67,9 +67,11 @@ export default function Explore() {
 
   const legendTiers = [
     { color: 'rgba(229, 57, 53, 0.75)', label: 'Liberal Party' },
-    { color: 'rgba(30, 136, 229, 0.75)', label: 'Conservative Party' },
-    { color: 'rgba(251, 140, 0, 0.75)', label: 'New Democratic Party (NDP)' },
-    { color: 'rgba(79, 195, 247, 0.75)', label: 'Bloc Québécois' },
+    { color: 'rgba(13, 71, 161, 0.75)', label: 'Conservative Party' },
+    { color: 'rgba(255, 152, 0, 0.75)', label: 'New Democratic Party (NDP)' },
+    { color: 'rgba(41, 182, 246, 0.75)', label: 'Bloc Québécois' },
+    { color: 'rgba(76, 175, 80, 0.75)', label: 'Green Party' },
+    { color: 'rgba(255, 255, 255, 0.75)', label: 'Independent' },
   ]
 
   const provincesList = useMemo(() => {
@@ -311,10 +313,11 @@ export default function Explore() {
           .attr('fill', d => {
             const party = d.city.price_source?.toLowerCase() || ''
             if (party.includes('liberal')) return 'rgba(229, 57, 53, 0.35)'
-            if (party.includes('conservative')) return 'rgba(30, 136, 229, 0.35)'
-            if (party.includes('ndp')) return 'rgba(251, 140, 0, 0.35)'
-            if (party.includes('bloc')) return 'rgba(79, 195, 247, 0.35)'
+            if (party.includes('conservative')) return 'rgba(13, 71, 161, 0.35)'
+            if (party.includes('ndp')) return 'rgba(255, 152, 0, 0.35)'
+            if (party.includes('bloc')) return 'rgba(41, 182, 246, 0.35)'
             if (party.includes('green')) return 'rgba(76, 175, 80, 0.35)'
+            if (party.includes('independent')) return 'rgba(255, 255, 255, 0.35)'
             return 'rgba(128, 128, 128, 0.2)'
           })
           .attr('stroke', 'var(--color-border)')

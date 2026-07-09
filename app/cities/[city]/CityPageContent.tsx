@@ -213,10 +213,11 @@ export default function CityPageContent({
   const partyColor = (party: string | null) => {
     const p = party?.toLowerCase() || ''
     if (p.includes('liberal')) return 'var(--color-red)'
-    if (p.includes('conservative')) return '#1E88E5'
-    if (p.includes('ndp')) return '#FB8C00'
-    if (p.includes('bloc')) return '#4FC3F7'
+    if (p.includes('conservative')) return '#0D47A1'
+    if (p.includes('ndp') || p.includes('new democratic')) return '#FF9800'
+    if (p.includes('bloc') || p.includes('québécois')) return '#29B6F6'
     if (p.includes('green')) return '#4CAF50'
+    if (p.includes('independent')) return '#FFFFFF'
     return 'var(--color-text-2)'
   }
 
