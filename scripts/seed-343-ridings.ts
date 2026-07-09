@@ -227,7 +227,7 @@ async function run() {
       avg_internet_mbps: null,
       salary_data_source: 'Statistics Canada Census Profile 2021 (98-401-X2021029), ref. year 2020',
       rent_data_source: zone.name + ', CMHC Rental Market Survey 2025 (StatCan table 34-10-0133-01)',
-      median_rent_local: qualZone.french,
+      median_rent_local: null,
       english_proficiency: qualZone.tax,
       visa_ease: qualZone.wait,
       price_cad: null,

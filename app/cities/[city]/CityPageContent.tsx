@@ -192,7 +192,6 @@ export default function CityPageContent({
   }, [])
 
   const provincial_tax_bracket = city.english_proficiency
-  const french_speaking_pct = city.median_rent_local
 
   let displayPopulation: number | null = city.population ? Number(city.population) : null
   let displayVoters: number | null = null
@@ -214,7 +213,6 @@ export default function CityPageContent({
 
   const hasLiving     = rent != null || salary != null
   const hasLiveability= city.safety_index != null ||
-    french_speaking_pct != null ||
     provincial_tax_bracket != null
 
   const rentBurden = (rent != null && salary != null && salary > 0)
@@ -379,14 +377,7 @@ export default function CityPageContent({
               {city.safety_index != null && (
                 <MetaCard label="Safety"><ScoreBar score={city.safety_index} label="Crime Index (inverted)" /></MetaCard>
               )}
-              {french_speaking_pct != null && (
-                <MetaCard label="Language Profile">
-                  <p style={metaValStyle}>{french_speaking_pct}%</p>
-                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
-                    First official language spoken (French)
-                  </p>
-                </MetaCard>
-              )}
+
               {provincial_tax_bracket != null && (
                 <MetaCard label="Provincial Tax">
                   <Badge value={provincial_tax_bracket} />
