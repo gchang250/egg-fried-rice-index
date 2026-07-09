@@ -184,6 +184,7 @@ export default function CityPageContent({
 }) {
   const [currency, setCurrency] = useState('CAD')
   const [rates, setRates] = useState<Record<string, number>>(RATES)
+  const [profile, setProfile] = useState<'single_renter' | 'family_homeowner'>('single_renter')
 
   useEffect(() => {
     fetch('/api/exchange-rates')
@@ -196,19 +197,38 @@ export default function CityPageContent({
   const provincial_tax_bracket = city.english_proficiency
   const healthcare_wait = city.visa_ease
 
-  const hasLiving     = city.median_rent_1br_cad != null || city.median_monthly_salary_cad != null
+  let displayPopulation: number | null = city.population ? Number(city.population) : null
+  let displayVoters: number | null = null
+  try {
+    if (city.population && city.population.startsWith('{')) {
+      const parsed = JSON.parse(city.population)
+      displayPopulation = Number(parsed.population)
+      displayVoters = Number(parsed.registered_voters)
+    }
+  } catch (e) {}
+
+  const rent = profile === 'single_renter'
+    ? (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) : null)
+    : (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) * 1.65 : null)
+    
+  const salary = profile === 'single_renter'
+    ? (city.median_monthly_salary_cad != null ? Number(city.median_monthly_salary_cad) : null)
+    : (city.tech_salary_cad != null ? Number(city.tech_salary_cad) : city.median_monthly_salary_cad != null ? Number(city.median_monthly_salary_cad) * 1.5 : null)
+
+  const hasLiving     = rent != null || salary != null
   const hasLiveability= city.safety_index != null ||
     city.healthcare_index != null ||
     french_speaking_pct != null ||
     provincial_tax_bracket != null ||
     healthcare_wait != null
 
-  const rentBurden = (city.median_rent_1br_cad != null && city.median_monthly_salary_cad != null && city.median_monthly_salary_cad > 0)
-    ? `${Math.round((city.median_rent_1br_cad / city.median_monthly_salary_cad) * 100)}%`
+  const rentBurden = (rent != null && salary != null && salary > 0)
+    ? `${Math.round((rent / salary) * 100)}%`
     : '-'
 
   const sym = SYMBOLS[currency] ?? currency
   const exchangeRateMonth = new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+  const disposable = (salary != null && rent != null) ? salary - rent : null
 
   const partyColor = (party: string | null) => {
     const p = party?.toLowerCase() || ''
@@ -232,13 +252,40 @@ export default function CityPageContent({
           <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: 0 }}>
             Riding profile
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 12, color: '#3a3a32' }}>View in</span>
-            <select
-              value={currency}
-              onChange={e => setCurrency(e.target.value)}
-              style={{ padding: '5px 10px', border: '0.5px solid var(--color-border)', borderRadius: 8, background: 'var(--color-surface)', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--color-text-1)', cursor: 'pointer' }}
-            >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+            <div style={{ display: 'inline-flex', background: 'var(--color-surface-2)', padding: 3, borderRadius: 10, border: '0.5px solid var(--color-border)' }}>
+              <button
+                onClick={() => setProfile('single_renter')}
+                style={{
+                  border: 'none', background: profile === 'single_renter' ? 'var(--color-surface)' : 'none',
+                  color: profile === 'single_renter' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                  boxShadow: profile === 'single_renter' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
+                  transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                }}
+              >
+                Single Renter
+              </button>
+              <button
+                onClick={() => setProfile('family_homeowner')}
+                style={{
+                  border: 'none', background: profile === 'family_homeowner' ? 'var(--color-surface)' : 'none',
+                  color: profile === 'family_homeowner' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                  boxShadow: profile === 'family_homeowner' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
+                  transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                }}
+              >
+                Family Homeowner
+              </button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 12, color: '#3a3a32' }}>View in</span>
+              <select
+                value={currency}
+                onChange={e => setCurrency(e.target.value)}
+                style={{ padding: '5px 10px', border: '0.5px solid var(--color-border)', borderRadius: 8, background: 'var(--color-surface)', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--color-text-1)', cursor: 'pointer' }}
+              >
               {CURRENCY_GROUPS.map(group => (
                 <optgroup key={group.label} label={group.label}>
                   {group.codes.filter(c => RATES[c]).map(code => (
@@ -248,6 +295,7 @@ export default function CityPageContent({
               ))}
             </select>
           </div>
+          </div>
         </div>
 
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 52, lineHeight: 1.05, letterSpacing: -1.2, margin: '0 0 0.4rem', color: 'var(--color-text-1)' }}>
@@ -255,7 +303,8 @@ export default function CityPageContent({
         </h1>
         <p style={{ fontSize: 14, color: '#4a4a42', margin: '0 0 1.25rem' }}>
           {[city.region, city.country].filter(Boolean).join(', ')}
-          {city.population ? ` · ${Number(city.population).toLocaleString()} people` : ''}
+          {displayPopulation ? ` · ${displayPopulation.toLocaleString()} population` : ''}
+          {displayVoters ? ` · Registered Voters: ${displayVoters.toLocaleString()}` : ''}
         </p>
         <p style={{ fontSize: 15, color: '#7a7a70', lineHeight: 1.75, maxWidth: 700, margin: '0 0 2rem' }}>
           {city.blurb ?? 'Riding socio-economic context coming soon.'}
@@ -272,8 +321,8 @@ export default function CityPageContent({
             />
             <PriceCard
               label="Disposable Income"
-              value={convert(city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null ? city.median_monthly_salary_cad - city.median_rent_1br_cad : null, currency, rates)}
-              sub="Remaining monthly wage after rent"
+              value={convert(salary != null && rent != null ? salary - rent : null, currency, rates)}
+              sub="Remaining monthly wage after housing"
             />
             <PriceCard
               label="Representing Party"
@@ -294,28 +343,27 @@ export default function CityPageContent({
               Living costs shown in <strong>{sym} {currency}</strong>. Sourced from CMHC housing market updates and Statistics Canada census logs.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
-              {city.median_rent_1br_cad != null && (
-                <LivingCard label="Typical monthly rent (1BR)"
-                  amount={convert(city.median_rent_1br_cad, currency, rates)} sub={city.rent_data_source ?? undefined} />
+              {rent != null && (
+                <LivingCard label={profile === 'single_renter' ? "Typical monthly rent (1BR)" : "Typical housing cost (Family)"}
+                  amount={convert(rent, currency, rates)} sub={city.rent_data_source ?? undefined} />
               )}
-              {city.median_monthly_salary_cad != null && (
-                <LivingCard label="Median monthly salary"
-                  amount={convert(city.median_monthly_salary_cad, currency, rates)} sub={city.salary_data_source ?? undefined} />
+              {salary != null && (
+                <LivingCard label={profile === 'single_renter' ? "Median monthly salary" : "Median salary (Family)"}
+                  amount={convert(salary, currency, rates)} sub={city.salary_data_source ?? undefined} />
               )}
               {city.tech_salary_cad != null && (
                 <LivingCard label="Tech / knowledge worker salary"
                   amount={convert(city.tech_salary_cad, currency, rates)} sub="Median gross monthly" />
               )}
-              {city.median_monthly_salary_cad != null && city.median_rent_1br_cad != null && (() => {
-                const diff = city.median_monthly_salary_cad - city.median_rent_1br_cad
-                const isDeficit = diff < 0
+              {disposable != null && (() => {
+                const isDeficit = disposable < 0
                 return (
                   <LivingCard
-                    label={isDeficit ? 'Rent exceeds median salary' : 'Monthly Disposable Income'}
-                    amount={convert(Math.abs(diff), currency, rates)}
+                    label={isDeficit ? 'Housing cost exceeds salary' : 'Monthly Disposable Income'}
+                    amount={convert(Math.abs(disposable), currency, rates)}
                     sub={isDeficit
-                      ? `Rent burden: ${rentBurden}. Median wage cannot cover local rent.`
-                      : `Rent burden: ${rentBurden} of median salary`}
+                      ? `Housing burden: ${rentBurden}. Earnings cannot cover local housing cost.`
+                      : `Housing burden: ${rentBurden} of monthly salary`}
                     highlight
                     deficit={isDeficit}
                   />
@@ -386,7 +434,8 @@ export default function CityPageContent({
               { label: 'Rent source',    value: city.rent_data_source,      isSource: true },
               { label: 'Last updated',   value: fmtDate(city.price_updated_at), isSource: false },
               { label: 'Climate',        value: city.climate,               isSource: false },
-              { label: 'Population',     value: city.population ? Number(city.population).toLocaleString() : null, isSource: false },
+              { label: 'Population',     value: displayPopulation ? displayPopulation.toLocaleString() : null, isSource: false },
+              { label: 'Registered Voters', value: displayVoters ? displayVoters.toLocaleString() : null, isSource: false },
             ].filter(({ value }) => value).map(({ label, value, isSource }) => (
               <p key={label} style={{ fontSize: 13, color: '#8a8a82', margin: 0 }}>
                 <span style={{ color: '#3a3a32', marginRight: 6 }}>{label}:</span>

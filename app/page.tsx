@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, useMemo, type CSSProperties } from 'react'
 import NavBar from './components/NavBar'
 import { supabase } from '@/lib/supabase'
 import * as d3 from 'd3'
+import { feature as topoFeature } from 'topojson-client'
 
 /* ═══════════════════════════════════════════════════════════════════
    Types & helpers
@@ -18,9 +19,11 @@ type CityRow = {
   longitude: number | null
   median_rent_1br_cad:      number | null
   median_monthly_salary_cad: number | null
+  tech_salary_cad:          number | null
   blurb: string | null
-  rentBurden:    number | null
-  bowlsAfterRent: number | null // renamed to plates left
+  price_source:             string | null
+  rentBurden?:    number | null
+  bowlsAfterRent?: number | null // renamed to plates left
 }
 
 type Tip = { city: string; province: string; price: number; burden: number | null; plates: number | null; x: number; y: number }
@@ -104,6 +107,7 @@ export default function Home() {
   const [sel, setSel]         = useState<CityRow | null>(null)
   const [boardIn, setBoardIn] = useState(false)
   const [mapLoading, setMapLoading] = useState(true)
+  const [profile, setProfile] = useState<'single_renter' | 'family_homeowner'>('single_renter')
 
   const mapRef   = useRef<SVGSVGElement>(null)
   const specRef  = useRef<SVGSVGElement>(null)
@@ -114,33 +118,48 @@ export default function Home() {
   useEffect(() => {
     supabase
       .from('cities')
-      .select('city,country,region,flag,price_cad,latitude,longitude,median_rent_1br_cad,median_monthly_salary_cad,blurb,median_rent_local')
+      .select('city,country,region,flag,price_cad,latitude,longitude,median_rent_1br_cad,median_monthly_salary_cad,tech_salary_cad,blurb,median_rent_local,price_source')
       .order('city', { ascending: true })
       .then(({ data }) => {
         if (!data) return
-        setCities(data.map(c => {
-          const rent   = c.median_rent_1br_cad        != null ? Number(c.median_rent_1br_cad)        : null
-          const salary = c.median_monthly_salary_cad  != null ? Number(c.median_monthly_salary_cad)  : null
-          return {
-            ...c,
-            price_cad:      c.price_cad ? Number(c.price_cad) : 0,
-            rentBurden:     rent && salary ? Math.round(rent / salary * 100) : null,
-            bowlsAfterRent: rent && salary ? salary - rent : null, // Replaced "bowlsAfterRent" with disposable CAD income
-          }
-        }))
+        setCities((data ?? []) as CityRow[])
       })
   }, [])
+
+  const parsedCities = useMemo(() => {
+    return cities.map(c => {
+      const isSingle = profile === 'single_renter'
+      const rent = isSingle
+        ? (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) : null)
+        : (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) * 1.65 : null)
+      const salary = isSingle
+        ? (c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) : null)
+        : (c.tech_salary_cad != null ? Number(c.tech_salary_cad) : c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) * 1.5 : null)
+
+      return {
+        ...c,
+        price_cad: c.price_cad ? Number(c.price_cad) : 0,
+        median_rent_1br_cad: rent,
+        median_monthly_salary_cad: salary,
+        rentBurden: rent && salary ? Math.round(rent / salary * 100) : null,
+        bowlsAfterRent: rent && salary ? Math.round(salary - rent) : null,
+      }
+    })
+  }, [cities, profile])
 
   /* ── Canada map ────────────────────────────────────────────────── */
   useEffect(() => {
     const svgEl = mapRef.current
-    if (!svgEl || !cities.length) return
+    if (!svgEl || !parsedCities.length) return
     setMapLoading(true)
 
-    d3.json('/canada.geojson').then((geojson: any) => {
+    Promise.all([
+      d3.json('/canada.geojson') as Promise<any>,
+      d3.json('/ridings.json') as Promise<any>,
+    ]).then(([geojson, ridingsTopo]) => {
       setMapLoading(false)
       svgEl.innerHTML = ''
-      
+
       const W = svgEl.clientWidth || 1000
       const H = 450
       svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`)
@@ -148,12 +167,13 @@ export default function Home() {
       const svg = d3.select(svgEl)
       const g = svg.append('g')
 
+      // Fit the projection so the full country (incl. southern Ontario/BC) is
+      // guaranteed to sit inside the viewBox instead of overflowing a hardcoded scale
+      const pad = 16
       const projection = d3.geoConicConformal()
-        .center([0, 62])
         .rotate([96, 0])
         .parallels([49, 77])
-        .scale(W * 0.72)
-        .translate([W / 2, H / 2 + 50])
+        .fitExtent([[pad, pad], [W - pad, H - pad]], { type: 'FeatureCollection', features: geojson.features } as any)
 
       const pathGen = d3.geoPath().projection(projection)
 
@@ -162,13 +182,20 @@ export default function Home() {
         .attr('id', 'landShadow')
         .attr('x', '-10%').attr('y', '-10%')
         .attr('width', '120%').attr('height', '120%')
-      
+
       shadowFilter.append('feDropShadow')
         .attr('dx', '0')
         .attr('dy', '3')
         .attr('stdDeviation', '3')
         .attr('flood-color', '#000000')
         .attr('flood-opacity', '0.65')
+
+      const clip = defs.append('clipPath').attr('id', 'canada-clip')
+      clip.selectAll('path')
+        .data(geojson.features)
+        .enter()
+        .append('path')
+        .attr('d', pathGen as any)
 
       // Draw Canada Outline
       g.append('g')
@@ -179,165 +206,76 @@ export default function Home() {
         .attr('d', pathGen as any)
         .attr('fill', 'var(--color-surface)')
         .attr('stroke', 'var(--color-border)')
-        .attr('stroke-width', 0.65)
+        .attr('stroke-width', 0.6)
         .attr('filter', 'url(#landShadow)')
 
-      // Plot communities as glowing dots
-      cities.forEach((city, idx) => {
-        if (city.longitude == null || city.latitude == null) return
-        const coords = projection([city.longitude, city.latitude])
-        if (!coords) return
-        const [cx, cy] = coords
+      // Draw real federal riding boundaries (2023 Representation Order)
+      const cityByName = new Map(parsedCities.map(c => [c.city, c]))
+      const objKey = Object.keys(ridingsTopo.objects)[0]
+      const ridingFeatures = (topoFeature(ridingsTopo, ridingsTopo.objects[objKey]) as any).features
 
-        const dotG = g.append('g')
-          .attr('class', 'grain')
-          .attr('transform', `translate(${cx},${cy})`)
-          .on('click', () => setSel(city))
-          .on('mousemove', (ev) => {
-            setTip({
-              city: city.city,
-              province: city.region ?? '',
-              price: city.price_cad,
-              burden: city.rentBurden,
-              plates: city.bowlsAfterRent,
-              x: ev.clientX,
-              y: ev.clientY
-            })
+      g.append('g')
+        .attr('clip-path', 'url(#canada-clip)')
+        .selectAll('path')
+        .data(ridingFeatures)
+        .enter()
+        .append('path')
+        .attr('d', pathGen as any)
+        .attr('fill', (d: any) => {
+          const city = cityByName.get(d.properties.name)
+          const party = city?.price_source?.toLowerCase() || ''
+          if (party.includes('liberal')) return 'rgba(229, 57, 53, 0.35)'
+          if (party.includes('conservative')) return 'rgba(13, 71, 161, 0.35)'
+          if (party.includes('ndp')) return 'rgba(255, 152, 0, 0.35)'
+          if (party.includes('bloc')) return 'rgba(41, 182, 246, 0.35)'
+          if (party.includes('green')) return 'rgba(76, 175, 80, 0.35)'
+          if (party.includes('independent')) return 'rgba(255, 255, 255, 0.35)'
+          return 'rgba(128, 128, 128, 0.2)'
+        })
+        .attr('stroke', 'rgba(255, 255, 255, 0.45)')
+        .attr('stroke-width', 0.9)
+        .style('cursor', 'pointer')
+        .attr('pointer-events', 'all')
+        .on('click', (event, d: any) => {
+          const city = cityByName.get(d.properties.name)
+          if (city) setSel(city)
+        })
+        .on('mouseover', (event) => {
+          d3.select(event.currentTarget)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 1.6)
+            .raise()
+        })
+        .on('mousemove', (event, d: any) => {
+          const city = cityByName.get(d.properties.name)
+          if (!city) return
+          setTip({
+            city: city.city,
+            province: city.region ?? '',
+            price: city.price_cad,
+            burden: city.rentBurden ?? null,
+            plates: city.bowlsAfterRent ?? null,
+            x: event.clientX,
+            y: event.clientY
           })
-          .on('mouseleave', () => setTip(null))
-
-        // Ripple glow
-        dotG.append('circle')
-          .attr('r', 9)
-          .attr('fill', colorFor(city.price_cad))
-          .attr('opacity', 0.12)
-          .attr('class', 'city-aura')
-
-        // Central dot
-        dotG.append('circle')
-          .attr('r', 4.5)
-          .attr('fill', colorFor(city.price_cad))
-          .attr('stroke', '#09090b')
-          .attr('stroke-width', 0.8)
-          .attr('class', 'city-dot')
-      })
+        })
+        .on('mouseleave', (event) => {
+          d3.select(event.currentTarget)
+            .attr('stroke', 'rgba(255, 255, 255, 0.45)')
+            .attr('stroke-width', 0.9)
+          setTip(null)
+        })
     })
-  }, [cities])
+  }, [parsedCities])
 
-  /* ── Price Spectrum ────────────────────────────────────────────── */
-  useEffect(() => {
-    const svg = specRef.current
-    if (!svg || !cities.length) return
 
-    const draw = () => {
-      svg.innerHTML = ''
-      const W = svg.clientWidth || 1100
-      const H = 200
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
-      
-      const axY = H - 55
-      const padding = { l: 40, r: 40 }
-      const minVal = cities[0].price_cad
-      const maxVal = cities[cities.length - 1].price_cad
-      
-      const x = d3.scaleLinear()
-        .domain([minVal, maxVal])
-        .range([padding.l, W - padding.r])
-
-      // Axis Line
-      d3.select(svg).append('line')
-        .attr('x1', padding.l).attr('x2', W - padding.r)
-        .attr('y1', axY).attr('y2', axY)
-        .attr('stroke', 'var(--color-border)')
-        .attr('stroke-width', 1)
-
-      // Tick markers
-      const ticks = x.ticks(10)
-      ticks.forEach(t => {
-        const tx = x(t)
-        d3.select(svg).append('line')
-          .attr('x1', tx).attr('x2', tx).attr('y1', axY).attr('y2', axY + 6)
-          .attr('stroke', 'var(--color-border)')
-          .attr('stroke-width', 0.8)
-        
-        d3.select(svg).append('text')
-          .attr('x', tx).attr('y', axY + 18).attr('text-anchor', 'middle')
-          .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
-          .attr('fill', 'var(--color-text-3)').text(fmt(t))
-      })
-
-      // Plot communities on spectrum
-      cities.forEach((c, idx) => {
-        const cx = x(c.price_cad)
-        const cy = axY - 24 - ((idx * 14) % 65)
-        
-        const g = d3.select(svg).append('g')
-          .attr('class', 'grain')
-          .attr('transform', `translate(${cx},${cy})`)
-          .on('click', () => setSel(c))
-          .on('mousemove', (ev) => {
-            setTip({
-              city: c.city,
-              province: c.region ?? '',
-              price: c.price_cad,
-              burden: c.rentBurden,
-              plates: c.bowlsAfterRent,
-              x: ev.clientX,
-              y: ev.clientY
-            })
-          })
-          .on('mouseleave', () => setTip(null))
-
-        // Vertical drop line
-        g.append('line')
-          .attr('x1', 0).attr('x2', 0)
-          .attr('y1', 4).attr('y2', axY - cy)
-          .attr('stroke', 'var(--color-border)')
-          .attr('stroke-width', 0.6)
-          .attr('stroke-opacity', 0.3)
-
-        // Drop stylized cheese-curd point
-        g.append('circle')
-          .attr('r', 5)
-          .attr('fill', colorFor(c.price_cad))
-          .attr('opacity', 0.95)
-
-        svg.appendChild(g.node()!)
-      })
-
-      // Extremes labels
-      const extremes: Array<[string, CityRow, string]> = [
-        ['CHEAPEST', cities[0], 'start'],
-        ['PRICIEST', cities[cities.length - 1], 'end']
-      ]
-      extremes.forEach(([label, d, anchor]) => {
-        const fx = x(d.price_cad)
-        const txt = d3.create('svg:text')
-          .attr('x', fx).attr('y', 20).attr('text-anchor', anchor)
-          .attr('font-family', 'var(--font-mono)').attr('font-size', '10')
-          .attr('letter-spacing', '1.5').attr('fill', colorFor(d.price_cad))
-          .text(`${d.city.toUpperCase()} ${fmt(d.price_cad)} · ${label}`).node()!
-        svg.appendChild(txt)
-        svg.appendChild(d3.create('svg:line')
-          .attr('x1', fx).attr('x2', fx).attr('y1', 28).attr('y2', axY - 2)
-          .attr('stroke', colorFor(d.price_cad)).attr('stroke-opacity', '.25')
-          .attr('stroke-dasharray', '2 4').node()!)
-      })
-    }
-    
-    draw()
-    const ro = new ResizeObserver(() => draw())
-    ro.observe(svg)
-    return () => ro.disconnect()
-  }, [cities])
 
   /* ── Scatter plot ──────────────────────────────────────────────── */
   useEffect(() => {
     const svg = scatRef.current
-    if (!svg || !cities.length) return
-    const data = cities.filter(c => c.rentBurden != null && c.bowlsAfterRent != null) as (CityRow & { rentBurden: number; bowlsAfterRent: number })[]
+    if (!svg || !parsedCities.length) return
+    const data = parsedCities.filter(c => c.rentBurden != null && c.bowlsAfterRent != null) as (CityRow & { rentBurden: number; bowlsAfterRent: number })[]
     if (!data.length) return
-    const PMIN = cities[0].price_cad, PMAX = cities[cities.length - 1].price_cad
     const NOTABLE = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Edmonton', 'Halifax', 'Winnipeg', 'Iqaluit', 'Yellowknife', 'Fort McMurray', 'Sherbrooke']
     
     const draw = () => {
@@ -365,7 +303,7 @@ export default function Home() {
       }
 
       // Y grid
-      const yStep = 50
+      const yStep = 1000
       for (let v = 0; v <= ymax; v += yStep) {
         svg.appendChild(d3.create('svg:line')
           .attr('x1', m.l).attr('x2', W - m.r).attr('y1', yS(v)).attr('y2', yS(v))
@@ -373,7 +311,7 @@ export default function Home() {
         const t = d3.create('svg:text')
           .attr('x', m.l - 10).attr('y', yS(v) + 3).attr('text-anchor', 'end')
           .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
-          .attr('fill', 'var(--color-text-3)').text(String(v)).node()!
+          .attr('fill', 'var(--color-text-3)').text('$' + v.toLocaleString()).node()!
         svg.appendChild(t)
       }
 
@@ -382,20 +320,20 @@ export default function Home() {
         .attr('x', (m.l + W - m.r) / 2).attr('y', H - 10).attr('text-anchor', 'middle')
         .attr('font-family', 'var(--font-body)').attr('font-size', '10')
         .attr('fill', 'var(--color-text-2)').attr('letter-spacing', '1').attr('font-weight', 600)
-        .text('RENT BURDEN (1BR RENT AS % OF LOCAL MEDIAN INCOME)').node()!
+        .text('HOUSING RENT BURDEN (% OF LOCAL MEDIAN INCOME)').node()!
       svg.appendChild(xt)
 
       const yt = d3.create('svg:text')
         .attr('transform', `translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle')
         .attr('font-family', 'var(--font-body)').attr('font-size', '10')
         .attr('fill', 'var(--color-text-2)').attr('letter-spacing', '1').attr('font-weight', 600)
-        .text('DISPOSABLE MONTHLY INCOME AFTER RENT (CAD)').node()!
+        .text('DISPOSABLE MONTHLY INCOME AFTER HOUSING COST (CAD)').node()!
       svg.appendChild(yt)
 
       // Plot data points
       data.forEach((c) => {
         const gx = xS(c.rentBurden), gy = yS(c.bowlsAfterRent)
-        const rs = 6 // Standardized size for all ridings
+        const rs = 6 
 
         const g = d3.create('svg:g')
           .attr('class', 'grain')
@@ -414,12 +352,20 @@ export default function Home() {
           })
           .on('mouseleave', () => setTip(null))
 
-        // Draw curd marker
+        const party = c.price_source?.toLowerCase() || ''
+        let fill = 'rgba(128,128,128,0.7)'
+        if (party.includes('liberal')) fill = 'rgba(229, 57, 53, 0.75)'
+        else if (party.includes('conservative')) fill = 'rgba(13, 71, 161, 0.75)'
+        else if (party.includes('ndp')) fill = 'rgba(255, 152, 0, 0.75)'
+        else if (party.includes('bloc')) fill = 'rgba(41, 182, 246, 0.75)'
+        else if (party.includes('green')) fill = 'rgba(76, 175, 80, 0.75)'
+        else if (party.includes('independent')) fill = 'rgba(255, 255, 255, 0.75)'
+
         g.append('circle')
           .attr('r', rs)
-          .attr('fill', colorFor(c.price_cad))
-          .attr('opacity', 0.9)
-          .attr('stroke', '#09090b')
+          .attr('fill', fill)
+          .attr('opacity', 0.95)
+          .attr('stroke', 'var(--color-border)')
           .attr('stroke-width', 0.8)
 
         svg.appendChild(g.node()!)
@@ -439,7 +385,7 @@ export default function Home() {
     const ro = new ResizeObserver(() => draw())
     ro.observe(svg)
     return () => ro.disconnect()
-  }, [cities])
+  }, [parsedCities])
 
   /* ── Leaderboard Intersection ─────────────────────────────────── */
   useEffect(() => {
@@ -448,7 +394,7 @@ export default function Home() {
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setBoardIn(true); io.disconnect() } }, { threshold: 0.1 })
     io.observe(el)
     return () => io.disconnect()
-  }, [cities])
+  }, [parsedCities])
 
   /* ── Escape key closes sidebar ───────────────────────────────── */
   useEffect(() => {
@@ -459,15 +405,15 @@ export default function Home() {
   }, [sel])
 
   /* ── Stats Calculations ────────────────────────────────────────── */
-  const rents    = cities.map(c => c.median_rent_1br_cad).filter((r): r is number => r != null && r > 0).sort((a, b) => a - b)
+  const rents    = parsedCities.map(c => c.median_rent_1br_cad).filter((r): r is number => r != null && r > 0).sort((a, b) => a - b)
   const rmin     = rents[0] ?? 1050
   const rmax     = rents[rents.length - 1] ?? 2800
-  const burdens  = cities.map(c => c.rentBurden).filter((b): b is number => b !== null)
+  const burdens  = parsedCities.map(c => c.rentBurden).filter((b): b is number => b !== null)
   const avgBurden = burdens.length ? Math.round(burdens.reduce((sum, b) => sum + b, 0) / burdens.length) : 41
   const spread   = rents.length >= 2 ? rmax / rmin : 2.4
-  const maxPlates = cities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
-  const cheapTop = [...cities].sort((a,b) => (a.rentBurden ?? 0) - (b.rentBurden ?? 0)).slice(0, 8)
-  const priceTop = [...cities].sort((a,b) => (b.rentBurden ?? 0) - (a.rentBurden ?? 0)).slice(0, 8)
+  const maxPlates = parsedCities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
+  const cheapTop = [...parsedCities].sort((a,b) => (a.rentBurden ?? 0) - (b.rentBurden ?? 0)).slice(0, 8)
+  const priceTop = [...parsedCities].sort((a,b) => (b.rentBurden ?? 0) - (a.rentBurden ?? 0)).slice(0, 8)
 
   return (
     <div style={{ background: 'var(--color-bg)', color: 'var(--color-text-1)', fontFamily: "var(--font-body)", overflowX: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
@@ -509,9 +455,39 @@ export default function Home() {
                 The index evaluates local housing burdens relative to regional median household income.
               </p>
 
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 28 }}>
                 <a href="/cities" style={BTN_GOLD}>Browse Ridings</a>
                 <a href="/explore" style={BTN_GHOST}>Interactive Map</a>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-start' }}>
+                <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--color-text-3)' }}>Living Profile</span>
+                <div style={{ display: 'inline-flex', background: 'var(--color-surface-2)', padding: 3, borderRadius: 10, border: '0.5px solid var(--color-border)' }}>
+                  <button
+                    onClick={() => setProfile('single_renter')}
+                    style={{
+                      border: 'none', background: profile === 'single_renter' ? 'var(--color-surface)' : 'none',
+                      color: profile === 'single_renter' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                      padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 500, cursor: 'pointer',
+                      boxShadow: profile === 'single_renter' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none',
+                      transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                    }}
+                  >
+                    Single Renter (1BR)
+                  </button>
+                  <button
+                    onClick={() => setProfile('family_homeowner')}
+                    style={{
+                      border: 'none', background: profile === 'family_homeowner' ? 'var(--color-surface)' : 'none',
+                      color: profile === 'family_homeowner' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                      padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 500, cursor: 'pointer',
+                      boxShadow: profile === 'family_homeowner' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none',
+                      transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                    }}
+                  >
+                    Family Homeowner
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -525,8 +501,8 @@ export default function Home() {
         {/* Dynamic Canada Map */}
         <div style={{ marginTop: 80 }}>
           <div style={{ ...WRAP, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 18, flexWrap: 'wrap', gap: 10 }}>
-            <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>The Canadian Ridings Index Map — {cities.length} Ridings</span>
-            <span style={LABEL}>Hover a riding point to inspect index details</span>
+            <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>The Canadian Ridings Index Map — {parsedCities.length} Ridings</span>
+            <span style={LABEL}>Hover a riding cell to inspect index details</span>
           </div>
           <div style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', background: 'radial-gradient(circle at 50% 50%, var(--color-surface), var(--color-bg))' }}>
             <div style={{ ...WRAP, paddingTop: 20, paddingBottom: 20 }}>

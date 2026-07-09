@@ -55,6 +55,7 @@ export default function CitiesPage() {
   const [search, setSearch]               = useState('')
   const [selectedProvince, setSelectedProvince] = useState('All')
   const [hoveredCity, setHoveredCity]     = useState<string | null>(null)
+  const [profile, setProfile]             = useState<'single_renter' | 'family_homeowner'>('single_renter')
   
   // Comparison State
   const [compareA, setCompareA]           = useState('')
@@ -114,14 +115,26 @@ export default function CitiesPage() {
   const cleanCities = useMemo(() => {
     return cities.filter(c => c.median_rent_1br_cad != null && c.median_monthly_salary_cad != null)
       .map(c => {
-        const rent = Number(c.median_rent_1br_cad)
-        const salary = Number(c.median_monthly_salary_cad)
+        const isSingle = profile === 'single_renter'
+        const rent = isSingle
+          ? Number(c.median_rent_1br_cad)
+          : Number(c.median_rent_1br_cad) * 1.65
+        const salary = isSingle
+          ? Number(c.median_monthly_salary_cad)
+          : (c.tech_salary_cad != null ? Number(c.tech_salary_cad) : Number(c.median_monthly_salary_cad) * 1.5)
+
         const burden = Math.round((rent / salary) * 100)
-        const disposable = salary - rent
-        return { ...c, burden, disposable }
+        const disposable = Math.round(salary - rent)
+        return { 
+          ...c, 
+          burden, 
+          disposable,
+          median_rent_1br_cad: Math.round(rent),
+          median_monthly_salary_cad: Math.round(salary)
+        }
       })
       .sort((a, b) => a.burden - b.burden)
-  }, [cities])
+  }, [cities, profile])
 
   const cheapest = cleanCities[0]
   const priciest = cleanCities[cleanCities.length - 1]
@@ -200,6 +213,32 @@ export default function CitiesPage() {
           </div>
 
           <div style={{ display:'flex', alignItems:'center', gap:'0.6rem', flexShrink:0 }}>
+            <div style={{ display: 'inline-flex', background: 'var(--color-surface-2)', padding: 3, borderRadius: 10, border: '0.5px solid var(--color-border)' }}>
+              <button
+                onClick={() => setProfile('single_renter')}
+                style={{
+                  border: 'none', background: profile === 'single_renter' ? 'var(--color-surface)' : 'none',
+                  color: profile === 'single_renter' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  padding: '6px 12px', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                  boxShadow: profile === 'single_renter' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
+                  transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                }}
+              >
+                Single Renter
+              </button>
+              <button
+                onClick={() => setProfile('family_homeowner')}
+                style={{
+                  border: 'none', background: profile === 'family_homeowner' ? 'var(--color-surface)' : 'none',
+                  color: profile === 'family_homeowner' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                  padding: '6px 12px', borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                  boxShadow: profile === 'family_homeowner' ? '0 2px 6px rgba(0,0,0,0.05)' : 'none',
+                  transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                }}
+              >
+                Family Homeowner
+              </button>
+            </div>
             <a href="/api/download-report" download style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'7px 14px', background:'var(--color-surface)', color:'var(--color-text-2)', borderRadius:8, fontSize:12, textDecoration:'none', whiteSpace:'nowrap', border:'0.5px solid var(--color-border)' }}>
               <Download size={12} /> Export CSV
             </a>

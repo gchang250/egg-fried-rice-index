@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import NavBar from '@/app/components/NavBar'
 import { useEffect, useRef, useState, useMemo } from 'react'
 import * as d3 from 'd3'
+import { feature as topoFeature } from 'topojson-client'
 import { Search } from 'lucide-react'
 
 type City = {
@@ -24,6 +25,7 @@ type City = {
   safety_index: number | null
   healthcare_index: number | null
   avg_internet_mbps: number | null
+  tech_salary_cad: number | null
 }
 
 const PROVINCE_NAMES: Record<string, string> = {
@@ -42,6 +44,23 @@ const PROVINCE_NAMES: Record<string, string> = {
   NU: 'Nunavut'
 }
 
+const PROVINCE_TO_ABBR: Record<string, string> = {
+  'Quebec': 'QC',
+  'Newfoundland and Labrador': 'NL',
+  'British Columbia': 'BC',
+  'Nunavut': 'NU',
+  'Northwest Territories': 'NT',
+  'New Brunswick': 'NB',
+  'Nova Scotia': 'NS',
+  'Saskatchewan': 'SK',
+  'Alberta': 'AB',
+  'Prince Edward Island': 'PE',
+  'Yukon Territory': 'YT',
+  'Yukon': 'YT',
+  'Manitoba': 'MB',
+  'Ontario': 'ON'
+}
+
 export default function Explore() {
   const svgRef = useRef<SVGSVGElement>(null)
   const gRef  = useRef<SVGGElement>(null)
@@ -52,6 +71,7 @@ export default function Explore() {
   const [cities, setCities]             = useState<City[]>([])
   const [loadingCities, setLoadingCities] = useState(true)
   const [isMobile, setIsMobile]         = useState(false)
+  const [ridingsTopo, setRidingsTopo]   = useState<any>(null)
 
   // Filters State
   const [rentBurdenMax, setRentBurdenMax] = useState(100)
@@ -59,26 +79,106 @@ export default function Explore() {
 
   // Tooltip & Search State
   const [hoveredCity, setHoveredCity] = useState<City | null>(null)
+  const [hoveredProvince, setHoveredProvince] = useState<{ name: string; abbr: string } | null>(null)
+  const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
   const [searchQuery, setSearchQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
+  const [isGeocoding, setIsGeocoding] = useState(false)
+  const [colorMode, setColorMode] = useState<'party' | 'burden'>('party')
+  const [profile, setProfile] = useState<'single_renter' | 'family_homeowner'>('single_renter')
 
   const cvt = (cad: number) => `CA$${cad.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
 
-  const legendTiers = [
-    { color: 'rgba(229, 57, 53, 0.75)', label: 'Liberal Party' },
-    { color: 'rgba(13, 71, 161, 0.75)', label: 'Conservative Party' },
-    { color: 'rgba(255, 152, 0, 0.75)', label: 'New Democratic Party (NDP)' },
-    { color: 'rgba(41, 182, 246, 0.75)', label: 'Bloc Québécois' },
-    { color: 'rgba(76, 175, 80, 0.75)', label: 'Green Party' },
-    { color: 'rgba(255, 255, 255, 0.75)', label: 'Independent' },
-  ]
+  const legendTiers = useMemo(() => {
+    if (colorMode === 'party') {
+      return [
+        { color: 'rgba(229, 57, 53, 0.75)', label: 'Liberal Party' },
+        { color: 'rgba(13, 71, 161, 0.75)', label: 'Conservative Party' },
+        { color: 'rgba(255, 152, 0, 0.75)', label: 'New Democratic Party (NDP)' },
+        { color: 'rgba(41, 182, 246, 0.75)', label: 'Bloc Québécois' },
+        { color: 'rgba(76, 175, 80, 0.75)', label: 'Green Party' },
+        { color: 'rgba(255, 255, 255, 0.75)', label: 'Independent' }
+      ]
+    } else {
+      return [
+        { color: 'rgba(76, 175, 80, 0.75)', label: 'Affordable (≤ 30% burden)' },
+        { color: 'rgba(139, 195, 74, 0.75)', label: 'Moderate (31% - 40%)' },
+        { color: 'rgba(255, 152, 0, 0.75)', label: 'High (41% - 50%)' },
+        { color: 'rgba(229, 57, 53, 0.75)', label: 'Severe (> 50% burden)' }
+      ]
+    }
+  }, [colorMode])
 
   const provincesList = useMemo(() => {
     const seen = new Set<string>()
     cities.forEach(c => { if (c.region) seen.add(c.region) })
     return ['All', ...Array.from(seen).sort()]
   }, [cities])
+
+  const provinceMetrics = useMemo(() => {
+    const metrics: Record<string, { pluralityParty: string; avgBurden: number | null; partyColor: string }> = {}
+    const grouped: Record<string, City[]> = {}
+    cities.forEach(c => {
+      if (c.region) {
+        if (!grouped[c.region]) grouped[c.region] = []
+        grouped[c.region].push(c)
+      }
+    })
+    
+    const partyColorFn = (party: string | null) => {
+      const p = party?.toLowerCase() || ''
+      if (p.includes('liberal')) return '#E53935'
+      if (p.includes('conservative')) return '#0D47A1'
+      if (p.includes('ndp') || p.includes('new democratic')) return '#FF9800'
+      if (p.includes('bloc') || p.includes('québécois')) return '#29B6F6'
+      if (p.includes('green')) return '#4CAF50'
+      if (p.includes('independent')) return '#FFFFFF'
+      return '#888888'
+    }
+
+    Object.entries(grouped).forEach(([region, list]) => {
+      const partyCounts: Record<string, number> = {}
+      list.forEach(c => {
+        const p = c.price_source || 'Unknown'
+        partyCounts[p] = (partyCounts[p] || 0) + 1
+      })
+      let pluralityParty = 'Unknown'
+      let maxCount = 0
+      Object.entries(partyCounts).forEach(([p, count]) => {
+        if (count > maxCount) {
+          maxCount = count
+          pluralityParty = p
+        }
+      })
+      
+      let sumBurden = 0
+      let validCount = 0
+      list.forEach(c => {
+        const isSingle = profile === 'single_renter'
+        const rent = isSingle
+          ? (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) : null)
+          : (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) * 1.65 : null)
+          
+        const salary = isSingle
+          ? (c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) : null)
+          : (c.tech_salary_cad != null ? Number(c.tech_salary_cad) : c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) * 1.5 : null)
+
+        if (rent && salary) {
+          sumBurden += Math.round((rent / salary) * 100)
+          validCount++
+        }
+      })
+      const avgBurden = validCount > 0 ? Math.round(sumBurden / validCount) : null
+
+      metrics[region] = {
+        pluralityParty,
+        avgBurden,
+        partyColor: partyColorFn(pluralityParty)
+      }
+    })
+    return metrics
+  }, [cities, profile])
 
   const filteredCities = useMemo(() => {
     return cities.filter(city => {
@@ -100,6 +200,17 @@ export default function Explore() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
+  // Real federal riding boundaries (2023 Representation Order), loaded once
+  useEffect(() => {
+    d3.json('/ridings.json').then((t: any) => setRidingsTopo(t))
+  }, [])
+
+  const ridingFeatures = useMemo(() => {
+    if (!ridingsTopo) return []
+    const objKey = Object.keys(ridingsTopo.objects)[0]
+    return (topoFeature(ridingsTopo, ridingsTopo.objects[objKey]) as any).features
+  }, [ridingsTopo])
+
   useEffect(() => {
     async function fetchCities() {
       setLoadingCities(true)
@@ -110,7 +221,7 @@ export default function Explore() {
           population, blurb, price_cad,
           price_source, price_updated_at, confidence_score,
           median_rent_1br_cad, median_monthly_salary_cad,
-          safety_index, healthcare_index, avg_internet_mbps
+          safety_index, healthcare_index, avg_internet_mbps, tech_salary_cad
         `)
         .order('city', { ascending: true })
 
@@ -166,32 +277,46 @@ export default function Explore() {
 
   // Programmatic travel transition
   const zoomToCity = (city: City) => {
-    if (!svgRef.current || !zoomRef.current || city.latitude == null || city.longitude == null) return
-    const W = 800, H = 450
-    const svg = d3.select(svgRef.current)
-    const projection = d3.geoConicConformal()
-      .center([0, 62])
-      .rotate([96, 0])
-      .parallels([49, 77])
-      .scale(W * 0.8)
-      .translate([W / 2, H / 2 + 50])
-    
-    const projected = projection([city.longitude, city.latitude])
-    if (!projected) return
-    const [x, y] = projected
-    
-    const scale = 5
-    const transform = d3.zoomIdentity
-      .translate(W / 2 - x * scale, H / 2 - y * scale)
-      .scale(scale)
-    
-    svg.transition()
-      .duration(750)
-      .call(zoomRef.current.transform, transform)
-    
+    setSelectedProvince(city.region ?? null)
     setSelectedCity(city)
     setSearchQuery('')
     setShowSuggestions(false)
+  }
+
+  const handleAddressSearch = async (query: string) => {
+    if (!query.trim()) return
+    setIsGeocoding(true)
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query.trim() + ', Canada')}&format=json&limit=1`, {
+        headers: {
+          'User-Agent': 'CanPolIndexApp/1.0'
+        }
+      })
+      const data = await res.json()
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat)
+        const lon = parseFloat(data[0].lon)
+        
+        let closest: City | null = null
+        let minDist = Infinity
+        cities.forEach(c => {
+          if (c.latitude != null && c.longitude != null) {
+            const dist = Math.hypot(c.latitude - lat, c.longitude - lon)
+            if (dist < minDist) {
+              minDist = dist
+              closest = c
+            }
+          }
+        })
+        if (closest) {
+          zoomToCity(closest)
+        }
+      }
+    } catch (e) {
+      console.error('Geocoding error:', e)
+    } finally {
+      setIsGeocoding(false)
+    }
   }
 
   const handleZoomIn = () => {
@@ -210,32 +335,36 @@ export default function Explore() {
   }
 
   useEffect(() => {
-    if (!svgRef.current || !gRef.current) return
+    if (!svgRef.current || !gRef.current || !ridingFeatures.length) return
     const W = 800, H = 450
     const svg = d3.select(svgRef.current)
     const g   = d3.select(gRef.current)
+    svg.selectAll('defs').remove()
     g.selectAll('*').remove()
 
     const projection = d3.geoConicConformal()
-      .center([0, 62])
       .rotate([96, 0])
       .parallels([49, 77])
-      .scale(W * 0.8)
-      .translate([W / 2, H / 2 + 50])
 
     const pathGen = d3.geoPath().projection(projection)
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 12])
-      .translateExtent([[0, 0], [W, H]])
+      .scaleExtent([1, 30])
+      .translateExtent([[-W, -H], [W * 2, H * 2]])
       .on('zoom', (event) => {
         g.attr('transform', event.transform)
         g.selectAll('path')
-          .attr('stroke-width', 0.8 / event.transform.k)
+          .attr('stroke-width', 0.6 / event.transform.k)
       })
 
     svg.call(zoom)
     zoomRef.current = zoom
+    // Stroke widths are set in the g's local (pre-zoom) coordinate space, so any
+    // absolute value gets multiplied by the current zoom scale on screen. Dividing
+    // by k keeps borders a constant, thin screen-space width at every zoom level —
+    // otherwise hover/selection highlights balloon into huge blobs on small, densely
+    // packed ridings once the user has zoomed in.
+    const currentK = () => d3.zoomTransform(svgRef.current!).k
 
     const defs = svg.append('defs')
 
@@ -267,6 +396,11 @@ export default function Explore() {
 
     // Load Canada GeoJSON
     d3.json('/canada.geojson').then((canada: any) => {
+      // Fit the projection so the full country (incl. southern Ontario/BC) is
+      // guaranteed to sit inside the viewBox instead of overflowing a hardcoded scale
+      const pad = 16
+      projection.fitExtent([[pad, pad], [W - pad, H - pad]], { type: 'FeatureCollection', features: canada.features } as any)
+
       // Create clip path for Canada land mass to keep boundaries on land
       const clip = defs.append('clipPath').attr('id', 'canada-clip')
       clip.selectAll('path')
@@ -275,6 +409,16 @@ export default function Explore() {
         .append('path')
         .attr('d', pathGen as any)
 
+      // If we have selectedProvince, create a clip-path for that province
+      if (selectedProvince) {
+        const provFeature = canada.features.find((f: any) => PROVINCE_TO_ABBR[f.properties.name] === selectedProvince)
+        if (provFeature) {
+          const pClip = defs.append('clipPath').attr('id', 'province-clip')
+          pClip.append('path')
+            .attr('d', pathGen(provFeature) as string)
+        }
+      }
+
       // Draw Canada Provinces
       g.append('g')
         .selectAll('path')
@@ -282,35 +426,79 @@ export default function Explore() {
         .enter()
         .append('path')
         .attr('d', pathGen as any)
-        .attr('fill', 'var(--color-surface)')
+        .attr('fill', (d: any) => {
+          const abbr = PROVINCE_TO_ABBR[d.properties.name]
+          
+          if (selectedProvince && selectedProvince !== abbr) {
+            return 'rgba(12, 13, 18, 0.65)'
+          }
+          
+          const m = provinceMetrics[abbr]
+          if (!m) return 'rgba(128, 128, 128, 0.15)'
+          if (colorMode === 'party') {
+            return m.partyColor + '44'
+          } else {
+            if (m.avgBurden === null) return 'rgba(128, 128, 128, 0.15)'
+            if (m.avgBurden <= 30) return 'rgba(76, 175, 80, 0.4)'
+            if (m.avgBurden <= 40) return 'rgba(139, 195, 74, 0.4)'
+            if (m.avgBurden <= 50) return 'rgba(255, 152, 0, 0.4)'
+            return 'rgba(229, 57, 53, 0.4)'
+          }
+        })
         .attr('stroke', 'var(--color-border)')
-        .attr('stroke-width', 0.6)
-        .attr('filter', 'url(#landShadow)')
+        .attr('stroke-width', (d: any) => {
+          const abbr = PROVINCE_TO_ABBR[d.properties.name]
+          return (selectedProvince === abbr ? 1.4 : 0.6) / currentK()
+        })
+        .style('cursor', selectedProvince ? 'default' : 'pointer')
+        .on('click', (event, d: any) => {
+          const abbr = PROVINCE_TO_ABBR[d.properties.name]
+          if (!selectedProvince) {
+            setSelectedProvince(abbr)
+            setHoveredProvince(null)
+          }
+        })
+        .on('mouseover', (event, d: any) => {
+          const abbr = PROVINCE_TO_ABBR[d.properties.name]
+          if (!selectedProvince) {
+            setHoveredProvince({ name: d.properties.name, abbr })
+            setTooltipPos({ x: event.clientX, y: event.clientY })
+            d3.select(event.currentTarget)
+              .attr('stroke', '#fff')
+              .attr('stroke-width', 1.0 / currentK())
+          }
+        })
+        .on('mousemove', (event) => {
+          if (!selectedProvince) {
+            setTooltipPos({ x: event.clientX, y: event.clientY })
+          }
+        })
+        .on('mouseleave', (event, d: any) => {
+          setHoveredProvince(null)
+          d3.select(event.currentTarget)
+            .attr('stroke', 'var(--color-border)')
+            .attr('stroke-width', 0.6 / currentK())
+        })
 
-      // Draw Regional Division Boundaries (Voronoi tessellation)
-      const validPoints: [number, number][] = []
-      const citiesWithProj: { city: City; proj: [number, number] }[] = []
-      filteredCities.forEach(city => {
-        if (city.longitude === null || city.latitude === null) return
-        const projected = projection([Number(city.longitude), Number(city.latitude)] as [number, number])
-        if (projected) {
-          validPoints.push(projected as [number, number])
-          citiesWithProj.push({ city, proj: projected as [number, number] })
-        }
-      })
+      // Draw real federal riding boundaries (2023 Representation Order)
+      const cityByName = new Map(filteredCities.map(c => [c.city, c]))
+      const ridingFeaturesWithCity = ridingFeatures
+        .map((f: any) => ({ feature: f, city: cityByName.get(f.properties.name) }))
+        .filter((d: any) => d.city)
 
-      if (validPoints.length > 0) {
-        const delaunay = d3.Delaunay.from(validPoints)
-        const voronoi = delaunay.voronoi([0, 0, W, H])
-
-        g.append('g')
-          .attr('clip-path', 'url(#canada-clip)')
-          .selectAll('path')
-          .data(citiesWithProj)
-          .enter()
-          .append('path')
-          .attr('d', (d, i) => voronoi.renderCell(i))
-          .attr('fill', d => {
+      g.append('g')
+        .attr('clip-path', selectedProvince ? 'url(#province-clip)' : 'url(#canada-clip)')
+        .selectAll('path')
+        .data(ridingFeaturesWithCity)
+        .enter()
+        .append('path')
+        .attr('d', (d: any) => pathGen(d.feature))
+        .attr('display', (d: any) => {
+          if (!selectedProvince) return 'none'
+          return d.city.region === selectedProvince ? 'block' : 'none'
+        })
+        .attr('fill', (d: any) => {
+          if (colorMode === 'party') {
             const party = d.city.price_source?.toLowerCase() || ''
             if (party.includes('liberal')) return 'rgba(229, 57, 53, 0.35)'
             if (party.includes('conservative')) return 'rgba(13, 71, 161, 0.35)'
@@ -319,45 +507,91 @@ export default function Explore() {
             if (party.includes('green')) return 'rgba(76, 175, 80, 0.35)'
             if (party.includes('independent')) return 'rgba(255, 255, 255, 0.35)'
             return 'rgba(128, 128, 128, 0.2)'
-          })
-          .attr('stroke', 'var(--color-border)')
-          .attr('stroke-width', 0.8)
-          .style('cursor', 'pointer')
-          .attr('pointer-events', 'all')
-          .on('click', (event, d) => {
-            zoomToCity(d.city)
-          })
-          .on('mouseover', (event, d) => {
-            setHoveredCity(d.city)
-            setTooltipPos({ x: event.clientX, y: event.clientY })
-            d3.select(event.currentTarget)
-              .attr('stroke', '#fff')
-              .attr('stroke-width', 1.6)
-              .raise()
-          })
-          .on('mousemove', (event) => {
-            setTooltipPos({ x: event.clientX, y: event.clientY })
-          })
-          .on('mouseleave', (event) => {
-            setHoveredCity(null)
-            d3.select(event.currentTarget)
-              .attr('stroke', 'var(--color-border)')
-              .attr('stroke-width', 0.8)
-          })
-      }
+          } else {
+            const burden = rentBurden(d.city)
+            if (burden === null) return 'rgba(128, 128, 128, 0.2)'
+            if (burden <= 30) return 'rgba(76, 175, 80, 0.4)'
+            if (burden <= 40) return 'rgba(139, 195, 74, 0.4)'
+            if (burden <= 50) return 'rgba(255, 152, 0, 0.4)'
+            return 'rgba(229, 57, 53, 0.4)'
+          }
+        })
+        .attr('stroke', 'rgba(255, 255, 255, 0.45)')
+        .attr('stroke-width', () => 0.6 / currentK())
+        .style('cursor', 'pointer')
+        .attr('pointer-events', 'all')
+        .on('click', (event, d: any) => {
+          zoomToCity(d.city)
+        })
+        .on('mouseover', (event, d: any) => {
+          setHoveredCity(d.city)
+          setTooltipPos({ x: event.clientX, y: event.clientY })
+          d3.select(event.currentTarget)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 1.3 / currentK())
+            .raise()
+        })
+        .on('mousemove', (event) => {
+          setTooltipPos({ x: event.clientX, y: event.clientY })
+        })
+        .on('mouseleave', (event) => {
+          setHoveredCity(null)
+          d3.select(event.currentTarget)
+            .attr('stroke', 'rgba(255, 255, 255, 0.45)')
+            .attr('stroke-width', 0.6 / currentK())
+        })
 
-      // Retain scale transformations during filter state redraws
-      const transform = d3.zoomTransform(svgRef.current!)
-      if (transform.k > 1) {
-        g.selectAll<SVGPathElement, unknown>('path')
-          .attr('stroke-width', 0.8 / transform.k)
+      // Declarative zoom transitions based on selectedProvince and selectedCity
+      if (selectedCity && selectedCity.latitude != null && selectedCity.longitude != null) {
+        const projected = projection([Number(selectedCity.longitude), Number(selectedCity.latitude)])
+        if (projected) {
+          const [x, y] = projected
+          const scale = 5.5
+          const targetTransform = d3.zoomIdentity
+            .translate(W / 2 - x * scale, H / 2 - y * scale)
+            .scale(scale)
+          
+          svg.transition()
+            .duration(750)
+            .call(zoom.transform, targetTransform)
+        }
+      } else if (selectedProvince) {
+        const provFeature = canada.features.find((f: any) => PROVINCE_TO_ABBR[f.properties.name] === selectedProvince)
+        if (provFeature) {
+          const [[x0, y0], [x1, y1]] = pathGen.bounds(provFeature)
+          const dx = x1 - x0
+          const dy = y1 - y0
+          const x = (x0 + x1) / 2
+          const y = (y0 + y1) / 2
+          const scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / W, dy / H)))
+          const targetTransform = d3.zoomIdentity
+            .translate(W / 2 - x * scale, H / 2 - y * scale)
+            .scale(scale)
+          
+          svg.transition()
+            .duration(750)
+            .call(zoom.transform, targetTransform)
+        }
+      } else {
+        svg.transition()
+          .duration(750)
+          .call(zoom.transform, d3.zoomIdentity)
       }
     })
-  }, [expanded, cities, isMobile, filteredCities, selectedCity])
+  }, [expanded, cities, isMobile, filteredCities, selectedCity, colorMode, profile, selectedProvince, provinceMetrics, ridingFeatures])
 
   const rentBurden = (city: City) => {
-    if (!city.median_monthly_salary_cad || !city.median_rent_1br_cad) return null
-    return Math.round((city.median_rent_1br_cad / city.median_monthly_salary_cad) * 100)
+    const isSingle = profile === 'single_renter'
+    const rent = isSingle
+      ? (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) : null)
+      : (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) * 1.65 : null)
+      
+    const salary = isSingle
+      ? (city.median_monthly_salary_cad != null ? Number(city.median_monthly_salary_cad) : null)
+      : (city.tech_salary_cad != null ? Number(city.tech_salary_cad) : city.median_monthly_salary_cad != null ? Number(city.median_monthly_salary_cad) * 1.5 : null)
+
+    if (!rent || !salary) return null
+    return Math.round((rent / salary) * 100)
   }
 
   return (
@@ -408,6 +642,50 @@ export default function Explore() {
         </div>
       )}
 
+      {/* Floating Hover Province Tooltip */}
+      {hoveredProvince && (
+        <div style={{
+          position: 'fixed',
+          left: tooltipPos.x + 15,
+          top: tooltipPos.y - 15,
+          zIndex: 1000,
+          pointerEvents: 'none',
+          background: 'var(--color-surface)',
+          backdropFilter: 'blur(12px)',
+          border: '1.5px solid var(--color-border)',
+          borderRadius: 12,
+          padding: '10px 14px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+          color: 'var(--color-text-1)',
+          minWidth: 200,
+          transform: 'translate3d(0,0,0)',
+          animation: 'fadeIn 0.15s ease-out'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+            <span style={{ fontSize: 16 }}>🍁</span>
+            <span style={{ fontSize: 13, fontWeight: 600 }}>{hoveredProvince.name}</span>
+          </div>
+          <div style={{ fontSize: 11, color: 'var(--color-text-3)', marginBottom: 2 }}>
+            Province-level Averages
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8, borderTop: '0.5px solid var(--color-border)', paddingTop: 6 }}>
+            <span style={{ fontSize: 11, color: 'var(--color-text-2)' }}>Plurality Party:</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-accent)' }}>
+              {provinceMetrics[hoveredProvince.abbr]?.pluralityParty ?? 'Unknown'}
+            </span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+            <span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>Avg Rent Burden:</span>
+            <span style={{ fontSize: 10, fontWeight: 500, color: 'var(--color-green)' }}>
+              {provinceMetrics[hoveredProvince.abbr]?.avgBurden ? `${provinceMetrics[hoveredProvince.abbr].avgBurden}%` : 'N/A'}
+            </span>
+          </div>
+          <div style={{ fontSize: 9.5, color: 'var(--color-accent)', marginTop: 8, fontStyle: 'italic', borderTop: '0.5px solid var(--color-border)', paddingTop: 4 }}>
+            Click to explore federal ridings
+          </div>
+        </div>
+      )}
+
       {/* Sliding Glass Drawer */}
       <div style={{
         position: 'fixed', top: 0, right: 0,
@@ -428,6 +706,17 @@ export default function Explore() {
           const burden = rentBurden(selectedCity)
           const provName = selectedCity.region ? PROVINCE_NAMES[selectedCity.region] || selectedCity.region : ''
           const disposableVal = selectedCity.median_monthly_salary_cad != null && selectedCity.median_rent_1br_cad != null ? selectedCity.median_monthly_salary_cad - selectedCity.median_rent_1br_cad : null
+          
+          let displayPopulation = selectedCity.population ? Number(selectedCity.population) : null
+          let displayVoters: number | null = null
+          try {
+            if (selectedCity.population && selectedCity.population.startsWith('{')) {
+              const parsed = JSON.parse(selectedCity.population)
+              displayPopulation = Number(parsed.population)
+              displayVoters = Number(parsed.registered_voters)
+            }
+          } catch (e) {}
+
           return (
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
@@ -438,7 +727,8 @@ export default function Explore() {
                   </h2>
                   <p style={{ fontSize: 13, color: 'var(--color-text-3)', margin: '4px 0 0' }}>
                     {provName} · Canada
-                    {selectedCity.population ? ` · Pop. ${Number(selectedCity.population).toLocaleString()}` : ''}
+                    {displayPopulation ? ` · Pop. ${displayPopulation.toLocaleString()}` : ''}
+                    {displayVoters ? ` (Voters: ${displayVoters.toLocaleString()})` : ''}
                   </p>
                 </div>
                 <button
@@ -550,9 +840,40 @@ export default function Explore() {
           </div>
         )}
 
-        <svg ref={svgRef} viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" style={{ display: 'block', width: '100%', height: '100%', outline: 'none' }}>
+        <svg ref={svgRef} viewBox="0 0 800 450" preserveAspectRatio="xMidYMid meet" style={{ display: 'block', width: '100%', height: '100%', outline: 'none' }}>
           <g ref={gRef} />
         </svg>
+
+        {selectedProvince && (
+          <button
+            onClick={() => {
+              setSelectedProvince(null)
+              resetZoom()
+            }}
+            style={{
+              position: 'absolute',
+              top: 20,
+              left: isMobile ? 20 : 380,
+              marginTop: isMobile ? 60 : 0,
+              zIndex: 25,
+              background: 'var(--color-surface)',
+              border: '0.5px solid var(--color-border)',
+              borderRadius: 8,
+              padding: '8px 12px',
+              color: 'var(--color-text-1)',
+              fontFamily: 'var(--font-body)',
+              fontSize: 12,
+              fontWeight: 500,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
+            }}
+          >
+            🍁 Back to Canada Map
+          </button>
+        )}
 
         {/* Floating Search Controls */}
         <div style={{
@@ -571,26 +892,31 @@ export default function Explore() {
               <Search size={16} style={{ color: 'var(--color-text-3)' }} />
               <input
                 type="text"
-                placeholder="Search Canadian community..."
+                placeholder={isGeocoding ? "Geocoding address..." : "Search community or postal code..."}
                 value={searchQuery}
                 onChange={e => {
                   setSearchQuery(e.target.value)
                   setShowSuggestions(true)
                 }}
                 onFocus={() => setShowSuggestions(true)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    handleAddressSearch(searchQuery)
+                  }
+                }}
                 style={{
                   background: 'none', border: 'none', color: 'var(--color-text-1)',
                   fontSize: 13.5, width: '100%', outline: 'none', fontFamily: 'var(--font-body)'
                 }}
               />
             </div>
-            {showSuggestions && suggestions.length > 0 && (
+            {showSuggestions && (suggestions.length > 0 || searchQuery.trim() !== '') && (
               <div style={{
                 position: 'absolute', top: '100%', left: 0, right: 0,
                 marginTop: 6, background: 'var(--color-surface)',
                 backdropFilter: 'blur(20px)', border: '0.5px solid var(--color-border)',
                 borderRadius: 10, boxShadow: '0 12px 40px rgba(0,0,0,0.1)',
-                maxHeight: 240, overflowY: 'auto', zIndex: 30
+                maxHeight: 280, overflowY: 'auto', zIndex: 30
               }}>
                 {suggestions.map(c => (
                   <button
@@ -612,6 +938,22 @@ export default function Explore() {
                     </div>
                   </button>
                 ))}
+                {searchQuery.trim() !== '' && (
+                  <button
+                    onClick={() => handleAddressSearch(searchQuery)}
+                    disabled={isGeocoding}
+                    style={{
+                      width: '100%', display: 'flex', alignItems: 'center', gap: 10,
+                      padding: '12px 14px', background: 'var(--color-surface-2)', border: 'none',
+                      textAlign: 'left', cursor: 'pointer', borderTop: '0.5px solid var(--color-border)',
+                      transition: 'background 0.2s', color: 'var(--color-accent)'
+                    }}
+                  >
+                    <span style={{ fontSize: 12.5, fontWeight: 500, fontFamily: 'var(--font-body)' }}>
+                      {isGeocoding ? '🔍 Geocoding address...' : `🔎 Search address/postal code: "${searchQuery}"`}
+                    </span>
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -650,6 +992,68 @@ export default function Explore() {
                     : 'N/A'
                   }
                 </p>
+              </div>
+            </div>
+
+            {/* Coloring Mode */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, borderTop: '0.5px solid var(--color-border)', paddingTop: 10 }}>
+              <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase', fontWeight: 600 }}>Map View Mode</span>
+              <div style={{ display: 'flex', background: 'var(--color-surface-2)', padding: 2, borderRadius: 8, border: '0.5px solid var(--color-border)' }}>
+                <button
+                  onClick={() => setColorMode('party')}
+                  style={{
+                    flex: 1, border: 'none', background: colorMode === 'party' ? 'var(--color-surface)' : 'none',
+                    color: colorMode === 'party' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                    padding: '5px 8px', borderRadius: 6, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                    boxShadow: colorMode === 'party' ? '0 1px 4px rgba(0,0,0,0.05)' : 'none',
+                    transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                  }}
+                >
+                  Political Party
+                </button>
+                <button
+                  onClick={() => setColorMode('burden')}
+                  style={{
+                    flex: 1, border: 'none', background: colorMode === 'burden' ? 'var(--color-surface)' : 'none',
+                    color: colorMode === 'burden' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                    padding: '5px 8px', borderRadius: 6, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                    boxShadow: colorMode === 'burden' ? '0 1px 4px rgba(0,0,0,0.05)' : 'none',
+                    transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                  }}
+                >
+                  Housing Burden
+                </button>
+              </div>
+            </div>
+
+            {/* Living Profile Switcher */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase', fontWeight: 600 }}>Living Profile</span>
+              <div style={{ display: 'flex', background: 'var(--color-surface-2)', padding: 2, borderRadius: 8, border: '0.5px solid var(--color-border)' }}>
+                <button
+                  onClick={() => setProfile('single_renter')}
+                  style={{
+                    flex: 1, border: 'none', background: profile === 'single_renter' ? 'var(--color-surface)' : 'none',
+                    color: profile === 'single_renter' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                    padding: '5px 8px', borderRadius: 6, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                    boxShadow: profile === 'single_renter' ? '0 1px 4px rgba(0,0,0,0.05)' : 'none',
+                    transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                  }}
+                >
+                  Single Renter
+                </button>
+                <button
+                  onClick={() => setProfile('family_homeowner')}
+                  style={{
+                    flex: 1, border: 'none', background: profile === 'family_homeowner' ? 'var(--color-surface)' : 'none',
+                    color: profile === 'family_homeowner' ? 'var(--color-text-1)' : 'var(--color-text-3)',
+                    padding: '5px 8px', borderRadius: 6, fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                    boxShadow: profile === 'family_homeowner' ? '0 1px 4px rgba(0,0,0,0.05)' : 'none',
+                    transition: 'all 0.2s', fontFamily: 'var(--font-body)'
+                  }}
+                >
+                  Family Homeowner
+                </button>
               </div>
             </div>
 
