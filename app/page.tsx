@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, useMemo, type CSSProperties } from 'react'
 import NavBar from './components/NavBar'
 import { supabase } from '@/lib/supabase'
 import * as d3 from 'd3'
-import { feature as topoFeature } from 'topojson-client'
 
 /* ═══════════════════════════════════════════════════════════════════
    Types & helpers
@@ -106,10 +105,8 @@ export default function Home() {
   const [tip, setTip]         = useState<Tip | null>(null)
   const [sel, setSel]         = useState<CityRow | null>(null)
   const [boardIn, setBoardIn] = useState(false)
-  const [mapLoading, setMapLoading] = useState(true)
   const [profile, setProfile] = useState<'single_renter' | 'family_homeowner'>('single_renter')
 
-  const mapRef   = useRef<SVGSVGElement>(null)
   const specRef  = useRef<SVGSVGElement>(null)
   const scatRef  = useRef<SVGSVGElement>(null)
   const boardRef = useRef<HTMLDivElement>(null)
@@ -147,129 +144,6 @@ export default function Home() {
     })
   }, [cities, profile])
 
-  /* ── Canada map ────────────────────────────────────────────────── */
-  useEffect(() => {
-    const svgEl = mapRef.current
-    if (!svgEl || !parsedCities.length) return
-    setMapLoading(true)
-
-    Promise.all([
-      d3.json('/canada.geojson') as Promise<any>,
-      d3.json('/ridings.json') as Promise<any>,
-    ]).then(([geojson, ridingsTopo]) => {
-      setMapLoading(false)
-      svgEl.innerHTML = ''
-
-      const W = svgEl.clientWidth || 1000
-      const H = 450
-      svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`)
-
-      const svg = d3.select(svgEl)
-      const g = svg.append('g')
-
-      // Fit the projection so the full country (incl. southern Ontario/BC) is
-      // guaranteed to sit inside the viewBox instead of overflowing a hardcoded scale
-      const pad = 16
-      const projection = d3.geoConicConformal()
-        .rotate([96, 0])
-        .parallels([49, 77])
-        .fitExtent([[pad, pad], [W - pad, H - pad]], { type: 'FeatureCollection', features: geojson.features } as any)
-
-      const pathGen = d3.geoPath().projection(projection)
-
-      const defs = svg.append('defs')
-      const shadowFilter = defs.append('filter')
-        .attr('id', 'landShadow')
-        .attr('x', '-10%').attr('y', '-10%')
-        .attr('width', '120%').attr('height', '120%')
-
-      shadowFilter.append('feDropShadow')
-        .attr('dx', '0')
-        .attr('dy', '3')
-        .attr('stdDeviation', '3')
-        .attr('flood-color', '#000000')
-        .attr('flood-opacity', '0.65')
-
-      const clip = defs.append('clipPath').attr('id', 'canada-clip')
-      clip.selectAll('path')
-        .data(geojson.features)
-        .enter()
-        .append('path')
-        .attr('d', pathGen as any)
-
-      // Draw Canada Outline
-      g.append('g')
-        .selectAll('path')
-        .data(geojson.features)
-        .enter()
-        .append('path')
-        .attr('d', pathGen as any)
-        .attr('fill', 'var(--color-surface)')
-        .attr('stroke', 'var(--color-border)')
-        .attr('stroke-width', 0.6)
-        .attr('filter', 'url(#landShadow)')
-
-      // Draw real federal riding boundaries (2023 Representation Order)
-      const cityByName = new Map(parsedCities.map(c => [c.city, c]))
-      const objKey = Object.keys(ridingsTopo.objects)[0]
-      const ridingFeatures = (topoFeature(ridingsTopo, ridingsTopo.objects[objKey]) as any).features
-
-      g.append('g')
-        .attr('clip-path', 'url(#canada-clip)')
-        .selectAll('path')
-        .data(ridingFeatures)
-        .enter()
-        .append('path')
-        .attr('d', pathGen as any)
-        .attr('fill', (d: any) => {
-          const city = cityByName.get(d.properties.name)
-          const party = city?.price_source?.toLowerCase() || ''
-          if (party.includes('liberal')) return 'rgba(229, 57, 53, 0.35)'
-          if (party.includes('conservative')) return 'rgba(13, 71, 161, 0.35)'
-          if (party.includes('ndp')) return 'rgba(255, 152, 0, 0.35)'
-          if (party.includes('bloc')) return 'rgba(41, 182, 246, 0.35)'
-          if (party.includes('green')) return 'rgba(76, 175, 80, 0.35)'
-          if (party.includes('independent')) return 'rgba(255, 255, 255, 0.35)'
-          return 'rgba(128, 128, 128, 0.2)'
-        })
-        .attr('stroke', 'rgba(255, 255, 255, 0.45)')
-        .attr('stroke-width', 0.9)
-        .style('cursor', 'pointer')
-        .attr('pointer-events', 'all')
-        .on('click', (event, d: any) => {
-          const city = cityByName.get(d.properties.name)
-          if (city) setSel(city)
-        })
-        .on('mouseover', (event) => {
-          d3.select(event.currentTarget)
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 1.6)
-            .raise()
-        })
-        .on('mousemove', (event, d: any) => {
-          const city = cityByName.get(d.properties.name)
-          if (!city) return
-          setTip({
-            city: city.city,
-            province: city.region ?? '',
-            price: city.price_cad,
-            burden: city.rentBurden ?? null,
-            plates: city.bowlsAfterRent ?? null,
-            x: event.clientX,
-            y: event.clientY
-          })
-        })
-        .on('mouseleave', (event) => {
-          d3.select(event.currentTarget)
-            .attr('stroke', 'rgba(255, 255, 255, 0.45)')
-            .attr('stroke-width', 0.9)
-          setTip(null)
-        })
-    })
-  }, [parsedCities])
-
-
-
   /* ── Scatter plot ──────────────────────────────────────────────── */
   useEffect(() => {
     const svg = scatRef.current
@@ -285,9 +159,9 @@ export default function Home() {
       
       const bVals = data.map(c => c.rentBurden), yVals = data.map(c => c.bowlsAfterRent)
       const bmin = Math.min(...bVals), bmax = Math.max(...bVals)
-      const ymax = Math.max(...yVals)
+      const ymin = Math.min(0, ...yVals), ymax = Math.max(...yVals)
       const xS = (v: number) => m.l + (v - bmin) / (bmax - bmin) * (W - m.l - m.r)
-      const yS = (v: number) => H - m.b - (Math.min(v, ymax) / ymax) * (H - m.t - m.b)
+      const yS = (v: number) => H - m.b - (v - ymin) / (ymax - ymin) * (H - m.t - m.b)
 
       // X grid
       const step = 5
@@ -304,7 +178,7 @@ export default function Home() {
 
       // Y grid
       const yStep = 1000
-      for (let v = 0; v <= ymax; v += yStep) {
+      for (let v = Math.ceil(ymin / yStep) * yStep; v <= ymax; v += yStep) {
         svg.appendChild(d3.create('svg:line')
           .attr('x1', m.l).attr('x2', W - m.r).attr('y1', yS(v)).attr('y2', yS(v))
           .attr('stroke', 'var(--color-border)').attr('stroke-dasharray', '1 4').node()!)
@@ -498,24 +372,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Dynamic Canada Map */}
-        <div style={{ marginTop: 80 }}>
-          <div style={{ ...WRAP, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 18, flexWrap: 'wrap', gap: 10 }}>
-            <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>The Canadian Ridings Index Map — {parsedCities.length} Ridings</span>
-            <span style={LABEL}>Hover a riding cell to inspect index details</span>
-          </div>
-          <div style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', background: 'radial-gradient(circle at 50% 50%, var(--color-surface), var(--color-bg))' }}>
-            <div style={{ ...WRAP, paddingTop: 20, paddingBottom: 20 }}>
-              {mapLoading && (
-                <div style={{ height: 450, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-3)', ...MONO, fontSize: 12 }}>
-                  LOADING CANADA ATLAS...
-                </div>
-              )}
-              <svg ref={mapRef} style={{ display: mapLoading ? 'none' : 'block', width: '100%', height: 'auto' }} />
-            </div>
-          </div>
-        </div>
-
         {/* Stats Grid */}
         <div style={{ ...WRAP, borderBottom: '1px solid var(--color-border)' }}>
           <div className="stats-grid">
@@ -595,7 +451,7 @@ export default function Home() {
                 <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-green)' }}>CA$4,300</span>
               </div>
               <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Median Monthly Income</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The median monthly individual earnings in the riding (Statistics Canada). Reflects local economic opportunity.</p>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>The real median monthly individual income in the riding, from Statistics Canada's 2021 Census Profile.</p>
             </div>
 
             {/* Metric 2 */}
@@ -660,7 +516,7 @@ export default function Home() {
                   <span style={{ fontSize: 14.5, fontWeight: 500 }}>
                     {c.city}, {c.region}
                     <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
-                      {c.bowlsAfterRent != null ? `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent` : ''}
+                      {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
                     </small>
                   </span>
                   <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -683,7 +539,7 @@ export default function Home() {
                   <span style={{ fontSize: 14.5, fontWeight: 500 }}>
                     {c.city}, {c.region}
                     <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
-                      {c.bowlsAfterRent != null ? `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent` : ''}
+                      {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
                     </small>
                   </span>
                   <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -733,7 +589,7 @@ export default function Home() {
                 Boring on purpose. <strong style={{ fontWeight: 500, color: 'var(--color-accent)' }}>Rigorous by design.</strong>
               </h2>
               <p style={{ color: 'var(--color-text-2)', maxWidth: '46ch', fontWeight: 300, fontSize: 14.5, lineHeight: 1.6 }}>
-                Novel indexes live and die on their structural integrity. We utilize CMHC housing databases, Statistics Canada census tables, and regional socio-economic reports.
+                Novel indexes live and die on their structural integrity. Boundaries, income, rent, and party come from Statistics Canada, CMHC, and Elections Canada, not estimates.
               </p>
               <div style={{ display: 'flex', gap: 16, marginTop: 30 }}>
                 <a href="/methodology" style={BTN_GHOST}>Read full methodology</a>
@@ -742,10 +598,10 @@ export default function Home() {
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {[
-                { n: '01', title: 'Census Metropolitan Data', body: 'Aggregated from Statistics Canada census tracts to match federal electoral boundaries.' },
-                { n: '02', title: 'Local Housing Rent Costs', body: 'Sourced from the Canada Mortgage and Housing Corporation (CMHC) annual market reports.' },
-                { n: '03', title: 'Wages and Marginal Tax Rates', body: 'Individual median employment income and provincial combined tax rates from recent fiscal schedules.' },
-                { n: '04', title: 'Independent Data Validation', body: 'All indicators are validated against provincial databases and normalized for inflation.' }
+                { n: '01', title: 'Federal Riding Census Data', body: 'Median income tabulated directly at the 343-riding geography by Statistics Canada\'s Census Profile, no estimation required.' },
+                { n: '02', title: 'Local Housing Rent Costs', body: 'CMHC 2025 Rental Market Survey average rent, applied by each riding\'s nearest surveyed metro area.' },
+                { n: '03', title: '2025 Election Results', body: 'Represented party, elected candidate, population, and registered electors from Elections Canada\'s official 45th general election results.' },
+                { n: '04', title: 'Boundary Validation', body: 'All 343 riding polygons were checked against Elections Canada\'s official bounding boxes, matching to within a fraction of a degree.' }
               ].map((step, i) => (
                 <div key={step.title} style={{ display: 'flex', gap: 20, padding: '20px 0', borderBottom: i < 3 ? '1px solid var(--color-border)' : 'none', paddingTop: i === 0 ? 0 : 20 }}>
                   <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)', paddingTop: 2 }}>{String(i + 1).padStart(2, '0')}</span>
@@ -862,18 +718,24 @@ export default function Home() {
                 )}
 
                 {/* Disposable income */}
-                {sel.bowlsAfterRent != null && (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                      <span style={LABEL}>Disposable Income Left</span>
-                      <span style={{ ...MONO, fontSize: 14, color: 'var(--color-green)' }}>CA${sel.bowlsAfterRent.toLocaleString()}</span>
+                {sel.bowlsAfterRent != null && (() => {
+                  const isDeficit = sel.bowlsAfterRent < 0
+                  const dispColor = isDeficit ? 'var(--color-accent)' : 'var(--color-green)'
+                  return (
+                    <div style={{ marginBottom: 24 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                        <span style={LABEL}>{isDeficit ? 'Housing Cost Exceeds Income' : 'Disposable Income Left'}</span>
+                        <span style={{ ...MONO, fontSize: 14, color: dispColor }}>{isDeficit ? '-' : ''}CA${Math.abs(sel.bowlsAfterRent).toLocaleString()}</span>
+                      </div>
+                      <div style={{ height: 6, borderRadius: 5, background: 'var(--color-bg)', marginTop: 10, overflow: 'hidden' }}>
+                        <div style={{ height: '100%', width: `${Math.min(100, (Math.abs(sel.bowlsAfterRent) / 5000) * 100)}%`, background: dispColor, borderRadius: 5 }} />
+                      </div>
+                      <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>
+                        {isDeficit ? 'Median income does not cover this profile\'s housing cost' : 'Income remaining after average 1BR housing costs'}
+                      </p>
                     </div>
-                    <div style={{ height: 6, borderRadius: 5, background: 'var(--color-bg)', marginTop: 10, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${Math.min(100, (sel.bowlsAfterRent / 5000) * 100)}%`, background: 'var(--color-green)', borderRadius: 5 }} />
-                    </div>
-                    <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>Income remaining after average 1BR housing costs</p>
-                  </div>
-                )}
+                  )
+                })()}
 
                 {sel.blurb && <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: '20px 0' }}>{sel.blurb}</p>}
 
@@ -905,7 +767,8 @@ export default function Home() {
           )}
           {tip.plates != null && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, color: 'var(--color-text-3)' }}>
-              <span>Disposable CAD:</span><b style={{ color: 'var(--color-green)', fontWeight: 600 }}>${tip.plates.toLocaleString()}</b>
+              <span>{tip.plates < 0 ? 'Shortfall CAD:' : 'Disposable CAD:'}</span>
+              <b style={{ color: tip.plates < 0 ? 'var(--color-accent)' : 'var(--color-green)', fontWeight: 600 }}>${Math.abs(tip.plates).toLocaleString()}</b>
             </div>
           )}
         </div>

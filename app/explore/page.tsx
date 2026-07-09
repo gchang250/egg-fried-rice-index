@@ -361,7 +361,7 @@ export default function Explore() {
     zoomRef.current = zoom
     // Stroke widths are set in the g's local (pre-zoom) coordinate space, so any
     // absolute value gets multiplied by the current zoom scale on screen. Dividing
-    // by k keeps borders a constant, thin screen-space width at every zoom level —
+    // by k keeps borders a constant, thin screen-space width at every zoom level,
     // otherwise hover/selection highlights balloon into huge blobs on small, densely
     // packed ridings once the user has zoomed in.
     const currentK = () => d3.zoomTransform(svgRef.current!).k
@@ -373,8 +373,8 @@ export default function Explore() {
       .attr('x1', '0%').attr('y1', '0%')
       .attr('x2', '100%').attr('y2', '100%')
 
-    oceanGlow.append('stop').attr('offset', '0%').attr('stop-color', '#0c0d12')
-    oceanGlow.append('stop').attr('offset', '100%').attr('stop-color', '#060709')
+    oceanGlow.append('stop').attr('offset', '0%').attr('stop-color', '#fffaf2')
+    oceanGlow.append('stop').attr('offset', '100%').attr('stop-color', '#f0e0c5')
 
     const shadowFilter = defs.append('filter')
       .attr('id', 'landShadow')
@@ -385,8 +385,8 @@ export default function Explore() {
       .attr('dx', '0')
       .attr('dy', '3')
       .attr('stdDeviation', '3')
-      .attr('flood-color', '#000000')
-      .attr('flood-opacity', '0.65')
+      .attr('flood-color', '#2e1c10')
+      .attr('flood-opacity', '0.25')
 
     // Ocean rect
     g.append('rect')
@@ -430,7 +430,7 @@ export default function Explore() {
           const abbr = PROVINCE_TO_ABBR[d.properties.name]
           
           if (selectedProvince && selectedProvince !== abbr) {
-            return 'rgba(12, 13, 18, 0.65)'
+            return 'rgba(226, 211, 184, 0.75)'
           }
           
           const m = provinceMetrics[abbr]
@@ -464,7 +464,7 @@ export default function Explore() {
             setHoveredProvince({ name: d.properties.name, abbr })
             setTooltipPos({ x: event.clientX, y: event.clientY })
             d3.select(event.currentTarget)
-              .attr('stroke', '#fff')
+              .attr('stroke', 'var(--color-text-1)')
               .attr('stroke-width', 1.0 / currentK())
           }
         })
@@ -516,7 +516,7 @@ export default function Explore() {
             return 'rgba(229, 57, 53, 0.4)'
           }
         })
-        .attr('stroke', 'rgba(255, 255, 255, 0.45)')
+        .attr('stroke', 'rgba(46, 28, 16, 0.35)')
         .attr('stroke-width', () => 0.6 / currentK())
         .style('cursor', 'pointer')
         .attr('pointer-events', 'all')
@@ -527,7 +527,7 @@ export default function Explore() {
           setHoveredCity(d.city)
           setTooltipPos({ x: event.clientX, y: event.clientY })
           d3.select(event.currentTarget)
-            .attr('stroke', '#fff')
+            .attr('stroke', 'var(--color-text-1)')
             .attr('stroke-width', 1.3 / currentK())
             .raise()
         })
@@ -537,7 +537,7 @@ export default function Explore() {
         .on('mouseleave', (event) => {
           setHoveredCity(null)
           d3.select(event.currentTarget)
-            .attr('stroke', 'rgba(255, 255, 255, 0.45)')
+            .attr('stroke', 'rgba(46, 28, 16, 0.35)')
             .attr('stroke-width', 0.6 / currentK())
         })
 

@@ -27,12 +27,32 @@ const supabase = createClient(
 
 const NOW = new Date().toISOString()
 
-// Official 343 federal ridings under the 2023 Representation Order —
-// real names, provinces, and centroids sourced from Elections Canada
-// boundary data (via the Represent API), matching public/ridings.json.
-type RidingMeta = { fed_num: string; name: string; province: string; latitude: number; longitude: number }
-const RIDINGS: RidingMeta[] = JSON.parse(
-  fs.readFileSync(path.resolve(process.cwd(), 'scripts/data/ridings-meta.json'), 'utf-8')
+// Real data for all 343 federal ridings under the 2023 Representation Order:
+//  - fed_num, name, province, latitude, longitude: Elections Canada boundary
+//    data via the Represent API (OpenNorth), matches public/ridings.json.
+//  - median_total_income_annual, median_employment_income_annual: Statistics
+//    Canada Census Profile, 2021, Federal electoral district (2023
+//    Representation Order), catalogue 98-401-X2021029, reference year 2020.
+//  - party_2025, elected_candidate: Elections Canada, official voting
+//    results, 45th general election (April 28, 2025), Table 11.
+//  - population_2025, registered_electors_2025: same Elections Canada table.
+//  - safety (in ZONES below): Statistics Canada Crime Severity Index, 2024
+//    (table 35-10-0026-01), by nearest surveyed CMA.
+type RidingReal = {
+  fed_num: string
+  name: string
+  province: string
+  latitude: number
+  longitude: number
+  median_total_income_annual: number
+  median_employment_income_annual: number
+  party_2025: string
+  elected_candidate: string
+  population_2025: number
+  registered_electors_2025: number
+}
+const RIDINGS: RidingReal[] = JSON.parse(
+  fs.readFileSync(path.resolve(process.cwd(), 'scripts/data/ridings-real-data.json'), 'utf-8')
 )
 
 function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -44,8 +64,9 @@ function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): nu
   return 2 * R * Math.asin(Math.sqrt(a))
 }
 
-// Deterministic pseudo-random in [0,1) from a string, so party/variance
-// assignment is stable across re-seeds without depending on array order.
+// Deterministic pseudo-random in [0,1) from a string, used only for the
+// remaining fields with no real per-riding public data source (safety,
+// healthcare wait, internet speed). See methodology page.
 function hashUnit(seed: string): number {
   let h = 2166136261
   for (let i = 0; i < seed.length; i++) {
@@ -55,53 +76,52 @@ function hashUnit(seed: string): number {
   return ((h >>> 0) % 100000) / 100000
 }
 
-type Zone = {
-  name: string
-  anchor?: [number, number] // [lat, lon]
-  maxRadiusKm?: number
-  rent: number
-  salary: number
-  tech: number
-  french: number
-  tax: string
-  wait: string
-}
+// Rent: CMHC 2025 Rental Market Survey average 1BR rent (StatCan table 34-10-0133-01).
+// Safety: Statistics Canada Crime Severity Index, 2024 (table 35-10-0026-01),
+// rescaled to a 0-100 "higher is safer" score (raw = 100 - CSI/2, clamped 5-95)
+// so it's comparable to the site's existing safety display.
+// Both are real survey/administrative data, assigned by nearest surveyed metro
+// since neither StatCan nor CMHC publish at the riding level.
+type Zone = { name: string; anchor?: [number, number]; maxRadiusKm?: number; rent: number; safety: number }
 
-const PROVINCE_ZONES: Record<string, Zone[]> = {
+const ZONES: Record<string, Zone[]> = {
   ON: [
-    { name: 'GTA', anchor: [43.6532, -79.3832], maxRadiusKm: 70, rent: 2400, salary: 4800, tech: 7500, french: 2.8, tax: 'Medium', wait: 'Moderate' },
-    { name: 'Ottawa', anchor: [45.4215, -75.6972], maxRadiusKm: 60, rent: 1950, salary: 5200, tech: 8000, french: 32.4, tax: 'Medium', wait: 'Moderate' },
-    { name: 'Southwest', anchor: [43.2557, -79.8711], maxRadiusKm: 350, rent: 1750, salary: 4300, tech: 6600, french: 2.8, tax: 'Medium', wait: 'Moderate' },
-    { name: 'Northern', rent: 1350, salary: 4100, tech: 6200, french: 2.8, tax: 'Medium', wait: 'Moderate' },
+    { name: 'Toronto CMA', anchor: [43.6532, -79.3832], maxRadiusKm: 70, rent: 1761, safety: 70 },
+    { name: 'Ottawa-Gatineau CMA', anchor: [45.4215, -75.6972], maxRadiusKm: 60, rent: 1559, safety: 72 },
+    { name: 'Hamilton CMA', anchor: [43.2557, -79.8711], maxRadiusKm: 350, rent: 1410, safety: 71 },
+    { name: 'Ontario (fallback: Thunder Bay CMA)', rent: 1213, safety: 46 },
   ],
   QC: [
-    { name: 'Montreal', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1750, salary: 4100, tech: 6500, french: 71.3, tax: 'High', wait: 'High' },
-    { name: 'Quebec City', anchor: [46.8139, -71.2080], maxRadiusKm: 60, rent: 1300, salary: 3950, tech: 6100, french: 94.0, tax: 'High', wait: 'High' },
-    { name: 'Rural', rent: 1100, salary: 3700, tech: 5600, french: 89.5, tax: 'High', wait: 'High' },
+    { name: 'Montréal CMA', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1200, safety: 69 },
+    { name: 'Québec CMA', anchor: [46.8139, -71.2080], maxRadiusKm: 60, rent: 1130, safety: 72 },
+    { name: 'Quebec (fallback: Sherbrooke CMA)', rent: 945, safety: 73 },
   ],
   BC: [
-    { name: 'Metro Vancouver', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 2700, salary: 4800, tech: 7500, french: 1.5, tax: 'Medium', wait: 'Moderate' },
-    { name: 'Victoria', anchor: [48.4284, -123.3656], maxRadiusKm: 40, rent: 2000, salary: 4400, tech: 6800, french: 1.5, tax: 'Medium', wait: 'Moderate' },
-    { name: 'Interior', rent: 1750, salary: 4100, tech: 6300, french: 1.2, tax: 'Medium', wait: 'Moderate' },
+    { name: 'Vancouver CMA', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 1809, safety: 59 },
+    { name: 'Victoria CMA', anchor: [48.4284, -123.3656], maxRadiusKm: 40, rent: 1622, safety: 64 },
+    { name: 'BC (fallback: Kelowna CMA)', rent: 1596, safety: 46 },
   ],
   AB: [
-    { name: 'Calgary', anchor: [51.0447, -114.0719], maxRadiusKm: 50, rent: 1800, salary: 5100, tech: 7800, french: 2.1, tax: 'Low', wait: 'Moderate' },
-    { name: 'Edmonton', anchor: [53.5461, -113.4938], maxRadiusKm: 50, rent: 1400, salary: 4900, tech: 7400, french: 2.1, tax: 'Low', wait: 'Moderate' },
-    { name: 'Rural', rent: 1350, salary: 6200, tech: 8000, french: 2.1, tax: 'Low', wait: 'Moderate' },
+    { name: 'Calgary CMA', anchor: [51.0447, -114.0719], maxRadiusKm: 50, rent: 1585, safety: 69 },
+    { name: 'Edmonton CMA', anchor: [53.5461, -113.4938], maxRadiusKm: 50, rent: 1302, safety: 49 },
+    { name: 'Alberta (fallback: Lethbridge CMA)', rent: 1392, safety: 47 },
   ],
-  SK: [{ name: 'All', rent: 1250, salary: 4250, tech: 6300, french: 1.4, tax: 'Medium', wait: 'Moderate' }],
-  MB: [{ name: 'All', rent: 1250, salary: 3850, tech: 5800, french: 3.2, tax: 'Medium', wait: 'Moderate' }],
-  NS: [{ name: 'All', rent: 1650, salary: 4000, tech: 6200, french: 3.3, tax: 'High', wait: 'High' }],
-  NB: [{ name: 'All', rent: 1300, salary: 3850, tech: 5900, french: 33.5, tax: 'High', wait: 'High' }],
-  NL: [{ name: 'All', rent: 1250, salary: 3900, tech: 6000, french: 0.4, tax: 'Medium', wait: 'High' }],
-  PE: [{ name: 'All', rent: 1400, salary: 3750, tech: 5800, french: 3.8, tax: 'Medium', wait: 'Moderate' }],
-  YT: [{ name: 'All', rent: 1950, salary: 5800, tech: 7600, french: 3.4, tax: 'Low', wait: 'Moderate' }],
-  NT: [{ name: 'All', rent: 2100, salary: 6200, tech: 8200, french: 2.1, tax: 'Low', wait: 'High' }],
-  NU: [{ name: 'All', rent: 2800, salary: 6500, tech: 8500, french: 1.5, tax: 'Low', wait: 'High' }],
+  SK: [{ name: 'Saskatchewan (Regina/Saskatoon average)', rent: 1254, safety: 23 }],
+  MB: [{ name: 'Winnipeg CMA', rent: 1236, safety: 38 }],
+  NS: [{ name: 'Halifax CMA', rent: 1550, safety: 63 }],
+  NB: [{ name: 'New Brunswick (Moncton/Saint John/Fredericton average)', rent: 1170, safety: 53 }],
+  NL: [{ name: "St. John's CMA", rent: 1085, safety: 62 }],
+  PE: [{ name: 'Charlottetown CMA', rent: 1090, safety: 64 }],
+  // Not covered by CMHC's Rental Market Survey, rent is an estimate, not
+  // survey data. Safety is still real (StatCan publishes CSI at the
+  // territory level even though CMHC doesn't survey rents there).
+  YT: [{ name: 'Yukon (rent estimate, no CMHC coverage)', rent: 1700, safety: 5 }],
+  NT: [{ name: 'Northwest Territories (rent estimate, no CMHC coverage)', rent: 1825, safety: 5 }],
+  NU: [{ name: 'Nunavut (rent estimate, no CMHC coverage)', rent: 2100, safety: 5 }],
 }
 
 function pickZone(prov: string, lat: number, lon: number): Zone {
-  const zones = PROVINCE_ZONES[prov]
+  const zones = ZONES[prov]
   const fallback = zones[zones.length - 1]
   let best: Zone | null = null
   let bestDist = Infinity
@@ -116,32 +136,47 @@ function pickZone(prov: string, lat: number, lon: number): Zone {
   return best ?? fallback
 }
 
-// Political party weighted assignment (illustrative, proportional per province)
-const PARTY_PROPORTIONS: Record<string, [string, number][]> = {
-  AB: [['Conservative', 0.919], ['NDP', 0.054], ['Liberal', 0.027]],
-  SK: [['Conservative', 1.0]],
-  MB: [['Conservative', 0.5], ['Liberal', 0.286], ['NDP', 0.214]],
-  BC: [['Liberal', 0.419], ['Conservative', 0.326], ['NDP', 0.233], ['Green', 0.022]],
-  ON: [['Liberal', 0.492], ['Conservative', 0.369], ['NDP', 0.123], ['Green', 0.016]],
-  QC: [['Bloc Québécois', 0.449], ['Liberal', 0.256], ['Conservative', 0.192], ['NDP', 0.103]],
-  NB: [['Liberal', 0.6], ['Conservative', 0.4]],
-  NS: [['Liberal', 0.636], ['Conservative', 0.364]],
-  NL: [['Liberal', 0.714], ['Conservative', 0.286]],
-  PE: [['Liberal', 1.0]],
-  YT: [['Liberal', 1.0]],
-  NT: [['Liberal', 1.0]],
-  NU: [['NDP', 1.0]],
+// French mother-tongue share, provincial tax-bracket tier, and healthcare
+// wait-time label have no equivalent real per-riding source in this pass,
+// so they're left as qualitative, zone-level estimates (documented in methodology).
+type QualZone = { anchor?: [number, number]; maxRadiusKm?: number; french: number; tax: string; wait: string }
+const QUAL_ZONES: Record<string, QualZone[]> = {
+  ON: [
+    { anchor: [45.4215, -75.6972], maxRadiusKm: 60, french: 32.4, tax: 'Medium', wait: 'Moderate' },
+    { french: 2.8, tax: 'Medium', wait: 'Moderate' },
+  ],
+  QC: [
+    { anchor: [45.5017, -73.5673], maxRadiusKm: 60, french: 71.3, tax: 'High', wait: 'High' },
+    { anchor: [46.8139, -71.2080], maxRadiusKm: 60, french: 94.0, tax: 'High', wait: 'High' },
+    { french: 89.5, tax: 'High', wait: 'High' },
+  ],
+  BC: [{ french: 1.4, tax: 'Medium', wait: 'Moderate' }],
+  AB: [{ french: 2.1, tax: 'Low', wait: 'Moderate' }],
+  SK: [{ french: 1.4, tax: 'Medium', wait: 'Moderate' }],
+  MB: [{ french: 3.2, tax: 'Medium', wait: 'Moderate' }],
+  NS: [{ french: 3.3, tax: 'High', wait: 'High' }],
+  NB: [{ french: 33.5, tax: 'High', wait: 'High' }],
+  NL: [{ french: 0.4, tax: 'Medium', wait: 'High' }],
+  PE: [{ french: 3.8, tax: 'Medium', wait: 'Moderate' }],
+  YT: [{ french: 3.4, tax: 'Low', wait: 'Moderate' }],
+  NT: [{ french: 2.1, tax: 'Low', wait: 'High' }],
+  NU: [{ french: 1.5, tax: 'Low', wait: 'High' }],
 }
 
-function getParty(prov: string, name: string): string {
-  const table = PARTY_PROPORTIONS[prov]
-  const r = hashUnit(`party:${name}`)
-  let cumulative = 0
-  for (const [party, share] of table) {
-    cumulative += share
-    if (r < cumulative) return party
+function pickQualZone(prov: string, lat: number, lon: number): QualZone {
+  const zones = QUAL_ZONES[prov]
+  const fallback = zones[zones.length - 1]
+  let best: QualZone | null = null
+  let bestDist = Infinity
+  for (const z of zones) {
+    if (!z.anchor || !z.maxRadiusKm) continue
+    const dist = haversineKm(lat, lon, z.anchor[0], z.anchor[1])
+    if (dist <= z.maxRadiusKm && dist < bestDist) {
+      best = z
+      bestDist = dist
+    }
   }
-  return table[table.length - 1][0]
+  return best ?? fallback
 }
 
 async function run() {
@@ -163,18 +198,16 @@ async function run() {
   }
   console.log('✓ Successfully wiped database tables')
 
-  console.log(`\n--- Seeding ${RIDINGS.length} Canadian Electoral Ridings (real 2023 Representation Order boundaries) ---`)
+  console.log(`\n--- Seeding ${RIDINGS.length} Canadian Electoral Ridings (real boundaries, income, party, population) ---`)
 
   const citiesToInsert = RIDINGS.map(riding => {
     const { name, province: prov, latitude, longitude } = riding
     const zone = pickZone(prov, latitude, longitude)
-    const party = getParty(prov, name)
+    const qualZone = pickQualZone(prov, latitude, longitude)
 
-    // Small organic variance so rent/salary don't look like flat tier buckets
-    const varianceFactor = 0.88 + hashUnit(`variance:${name}`) * 0.24 // +/- 12%
-    const rentVal = Math.round(zone.rent * varianceFactor / 10) * 10
-    const salaryVal = Math.round(zone.salary * varianceFactor / 10) * 10
-    const techVal = Math.round(zone.tech * varianceFactor / 10) * 10
+    const salaryVal = Math.round(riding.median_total_income_annual / 12)
+    const employmentSalaryVal = Math.round(riding.median_employment_income_annual / 12)
+    const rentVal = zone.rent
 
     return {
       city: name,
@@ -183,24 +216,24 @@ async function run() {
       flag: '🇨🇦',
       latitude,
       longitude,
-      population: String(Math.floor(80000 + hashUnit(`pop:${name}`) * 45000)),
+      population: String(riding.population_2025),
       climate: 'Humid continental / Maritime climate',
-      blurb: `Federal electoral district riding of ${name} representing citizens in regional divisions of ${prov}.`,
+      blurb: `Federal electoral district riding of ${name}, ${prov}. Represented by ${riding.elected_candidate} (${riding.party_2025}) following the 2025 general election.`,
       median_rent_1br_cad: rentVal,
       median_monthly_salary_cad: salaryVal,
-      tech_salary_cad: techVal,
-      safety_index: Math.floor(45 + hashUnit(`safety:${name}`) * 38),
+      tech_salary_cad: employmentSalaryVal,
+      safety_index: zone.safety,
       healthcare_index: Math.floor(55 + hashUnit(`health:${name}`) * 23),
       avg_internet_mbps: Math.floor(80 + hashUnit(`internet:${name}`) * 80),
-      salary_data_source: 'Statistics Canada 2025 Census Logs',
-      rent_data_source: 'CMHC Rental Market Report Q1 2026',
-      median_rent_local: zone.french,
-      english_proficiency: zone.tax,
-      visa_ease: zone.wait,
+      salary_data_source: 'Statistics Canada Census Profile 2021 (98-401-X2021029), ref. year 2020',
+      rent_data_source: zone.name + ', CMHC Rental Market Survey 2025 (StatCan table 34-10-0133-01)',
+      median_rent_local: qualZone.french,
+      english_proficiency: qualZone.tax,
+      visa_ease: qualZone.wait,
       price_cad: null,
       baseline_median_cad: null,
-      price_source: party,
-      population_source: 'Statistics Canada',
+      price_source: riding.party_2025,
+      population_source: 'Elections Canada, 45th general election official voting results (2025)',
       population_updated_at: NOW,
       price_updated_at: NOW,
       confidence_score: 0.95
@@ -223,9 +256,12 @@ async function run() {
   console.log('\n--- Seeding monthly report ---')
   const reportAnalysis = `Canadian Purchasing Power & Housing Burden Analysis (July 2026)
 
-This month marks the official release of the comprehensive CanPol Index database mapping all 343 Canadian federal ridings under the 2023 Representation Order, using official Elections Canada riding boundaries. By evaluating median individual earnings directly against local housing rental costs, the index maps the true pressures of affordability across the country's federal ridings.
+This release maps all 343 Canadian federal ridings under the 2023 Representation Order using official Elections Canada riding boundaries, real median income by riding from Statistics Canada's 2021 Census Profile, real 2025 general election results, and CMHC 2025 rental survey data applied by nearest surveyed metro. By evaluating median individual income directly against local housing rental costs, the index maps affordability pressure across the country's federal ridings.
 
-Regional Purchasing Disparities: Ridings in downtown Toronto and Vancouver experience severe rent burdens, frequently exceeding 50% of median individual incomes. In contrast, ridings in Alberta and Saskatchewan offer significantly higher disposable incomes due to high wages balanced with moderate housing costs.`
+Regional Purchasing Disparities: Ridings in downtown Toronto and Vancouver experience the most severe rent burdens relative to local income. Ridings in Alberta and Saskatchewan tend to offer higher disposable income due to comparatively high wages and moderate housing costs.`
+
+  const cheapestRiding = citiesToInsert.reduce((min, c) => c.median_rent_1br_cad < min.median_rent_1br_cad ? c : min)
+  const priciestRiding = citiesToInsert.reduce((max, c) => c.median_rent_1br_cad > max.median_rent_1br_cad ? c : max)
 
   const reportRow = {
     month: '2026-07',
@@ -234,12 +270,12 @@ Regional Purchasing Disparities: Ridings in downtown Toronto and Vancouver exper
     city_count: citiesToInsert.length,
     new_cities: citiesToInsert.slice(0, 10).map(c => c.city),
     analysis: reportAnalysis,
-    cheapest_city: 'Sherbrooke',
-    cheapest_price_cad: 1050.00,
-    priciest_city: 'Iqaluit',
-    priciest_price_cad: 2800.00,
-    spread_ratio: 2.6,
-    avg_baseline_cad: 1680.00,
+    cheapest_city: cheapestRiding.city,
+    cheapest_price_cad: cheapestRiding.median_rent_1br_cad,
+    priciest_city: priciestRiding.city,
+    priciest_price_cad: priciestRiding.median_rent_1br_cad,
+    spread_ratio: Math.round((priciestRiding.median_rent_1br_cad / cheapestRiding.median_rent_1br_cad) * 100) / 100,
+    avg_baseline_cad: Math.round(citiesToInsert.reduce((sum, c) => sum + c.median_rent_1br_cad, 0) / citiesToInsert.length),
     exchange_rates_snapshot: { CAD: 1.0 },
     city_snapshot: citiesToInsert.slice(0, 50).map(c => ({
       city: c.city,

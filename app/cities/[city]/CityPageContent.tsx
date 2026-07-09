@@ -138,13 +138,13 @@ function ScoreBar({ score, label }: { score: number | null; label: string }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
         <span style={{ ...metaValStyle, color }}>{score}</span>
-        <span style={{ fontSize: 12, color: '#9b9b90' }}>/ 100</span>
+        <span style={{ fontSize: 12, color: 'var(--color-text-3)' }}>/ 100</span>
         <span style={{ fontSize: 11, color, fontWeight: 500 }}>· {grade}</span>
       </div>
       <div style={{ height: 4, borderRadius: 4, background: 'var(--color-border)', overflow: 'hidden' }}>
         <div style={{ height: '100%', width: `${pct}%`, background: color, borderRadius: 4 }} />
       </div>
-      <p style={{ fontSize: 11, color: '#9b9b90', margin: '4px 0 0' }}>{label}</p>
+      <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '4px 0 0' }}>{label}</p>
     </div>
   )
 }
@@ -280,7 +280,7 @@ export default function CityPageContent({
               </button>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 12, color: '#3a3a32' }}>View in</span>
+              <span style={{ fontSize: 12, color: 'var(--color-text-2)' }}>View in</span>
               <select
                 value={currency}
                 onChange={e => setCurrency(e.target.value)}
@@ -301,7 +301,7 @@ export default function CityPageContent({
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 52, lineHeight: 1.05, letterSpacing: -1.2, margin: '0 0 0.4rem', color: 'var(--color-text-1)' }}>
           {city.flag ? `${city.flag} ` : ''}{city.city}
         </h1>
-        <p style={{ fontSize: 14, color: '#4a4a42', margin: '0 0 1.25rem' }}>
+        <p style={{ fontSize: 14, color: 'var(--color-text-2)', margin: '0 0 1.25rem' }}>
           {[city.region, city.country].filter(Boolean).join(', ')}
           {displayPopulation ? ` · ${displayPopulation.toLocaleString()} population` : ''}
           {displayVoters ? ` · Registered Voters: ${displayVoters.toLocaleString()}` : ''}
@@ -340,7 +340,7 @@ export default function CityPageContent({
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
             <h2 style={h2}>Economic metrics</h2>
             <p style={lead}>
-              Living costs shown in <strong>{sym} {currency}</strong>. Sourced from CMHC housing market updates and Statistics Canada census logs.
+              Living costs shown in <strong>{sym} {currency}</strong>. Income and rent are real government data, sourcing shown on each card. See the <a href="/methodology" style={{ color: 'var(--color-accent)' }}>methodology page</a> for details.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {rent != null && (
@@ -352,8 +352,8 @@ export default function CityPageContent({
                   amount={convert(salary, currency, rates)} sub={city.salary_data_source ?? undefined} />
               )}
               {city.tech_salary_cad != null && (
-                <LivingCard label="Tech / knowledge worker salary"
-                  amount={convert(city.tech_salary_cad, currency, rates)} sub="Median gross monthly" />
+                <LivingCard label="Median employment income"
+                  amount={convert(city.tech_salary_cad, currency, rates)} sub="Statistics Canada, ref. year 2020" />
               )}
               {disposable != null && (() => {
                 const isDeficit = disposable < 0
@@ -385,12 +385,12 @@ export default function CityPageContent({
                 <MetaCard label="Safety"><ScoreBar score={city.safety_index} label="Crime Index (inverted)" /></MetaCard>
               )}
               {city.healthcare_index != null && (
-                <MetaCard label="Healthcare Quality"><ScoreBar score={city.healthcare_index} label="Local Healthcare Survey" /></MetaCard>
+                <MetaCard label="Healthcare Quality"><ScoreBar score={city.healthcare_index} label="Estimated, not surveyed" /></MetaCard>
               )}
               {french_speaking_pct != null && (
                 <MetaCard label="Language Profile">
                   <p style={metaValStyle}>{french_speaking_pct}%</p>
-                  <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
+                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
                     First official language spoken (French)
                   </p>
                 </MetaCard>
@@ -398,7 +398,7 @@ export default function CityPageContent({
               {provincial_tax_bracket != null && (
                 <MetaCard label="Provincial Tax">
                   <Badge value={provincial_tax_bracket} />
-                  <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
+                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
                     Combined marginal bracket pressure
                   </p>
                 </MetaCard>
@@ -406,15 +406,15 @@ export default function CityPageContent({
               {healthcare_wait != null && (
                 <MetaCard label="Healthcare Access">
                   <Badge value={healthcare_wait} />
-                  <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
+                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '6px 0 0' }}>
                     ER & specialist provincial wait times
                   </p>
                 </MetaCard>
               )}
               {city.avg_internet_mbps != null && (
                 <MetaCard label="Internet speed">
-                  <p style={metaValStyle}>{city.avg_internet_mbps} <span style={{ fontSize: 14, color: '#9b9b90' }}>Mbps</span></p>
-                  <p style={{ fontSize: 11, color: '#9b9b90', margin: '4px 0 0' }}>
+                  <p style={metaValStyle}>{city.avg_internet_mbps} <span style={{ fontSize: 14, color: 'var(--color-text-3)' }}>Mbps</span></p>
+                  <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: '4px 0 0' }}>
                     {city.avg_internet_mbps >= 200 ? 'Excellent' : city.avg_internet_mbps >= 100 ? 'Good' : city.avg_internet_mbps >= 50 ? 'Average' : 'Below avg'}
                   </p>
                 </MetaCard>
@@ -437,14 +437,14 @@ export default function CityPageContent({
               { label: 'Population',     value: displayPopulation ? displayPopulation.toLocaleString() : null, isSource: false },
               { label: 'Registered Voters', value: displayVoters ? displayVoters.toLocaleString() : null, isSource: false },
             ].filter(({ value }) => value).map(({ label, value, isSource }) => (
-              <p key={label} style={{ fontSize: 13, color: '#8a8a82', margin: 0 }}>
-                <span style={{ color: '#3a3a32', marginRight: 6 }}>{label}:</span>
+              <p key={label} style={{ fontSize: 13, color: 'var(--color-text-3)', margin: 0 }}>
+                <span style={{ color: 'var(--color-text-2)', marginRight: 6 }}>{label}:</span>
                 {isSource ? <SourceLink value={value} /> : value}
               </p>
             ))}
-            <p style={{ fontSize: 12, color: '#3a3a32', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 12, color: 'var(--color-text-2)', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
               All monetary values stored in CAD and converted client-side.
-              Salary and rent figures represent median values for the metropolitan area representing this riding.
+              Rent and safety are applied by nearest surveyed metro, not measured per riding. Healthcare-wait and internet-speed figures are still synthetic. See the <a href="/methodology" style={{ color: 'var(--color-accent)' }}>methodology page</a> for the full breakdown.
             </p>
           </div>
         </div>
@@ -465,9 +465,9 @@ function PriceCard({ label, value, sub, accent = false, color }: {
       background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 18,
       padding: '1.5rem 1.75rem', flex: '1 1 200px',
     }}>
-      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.5rem' }}>{label}</p>
+      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-2)', margin: '0 0 0.5rem' }}>{label}</p>
       <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: valColor, margin: 0, lineHeight: 1.1, fontWeight: 400 }}>{value}</p>
-      <p style={{ fontSize: 12, color: '#4a4a42', margin: '0.4rem 0 0' }}>{sub}</p>
+      <p style={{ fontSize: 12, color: 'var(--color-text-2)', margin: '0.4rem 0 0' }}>{sub}</p>
     </div>
   )
 }
@@ -492,7 +492,7 @@ function LivingCard({ label, amount, sub, highlight = false, deficit = false }: 
 function MetaCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, padding: '1.1rem', flex: '1 1 220px' }}>
-      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: '#3a3a32', margin: '0 0 0.6rem' }}>{label}</p>
+      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: 'var(--color-text-2)', margin: '0 0 0.6rem' }}>{label}</p>
       {children}
     </div>
   )
@@ -504,7 +504,7 @@ const h2: React.CSSProperties = {
   fontFamily: 'var(--font-display)', fontSize: 28, letterSpacing: -0.5, margin: '0 0 0.4rem', color: 'var(--color-text-1)',
 }
 const lead: React.CSSProperties = {
-  fontSize: 13, color: '#4a4a42', lineHeight: 1.6, margin: 0, maxWidth: 700,
+  fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0, maxWidth: 700,
 }
 const metaValStyle: React.CSSProperties = {
   fontFamily: 'var(--font-display)', fontSize: 26, margin: 0, color: 'var(--color-text-1)', lineHeight: 1.1, fontWeight: 400,

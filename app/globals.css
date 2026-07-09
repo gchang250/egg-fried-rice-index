@@ -3,33 +3,35 @@
 /* ═══════════════════════════════════════════════════════════════════════
    CANPOL INDEX — Socio-Economic Cost of Living Atlas
    Token structure: --color-{role}  |  --font-{role}
-   Contrast notes verified against WCAG AA (4.5:1 for text, 3:1 UI)
+   Palette: warm bakery/Canadiana (Levain-style cream & espresso, a
+   BeaverTails-style maple red accent). Contrast checked against WCAG AA
+   (4.5:1 body text, 3:1 large text/UI) — see contrast notes inline.
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
   /* ── Surfaces ───────────────────────────────────────────────────── */
-  --color-bg:           #faf8f5;   /* warm cream paper (matching Civics Studio) */
-  --color-surface:      #ffffff;   /* white                            */
-  --color-surface-2:    #f3efe6;   /* soft warm grey/beige             */
-  --color-border:       #e5e0d4;   /* beige border                     */
+  --color-bg:           #f8f0e3;   /* warm cream / dough                */
+  --color-surface:      #fffaf2;   /* warm ivory / parchment            */
+  --color-surface-2:    #f0e0c5;   /* toasted sand / crust              */
+  --color-border:       #e2d3b8;   /* warm tan border                   */
 
   /* ── Foreground ─────────────────────────────────────────────────── */
-  --color-text-1:       #111f36;   /* deep navy (matching Civics Studio) */
-  --color-text-2:       #4a4740;   /* timber grey                      */
-  --color-text-3:       #7a776c;   /* soft sand                        */
-  --color-text-4:       #c2beb4;   /* light paper decorative           */
+  --color-text-1:       #2e1c10;   /* espresso brown, 14.4:1 on bg      */
+  --color-text-2:       #6b4f3a;   /* coffee brown, 6.6:1 on bg         */
+  --color-text-3:       #7d6349;   /* caramel grey-brown, 4.9:1 on bg   */
+  --color-text-4:       #d8c4a8;   /* light tan, decorative only        */
 
-  /* ── Brand accent (Brick Red / Crimson) ─────────────────────────── */
-  --color-accent:       #8b1e1e;   /* brick red from Civics Studio      */
-  --color-accent-dim:   rgba(139, 30, 30, 0.06);
-  --color-accent-glow:  rgba(139, 30, 30, 0.12);
+  /* ── Brand accent (Maple / Cherry Red) ───────────────────────────── */
+  --color-accent:       #c0272d;   /* maple red, 5.2:1 on bg            */
+  --color-accent-dim:   rgba(192, 39, 45, 0.07);
+  --color-accent-glow:  rgba(192, 39, 45, 0.14);
 
   /* ── Status / Affordability mapping ─────────────────────────────── */
-  --color-green:        #eeb44f;   /* cheese curd gold — affordable end */
-  --color-red:          #8b1e1e;   /* brick red — expensive end         */
-  --color-amber:        #8b1e1e;   /* same as accent                   */
+  --color-green:        #a8721f;   /* toasted honey gold — affordable end */
+  --color-red:          #c0272d;   /* maple red — expensive end         */
+  --color-amber:        #c0272d;   /* same as accent                   */
 
-  --color-nav-bg:       rgba(250, 248, 245, 0.82);
+  --color-nav-bg:       rgba(248, 240, 227, 0.85);
 
   /* ── Typography ────────────────────────────────────────────────── */
   --font-display: 'Fraunces', Georgia, serif;
@@ -39,33 +41,33 @@
 
 /* ── Dark theme ─────────────────────────────────────────────────────── */
 .dark {
-  --color-bg:           #09090b;   /* rich deep warm-black             */
-  --color-surface:      #0e0e12;   /* warm timber charcoal             */
-  --color-surface-2:    #131318;   /* warm charcoal hover              */
-  --color-border:       #1e1d1d;   /* dark crimson-tinted border       */
+  --color-bg:           #1a120b;   /* dark chocolate                    */
+  --color-surface:      #221812;   /* espresso surface                  */
+  --color-surface-2:    #2b1e15;   /* toasted espresso hover            */
+  --color-border:       #3c2c1e;   /* warm umber border                 */
 
-  --color-text-1:       #faf8f5;   /* warm white                       */
-  --color-text-2:       #b3b0a9;   /* warm grey                        */
-  --color-text-3:       #8a8781;   /* muted warm grey                  */
-  --color-text-4:       #4f4d48;   /* deep slate                       */
+  --color-text-1:       #f8f0e3;   /* warm cream                        */
+  --color-text-2:       #cbb69a;   /* warm tan grey                     */
+  --color-text-3:       #a2896c;   /* muted caramel grey                */
+  --color-text-4:       #5a4635;   /* deep umber                        */
 
-  --color-accent:       #d9383a;   /* vibrant crimson                  */
-  --color-accent-dim:   rgba(217, 56, 58, 0.08);
-  --color-accent-glow:  rgba(217, 56, 58, 0.16);
+  --color-accent:       #e5484d;   /* bright maple red                  */
+  --color-accent-dim:   rgba(229, 72, 77, 0.1);
+  --color-accent-glow:  rgba(229, 72, 77, 0.18);
 
-  --color-green:        #eeb44f;   /* cheese curd gold                 */
-  --color-red:          #b85c37;   /* gravy brown                      */
-  --color-amber:        #d9383a;
+  --color-green:        #d4a03a;   /* honey gold                        */
+  --color-red:          #e5484d;
+  --color-amber:        #e5484d;
 
-  --color-nav-bg:       rgba(9, 9, 11, 0.82);
+  --color-nav-bg:       rgba(26, 18, 11, 0.85);
 }
 
 /* ── High-contrast theme ────────────────────────────────────────────── */
 .hc {
-  --color-text-1:       #111f36;
-  --color-text-2:       #313d4f;
-  --color-text-3:       #4e5b6f;
-  --color-accent:       #8b1e1e;
+  --color-text-1:       #1c1108;
+  --color-text-2:       #3a2a1a;
+  --color-text-3:       #57402a;
+  --color-accent:       #a3181e;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

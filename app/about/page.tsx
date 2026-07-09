@@ -6,28 +6,28 @@ const CARDS = [
     title: 'Why this exists',
     body: [
       "Cost of living is often described through abstract national macroeconomic metrics: CPI, average wage baskets, or national housing reports. While valuable, these national figures hide significant local realities.",
-      "The CanPol Index evaluates these pressures at the level of individual communities and federal ridings. By comparing local median wages against CMHC rental data, we highlight the true socio-economic pressures that citizens face in their daily lives."
+      "The CanPol Index evaluates these pressures at the level of individual federal ridings instead of provincial or national averages, to illustrate how differently housing burden can land depending on where you live."
     ],
   },
   {
     title: 'What the index does',
     body: [
-      "It compiles median 1BR rental costs and median individual monthly salaries directly for major communities representing Canada's federal ridings.",
-      "By calculating the exact Rent Burden (the percentage of local wages spent on a single housing unit), the index provides a pure, currency-neutral indicator of regional affordability and discretionary purchasing power."
+      "For all 343 federal ridings, it compares a real median 1BR rental cost against each riding's real median individual monthly income.",
+      "By calculating the resulting Rent Burden (the percentage of income spent on a single housing unit), the index provides a currency-neutral view of relative regional affordability and discretionary purchasing power."
     ],
   },
   {
-    title: 'Sourcing & Rigor',
+    title: 'Data status',
     body: [
-      "The index does not use speculative estimates or ad-hoc data. All values are sourced directly from Statistics Canada census logs, Canada Mortgage and Housing Corporation (CMHC) market profiles, and official provincial tax schedules.",
-      "Liveability indicators (safety, healthcare wait times, internet speeds) are pulled from standardized community surveys to ensure consistent comparative integrity."
+      "Riding boundaries, median income, represented party, population, registered electors, and the safety score are all real, sourced government data from Elections Canada and Statistics Canada.",
+      "Rent is real CMHC 2025 survey data applied by nearest surveyed metro, since CMHC surveys metro areas rather than individual ridings. Healthcare-wait and internet-speed figures remain synthetic, see the methodology page for the full breakdown."
     ],
   },
   {
     title: 'Where the project is going',
     body: [
-      "The CanPol Index is expanding to map cost of living and tax pressures across all 343 Canadian federal electoral ridings under the 2023 Representation Order.",
-      "Our goal is to build a completely open-source, community-audited economic atlas that provides voters and researchers with local economic clarity."
+      "All 343 Canadian federal electoral ridings under the 2023 Representation Order are mapped with real boundaries, real income, real rent, real 2025 election results, and a real safety score.",
+      "The next step is finding a real per-riding source for the two indicators still synthetic: healthcare wait times and internet speed."
     ],
   },
 ]
@@ -73,25 +73,25 @@ export default function AboutPage() {
             The Core Index Pillars
           </h2>
           <p style={{ fontSize: 15, color: 'var(--color-text-2)', lineHeight: 1.7, marginBottom: '2rem' }}>
-            The index evaluates local economic realities through three primary, non-overlapping pillars:
+            The index evaluates local economic realities through three primary, non-overlapping pillars.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
               <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>01. Housing Burden</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Compares local median gross wages to median 1BR rental costs. Sourced directly from CMHC housing market reports.
+                Real Statistics Canada median income compared against real CMHC 1BR rent (applied by nearest surveyed metro).
               </p>
             </div>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>02. Income & Taxes</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>02. Represented Party</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Maps local median wages and provincial marginal combined tax rates, highlighting regional taxation differences.
+                Real Elections Canada results from the 2025 general election: the actual elected candidate and party per riding.
               </p>
             </div>
             <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 12, padding: '1.5rem' }}>
               <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: '0.5rem', color: 'var(--color-accent)' }}>03. Infrastructure Quality</h3>
               <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: 0 }}>
-                Evaluates liveability factors including safety indices, average healthcare wait times, and high-speed internet connectivity.
+                Real Statistics Canada crime severity data for safety. Healthcare wait times and internet connectivity are still modelled, pending a real per-riding source.
               </p>
             </div>
           </div>
