@@ -390,8 +390,16 @@ export default function CityPageContent({
   const mktMax    = city.market_max_cad ?? (allPrices.length ? Math.max(...allPrices) : null)
   const sd        = stddev(allPrices)
 
+  const french_speaking_pct = city.median_rent_local
+  const provincial_tax_bracket = city.english_proficiency
+  const healthcare_wait = city.visa_ease
+
   const hasLiving     = city.median_rent_1br_cad != null || city.median_monthly_salary_cad != null
-  const hasLiveability= city.safety_index != null || city.healthcare_index != null
+  const hasLiveability= city.safety_index != null ||
+    city.healthcare_index != null ||
+    french_speaking_pct != null ||
+    provincial_tax_bracket != null ||
+    healthcare_wait != null
 
   const bowlsRent      = bowls(city.median_rent_1br_cad, bowlPrice)
   const bowlsSalary    = bowls(city.median_monthly_salary_cad, bowlPrice)
@@ -521,28 +529,35 @@ export default function CityPageContent({
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2.5rem 2rem' }}>
           <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '2rem' }}>
             <h2 style={h2}>Liveability</h2>
-            <p style={lead}>Key quality-of-life and practical indicators for international residents.</p>
+            <p style={lead}>Key quality-of-life and practical indicators for Canadian residents.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {city.safety_index != null && (
                 <MetaCard label="Safety"><ScoreBar score={city.safety_index} label="Numbeo Crime Index (inverted)" /></MetaCard>
               )}
               {city.healthcare_index != null && (
-                <MetaCard label="Healthcare"><ScoreBar score={city.healthcare_index} label="Numbeo Healthcare Index" /></MetaCard>
+                <MetaCard label="Healthcare Quality"><ScoreBar score={city.healthcare_index} label="Numbeo Healthcare Index" /></MetaCard>
               )}
-              {city.english_proficiency != null && (
-                <MetaCard label="English">
-                  <Badge value={city.english_proficiency} />
+              {french_speaking_pct != null && (
+                <MetaCard label="Language Profile">
+                  <p style={metaValStyle}>{french_speaking_pct}%</p>
                   <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
-                    {{ native:'Official or de facto language', high:'Widely spoken in business and daily life', medium:'Basic communication manageable', low:'Significant language barrier' }[city.english_proficiency] ?? ''}
+                    First official language spoken (French)
                   </p>
                 </MetaCard>
               )}
-              {city.visa_ease != null && (
-                <MetaCard label="Visa ease">
-                  <Badge value={city.visa_ease} />
+              {provincial_tax_bracket != null && (
+                <MetaCard label="Provincial Tax">
+                  <Badge value={provincial_tax_bracket} />
                   <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
-                    {{ easy:'Visa-free entry or straightforward pathways', moderate:'Visa required; work permit needs employer', complex:'Significant immigration requirements' }[city.visa_ease] ?? ''}
-                    {' '}(Western passport)
+                    Combined marginal bracket pressure
+                  </p>
+                </MetaCard>
+              )}
+              {healthcare_wait != null && (
+                <MetaCard label="Healthcare Wait Time">
+                  <Badge value={healthcare_wait} />
+                  <p style={{ fontSize: 11, color: '#9b9b90', margin: '6px 0 0' }}>
+                    Provincial ER & specialist access delay
                   </p>
                 </MetaCard>
               )}

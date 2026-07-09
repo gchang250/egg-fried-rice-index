@@ -686,33 +686,82 @@ async function run() {
     ;(c as any).computedPrice = tempPrices[c.city]
   })
 
-  const cityRows = CITIES.map(c => ({
-    city: c.city,
-    country: 'Canada',
-    region: c.province,
-    flag: '🇨🇦',
-    latitude: c.latitude,
-    longitude: c.longitude,
-    population: c.population,
-    climate: c.climate,
-    blurb: c.blurb,
-    median_rent_1br_cad: c.median_rent,
-    median_monthly_salary_cad: c.median_salary,
-    tech_salary_cad: c.tech_salary,
-    safety_index: c.safety_index,
-    healthcare_index: c.healthcare_index,
-    avg_internet_mbps: c.internet_speed,
-    salary_data_source: c.salary_source,
-    rent_data_source: c.rent_source,
-    english_proficiency: 'native',
-    visa_ease: 'easy',
-    price_cad: (c as any).computedPrice,
-    baseline_median_cad: (c as any).computedPrice,
-    population_source: 'Statistics Canada',
-    population_updated_at: NOW,
-    price_updated_at: NOW,
-    confidence_score: 0.90
-  }))
+  const cityRows = CITIES.map(c => {
+    let tax = 'Medium'
+    let wait = 'Moderate'
+    let french = 2.0 // default %
+
+    if (c.province === 'QC') {
+      tax = 'High'
+      wait = 'High'
+      french = c.city === 'Montreal' ? 71.3 : c.city === 'Quebec City' ? 94.0 : 89.5
+    } else if (c.province === 'AB') {
+      tax = 'Low'
+      wait = 'Moderate'
+      french = 2.1
+    } else if (c.province === 'BC') {
+      tax = 'Medium'
+      wait = 'Moderate'
+      french = 1.8
+    } else if (c.province === 'ON') {
+      tax = 'Medium'
+      wait = 'Moderate'
+      french = c.city === 'Ottawa' ? 32.4 : c.city === 'Sudbury' ? 25.1 : 2.8
+    } else if (c.province === 'NB') {
+      tax = 'High'
+      wait = 'High'
+      french = c.city === 'Moncton' ? 33.5 : 7.2
+    } else if (c.province === 'NS' || c.province === 'NL' || c.province === 'PE') {
+      tax = 'High'
+      wait = 'High'
+      french = c.province === 'PE' ? 3.8 : c.province === 'NS' ? 2.4 : 0.6
+    } else if (c.province === 'MB') {
+      tax = 'High'
+      wait = 'High'
+      french = 3.9
+    } else if (c.province === 'SK') {
+      tax = 'Medium'
+      wait = 'Moderate'
+      french = 1.3
+    } else if (c.province === 'YT' || c.province === 'NT') {
+      tax = 'Low'
+      wait = 'Low'
+      french = c.province === 'YT' ? 4.8 : 3.6
+    } else if (c.province === 'NU') {
+      tax = 'Low'
+      wait = 'High'
+      french = 4.1
+    }
+
+    return {
+      city: c.city,
+      country: 'Canada',
+      region: c.province,
+      flag: '🇨🇦',
+      latitude: c.latitude,
+      longitude: c.longitude,
+      population: c.population,
+      climate: c.climate,
+      blurb: c.blurb,
+      median_rent_1br_cad: c.median_rent,
+      median_monthly_salary_cad: c.median_salary,
+      tech_salary_cad: c.tech_salary,
+      safety_index: c.safety_index,
+      healthcare_index: c.healthcare_index,
+      avg_internet_mbps: c.internet_speed,
+      salary_data_source: c.salary_source,
+      rent_data_source: c.rent_source,
+      median_rent_local: french,
+      english_proficiency: tax,
+      visa_ease: wait,
+      price_cad: (c as any).computedPrice,
+      baseline_median_cad: (c as any).computedPrice,
+      population_source: 'Statistics Canada',
+      population_updated_at: NOW,
+      price_updated_at: NOW,
+      confidence_score: 0.90
+    }
+  })
 
   const { error: insertCitiesErr } = await supabase.from('cities').insert(cityRows)
   if (insertCitiesErr) {
@@ -789,24 +838,19 @@ async function run() {
   console.log('✓ Community calculations complete!')
 
   console.log('\n--- Seeding monthly report ---')
-  const reportAnalysis = `## Canadian Purchasing Power Analysis (July 2026)
+  const reportAnalysis = `Canadian Purchasing Power Analysis (July 2026)
 
-This month marks the launch of **The Canadian Poutine Index**, shifting the spotlight entirely onto local purchasing power disparities across Canada. By evaluating the local cost of a classic plate of poutine relative to median salaries and rents, we reveal the real economic weight of local living costs.
+This month marks the launch of The Canadian Poutine Index, shifting the spotlight entirely onto local purchasing power disparities across Canada. By evaluating the local cost of a classic plate of poutine relative to median salaries and rents, we reveal the real economic weight of local living costs.
 
-### The Housing Crisis Meets the Poutine Bowl
-The index confirms that housing costs remain the single largest factor in discretionary purchasing power across Canada.
-- **Vancouver** and **Toronto** are the most expensive places to buy poutine (averaging **CA$11.50** and **CA$11.17** respectively), but the true crisis lies in the rent burden.
-- In Vancouver, the rent burden is a staggering **56%** of median monthly income. After rent, a median worker can only afford **168 poutines** per month.
-- In Toronto, the rent burden is **51%**, leaving **215 poutines** per month.
+The Housing Crisis Meets the Poutine Bowl: The index confirms that housing costs remain the single largest factor in discretionary purchasing power across Canada. Vancouver and Toronto are the most expensive places to buy poutine, averaging CA$11.50 and CA$11.17 respectively, but the true crisis lies in the rent burden.
 
-### The Prairie Advantage
-Conversely, the Canadian prairies represent a haven of purchasing power:
-- **Sherbrooke** features a median price of **CA$7.50** for classic poutine, a low rent burden of **28%**, leaving **353 poutines** after rent.
-- **Calgary** offers high median salaries ($5,100), moderate rents ($1,800), and a poutine price of **CA$10.75**, leaving **307 poutines** after rent.
-- **Fort McMurray** holds the highest purchasing power in Canada. With a high median monthly income of $6,500 and a 1BR rent of $1,350, a local worker has $5,150 left after rent, which buys **429 poutines** per month!
+In Vancouver, the rent burden is a staggering 56% of median monthly income. After rent, a median worker can only afford 168 poutines per month. In Toronto, the rent burden is 51%, leaving 215 poutines per month.
 
-### Northern Realities
-In remote northern capitals like **Iqaluit**, high transport costs and remote supply chain lines drive the price of a classic poutine to **CA$18.00**. Although wages are high ($6,500), high rents ($2,800) and expensive food leave northern workers with lower purchasing power than their prairie counterparts (**206 poutines**).`
+The Prairie Advantage: Conversely, the Canadian prairies represent a haven of purchasing power. Sherbrooke features a median price of CA$7.50 for classic poutine, and a low rent burden of 28%, leaving 353 poutines after rent.
+
+Calgary offers high median salaries ($5,100), moderate rents ($1,800), and a poutine price of CA$10.75, leaving 307 poutines after rent. Fort McMurray holds the highest purchasing power in Canada. With a high median monthly income of $6,500 and a 1BR rent of $1,350, a local worker has $5,150 left after rent, which buys 429 poutines per month!
+
+Northern Realities: In remote northern capitals like Iqaluit, high transport costs and remote supply chain lines drive the price of a classic poutine to CA$18.00. Although wages are high ($6,500), high rents ($2,800) and expensive food leave northern workers with lower purchasing power than their prairie counterparts (206 poutines).`
 
   const reportRow = {
     month: '2026-07',

@@ -291,8 +291,8 @@ export default function Explore() {
       .attr('cx', '50%').attr('cy', '50%').attr('r', '75%')
       .selectAll('stop')
       .data([
-        { offset: '0%', color: '#111116' },
-        { offset: '100%', color: '#070709' }
+        { offset: '0%', color: 'var(--color-surface-2)' },
+        { offset: '100%', color: 'var(--color-bg)' }
       ])
       .enter().append('stop')
       .attr('offset', d => d.offset)
@@ -676,7 +676,7 @@ export default function Explore() {
           </div>
         )}
 
-        <svg ref={svgRef} style={{ display: 'block', width: '100%', height: '100%', outline: 'none' }}>
+        <svg ref={svgRef} viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" style={{ display: 'block', width: '100%', height: '100%', outline: 'none' }}>
           <g ref={gRef} />
         </svg>
 
