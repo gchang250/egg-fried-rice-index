@@ -173,6 +173,26 @@ function Badge({ value }: { value: string | null }) {
   )
 }
 
+function getNetDisposable(monthlyGross: number, monthlyRent: number, prov: string | null): number {
+  const annualGross = monthlyGross * 12
+  let baseRate = 0.15
+  const p = prov?.toUpperCase() || ''
+  if (p === 'QC') baseRate = 0.205
+  else if (p === 'ON') baseRate = 0.150
+  else if (p === 'BC') baseRate = 0.135
+  else if (p === 'AB') baseRate = 0.140
+  else if (['NS', 'NB', 'PE', 'NL'].includes(p)) baseRate = 0.180
+  else if (['MB', 'SK'].includes(p)) baseRate = 0.165
+  else if (['YT', 'NT', 'NU'].includes(p)) baseRate = 0.125
+  else baseRate = 0.150
+
+  const progressiveRate = baseRate + (annualGross - 42600) * 0.000002
+  const finalRate = Math.max(0.08, Math.min(0.38, progressiveRate))
+  
+  const netIncome = monthlyGross * (1 - finalRate)
+  return Math.round(netIncome - monthlyRent)
+}
+
 export default function CityPageContent({
   city,
 }: {
@@ -221,7 +241,7 @@ export default function CityPageContent({
 
   const sym = SYMBOLS[currency] ?? currency
   const exchangeRateMonth = new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
-  const disposable = (salary != null && rent != null) ? salary - rent : null
+  const disposable = (salary != null && rent != null) ? getNetDisposable(salary, rent, city.region) : null
 
   const partyColor = (party: string | null) => {
     const p = party?.toLowerCase() || ''
@@ -355,8 +375,8 @@ export default function CityPageContent({
                     label={isDeficit ? 'Housing cost exceeds salary' : 'Monthly Disposable Income'}
                     amount={convert(Math.abs(disposable), currency, rates)}
                     sub={isDeficit
-                      ? `Housing burden: ${rentBurden}. Earnings cannot cover local housing cost.`
-                      : `Housing burden: ${rentBurden} of monthly salary`}
+                      ? `Housing burden: ${rentBurden} (gross). Net income cannot cover housing.`
+                      : `Housing burden: ${rentBurden} (gross). Net remaining after estimated progressive taxes.`}
                     highlight
                     deficit={isDeficit}
                   />

@@ -30,6 +30,26 @@ type Tip = { city: string; province: string; price: number; burden: number | nul
 const colorFor = (p: number) => p < 9.5 ? 'var(--color-green)' : p < 12.5 ? 'var(--color-text-2)' : 'var(--color-accent)'
 const fmt = (n: number) => `CA$${n.toFixed(2)}`
 
+function getNetDisposable(monthlyGross: number, monthlyRent: number, prov: string | null): number {
+  const annualGross = monthlyGross * 12
+  let baseRate = 0.15
+  const p = prov?.toUpperCase() || ''
+  if (p === 'QC') baseRate = 0.205
+  else if (p === 'ON') baseRate = 0.150
+  else if (p === 'BC') baseRate = 0.135
+  else if (p === 'AB') baseRate = 0.140
+  else if (['NS', 'NB', 'PE', 'NL'].includes(p)) baseRate = 0.180
+  else if (['MB', 'SK'].includes(p)) baseRate = 0.165
+  else if (['YT', 'NT', 'NU'].includes(p)) baseRate = 0.125
+  else baseRate = 0.150
+
+  const progressiveRate = baseRate + (annualGross - 42600) * 0.000002
+  const finalRate = Math.max(0.08, Math.min(0.38, progressiveRate))
+  
+  const netIncome = monthlyGross * (1 - finalRate)
+  return Math.round(netIncome - monthlyRent)
+}
+
 const PROVINCE_NAMES: Record<string, string> = {
   ON: 'Ontario',
   BC: 'British Columbia',
@@ -139,7 +159,7 @@ export default function Home() {
         median_rent_1br_cad: rent,
         median_monthly_salary_cad: salary,
         rentBurden: rent && salary ? Math.round(rent / salary * 100) : null,
-        bowlsAfterRent: rent && salary ? Math.round(salary - rent) : null,
+        bowlsAfterRent: rent && salary ? getNetDisposable(salary, rent, c.region) : null,
       }
     })
   }, [cities, profile])
@@ -150,7 +170,11 @@ export default function Home() {
     if (!svg || !parsedCities.length) return
     const data = parsedCities.filter(c => c.rentBurden != null && c.bowlsAfterRent != null) as (CityRow & { rentBurden: number; bowlsAfterRent: number })[]
     if (!data.length) return
-    const NOTABLE = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Edmonton', 'Halifax', 'Winnipeg', 'Iqaluit', 'Yellowknife', 'Fort McMurray', 'Sherbrooke']
+    const NOTABLE = [
+      'Spadina-Fort York', 'Vancouver Centre', 'Laurier-Sainte-Marie', 'Calgary Centre', 
+      'Edmonton Centre', 'Halifax', 'Winnipeg Centre', 'Nunavut', 'Northwest Territories', 
+      'Fort McMurray-Cold Lake', 'Sherbrooke'
+    ]
     
     const draw = () => {
       svg.innerHTML = ''
@@ -479,7 +503,7 @@ export default function Home() {
                 <span style={{ fontFamily: 'var(--font-display)', fontSize: 36, color: 'var(--color-text-1)' }}>CA$1,626</span>
               </div>
               <h3 style={{ fontSize: 20, marginBottom: 10, fontWeight: 500 }}>Disposable Income</h3>
-              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>Remaining discretionary cash per month after paying 1BR median housing costs on a median monthly paycheck. Represents real single renter purchasing power.</p>
+              <p style={{ color: 'var(--color-text-2)', fontSize: 14, fontWeight: 300, lineHeight: 1.6 }}>Net income remaining after 1BR housing costs and progressive provincial + federal taxes are subtracted from the riding's actual local median paycheck. The CA$1,626 represents the resulting national baseline average.</p>
             </div>
           </div>
         </div>
@@ -690,7 +714,7 @@ export default function Home() {
                         <div style={{ height: '100%', width: `${Math.min(100, (Math.abs(sel.bowlsAfterRent) / 5000) * 100)}%`, background: dispColor, borderRadius: 5 }} />
                       </div>
                       <p style={{ ...LABEL, fontSize: 8.5, marginTop: 8 }}>
-                        {isDeficit ? 'Median income does not cover this profile\'s housing cost' : 'Income remaining after average 1BR housing costs'}
+                        {isDeficit ? 'Median net income does not cover this profile\'s housing cost' : 'Net income remaining after estimated progressive provincial taxes and 1BR housing costs'}
                       </p>
                     </div>
                   )

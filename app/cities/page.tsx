@@ -15,6 +15,26 @@ type CityRow = {
   tech_salary_cad: number | null
 }
 
+function getNetDisposable(monthlyGross: number, monthlyRent: number, prov: string | null): number {
+  const annualGross = monthlyGross * 12
+  let baseRate = 0.15
+  const p = prov?.toUpperCase() || ''
+  if (p === 'QC') baseRate = 0.205
+  else if (p === 'ON') baseRate = 0.150
+  else if (p === 'BC') baseRate = 0.135
+  else if (p === 'AB') baseRate = 0.140
+  else if (['NS', 'NB', 'PE', 'NL'].includes(p)) baseRate = 0.180
+  else if (['MB', 'SK'].includes(p)) baseRate = 0.165
+  else if (['YT', 'NT', 'NU'].includes(p)) baseRate = 0.125
+  else baseRate = 0.150
+
+  const progressiveRate = baseRate + (annualGross - 42600) * 0.000002
+  const finalRate = Math.max(0.08, Math.min(0.38, progressiveRate))
+  
+  const netIncome = monthlyGross * (1 - finalRate)
+  return Math.round(netIncome - monthlyRent)
+}
+
 function slugifyCity(city: string) {
   return city.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
@@ -124,7 +144,7 @@ export default function CitiesPage() {
           : (c.tech_salary_cad != null ? Number(c.tech_salary_cad) : Number(c.median_monthly_salary_cad) * 1.5)
 
         const burden = Math.round((rent / salary) * 100)
-        const disposable = Math.round(salary - rent)
+        const disposable = getNetDisposable(salary, rent, c.region)
         return { 
           ...c, 
           burden, 
@@ -264,7 +284,7 @@ export default function CitiesPage() {
               <div style={{ display:'grid', gridTemplateColumns:'62px 2fr 1fr 1fr 1fr 1fr 1.2fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:11, color:'var(--color-text-3)' }}>
                 <div>Rank</div><div>Riding / Community</div><div>Median Rent (1BR)</div>
                 <div>Median Income</div>
-                <div>Rent Burden</div><div>Disposable Income</div><div>Quality Metrics</div>
+                <div>Rent Burden</div><div>Net Disposable</div><div>Quality Metrics</div>
               </div>
             )}
 
@@ -288,7 +308,7 @@ export default function CitiesPage() {
                           {city.city}
                         </h2>
                         <p style={{ fontSize:12, color:'var(--color-text-3)', margin:'0.2rem 0 0' }}>{provName}</p>
-                        <p style={{ fontSize:12, margin:'0.35rem 0 0', color: burdenColor(burden) }}>{burden}% rent burden · ${disposable.toLocaleString()} disposable</p>
+                        <p style={{ fontSize:12, margin:'0.35rem 0 0', color: burdenColor(burden) }}>{burden}% rent burden · ${disposable.toLocaleString()} net disposable</p>
                       </div>
                       <div style={{ textAlign:'right' }}>
                         <div style={{ fontFamily:'var(--font-display)', fontSize:20, color:'var(--color-accent)', whiteSpace:'nowrap', fontWeight:400 }}>${city.median_rent_1br_cad}/mo</div>
@@ -326,7 +346,7 @@ export default function CitiesPage() {
 
                     <div>
                       <span style={{ fontSize:13, fontWeight:500, color:'var(--color-green)' }}>${disposable.toLocaleString()}</span>
-                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>after rent</p>
+                      <p style={{ fontSize:10, color:'var(--color-text-4)', margin:'2px 0 0' }}>net after tax</p>
                     </div>
 
                     <div>
@@ -415,7 +435,7 @@ export default function CitiesPage() {
                 desc: burdenValA < burdenValB ? `${cityDataA.city} is ${burdenValB - burdenValA}% lower` : `${cityDataB.city} is ${burdenValA - burdenValB}% lower`
               },
               {
-                label: 'Disposable Monthly Income After Rent',
+                label: 'Net Monthly Disposable Income',
                 valA: `$${dispA.toLocaleString()}`,
                 valB: `$${dispB.toLocaleString()}`,
                 better: dispA > dispB ? 'A' : dispA < dispB ? 'B' : 'draw',
