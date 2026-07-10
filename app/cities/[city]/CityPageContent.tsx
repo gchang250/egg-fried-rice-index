@@ -343,8 +343,20 @@ export default function CityPageContent({
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginTop: '1.25rem' }}>
               {rent != null && (
-                <LivingCard label={profile === 'single_renter' ? "Typical monthly rent (1BR)" : "Typical housing cost (Family)"}
-                  amount={convert(rent, currency, rates)} sub={city.rent_data_source ?? undefined} />
+                <LivingCard
+                  label={profile === 'single_renter' ? "Typical monthly rent (1BR)" : "Typical housing cost (Family)"}
+                  amount={convert(rent, currency, rates)}
+                  sub={
+                    city.rent_data_source ? (
+                      <span>
+                        {city.rent_data_source}.{' '}
+                        <a href="/about" style={{ color: 'var(--color-text-2)', textDecoration: 'underline', fontWeight: 500 }}>
+                          Learn about our hybrid methodology
+                        </a>
+                      </span>
+                    ) : undefined
+                  }
+                />
               )}
               {salary != null && (
                 <LivingCard label={profile === 'single_renter' ? "Median monthly salary" : "Median salary (Family)"}
@@ -446,7 +458,7 @@ function PriceCard({ label, value, sub, accent = false, color }: {
 }
 
 function LivingCard({ label, amount, sub, highlight = false, deficit = false }: {
-  label: string; amount: string; sub?: string; highlight?: boolean; deficit?: boolean
+  label: string; amount: string; sub?: React.ReactNode; highlight?: boolean; deficit?: boolean
 }) {
   const bg     = deficit ? 'rgba(217,56,58,0.06)' : highlight ? 'rgba(238,180,79,0.06)' : 'var(--color-surface)'
   const border = deficit ? 'rgba(217,56,58,0.20)' : highlight ? 'rgba(238,180,79,0.20)' : 'var(--color-border)'

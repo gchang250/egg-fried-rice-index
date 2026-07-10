@@ -887,9 +887,12 @@ export default function Explore() {
                   </div>
                 </div>
 
-                {rentDisclaimer && (
-                  <div style={{ fontSize: 9.5, color: 'var(--color-text-4)', lineHeight: 1.3, marginTop: -4, marginBottom: 12 }}>
-                    ℹ️ {rentDisclaimer}
+                {selectedCity.rent_data_source && (
+                  <div style={{ fontSize: 10, color: 'var(--color-text-4)', lineHeight: 1.4, marginTop: -4, marginBottom: 12 }}>
+                    ℹ️ {selectedCity.rent_data_source}.{' '}
+                    <a href="/about" style={{ color: 'var(--color-text-2)', textDecoration: 'underline', fontWeight: 500 }}>
+                      Learn about our hybrid methodology
+                    </a>
                   </div>
                 )}
 
