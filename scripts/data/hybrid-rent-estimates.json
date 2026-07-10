@@ -138,18 +138,18 @@
   {
     "riding_name": "Burnaby North—Seymour",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
-    "sample_size": 3,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 976,
+    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Burnaby Central",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
-    "sample_size": 3,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 976,
+    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Abbotsford—South Langley",
@@ -346,16 +346,16 @@
   {
     "riding_name": "Calgary Skyview",
     "province": "AB",
-    "estimated_rent_1br_cad": 1034,
-    "data_source": "Hybrid blend: active listings (N=1, 10% weight) + Census baseline (adjusted by AB Rent CPI)",
-    "sample_size": 1,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 960,
+    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Calgary Signal Hill",
     "province": "AB",
-    "estimated_rent_1br_cad": 1103,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
+    "estimated_rent_1br_cad": 1011,
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -370,64 +370,64 @@
   {
     "riding_name": "Calgary Nose Hill",
     "province": "AB",
-    "estimated_rent_1br_cad": 1103,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
+    "estimated_rent_1br_cad": 1011,
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
   {
     "riding_name": "Calgary Midnapore",
     "province": "AB",
-    "estimated_rent_1br_cad": 1029,
-    "data_source": "Hybrid blend: active listings (N=1, 10% weight) + Census baseline (adjusted by AB Rent CPI)",
-    "sample_size": 1,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 960,
+    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Calgary McKnight",
     "province": "AB",
-    "estimated_rent_1br_cad": 1103,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
+    "estimated_rent_1br_cad": 1011,
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
   {
     "riding_name": "Calgary Heritage",
     "province": "AB",
-    "estimated_rent_1br_cad": 1103,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
-    "sample_size": 2,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 960,
+    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Calgary East",
     "province": "AB",
-    "estimated_rent_1br_cad": 1103,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
+    "estimated_rent_1br_cad": 1011,
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
   {
     "riding_name": "Calgary Crowfoot",
     "province": "AB",
-    "estimated_rent_1br_cad": 1034,
-    "data_source": "Hybrid blend: active listings (N=1, 10% weight) + Census baseline (adjusted by AB Rent CPI)",
-    "sample_size": 1,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 960,
+    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Calgary Confederation",
     "province": "AB",
-    "estimated_rent_1br_cad": 1103,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
+    "estimated_rent_1br_cad": 1011,
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
   {
     "riding_name": "Calgary Centre",
     "province": "AB",
-    "estimated_rent_1br_cad": 1535,
-    "data_source": "Hybrid blend: active listings (N=2, 20% weight) + Census baseline (adjusted by AB Rent CPI)",
+    "estimated_rent_1br_cad": 1507,
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -786,48 +786,48 @@
   {
     "riding_name": "Vancouver Quadra",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
+    "estimated_rent_1br_cad": 1144,
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
   {
     "riding_name": "Vancouver Kingsway",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
+    "estimated_rent_1br_cad": 1144,
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
   {
     "riding_name": "Vancouver Granville",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
+    "estimated_rent_1br_cad": 1144,
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
   {
     "riding_name": "Vancouver Fraserview—South Burnaby",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
-    "sample_size": 3,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 976,
+    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Vancouver East",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
+    "estimated_rent_1br_cad": 1144,
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
   {
     "riding_name": "Vancouver Centre",
     "province": "BC",
-    "estimated_rent_1br_cad": 2463,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
+    "estimated_rent_1br_cad": 2325,
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
@@ -882,18 +882,18 @@
   {
     "riding_name": "Richmond East—Steveston",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
-    "sample_size": 3,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 976,
+    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Richmond Centre—Marpole",
     "province": "BC",
-    "estimated_rent_1br_cad": 1523,
-    "data_source": "Hybrid blend: active listings (N=3, 30% weight) + Census baseline (adjusted by BC Rent CPI)",
-    "sample_size": 3,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 976,
+    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Prince George—Peace River—Northern Rockies",
@@ -1218,18 +1218,18 @@
   {
     "riding_name": "Etobicoke—Lakeshore",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Etobicoke Centre",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Essex",
@@ -1250,9 +1250,9 @@
   {
     "riding_name": "Eglinton—Lawrence",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
@@ -1346,9 +1346,9 @@
   {
     "riding_name": "Beaches—East York",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
@@ -1626,10 +1626,10 @@
   {
     "riding_name": "York South—Weston—Etobicoke",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "York—Durham",
@@ -1642,10 +1642,10 @@
   {
     "riding_name": "York Centre",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Windsor West",
@@ -1666,10 +1666,10 @@
   {
     "riding_name": "Willowdale",
     "province": "ON",
-    "estimated_rent_1br_cad": 1085,
-    "data_source": "Hybrid blend: active listings (N=1, 10% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 1,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Whitby",
@@ -1706,33 +1706,33 @@
   {
     "riding_name": "University—Rosedale",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
     "riding_name": "Toronto—St. Paul's",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
     "riding_name": "Toronto—Danforth",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
     "riding_name": "Toronto Centre",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
@@ -1762,9 +1762,9 @@
   {
     "riding_name": "Taiaiako'n—Parkdale—High Park",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
@@ -1802,9 +1802,9 @@
   {
     "riding_name": "Spadina—Harbourfront",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
@@ -1834,10 +1834,10 @@
   {
     "riding_name": "Scarborough Southwest",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Scarborough North",
@@ -1858,10 +1858,10 @@
   {
     "riding_name": "Scarborough Centre—Don Valley East",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Scarborough—Agincourt",
@@ -2410,25 +2410,25 @@
   {
     "riding_name": "Don Valley West",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1163,
+    "data_source": "Hybrid blend: market listings (N=5, 20% weight) + Census baseline (CPI-adjusted, 80% weight)",
+    "sample_size": 5,
     "confidence": "low"
   },
   {
     "riding_name": "Don Valley North",
     "province": "ON",
-    "estimated_rent_1br_cad": 1085,
-    "data_source": "Hybrid blend: active listings (N=1, 10% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 1,
-    "confidence": "low"
+    "estimated_rent_1br_cad": 944,
+    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "sample_size": 0,
+    "confidence": "baseline"
   },
   {
     "riding_name": "Davenport",
     "province": "ON",
-    "estimated_rent_1br_cad": 1546,
-    "data_source": "Hybrid blend: active listings (N=4, 40% weight) + Census baseline (adjusted by ON Rent CPI)",
-    "sample_size": 4,
+    "estimated_rent_1br_cad": 1217,
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "sample_size": 6,
     "confidence": "low"
   },
   {
@@ -2514,8 +2514,8 @@
   {
     "riding_name": "Moncton—Dieppe",
     "province": "NB",
-    "estimated_rent_1br_cad": 955,
-    "data_source": "Hybrid blend: active listings (N=1, 10% weight) + Census baseline (adjusted by NB Rent CPI)",
+    "estimated_rent_1br_cad": 936,
+    "data_source": "Hybrid blend: market listings (N=1, 4% weight) + Census baseline (CPI-adjusted, 96% weight)",
     "sample_size": 1,
     "confidence": "low"
   },
