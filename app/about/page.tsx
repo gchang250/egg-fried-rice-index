@@ -11,7 +11,7 @@ const CARDS = [
   {
     title: 'What the index does',
     body: [
-      "For all 343 federal ridings, it compares a real median 1BR rental cost against each riding's real median individual monthly income.",
+      "For all Canadian federal ridings, it compares a real median 1BR rental cost against each riding's real median individual monthly income.",
       "By calculating the resulting Rent Burden (the percentage of income spent on a single housing unit), the index provides a currency-neutral view of relative regional affordability and discretionary purchasing power."
     ],
   },

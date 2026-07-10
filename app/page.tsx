@@ -387,7 +387,7 @@ export default function Home() {
       <header style={{ paddingTop: 112 }}>
         <div style={WRAP}>
           <h1 style={{ fontSize: 'clamp(36px, 4.6vw, 60px)', lineHeight: 1.08, letterSpacing: '-.03em', fontWeight: 600, maxWidth: '16ch', margin: '0 0 20px' }}>
-            Cost of living across {cities.length || 343} federal ridings.
+            Cost of living across Canada.
           </h1>
 
           <p style={{ maxWidth: '58ch', color: 'var(--color-text-2)', fontSize: 19, lineHeight: 1.55, margin: '0 0 32px' }}>
