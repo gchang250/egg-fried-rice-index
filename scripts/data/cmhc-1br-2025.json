@@ -1,0 +1,678 @@
+{
+ "Corner Brook, Newfoundland and Labrador": {
+  "rent_1br_2025": 776,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Gander, Newfoundland and Labrador": {
+  "rent_1br_2025": 849,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Grand Falls-Windsor, Newfoundland and Labrador": {
+  "rent_1br_2025": 620,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "St. John's, Newfoundland and Labrador": {
+  "rent_1br_2025": 1064,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Charlottetown, Prince Edward Island": {
+  "rent_1br_2025": 1066,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Summerside, Prince Edward Island": {
+  "rent_1br_2025": 963,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Cape Breton, Nova Scotia": {
+  "rent_1br_2025": 840,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Halifax, Nova Scotia": {
+  "rent_1br_2025": 1539,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kentville, Nova Scotia": {
+  "rent_1br_2025": 1044,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "New Glasgow, Nova Scotia": {
+  "rent_1br_2025": 842,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Truro, Nova Scotia": {
+  "rent_1br_2025": 1011,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Bathurst, New Brunswick": {
+  "rent_1br_2025": 776,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Campbellton, New Brunswick part, New Brunswick/Quebec": {
+  "rent_1br_2025": 851,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Edmundston, New Brunswick": {
+  "rent_1br_2025": 716,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Fredericton, New Brunswick": {
+  "rent_1br_2025": 1208,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Miramichi, New Brunswick": {
+  "rent_1br_2025": 662,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Moncton, New Brunswick": {
+  "rent_1br_2025": 1164,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saint John, New Brunswick": {
+  "rent_1br_2025": 1001,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Alma, Quebec": {
+  "rent_1br_2025": 583,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Amos, Quebec": {
+  "rent_1br_2025": 930,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Baie-Comeau, Quebec": {
+  "rent_1br_2025": 728,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Cowansville, Quebec": {
+  "rent_1br_2025": 796,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Dolbeau-Mistassini, Quebec": {
+  "rent_1br_2025": 484,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Drummondville, Quebec": {
+  "rent_1br_2025": 904,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Gaspé, Quebec": {
+  "rent_1br_2025": 688,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Ottawa-Gatineau, Quebec part, Ontario/Quebec": {
+  "rent_1br_2025": 1362,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Granby, Quebec": {
+  "rent_1br_2025": 884,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Joliette, Quebec": {
+  "rent_1br_2025": 796,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "La Tuque, Quebec": {
+  "rent_1br_2025": 523,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Lachute, Quebec": {
+  "rent_1br_2025": 806,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Les Îles-de-la-Madeleine, Quebec": {
+  "rent_1br_2025": 780,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Matane, Quebec": {
+  "rent_1br_2025": 613,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Mont-Laurier, Quebec": {
+  "rent_1br_2025": 598,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Montmagny, Quebec": {
+  "rent_1br_2025": 654,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Montréal, Quebec": {
+  "rent_1br_2025": 1131,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Prévost, Quebec": {
+  "rent_1br_2025": 747,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Québec, Quebec": {
+  "rent_1br_2025": 1107,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Rawdon, Quebec": {
+  "rent_1br_2025": 743,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Rimouski, Quebec": {
+  "rent_1br_2025": 756,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Rivière-du-Loup, Quebec": {
+  "rent_1br_2025": 693,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Rouyn-Noranda, Quebec": {
+  "rent_1br_2025": 681,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saint-Félicien, Quebec": {
+  "rent_1br_2025": 542,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saint-Georges, Quebec": {
+  "rent_1br_2025": 617,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saint-Hyacinthe, Quebec": {
+  "rent_1br_2025": 964,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sainte-Adèle, Quebec": {
+  "rent_1br_2025": 773,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sainte-Marie, Quebec": {
+  "rent_1br_2025": 851,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sainte- Sophie, Quebec": {
+  "rent_1br_2025": 997,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saguenay, Quebec": {
+  "rent_1br_2025": 762,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Salaberry-de-Valleyfield, Quebec": {
+  "rent_1br_2025": 773,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sept-Îles, Quebec": {
+  "rent_1br_2025": 819,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Shawinigan, Quebec": {
+  "rent_1br_2025": 658,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sherbrooke, Quebec": {
+  "rent_1br_2025": 905,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sorel-Tracy, Quebec": {
+  "rent_1br_2025": 677,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Thetford Mines, Quebec": {
+  "rent_1br_2025": 663,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Trois-Rivières, Quebec": {
+  "rent_1br_2025": 828,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Val-d'Or, Quebec": {
+  "rent_1br_2025": 793,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Victoriaville, Quebec": {
+  "rent_1br_2025": 817,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Barrie, Ontario": {
+  "rent_1br_2025": 1583,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Bracebridge, Ontario": {
+  "rent_1br_2025": 1165,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Brantford, Ontario": {
+  "rent_1br_2025": 1448,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Brock, Ontario": {
+  "rent_1br_2025": 1030,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Brockville, Ontario": {
+  "rent_1br_2025": 1140,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Centre Wellington, Ontario": {
+  "rent_1br_2025": 1298,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Chatham-Kent, Ontario": {
+  "rent_1br_2025": 1203,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Cobourg, Ontario": {
+  "rent_1br_2025": 1320,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Collingwood, Ontario": {
+  "rent_1br_2025": 1418,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Cornwall, Ontario": {
+  "rent_1br_2025": 1082,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Elliot Lake, Ontario": {
+  "rent_1br_2025": 789,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Gravenhurst, Ontario": {
+  "rent_1br_2025": 1269,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Greater Napanee, Ontario": {
+  "rent_1br_2025": 1066,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Greater Sudbury, Ontario": {
+  "rent_1br_2025": 1244,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Guelph, Ontario": {
+  "rent_1br_2025": 1627,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Haldimand County, Ontario": {
+  "rent_1br_2025": 1132,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Hamilton, Ontario": {
+  "rent_1br_2025": 1402,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Hawkesbury, Ontario part, Ontario/Quebec": {
+  "rent_1br_2025": 764,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Huntsville, Ontario": {
+  "rent_1br_2025": 1514,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Ingersoll, Ontario": {
+  "rent_1br_2025": 1124,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kawartha Lakes, Ontario": {
+  "rent_1br_2025": 1311,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kenora, Ontario": {
+  "rent_1br_2025": 1005,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kings Subdivision, Ontario": {
+  "rent_1br_2025": 823,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kingston, Ontario": {
+  "rent_1br_2025": 1503,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kitchener-Cambridge-Waterloo, Ontario": {
+  "rent_1br_2025": 1546,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "London, Ontario": {
+  "rent_1br_2025": 1371,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Meaford, Ontario": {
+  "rent_1br_2025": 919,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Midland, Ontario": {
+  "rent_1br_2025": 1290,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Norfolk, Ontario": {
+  "rent_1br_2025": 1004,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "North Bay, Ontario": {
+  "rent_1br_2025": 1078,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "North Perth, Ontario": {
+  "rent_1br_2025": 1398,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Orillia, Ontario": {
+  "rent_1br_2025": 1475,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Oshawa, Ontario": {
+  "rent_1br_2025": 1586,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Ottawa-Gatineau, Ontario/Quebec": {
+  "rent_1br_2025": 1542,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Ottawa-Gatineau, Ontario part, Ontario/Quebec": {
+  "rent_1br_2025": 1593,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Owen Sound, Ontario": {
+  "rent_1br_2025": 1130,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Pembroke, Ontario": {
+  "rent_1br_2025": 953,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Petawawa, Ontario": {
+  "rent_1br_2025": 1079,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Peterborough, Ontario": {
+  "rent_1br_2025": 1232,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Port Hope, Ontario": {
+  "rent_1br_2025": 1536,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Prince Edward, Ontario": {
+  "rent_1br_2025": 1337,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "St. Catharines-Niagara, Ontario": {
+  "rent_1br_2025": 1318,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sarnia, Ontario": {
+  "rent_1br_2025": 1235,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saugeen Shores, Ontario": {
+  "rent_1br_2025": 1177,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sault Ste. Marie, Ontario": {
+  "rent_1br_2025": 1167,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Scugog, Ontario": {
+  "rent_1br_2025": 1117,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Stratford, Ontario": {
+  "rent_1br_2025": 1508,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "The Nation, Ontario": {
+  "rent_1br_2025": 1062,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Thunder Bay, Ontario": {
+  "rent_1br_2025": 1173,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Tillsonburg, Ontario": {
+  "rent_1br_2025": 1195,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Timmins, Ontario": {
+  "rent_1br_2025": 1177,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Toronto, Ontario": {
+  "rent_1br_2025": 1761,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "West Nipissing, Ontario": {
+  "rent_1br_2025": 852,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Windsor, Ontario": {
+  "rent_1br_2025": 1193,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Woodstock, Ontario": {
+  "rent_1br_2025": 1409,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Brandon, Manitoba": {
+  "rent_1br_2025": 810,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Portage La Prairie, Manitoba": {
+  "rent_1br_2025": 829,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Steinbach, Manitoba": {
+  "rent_1br_2025": 944,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Thompson, Manitoba": {
+  "rent_1br_2025": 1007,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Winnipeg, Manitoba": {
+  "rent_1br_2025": 1232,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Estevan, Saskatchewan": {
+  "rent_1br_2025": 863,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Lloydminster, Saskatchewan part, Saskatchewan/Alberta": {
+  "rent_1br_2025": 1123,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Moose Jaw, Saskatchewan": {
+  "rent_1br_2025": 997,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "North Battleford, Saskatchewan": {
+  "rent_1br_2025": 924,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Prince Albert, Saskatchewan": {
+  "rent_1br_2025": 1073,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Regina, Saskatchewan": {
+  "rent_1br_2025": 1240,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Saskatoon, Saskatchewan": {
+  "rent_1br_2025": 1281,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Swift Current, Saskatchewan": {
+  "rent_1br_2025": 830,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Yorkton, Saskatchewan": {
+  "rent_1br_2025": 1076,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Brooks, Alberta": {
+  "rent_1br_2025": 1176,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Calgary, Alberta": {
+  "rent_1br_2025": 1581,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Camrose, Alberta": {
+  "rent_1br_2025": 1228,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Canmore, Alberta": {
+  "rent_1br_2025": 1858,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Cold Lake, Alberta": {
+  "rent_1br_2025": 1092,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Edmonton, Alberta": {
+  "rent_1br_2025": 1301,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Grande Prairie, Alberta": {
+  "rent_1br_2025": 1223,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "High River, Alberta": {
+  "rent_1br_2025": 1106,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Lacombe, Alberta": {
+  "rent_1br_2025": 1157,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Lethbridge, Alberta": {
+  "rent_1br_2025": 1370,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Lloydminster, Alberta part, Saskachewan/Alberta": {
+  "rent_1br_2025": 1130,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Medicine Hat, Alberta": {
+  "rent_1br_2025": 1120,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Red Deer, Alberta": {
+  "rent_1br_2025": 1220,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Strathmore, Alberta": {
+  "rent_1br_2025": 1283,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Sylvan Lake, Alberta": {
+  "rent_1br_2025": 1355,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Wetaskiwin, Alberta": {
+  "rent_1br_2025": 984,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Wood Buffalo, Alberta": {
+  "rent_1br_2025": 1199,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Abbotsford-Mission, British Columbia": {
+  "rent_1br_2025": 1278,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Campbell River, British Columbia": {
+  "rent_1br_2025": 1282,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Chilliwack, British Columbia": {
+  "rent_1br_2025": 1222,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Courtenay, British Columbia": {
+  "rent_1br_2025": 1459,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Cranbrook, British Columbia": {
+  "rent_1br_2025": 1052,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Dawson Creek, British Columbia": {
+  "rent_1br_2025": 959,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Duncan, British Columbia": {
+  "rent_1br_2025": 1283,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Fort St. John, British Columbia": {
+  "rent_1br_2025": 917,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kamloops, British Columbia": {
+  "rent_1br_2025": 1345,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Kelowna, British Columbia": {
+  "rent_1br_2025": 1597,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Nanaimo, British Columbia": {
+  "rent_1br_2025": 1527,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Parksville, British Columbia": {
+  "rent_1br_2025": 1546,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Penticton, British Columbia": {
+  "rent_1br_2025": 1197,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Port Alberni, British Columbia": {
+  "rent_1br_2025": 994,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Powell River, British Columbia": {
+  "rent_1br_2025": 957,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Prince George, British Columbia": {
+  "rent_1br_2025": 1214,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Prince Rupert, British Columbia": {
+  "rent_1br_2025": 1143,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Quesnel, British Columbia": {
+  "rent_1br_2025": 889,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Salmon Arm, British Columbia": {
+  "rent_1br_2025": 1151,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Squamish, British Columbia": {
+  "rent_1br_2025": 1626,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Summerland, British Columbia": {
+  "rent_1br_2025": 1349,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Vancouver, British Columbia": {
+  "rent_1br_2025": 1807,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Vernon, British Columbia": {
+  "rent_1br_2025": 1234,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Victoria, British Columbia": {
+  "rent_1br_2025": 1624,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Williams Lake, British Columbia": {
+  "rent_1br_2025": 1082,
+  "structure": "Row and apartment structures of three units and over"
+ },
+ "Yellowknife, Northwest Territories": {
+  "rent_1br_2025": 1757,
+  "structure": "Row and apartment structures of three units and over"
+ }
+}

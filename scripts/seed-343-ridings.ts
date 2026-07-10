@@ -30,14 +30,13 @@ const NOW = new Date().toISOString()
 // Real data for all 343 federal ridings under the 2023 Representation Order:
 //  - fed_num, name, province, latitude, longitude: Elections Canada boundary
 //    data via the Represent API (OpenNorth), matches public/ridings.json.
-//  - median_total_income_annual, median_employment_income_annual: Statistics
-//    Canada Census Profile, 2021, Federal electoral district (2023
-//    Representation Order), catalogue 98-401-X2021029, reference year 2020.
+//  - median_total_income_annual, median_employment_income_annual,
+//    median_household_income_annual: Statistics Canada Census Profile, 2021,
+//    Federal electoral district (2023 Representation Order), catalogue
+//    98-401-X2021029, reference year 2020.
 //  - party_2025, elected_candidate: Elections Canada, official voting
 //    results, 45th general election (April 28, 2025), Table 11.
 //  - population_2025, registered_electors_2025: same Elections Canada table.
-//  - safety (in ZONES below): Statistics Canada Crime Severity Index, 2024
-//    (table 35-10-0026-01), by nearest surveyed CMA.
 type RidingReal = {
   fed_num: string
   name: string
@@ -46,6 +45,7 @@ type RidingReal = {
   longitude: number
   median_total_income_annual: number
   median_employment_income_annual: number
+  median_household_income_annual: number
   party_2025: string
   elected_candidate: string
   population_2025: number
@@ -53,6 +53,29 @@ type RidingReal = {
 }
 const RIDINGS: RidingReal[] = JSON.parse(
   fs.readFileSync(path.resolve(process.cwd(), 'scripts/data/ridings-real-data.json'), 'utf-8')
+)
+
+// Rent and safety, assigned to each riding by nearest surveyed metro, because
+// neither agency publishes at the riding level. Built by
+// scripts/data/build-metro-assignments.py; see that file for the derivation.
+//  - rent_1br_cad: CMHC Rental Market Survey 2025, average rent for a
+//    one-bedroom unit (StatCan table 34-10-0133-01).
+//  - csi / safety_index: Statistics Canada Crime Severity Index, 2024 (table
+//    35-10-0026-01), rescaled to a 0-100 "higher is safer" score via
+//    100 - CSI/2, clamped to 5-95.
+// Distance is measured from the surveyed centre to the riding's 2023 boundary
+// polygon, so a centre inside the riding scores 0 km.
+type MetroAssignment = {
+  rent_1br_cad: number
+  rent_metro: string
+  rent_distance_km: number
+  csi: number
+  csi_geo: string
+  csi_distance_km: number | null
+  safety_index: number
+}
+const ASSIGNMENTS: Record<string, MetroAssignment> = JSON.parse(
+  fs.readFileSync(path.resolve(process.cwd(), 'scripts/data/metro-assignments.json'), 'utf-8')
 )
 
 function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -64,81 +87,10 @@ function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): nu
   return 2 * R * Math.asin(Math.sqrt(a))
 }
 
-// Deterministic pseudo-random in [0,1) from a string, used only for the
-// remaining fields with no real per-riding public data source (safety,
-// healthcare wait, internet speed). See methodology page.
-function hashUnit(seed: string): number {
-  let h = 2166136261
-  for (let i = 0; i < seed.length; i++) {
-    h ^= seed.charCodeAt(i)
-    h = Math.imul(h, 16777619)
-  }
-  return ((h >>> 0) % 100000) / 100000
-}
-
-// Rent: Realistic 2025/2026 market-asking 1BR rents (downtown core, suburban, and rural tiers).
-// Safety: Statistics Canada Crime Severity Index, 2024 (table 35-10-0026-01),
-// rescaled to a 0-100 "higher is safer" score (raw = 100 - CSI/2, clamped 5-95)
-// so it's comparable to the site's existing safety display.
-// Both are real survey/administrative data, assigned by nearest surveyed metro
-// since neither StatCan nor CMHC publish at the riding level.
-type Zone = { name: string; anchor?: [number, number]; maxRadiusKm?: number; rent: number; safety: number }
-
-const ZONES: Record<string, Zone[]> = {
-  ON: [
-    { name: 'Toronto Core', anchor: [43.6532, -79.3832], maxRadiusKm: 12, rent: 2950, safety: 70 },
-    { name: 'Toronto GTA', anchor: [43.6532, -79.3832], maxRadiusKm: 60, rent: 2150, safety: 72 },
-    { name: 'Ottawa Core', anchor: [45.4215, -75.6972], maxRadiusKm: 25, rent: 1750, safety: 72 },
-    { name: 'Hamilton Core', anchor: [43.2557, -79.8711], maxRadiusKm: 40, rent: 1550, safety: 71 },
-    { name: 'Ontario (fallback)', rent: 1350, safety: 46 },
-  ],
-  QC: [
-    { name: 'Montréal Core', anchor: [45.5017, -73.5673], maxRadiusKm: 15, rent: 1750, safety: 69 },
-    { name: 'Montréal Metro', anchor: [45.5017, -73.5673], maxRadiusKm: 60, rent: 1350, safety: 71 },
-    { name: 'Québec Core', anchor: [46.8139, -71.2080], maxRadiusKm: 30, rent: 1250, safety: 72 },
-    { name: 'Quebec (fallback)', rent: 950, safety: 73 },
-  ],
-  BC: [
-    { name: 'Vancouver Core', anchor: [49.2827, -123.1207], maxRadiusKm: 12, rent: 3100, safety: 59 },
-    { name: 'Vancouver Metro', anchor: [49.2827, -123.1207], maxRadiusKm: 50, rent: 2250, safety: 62 },
-    { name: 'Victoria Core', anchor: [48.4284, -123.3656], maxRadiusKm: 30, rent: 1850, safety: 64 },
-    { name: 'BC (fallback)', rent: 1500, safety: 46 },
-  ],
-  AB: [
-    { name: 'Calgary Core', anchor: [51.0447, -114.0719], maxRadiusKm: 30, rent: 1850, safety: 69 },
-    { name: 'Edmonton Core', anchor: [53.5461, -113.4938], maxRadiusKm: 30, rent: 1450, safety: 49 },
-    { name: 'Alberta (fallback)', rent: 1250, safety: 47 },
-  ],
-  SK: [{ name: 'Saskatchewan', rent: 1100, safety: 23 }],
-  MB: [{ name: 'Winnipeg', rent: 1200, safety: 38 }],
-  NS: [{ name: 'Halifax', rent: 1650, safety: 63 }],
-  NB: [{ name: 'New Brunswick', rent: 1100, safety: 53 }],
-  NL: [{ name: "St. John's", rent: 1100, safety: 62 }],
-  PE: [{ name: 'Charlottetown', rent: 1150, safety: 64 }],
-  YT: [{ name: 'Yukon (estimate)', rent: 1600, safety: 5 }],
-  NT: [{ name: 'Northwest Territories (estimate)', rent: 1750, safety: 5 }],
-  NU: [{ name: 'Nunavut (estimate)', rent: 1950, safety: 5 }],
-}
-
-function pickZone(prov: string, lat: number, lon: number): Zone {
-  const zones = ZONES[prov]
-  const fallback = zones[zones.length - 1]
-  let best: Zone | null = null
-  let bestDist = Infinity
-  for (const z of zones) {
-    if (!z.anchor || !z.maxRadiusKm) continue
-    const dist = haversineKm(lat, lon, z.anchor[0], z.anchor[1])
-    if (dist <= z.maxRadiusKm && dist < bestDist) {
-      best = z
-      bestDist = dist
-    }
-  }
-  return best ?? fallback
-}
-
 // French mother-tongue share, provincial tax-bracket tier, and healthcare
 // wait-time label have no equivalent real per-riding source in this pass,
-// so they're left as qualitative, zone-level estimates (documented in methodology).
+// so they're left as qualitative, zone-level estimates. Nothing on the site
+// presents these as sourced government data.
 type QualZone = { anchor?: [number, number]; maxRadiusKm?: number; french: number; tax: string; wait: string }
 const QUAL_ZONES: Record<string, QualZone[]> = {
   ON: [
@@ -202,12 +154,20 @@ async function run() {
 
   const citiesToInsert = RIDINGS.map(riding => {
     const { name, province: prov, latitude, longitude } = riding
-    const zone = pickZone(prov, latitude, longitude)
+    const assign = ASSIGNMENTS[riding.fed_num]
+    if (!assign) throw new Error(`No metro assignment for riding ${riding.fed_num} (${name})`)
     const qualZone = pickQualZone(prov, latitude, longitude)
 
-    const salaryVal = Math.round((riding.median_total_income_annual / 12) * 1.025)
-    const employmentSalaryVal = Math.round((riding.median_employment_income_annual / 12) * 2.433)
-    const rentVal = zone.rent
+    // Straight monthly conversions of the real annual census medians. No
+    // adjustment factors: the site states these figures are the census values.
+    const salaryVal = Math.round(riding.median_total_income_annual / 12)
+    const householdSalaryVal = Math.round(riding.median_household_income_annual / 12)
+    const rentVal = assign.rent_1br_cad
+
+    const rentSource =
+      `CMHC Rental Market Survey 2025, average one-bedroom rent for ` +
+      `${assign.rent_metro} (Statistics Canada table 34-10-0133-01); ` +
+      `nearest surveyed centre, ${assign.rent_distance_km} km from this riding`
 
     return {
       city: name,
@@ -221,12 +181,12 @@ async function run() {
       blurb: `Federal electoral district riding of ${name}, ${prov}. Represented by ${riding.elected_candidate} (${riding.party_2025}) following the 2025 general election.`,
       median_rent_1br_cad: rentVal,
       median_monthly_salary_cad: salaryVal,
-      tech_salary_cad: employmentSalaryVal,
-      safety_index: zone.safety,
+      tech_salary_cad: householdSalaryVal,
+      safety_index: assign.safety_index,
       healthcare_index: null,
       avg_internet_mbps: null,
       salary_data_source: 'Statistics Canada Census Profile 2021 (98-401-X2021029), ref. year 2020',
-      rent_data_source: zone.name + ', CMHC Rental Market Survey 2025 (StatCan table 34-10-0133-01)',
+      rent_data_source: rentSource,
       median_rent_local: null,
       english_proficiency: qualZone.tax,
       visa_ease: qualZone.wait,

@@ -1,0 +1,1040 @@
+{
+"Corner Brook, Newfoundland and Labrador": {
+"lat": 48.941111,
+"lon": -57.970278,
+"matched": "Corner Brook",
+"query": "Corner Brook"
+},
+"Gander, Newfoundland and Labrador": {
+"lat": 48.957189,
+"lon": -54.588561,
+"matched": "Gander",
+"query": "Gander"
+},
+"Grand Falls-Windsor, Newfoundland and Labrador": {
+"lat": 48.9640028,
+"lon": -55.6644417,
+"matched": "Grand Falls-Windsor",
+"query": "Grand Falls-Windsor"
+},
+"St. John's, Newfoundland and Labrador": {
+"lat": 47.482197,
+"lon": -52.797069,
+"matched": "St. John's",
+"query": "St. John's"
+},
+"Charlottetown, Prince Edward Island": {
+"lat": 46.240278,
+"lon": -63.134722,
+"matched": "Charlottetown",
+"query": "Charlottetown"
+},
+"Summerside, Prince Edward Island": {
+"lat": 46.395833,
+"lon": -63.788889,
+"matched": "Summerside",
+"query": "Summerside"
+},
+"Cape Breton, Nova Scotia": {
+"lat": 46.000069,
+"lon": -60.315896,
+"matched": "Cape Breton",
+"query": "Cape Breton"
+},
+"Halifax, Nova Scotia": {
+"lat": 44.647401,
+"lon": -63.590651,
+"matched": "Halifax",
+"query": "Halifax"
+},
+"Kentville, Nova Scotia": {
+"lat": 45.077707,
+"lon": -64.495306,
+"matched": "Kentville",
+"query": "Kentville"
+},
+"New Glasgow, Nova Scotia": {
+"lat": 45.589332,
+"lon": -62.64479,
+"matched": "New Glasgow",
+"query": "New Glasgow"
+},
+"Truro, Nova Scotia": {
+"lat": 45.364959,
+"lon": -63.279847,
+"matched": "Truro",
+"query": "Truro"
+},
+"Bathurst, New Brunswick": {
+"lat": 47.626111,
+"lon": -65.628333,
+"matched": "Bathurst",
+"query": "Bathurst"
+},
+"Campbellton, New Brunswick part, New Brunswick/Quebec": {
+"lat": 47.999336,
+"lon": -66.683511,
+"matched": "Campbellton",
+"query": "Campbellton,"
+},
+"Edmundston, New Brunswick": {
+"lat": 47.377222,
+"lon": -68.294444,
+"matched": "Edmundston",
+"query": "Edmundston"
+},
+"Fredericton, New Brunswick": {
+"lat": 45.945278,
+"lon": -66.666667,
+"matched": "Fredericton",
+"query": "Fredericton"
+},
+"Miramichi, New Brunswick": {
+"lat": 46.7253469797194,
+"lon": -65.834330642518,
+"matched": "Miramichi River Valley",
+"query": "Miramichi"
+},
+"Moncton, New Brunswick": {
+"lat": 46.099479,
+"lon": -64.799802,
+"matched": "Moncton",
+"query": "Moncton"
+},
+"Saint John, New Brunswick": {
+"lat": 45.259167,
+"lon": -66.038889,
+"matched": "Saint John",
+"query": "Saint John"
+},
+"Alma, Quebec": {
+"lat": 48.549702,
+"lon": -71.653425,
+"matched": "Alma",
+"query": "Alma"
+},
+"Amos, Quebec": {
+"lat": 48.564766,
+"lon": -78.11275,
+"matched": "Amos",
+"query": "Amos"
+},
+"Baie-Comeau, Quebec": {
+"lat": 49.220927,
+"lon": -68.149305,
+"matched": "Baie-Comeau",
+"query": "Baie-Comeau"
+},
+"Cowansville, Quebec": {
+"lat": 45.2047,
+"lon": -72.74086,
+"matched": "Cowansville",
+"query": "Cowansville"
+},
+"Dolbeau-Mistassini, Quebec": {
+"lat": 48.87651,
+"lon": -72.225957,
+"matched": "Dolbeau-Mistassini",
+"query": "Dolbeau-Mistassini"
+},
+"Drummondville, Quebec": {
+"lat": 45.880577,
+"lon": -72.484058,
+"matched": "Drummondville",
+"query": "Drummondville"
+},
+"Gaspé, Quebec": {
+"lat": 48.824618,
+"lon": -64.476254,
+"matched": "Gaspé",
+"query": "Gaspé"
+},
+"Ottawa-Gatineau, Quebec part, Ontario/Quebec": {
+"lat": 45.33339,
+"lon": -75.58429,
+"matched": "Ottawa",
+"query": "Ottawa"
+},
+"Granby, Quebec": {
+"lat": 45.398555,
+"lon": -72.722249,
+"matched": "Granby",
+"query": "Granby"
+},
+"Joliette, Quebec": {
+"lat": 46.023541,
+"lon": -73.442666,
+"matched": "Joliette",
+"query": "Joliette"
+},
+"La Tuque, Quebec": {
+"lat": 47.44078,
+"lon": -72.781466,
+"matched": "La Tuque",
+"query": "La Tuque"
+},
+"Lachute, Quebec": {
+"lat": 45.6558,
+"lon": -74.338846,
+"matched": "Lachute",
+"query": "Lachute"
+},
+"Les Îles-de-la-Madeleine, Quebec": {
+"lat": 47.375438,
+"lon": -61.870302,
+"matched": "Les Îles-de-la-Madeleine",
+"query": "Les Îles-de-la-Madeleine"
+},
+"Matane, Quebec": {
+"lat": 48.843238,
+"lon": -67.530435,
+"matched": "Saint-Luc-de-Matane",
+"query": "Matane"
+},
+"Mont-Laurier, Quebec": {
+"lat": 46.548144,
+"lon": -75.503619,
+"matched": "Mont-Laurier",
+"query": "Mont-Laurier"
+},
+"Montmagny, Quebec": {
+"lat": 46.981118,
+"lon": -70.557452,
+"matched": "Montmagny",
+"query": "Montmagny"
+},
+"Montréal, Quebec": {
+"lat": 45.508822,
+"lon": -73.554077,
+"matched": "Montréal-Nord",
+"query": "Montréal"
+},
+"Prévost, Quebec": {
+"lat": 45.866666,
+"lon": -74.083333,
+"matched": "Circonscription électorale de Prévost",
+"query": "Prévost"
+},
+"Québec, Quebec": {
+"lat": 46.813819,
+"lon": -71.207997,
+"matched": "Québec",
+"query": "Québec"
+},
+"Rawdon, Quebec": {
+"lat": 46.042371,
+"lon": -73.707475,
+"matched": "Rawdon",
+"query": "Rawdon"
+},
+"Rimouski, Quebec": {
+"lat": 48.449138,
+"lon": -68.525096,
+"matched": "Rimouski-Est",
+"query": "Rimouski"
+},
+"Rivière-du-Loup, Quebec": {
+"lat": 47.835752,
+"lon": -69.536608,
+"matched": "Saint-Patrice-de-la-Rivière-du-Loup",
+"query": "Rivière-du-Loup"
+},
+"Rouyn-Noranda, Quebec": {
+"lat": 48.2372222,
+"lon": -79.0169444,
+"matched": "Rouyn-Noranda",
+"query": "Rouyn-Noranda"
+},
+"Saint-Félicien, Quebec": {
+"lat": 48.652725,
+"lon": -72.446691,
+"matched": "Saint-Félicien",
+"query": "Saint-Félicien"
+},
+"Saint-Georges, Quebec": {
+"lat": 46.122938,
+"lon": -70.671163,
+"matched": "Saint-Georges-Est",
+"query": "Saint-Georges"
+},
+"Saint-Hyacinthe, Quebec": {
+"lat": 45.633333,
+"lon": -72.9,
+"matched": "Circonscription électorale de Saint-Hyacinthe",
+"query": "Saint-Hyacinthe"
+},
+"Sainte-Adèle, Quebec": {
+"lat": 45.955355,
+"lon": -74.139374,
+"matched": "Sainte-Adèle",
+"query": "Sainte-Adèle"
+},
+"Sainte-Marie, Quebec": {
+"lat": 46.43838,
+"lon": -71.02131,
+"matched": "Sainte-Marie",
+"query": "Sainte-Marie"
+},
+"Sainte- Sophie, Quebec": {
+"lat": 45.8166666,
+"lon": -73.9,
+"matched": "Sainte-Sophie",
+"query": "Sainte- Sophie"
+},
+"Saguenay, Quebec": {
+"lat": 48.428221,
+"lon": -71.062202,
+"matched": "Saguenay",
+"query": "Saguenay"
+},
+"Salaberry-de-Valleyfield, Quebec": {
+"lat": 45.255397,
+"lon": -74.131552,
+"matched": "Salaberry-de-Valleyfield",
+"query": "Salaberry-de-Valleyfield"
+},
+"Sept-Îles, Quebec": {
+"lat": 50.209655,
+"lon": -66.38518,
+"matched": "Sept-Îles",
+"query": "Sept-Îles"
+},
+"Shawinigan, Quebec": {
+"lat": 46.541088,
+"lon": -72.74521,
+"matched": "Shawinigan-Sud",
+"query": "Shawinigan"
+},
+"Sherbrooke, Quebec": {
+"lat": 45.404047,
+"lon": -71.893171,
+"matched": "Sherbrooke",
+"query": "Sherbrooke"
+},
+"Sorel-Tracy, Quebec": {
+"lat": 46.0436111,
+"lon": -73.1130556,
+"matched": "Sorel-Tracy",
+"query": "Sorel-Tracy"
+},
+"Thetford Mines, Quebec": {
+"lat": 46.088908,
+"lon": -71.301952,
+"matched": "Thetford Mines",
+"query": "Thetford Mines"
+},
+"Trois-Rivières, Quebec": {
+"lat": 46.343077,
+"lon": -72.543383,
+"matched": "Trois-Rivières-Ouest",
+"query": "Trois-Rivières"
+},
+"Val-d'Or, Quebec": {
+"lat": 48.102044,
+"lon": -77.789358,
+"matched": "Val-d'Or",
+"query": "Val-d'Or"
+},
+"Victoriaville, Quebec": {
+"lat": 46.055183,
+"lon": -71.959997,
+"matched": "Victoriaville",
+"query": "Victoriaville"
+},
+"Barrie, Ontario": {
+"lat": 44.37124,
+"lon": -79.67697,
+"matched": "Barrie",
+"query": "Barrie"
+},
+"Bracebridge, Ontario": {
+"lat": 45.0263889,
+"lon": -79.19,
+"matched": "Bracebridge",
+"query": "Bracebridge"
+},
+"Brantford, Ontario": {
+"lat": 43.1569444,
+"lon": -80.2575,
+"matched": "Brantford",
+"query": "Brantford"
+},
+"Brock, Ontario": {
+"lat": 43.2911111,
+"lon": -80.0002777,
+"matched": "Brock Gardens",
+"query": "Brock"
+},
+"Brockville, Ontario": {
+"lat": 44.59733,
+"lon": -75.6855,
+"matched": "Brockville",
+"query": "Brockville"
+},
+"Centre Wellington, Ontario": {
+"lat": 43.7347223,
+"lon": -80.3897223,
+"matched": "Centre Wellington",
+"query": "Centre Wellington"
+},
+"Chatham-Kent, Ontario": {
+"lat": 42.43396,
+"lon": -82.12876,
+"matched": "Chatham-Kent",
+"query": "Chatham-Kent"
+},
+"Cobourg, Ontario": {
+"lat": 43.9630555,
+"lon": -78.1647223,
+"matched": "Cobourg",
+"query": "Cobourg"
+},
+"Collingwood, Ontario": {
+"lat": 44.5014,
+"lon": -80.24071,
+"matched": "Collingwood",
+"query": "Collingwood"
+},
+"Cornwall, Ontario": {
+"lat": 45.0263889,
+"lon": -74.7263889,
+"matched": "Cornwall",
+"query": "Cornwall"
+},
+"Elliot Lake, Ontario": {
+"lat": 46.3811111,
+"lon": -82.6572222,
+"matched": "Elliot Lake",
+"query": "Elliot Lake"
+},
+"Gravenhurst, Ontario": {
+"lat": 44.8686111,
+"lon": -79.3394445,
+"matched": "Gravenhurst",
+"query": "Gravenhurst"
+},
+"Greater Napanee, Ontario": {
+"lat": 44.2375,
+"lon": -76.9686111,
+"matched": "Greater Napanee",
+"query": "Greater Napanee"
+},
+"Greater Sudbury, Ontario": {
+"lat": 46.57789,
+"lon": -81.06958,
+"matched": "Greater Sudbury",
+"query": "Greater Sudbury"
+},
+"Guelph, Ontario": {
+"lat": 43.53571,
+"lon": -80.229,
+"matched": "Guelph",
+"query": "Guelph"
+},
+"Haldimand County, Ontario": {
+"lat": 42.986111,
+"lon": -79.853333,
+"matched": "Haldimand County",
+"query": "Haldimand County"
+},
+"Hamilton, Ontario": {
+"lat": 43.24504,
+"lon": -79.8418,
+"matched": "Hamilton",
+"query": "Hamilton"
+},
+"Hawkesbury, Ontario part, Ontario/Quebec": {
+"lat": 45.60826,
+"lon": -74.60179,
+"matched": "Hawkesbury",
+"query": "Hawkesbury,"
+},
+"Huntsville, Ontario": {
+"lat": 45.31098,
+"lon": -79.27733,
+"matched": "Huntsville",
+"query": "Huntsville"
+},
+"Ingersoll, Ontario": {
+"lat": 43.04062,
+"lon": -80.87399,
+"matched": "Ingersoll",
+"query": "Ingersoll"
+},
+"Kawartha Lakes, Ontario": {
+"lat": 44.58758,
+"lon": -78.8321,
+"matched": "Kawartha Lakes",
+"query": "Kawartha Lakes"
+},
+"Kenora, Ontario": {
+"lat": 49.7638889,
+"lon": -94.5066667,
+"matched": "Kenora",
+"query": "Kenora"
+},
+"Kings Subdivision, Ontario": {
+"lat": 44.4405555,
+"lon": -78.5316666,
+"matched": "Kings Wharf",
+"query": "Kings"
+},
+"Kingston, Ontario": {
+"lat": 44.2347222,
+"lon": -76.5108334,
+"matched": "Kingston",
+"query": "Kingston"
+},
+"Kitchener-Cambridge-Waterloo, Ontario": {
+"lat": 43.4186111,
+"lon": -80.4727778,
+"matched": "Kitchener",
+"query": "Kitchener"
+},
+"London, Ontario": {
+"lat": 42.9675,
+"lon": -81.2325,
+"matched": "London",
+"query": "London"
+},
+"Meaford, Ontario": {
+"lat": 44.591111,
+"lon": -80.743333,
+"matched": "Meaford",
+"query": "Meaford"
+},
+"Midland, Ontario": {
+"lat": 44.7502777,
+"lon": -79.8836111,
+"matched": "Midland",
+"query": "Midland"
+},
+"Norfolk, Ontario": {
+"lat": 42.803333,
+"lon": -80.408611,
+"matched": "Norfolk County",
+"query": "Norfolk"
+},
+"North Bay, Ontario": {
+"lat": 46.314444,
+"lon": -79.459167,
+"matched": "North Bay",
+"query": "North Bay"
+},
+"North Perth, Ontario": {
+"lat": 43.725,
+"lon": -80.9672222,
+"matched": "North Perth",
+"query": "North Perth"
+},
+"Orillia, Ontario": {
+"lat": 44.6043,
+"lon": -79.42392,
+"matched": "Orillia",
+"query": "Orillia"
+},
+"Oshawa, Ontario": {
+"lat": 43.9005555,
+"lon": -78.8572222,
+"matched": "Oshawa",
+"query": "Oshawa"
+},
+"Ottawa-Gatineau, Ontario/Quebec": {
+"lat": 45.33339,
+"lon": -75.58429,
+"matched": "Ottawa",
+"query": "Ottawa"
+},
+"Ottawa-Gatineau, Ontario part, Ontario/Quebec": {
+"lat": 45.33339,
+"lon": -75.58429,
+"matched": "Ottawa",
+"query": "Ottawa"
+},
+"Owen Sound, Ontario": {
+"lat": 44.56981,
+"lon": -80.93067,
+"matched": "Owen Sound",
+"query": "Owen Sound"
+},
+"Pembroke, Ontario": {
+"lat": 45.8205556,
+"lon": -77.1111111,
+"matched": "Pembroke",
+"query": "Pembroke"
+},
+"Petawawa, Ontario": {
+"lat": 45.8913889,
+"lon": -77.2711111,
+"matched": "Petawawa",
+"query": "Petawawa"
+},
+"Peterborough, Ontario": {
+"lat": 44.3011111,
+"lon": -78.3333334,
+"matched": "Peterborough",
+"query": "Peterborough"
+},
+"Port Hope, Ontario": {
+"lat": 44.0283334,
+"lon": -78.3875,
+"matched": "Port Hope",
+"query": "Port Hope"
+},
+"Prince Edward, Ontario": {
+"lat": 44.0230555,
+"lon": -77.2558334,
+"matched": "Prince Edward",
+"query": "Prince Edward"
+},
+"St. Catharines-Niagara, Ontario": {
+"lat": 43.16544,
+"lon": -79.2533,
+"matched": "St. Catharines",
+"query": "St. Catharines"
+},
+"Sarnia, Ontario": {
+"lat": 42.9813889,
+"lon": -82.3177777,
+"matched": "Sarnia",
+"query": "Sarnia"
+},
+"Saugeen Shores, Ontario": {
+"lat": 44.40562,
+"lon": -81.37455,
+"matched": "Saugeen Shores",
+"query": "Saugeen Shores"
+},
+"Sault Ste. Marie, Ontario": {
+"lat": 46.558889,
+"lon": -84.346944,
+"matched": "Sault Ste. Marie",
+"query": "Sault Ste. Marie"
+},
+"Scugog, Ontario": {
+"lat": 44.17,
+"lon": -78.8925,
+"matched": "Scugog",
+"query": "Scugog"
+},
+"Stratford, Ontario": {
+"lat": 43.3725,
+"lon": -80.9763889,
+"matched": "Stratford",
+"query": "Stratford"
+},
+"The Nation, Ontario": {
+"lat": 45.40171,
+"lon": -74.98266,
+"matched": "The Nation",
+"query": "The Nation"
+},
+"Thunder Bay, Ontario": {
+"lat": 48.4013889,
+"lon": -89.2677778,
+"matched": "Thunder Bay",
+"query": "Thunder Bay"
+},
+"Tillsonburg, Ontario": {
+"lat": 42.86794,
+"lon": -80.7307,
+"matched": "Tillsonburg",
+"query": "Tillsonburg"
+},
+"Timmins, Ontario": {
+"lat": 48.47153,
+"lon": -81.33132,
+"matched": "Timmins-Porcupine",
+"query": "Timmins"
+},
+"Toronto, Ontario": {
+"lat": 43.7417,
+"lon": -79.3733,
+"matched": "Toronto",
+"query": "Toronto"
+},
+"West Nipissing, Ontario": {
+"lat": 46.4471999,
+"lon": -80.0414,
+"matched": "Nipissing Ouest",
+"query": "West Nipissing"
+},
+"Windsor, Ontario": {
+"lat": 42.30227,
+"lon": -82.99348,
+"matched": "Windsor",
+"query": "Windsor"
+},
+"Woodstock, Ontario": {
+"lat": 43.1372222,
+"lon": -80.7377778,
+"matched": "Woodstock",
+"query": "Woodstock"
+},
+"Brandon, Manitoba": {
+"lat": 49.846944,
+"lon": -99.952222,
+"matched": "Brandon",
+"query": "Brandon"
+},
+"Portage La Prairie, Manitoba": {
+"lat": 49.972778,
+"lon": -98.291944,
+"matched": "Portage la Prairie",
+"query": "Portage La Prairie"
+},
+"Steinbach, Manitoba": {
+"lat": 49.525833,
+"lon": -96.683889,
+"matched": "Steinbach",
+"query": "Steinbach"
+},
+"Thompson, Manitoba": {
+"lat": 55.743333,
+"lon": -97.855278,
+"matched": "Thompson",
+"query": "Thompson"
+},
+"Winnipeg, Manitoba": {
+"lat": 49.884444,
+"lon": -97.146389,
+"matched": "Winnipeg",
+"query": "Winnipeg"
+},
+"Estevan, Saskatchewan": {
+"lat": 49.1392833,
+"lon": -102.9859847,
+"matched": "Estevan",
+"query": "Estevan"
+},
+"Lloydminster, Saskatchewan part, Saskatchewan/Alberta": {
+"lat": 53.2779556,
+"lon": -109.9802528,
+"matched": "Lloydminster",
+"query": "Lloydminster,"
+},
+"Moose Jaw, Saskatchewan": {
+"lat": 50.3934194,
+"lon": -105.5519522,
+"matched": "Moose Jaw",
+"query": "Moose Jaw"
+},
+"North Battleford, Saskatchewan": {
+"lat": 52.7574361,
+"lon": -108.2861667,
+"matched": "North Battleford",
+"query": "North Battleford"
+},
+"Prince Albert, Saskatchewan": {
+"lat": 53.199517,
+"lon": -105.760094,
+"matched": "Prince Albert",
+"query": "Prince Albert"
+},
+"Regina, Saskatchewan": {
+"lat": 50.4548389,
+"lon": -104.6066083,
+"matched": "Regina",
+"query": "Regina"
+},
+"Saskatoon, Saskatchewan": {
+"lat": 52.13965,
+"lon": -106.6861833,
+"matched": "Saskatoon",
+"query": "Saskatoon"
+},
+"Swift Current, Saskatchewan": {
+"lat": 50.2881611,
+"lon": -107.7938944,
+"matched": "Swift Current",
+"query": "Swift Current"
+},
+"Yorkton, Saskatchewan": {
+"lat": 51.213775,
+"lon": -102.4628806,
+"matched": "Yorkton",
+"query": "Yorkton"
+},
+"Brooks, Alberta": {
+"lat": 50.567222,
+"lon": -111.895,
+"matched": "Brooks",
+"query": "Brooks"
+},
+"Calgary, Alberta": {
+"lat": 51.0458333,
+"lon": -114.0574999,
+"matched": "Calgary",
+"query": "Calgary"
+},
+"Camrose, Alberta": {
+"lat": 53.0247222,
+"lon": -112.8241667,
+"matched": "Camrose",
+"query": "Camrose"
+},
+"Canmore, Alberta": {
+"lat": 51.0830555,
+"lon": -115.3683333,
+"matched": "Canmore",
+"query": "Canmore"
+},
+"Cold Lake, Alberta": {
+"lat": 54.45,
+"lon": -110.1666667,
+"matched": "Cold Lake",
+"query": "Cold Lake"
+},
+"Edmonton, Alberta": {
+"lat": 53.5344445,
+"lon": -113.4902778,
+"matched": "Edmonton",
+"query": "Edmonton"
+},
+"Grande Prairie, Alberta": {
+"lat": 55.1708334,
+"lon": -118.7961111,
+"matched": "Grande Prairie",
+"query": "Grande Prairie"
+},
+"High River, Alberta": {
+"lat": 50.5797223,
+"lon": -113.8741667,
+"matched": "High River",
+"query": "High River"
+},
+"Lacombe, Alberta": {
+"lat": 52.464444,
+"lon": -113.734167,
+"matched": "Lacombe",
+"query": "Lacombe"
+},
+"Lethbridge, Alberta": {
+"lat": 49.6936111,
+"lon": -112.8419444,
+"matched": "Lethbridge",
+"query": "Lethbridge"
+},
+"Lloydminster, Alberta part, Saskachewan/Alberta": {
+"lat": 53.2779556,
+"lon": -109.9802528,
+"matched": "Lloydminster",
+"query": "Lloydminster,"
+},
+"Medicine Hat, Alberta": {
+"lat": 50.0408334,
+"lon": -110.6766667,
+"matched": "Medicine Hat",
+"query": "Medicine Hat"
+},
+"Red Deer, Alberta": {
+"lat": 52.2686111,
+"lon": -113.8102778,
+"matched": "Red Deer",
+"query": "Red Deer"
+},
+"Strathmore, Alberta": {
+"lat": 51.0455556,
+"lon": -113.3930556,
+"matched": "Strathmore",
+"query": "Strathmore"
+},
+"Sylvan Lake, Alberta": {
+"lat": 52.3088888,
+"lon": -114.0977778,
+"matched": "Sylvan Lake",
+"query": "Sylvan Lake"
+},
+"Wetaskiwin, Alberta": {
+"lat": 52.9691667,
+"lon": -113.3769444,
+"matched": "Wetaskiwin",
+"query": "Wetaskiwin"
+},
+"Wood Buffalo, Alberta": {
+"lat": 57.664167,
+"lon": -112.005,
+"matched": "Wood Buffalo",
+"query": "Wood Buffalo"
+},
+"Abbotsford-Mission, British Columbia": {
+"lat": 49.05,
+"lon": -122.28333,
+"matched": "Abbotsford",
+"query": "Abbotsford"
+},
+"Campbell River, British Columbia": {
+"lat": 50.023056,
+"lon": -125.243611,
+"matched": "Campbell River",
+"query": "Campbell River"
+},
+"Chilliwack, British Columbia": {
+"lat": 49.166667,
+"lon": -121.95,
+"matched": "Chilliwack",
+"query": "Chilliwack"
+},
+"Courtenay, British Columbia": {
+"lat": 49.689444,
+"lon": -124.995833,
+"matched": "Courtenay",
+"query": "Courtenay"
+},
+"Cranbrook, British Columbia": {
+"lat": 49.508056,
+"lon": -115.746944,
+"matched": "Cranbrook",
+"query": "Cranbrook"
+},
+"Dawson Creek, British Columbia": {
+"lat": 55.760556,
+"lon": -120.235556,
+"matched": "Dawson Creek",
+"query": "Dawson Creek"
+},
+"Duncan, British Columbia": {
+"lat": 48.778611,
+"lon": -123.708056,
+"matched": "Duncan",
+"query": "Duncan"
+},
+"Fort St. John, British Columbia": {
+"lat": 56.2525,
+"lon": -120.846667,
+"matched": "Fort St. John",
+"query": "Fort St. John"
+},
+"Kamloops, British Columbia": {
+"lat": 50.675833,
+"lon": -120.339444,
+"matched": "Kamloops",
+"query": "Kamloops"
+},
+"Kelowna, British Columbia": {
+"lat": 49.888056,
+"lon": -119.495556,
+"matched": "Kelowna",
+"query": "Kelowna"
+},
+"Nanaimo, British Columbia": {
+"lat": 49.163889,
+"lon": -123.938056,
+"matched": "Nanaimo",
+"query": "Nanaimo"
+},
+"Parksville, British Columbia": {
+"lat": 49.318056,
+"lon": -124.311389,
+"matched": "Parksville",
+"query": "Parksville"
+},
+"Penticton, British Columbia": {
+"lat": 49.500833,
+"lon": -119.593889,
+"matched": "Penticton",
+"query": "Penticton"
+},
+"Port Alberni, British Columbia": {
+"lat": 49.234444,
+"lon": -124.805833,
+"matched": "Port Alberni",
+"query": "Port Alberni"
+},
+"Powell River, British Columbia": {
+"lat": 49.835556,
+"lon": -124.524444,
+"matched": "Powell River",
+"query": "Powell River"
+},
+"Prince George, British Columbia": {
+"lat": 53.913056,
+"lon": -122.745278,
+"matched": "Prince George",
+"query": "Prince George"
+},
+"Prince Rupert, British Columbia": {
+"lat": 54.312778,
+"lon": -130.325278,
+"matched": "Prince Rupert",
+"query": "Prince Rupert"
+},
+"Quesnel, British Columbia": {
+"lat": 52.979722,
+"lon": -122.493611,
+"matched": "Quesnel",
+"query": "Quesnel"
+},
+"Salmon Arm, British Columbia": {
+"lat": 50.7,
+"lon": -119.26667,
+"matched": "Salmon Arm",
+"query": "Salmon Arm"
+},
+"Squamish, British Columbia": {
+"lat": 49.698056,
+"lon": -123.155833,
+"matched": "Squamish",
+"query": "Squamish"
+},
+"Summerland, British Columbia": {
+"lat": 49.602222,
+"lon": -119.681944,
+"matched": "Summerland",
+"query": "Summerland"
+},
+"Vancouver, British Columbia": {
+"lat": 49.261111,
+"lon": -123.113889,
+"matched": "Vancouver",
+"query": "Vancouver"
+},
+"Vernon, British Columbia": {
+"lat": 50.2655555555556,
+"lon": -119.271388888889,
+"matched": "Vernon",
+"query": "Vernon"
+},
+"Victoria, British Columbia": {
+"lat": 48.428333,
+"lon": -123.364722,
+"matched": "Victoria",
+"query": "Victoria"
+},
+"Williams Lake, British Columbia": {
+"lat": 52.129167,
+"lon": -122.14,
+"matched": "Williams Lake",
+"query": "Williams Lake"
+},
+"Yellowknife, Northwest Territories": {
+"lat": 62.4536,
+"lon": -114.37,
+"matched": "Yellowknife",
+"query": "Yellowknife"
+},
+"Belleville-Quinte West, Ontario": {
+"lat": 44.2566666,
+"lon": -77.3697222,
+"matched": "Belleville",
+"query": "Belleville"
+},
+"St.Catharines-Niagara, Ontario": {
+"lat": 43.16544,
+"lon": -79.2533,
+"matched": "St. Catharines",
+"query": "St. Catharines"
+},
+"Ottawa-Gatineau, Ontario part": {
+"lat": 45.4215,
+"lon": -75.6972,
+"matched": "Ottawa",
+"query": "alias"
+},
+"Ottawa-Gatineau, Quebec part": {
+"lat": 45.4765,
+"lon": -75.7013,
+"matched": "Gatineau",
+"query": "alias"
+}
+}
