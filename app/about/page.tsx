@@ -19,7 +19,7 @@ const CARDS = [
     title: 'Data status',
     body: [
       "Riding boundaries, median income, represented party, population, registered electors, and the safety score are all real, sourced government data from Elections Canada and Statistics Canada.",
-      "Rent is real CMHC 2025 survey data applied by nearest surveyed metro, since CMHC surveys metro areas rather than individual ridings."
+      "Rent values are calculated using a hybrid approach that integrates the most recent Statistics Canada Census figures, CMHC rental market surveys from the nearest polled city, and active listing data to capture the current local housing market. For ridings that do not have their own CMHC surveys or active market listings, we estimate values using the closest surveyed center or the inflation-adjusted Census baseline."
     ],
   },
   {
@@ -73,7 +73,7 @@ export default function AboutPage() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
             {[
-              ['Housing burden', 'Real Statistics Canada median income compared against real CMHC 1BR rent (applied by nearest surveyed metro).'],
+              ['Housing burden', 'Real Statistics Canada median income compared against rent estimates using a hybrid model of Census data, CMHC nearest-city surveys, and active local listings.'],
               ['Take-home pay', 'Median gross pay is a Statistics Canada figure. "Take-home" and "left after tax & rent" apply an estimate of 2026 federal and provincial income tax, CPP and EI for a single individual — an approximation, not tax advice.'],
               ['Represented party', 'Real Elections Canada results from the 2025 general election: the actual elected candidate and party per riding.'],
               ['Safety quality', 'Real Statistics Canada Crime Severity Index data for safety (applied by nearest surveyed metro).'],
