@@ -320,8 +320,8 @@ export default function CityPageContent({
             />
             <PriceCard
               label="Disposable Income"
-              value={convert(salary != null && rent != null ? salary - rent : null, currency, rates)}
-              sub="Remaining monthly wage after housing"
+              value={convert(disposable, currency, rates)}
+              sub="Remaining monthly take-home after tax & rent"
             />
             <PriceCard
               label="Representing Party"
