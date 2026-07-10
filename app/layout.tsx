@@ -33,15 +33,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Fraunces (serif for titles) and Plus Jakarta Sans (sans-serif for body) */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:wght@200..800&family=JetBrains+Mono:wght@300..500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         {children}
         <Analytics />

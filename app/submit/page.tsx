@@ -84,7 +84,7 @@ export default function SubmitPage() {
       <div style={{ maxWidth: 680, margin: '0 auto', padding: 'clamp(3rem,6vh,5rem) 2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '1.5rem' }}>
           <Send size={14} color="var(--color-accent)" />
-          <span style={{ fontSize: 11, letterSpacing: '2.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', fontWeight: 600 }}>Submit Data</span>
+          <span style={{ fontSize: 13, color: 'var(--color-text-3)', fontWeight: 600 }}>Submit Data</span>
         </div>
 
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px,5vw,52px)', fontWeight: 400, lineHeight: 1.05, letterSpacing: -1.2, color: 'var(--color-text-1)', margin: '0 0 1rem' }}>

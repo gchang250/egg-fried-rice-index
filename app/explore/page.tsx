@@ -366,14 +366,6 @@ export default function Explore() {
 
     const defs = svg.append('defs')
 
-    const oceanGlow = defs.append('linearGradient')
-      .attr('id', 'oceanGlow')
-      .attr('x1', '0%').attr('y1', '0%')
-      .attr('x2', '100%').attr('y2', '100%')
-
-    oceanGlow.append('stop').attr('offset', '0%').attr('stop-color', '#fffaf2')
-    oceanGlow.append('stop').attr('offset', '100%').attr('stop-color', '#f0e0c5')
-
     const shadowFilter = defs.append('filter')
       .attr('id', 'landShadow')
       .attr('x', '-10%').attr('y', '-10%')
@@ -381,16 +373,16 @@ export default function Explore() {
 
     shadowFilter.append('feDropShadow')
       .attr('dx', '0')
-      .attr('dy', '3')
-      .attr('stdDeviation', '3')
-      .attr('flood-color', '#2e1c10')
-      .attr('flood-opacity', '0.25')
+      .attr('dy', '1')
+      .attr('stdDeviation', '1.5')
+      .attr('flood-color', '#000')
+      .attr('flood-opacity', '0.10')
 
     // Ocean rect
     g.append('rect')
       .attr('width', W)
       .attr('height', H)
-      .attr('fill', 'url(#oceanGlow)')
+      .style('fill', 'var(--color-surface-2)')
 
     // Load Canada GeoJSON
     d3.json('/canada.geojson').then((canada: any) => {
@@ -739,7 +731,7 @@ export default function Explore() {
 
               {/* Political Party Representation Section */}
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Represented party</p>
+                <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>Represented party</p>
                 <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: 'var(--color-accent)', margin: 0, lineHeight: 1 }}>
                   {selectedCity.price_source ?? 'Unknown'}
                 </p>
@@ -747,11 +739,11 @@ export default function Explore() {
 
               {/* Ranks Cards Section */}
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Affordability Ranks</p>
+                <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Affordability ranks</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   {ranks.burdenRank[selectedCity.city] ? (
                     <div style={{ background: 'var(--color-surface)', borderRadius: 10, padding: '8px', textAlign: 'center', border: '0.5px solid var(--color-border)' }}>
-                      <p style={{ fontSize: 8.5, color: 'var(--color-text-3)', textTransform: 'uppercase', margin: '0 0 4px', letterSpacing: '0.5px' }}>Rent burden</p>
+                      <p style={{ fontSize: 13, color: 'var(--color-text-3)', margin: '0 0 4px' }}>Rent burden</p>
                       <p style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--color-green)', margin: 0, fontWeight: 500 }}>
                         #{ranks.burdenRank[selectedCity.city]}
                       </p>
@@ -760,7 +752,7 @@ export default function Explore() {
                   ) : null}
                   {ranks.leftoverRank[selectedCity.city] ? (
                     <div style={{ background: 'var(--color-surface)', borderRadius: 10, padding: '8px', textAlign: 'center', border: '0.5px solid var(--color-border)' }}>
-                      <p style={{ fontSize: 8.5, color: 'var(--color-text-3)', textTransform: 'uppercase', margin: '0 0 4px', letterSpacing: '0.5px' }}>Disposable Income</p>
+                      <p style={{ fontSize: 13, color: 'var(--color-text-3)', margin: '0 0 4px' }}>Disposable income</p>
                       <p style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--color-accent)', margin: 0, fontWeight: 500 }}>
                         #{ranks.leftoverRank[selectedCity.city]}
                       </p>
@@ -772,7 +764,7 @@ export default function Explore() {
 
               {/* Economic stats */}
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginBottom: '1.25rem' }}>
-                <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Local Affordability</p>
+                <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Local affordability</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
                   <div>
                     <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>Median gross pay:</span>
@@ -965,10 +957,10 @@ export default function Explore() {
           }}>
             {/* Expanded toggle */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--color-text-2)' }}>Index Controls</span>
+              <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text-1)' }}>Index controls</span>
               <button
                 onClick={() => setExpanded(!expanded)}
-                style={{ background: 'none', border: 'none', color: 'var(--color-accent)', fontSize: 11.5, cursor: 'pointer' }}
+                style={{ background: 'none', border: 'none', color: 'var(--color-text-1)', fontSize: 13, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
               >
                 {expanded ? 'Hide filters' : 'Show filters'}
               </button>
@@ -977,13 +969,13 @@ export default function Explore() {
             {/* Always Visible stats */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', borderTop: '0.5px solid var(--color-border)', paddingTop: 10 }}>
               <div>
-                <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Filtered ridings</span>
+                <span style={{ fontSize: 13, color: 'var(--color-text-3)' }}>Filtered ridings</span>
                 <p style={{ fontSize: 16, margin: '2px 0 0', fontWeight: 500, color: 'var(--color-text-1)' }}>
                   {filteredCities.length} of {cities.length}
                 </p>
               </div>
               <div>
-                <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Avg rent burden</span>
+                <span style={{ fontSize: 13, color: 'var(--color-text-3)' }}>Avg rent burden</span>
                 <p style={{ fontSize: 16, margin: '2px 0 0', fontWeight: 500, color: 'var(--color-accent)' }}>
                   {filteredCities.length > 0
                     ? `${Math.round(filteredCities.reduce((s, c) => s + (rentBurden(c) ?? 0), 0) / filteredCities.length)}%`
@@ -995,7 +987,7 @@ export default function Explore() {
 
             {/* Coloring Mode */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, borderTop: '0.5px solid var(--color-border)', paddingTop: 10 }}>
-              <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase', fontWeight: 600 }}>Map View Mode</span>
+              <span style={{ fontSize: 13, color: 'var(--color-text-3)', fontWeight: 600 }}>Map view mode</span>
               <div style={{ display: 'flex', background: 'var(--color-surface-2)', padding: 2, borderRadius: 8, border: '0.5px solid var(--color-border)' }}>
                 <button
                   onClick={() => setColorMode('party')}
@@ -1026,7 +1018,7 @@ export default function Explore() {
 
             {/* Living Profile Switcher */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <span style={{ fontSize: 9.5, color: 'var(--color-text-3)', textTransform: 'uppercase', fontWeight: 600 }}>Living Profile</span>
+              <span style={{ fontSize: 13, color: 'var(--color-text-3)', fontWeight: 600 }}>Living profile</span>
               <div style={{ display: 'flex', background: 'var(--color-surface-2)', padding: 2, borderRadius: 8, border: '0.5px solid var(--color-border)' }}>
                 <button
                   onClick={() => setProfile('single_renter')}
@@ -1117,7 +1109,7 @@ export default function Explore() {
           padding: '10px 14px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
           display: 'flex', flexDirection: 'column', gap: 6
         }}>
-          <span style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: 2 }}>Represented Party</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-3)', marginBottom: 2 }}>Represented party</span>
           {legendTiers.map(tier => (
             <div key={tier.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: tier.color }} />

@@ -1,89 +1,85 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════════════════════════════════
-   CANPOL INDEX — Socio-Economic Cost of Living Atlas
-   Token structure: --color-{role}  |  --font-{role}
-   Palette: warm bakery/Canadiana (Levain-style cream & espresso, a
-   BeaverTails-style maple red accent). Contrast checked against WCAG AA
-   (4.5:1 body text, 3:1 large text/UI) — see contrast notes inline.
-   ═══════════════════════════════════════════════════════════════════════ */
+/* CanPol Index — design tokens.
+
+   Neutral surfaces, one typeface, near-black UI. Color is reserved for data:
+   the only saturated pixels on a page should be inside a chart, a bar, or a
+   status dot. Buttons and links use --color-ink, not --color-accent. */
 
 :root {
-  /* ── Surfaces ───────────────────────────────────────────────────── */
-  --color-bg:           #f8f0e3;   /* warm cream / dough                */
-  --color-surface:      #fffaf2;   /* warm ivory / parchment            */
-  --color-surface-2:    #f0e0c5;   /* toasted sand / crust              */
-  --color-border:       #e2d3b8;   /* warm tan border                   */
+  /* Surfaces */
+  --color-bg:        #ffffff;
+  --color-surface:   #ffffff;
+  --color-surface-2: #f5f5f7;
+  --color-border:    #d2d2d7;
 
-  /* ── Foreground ─────────────────────────────────────────────────── */
-  --color-text-1:       #2e1c10;   /* espresso brown, 14.4:1 on bg      */
-  --color-text-2:       #6b4f3a;   /* coffee brown, 6.6:1 on bg         */
-  --color-text-3:       #7d6349;   /* caramel grey-brown, 4.9:1 on bg   */
-  --color-text-4:       #d8c4a8;   /* light tan, decorative only        */
+  /* Foreground */
+  --color-text-1:    #1d1d1f;  /* 16.8:1 on bg */
+  --color-text-2:    #55555a;  /* 7.4:1  on bg */
+  --color-text-3:    #6e6e73;  /* 5.3:1  on bg */
+  --color-text-4:    #a1a1a6;  /* decorative only */
 
-  /* ── Brand accent (Maple / Cherry Red) ───────────────────────────── */
-  --color-accent:       #c0272d;   /* maple red, 5.2:1 on bg            */
-  --color-accent-dim:   rgba(192, 39, 45, 0.07);
-  --color-accent-glow:  rgba(192, 39, 45, 0.14);
+  /* UI primary — buttons, links, focus. Deliberately not a hue. */
+  --color-ink:       #1d1d1f;
+  --color-ink-fg:    #ffffff;
+  --color-ink-hover: #000000;
 
-  /* ── Status / Affordability mapping ─────────────────────────────── */
-  --color-green:        #a8721f;   /* toasted honey gold — affordable end */
-  --color-red:          #c0272d;   /* maple red — expensive end         */
-  --color-amber:        #c0272d;   /* same as accent                   */
+  /* Data scale. Sequential low → mid → high, perceptually ordered. */
+  --color-green:     #1a7f37;
+  --color-amber:     #b25e09;
+  --color-red:       #b42318;
+  --color-accent:    #b42318;
+  --color-accent-dim:  rgba(180, 35, 24, 0.06);
+  --color-accent-glow: rgba(180, 35, 24, 0.12);
 
-  --color-nav-bg:       rgba(248, 240, 227, 0.85);
+  --color-nav-bg:    #ffffff;
 
-  /* ── Typography ────────────────────────────────────────────────── */
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
+  /* Type — the system UI stack, as Apple and Google ship it. */
+  --font-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Geometry */
+  --radius:    8px;
+  --radius-lg: 12px;
 }
 
-/* ── Dark theme ─────────────────────────────────────────────────────── */
 .dark {
-  --color-bg:           #1a120b;   /* dark chocolate                    */
-  --color-surface:      #221812;   /* espresso surface                  */
-  --color-surface-2:    #2b1e15;   /* toasted espresso hover            */
-  --color-border:       #3c2c1e;   /* warm umber border                 */
+  --color-bg:        #000000;
+  --color-surface:   #1c1c1e;
+  --color-surface-2: #2c2c2e;
+  --color-border:    #38383a;
 
-  --color-text-1:       #f8f0e3;   /* warm cream                        */
-  --color-text-2:       #cbb69a;   /* warm tan grey                     */
-  --color-text-3:       #a2896c;   /* muted caramel grey                */
-  --color-text-4:       #5a4635;   /* deep umber                        */
+  --color-text-1:    #f5f5f7;
+  --color-text-2:    #aeaeb2;
+  --color-text-3:    #8e8e93;
+  --color-text-4:    #48484a;
 
-  --color-accent:       #e5484d;   /* bright maple red                  */
-  --color-accent-dim:   rgba(229, 72, 77, 0.1);
-  --color-accent-glow:  rgba(229, 72, 77, 0.18);
+  --color-ink:       #f5f5f7;
+  --color-ink-fg:    #000000;
+  --color-ink-hover: #ffffff;
 
-  --color-green:        #d4a03a;   /* honey gold                        */
-  --color-red:          #e5484d;
-  --color-amber:        #e5484d;
+  --color-green:     #30d158;
+  --color-amber:     #ff9f0a;
+  --color-red:       #ff453a;
+  --color-accent:    #ff453a;
+  --color-accent-dim:  rgba(255, 69, 58, 0.10);
+  --color-accent-glow: rgba(255, 69, 58, 0.18);
 
-  --color-nav-bg:       rgba(26, 18, 11, 0.85);
+  --color-nav-bg:    #000000;
 }
 
-/* ── High-contrast theme ────────────────────────────────────────────── */
 .hc {
-  --color-text-1:       #1c1108;
-  --color-text-2:       #3a2a1a;
-  --color-text-3:       #57402a;
-  --color-accent:       #a3181e;
+  --color-text-1: #000000;
+  --color-text-2: #2b2b2f;
+  --color-text-3: #3f3f45;
+  --color-border: #8e8e93;
 }
-
-/* ═══════════════════════════════════════════════════════════════════════
-   Global resets & base styles
-   ═══════════════════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html {
-  color-scheme: light;
-  scroll-behavior: smooth;
-}
-
-.dark {
-  color-scheme: dark;
-}
+html { color-scheme: light; }
+.dark { color-scheme: dark; }
 
 body {
   margin: 0;
@@ -94,60 +90,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Scrollbar ───────────────────────────────────────────────────────── */
-::-webkit-scrollbar               { width: 5px; }
-::-webkit-scrollbar-track         { background: var(--color-bg); }
-::-webkit-scrollbar-thumb         { background: var(--color-border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover   { background: var(--color-text-4); }
+/* Tabular figures everywhere a number is compared against another number. */
+[data-nums] { font-variant-numeric: tabular-nums; }
 
-/* ── Focus ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar             { width: 12px; }
+::-webkit-scrollbar-track       { background: transparent; }
+::-webkit-scrollbar-thumb       { background: var(--color-text-4); border-radius: 6px;
+                                  border: 3px solid var(--color-bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-3); }
+
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* ── Glassmorphism & Panel Styling ───────────────────────────────────── */
+/* A card. Flat, one hairline border, no blur and no glow. */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
 }
 
-.dark .glass-panel {
-  background: rgba(14, 14, 18, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border);
-}
+.glow-hover { transition: border-color .15s ease; }
+.glow-hover:hover { border-color: var(--color-text-3) !important; }
 
-.glow-hover {
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-.glow-hover:hover {
-  border-color: rgba(139, 30, 30, 0.3) !important;
-}
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes fadeIn       { from { opacity: 0; }                  to { opacity: 1; } }
 
-.dark .glow-hover:hover {
-  border-color: rgba(217, 56, 58, 0.25) !important;
-}
+.animate-slide-in { animation: slideInRight .3s cubic-bezier(.32,.72,0,1) forwards; }
+.animate-fade-in  { animation: fadeIn .2s ease-out forwards; }
 
-/* Animations */
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animate-slide-in {
-  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }

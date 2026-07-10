@@ -262,7 +262,7 @@ export default function CityPageContent({
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section style={{ padding: '3rem 2rem 2rem', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
-          <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-accent)', margin: 0 }}>
+          <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-3)', margin: 0 }}>
             Riding profile
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
@@ -452,7 +452,7 @@ function PriceCard({ label, value, sub, accent = false, color }: {
       background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 18,
       padding: '1.5rem 1.75rem', flex: '1 1 200px',
     }}>
-      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--color-text-2)', margin: '0 0 0.5rem' }}>{label}</p>
+      <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-2)', margin: '0 0 0.5rem' }}>{label}</p>
       <p style={{ fontFamily: 'var(--font-display)', fontSize: 32, color: valColor, margin: 0, lineHeight: 1.1, fontWeight: 400 }}>{value}</p>
       <p style={{ fontSize: 12, color: 'var(--color-text-2)', margin: '0.4rem 0 0' }}>{sub}</p>
     </div>
@@ -467,7 +467,7 @@ function LivingCard({ label, amount, sub, highlight = false, deficit = false }: 
   const numColor = deficit ? 'var(--color-accent)' : highlight ? 'var(--color-green)' : 'var(--color-text-1)'
   return (
     <div style={{ background: bg, border: `0.5px solid ${border}`, borderRadius: 14, padding: '1.5rem 1.25rem' }}>
-      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 500, color: 'var(--color-text-3)', margin: '0 0 0.5rem' }}>{label}</p>
       <p style={{ fontFamily: 'var(--font-display)', fontSize: 26, color: numColor, margin: '0 0 0.25rem', lineHeight: 1.1 }}>
         {deficit ? '−' : ''}{amount}
       </p>
@@ -479,7 +479,7 @@ function LivingCard({ label, amount, sub, highlight = false, deficit = false }: 
 function MetaCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ background: 'var(--color-surface)', border: '0.5px solid var(--color-border)', borderRadius: 14, padding: '1.1rem', flex: '1 1 220px' }}>
-      <p style={{ fontSize: 9, fontWeight: 500, letterSpacing: '1.1px', textTransform: 'uppercase', color: 'var(--color-text-2)', margin: '0 0 0.6rem' }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 500, color: 'var(--color-text-2)', margin: '0 0 0.6rem' }}>{label}</p>
       {children}
     </div>
   )
