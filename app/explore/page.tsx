@@ -83,6 +83,7 @@ export default function Explore() {
   const [searchQuery, setSearchQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isGeocoding, setIsGeocoding] = useState(false)
+  const [geoError, setGeoError] = useState<string | null>(null)
   const [colorMode, setColorMode] = useState<'party' | 'burden'>('party')
   const [profile, setProfile] = useState<'single_renter' | 'family_homeowner'>('single_renter')
 
@@ -282,36 +283,67 @@ export default function Explore() {
   }
 
   const handleAddressSearch = async (query: string) => {
-    if (!query.trim()) return
+    const raw = query.trim()
+    if (!raw) return
     setIsGeocoding(true)
+    setGeoError(null)
     try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query.trim() + ', Canada')}&format=json&limit=1`, {
-        headers: {
-          'User-Agent': 'CanPolIndexApp/1.0'
+      // Canadian postal code shapes: full "A1A 1A1" or just the FSA "A1A".
+      const compact = raw.replace(/\s+/g, '').toUpperCase()
+      const isFullPostal = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$/.test(compact)
+      const isFsa = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]$/.test(compact)
+
+      // Free-text search resolves full postal codes, FSAs and place names alike
+      // (OSM's structured postalcode= param returns nothing for full Canadian
+      // codes). countrycodes=ca stops a weak match from wandering to another
+      // country; addressdetails lets us verify the hit is actually in Canada.
+      const url =
+        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1` +
+        `&countrycodes=ca&limit=1&q=${encodeURIComponent(raw + ', Canada')}`
+
+      const res = await fetch(url)
+      const data = await res.json()
+      const hit = Array.isArray(data) ? data[0] : null
+
+      // Reject anything OSM couldn't place inside Canada rather than silently
+      // zooming to a wrong location (the old behaviour: a bad postal match in
+      // Toronto could land the map in Newfoundland).
+      if (!hit || hit.address?.country_code !== 'ca') {
+        setGeoError(
+          (isFullPostal || isFsa)
+            ? `Couldn't locate postal code "${raw}". Try the first 3 characters or a community name.`
+            : `Couldn't find "${raw}" in Canada. Try a community name or postal code.`
+        )
+        return
+      }
+
+      const lat = parseFloat(hit.lat)
+      const lon = parseFloat(hit.lon)
+
+      // Nearest surveyed community. Scale longitude by cos(latitude) so the
+      // distance is geographically correct at Canadian latitudes (a degree of
+      // longitude is much shorter than a degree of latitude up here).
+      const kx = Math.cos((lat * Math.PI) / 180)
+      let closest: City | null = null
+      let minDist = Infinity
+      cities.forEach(c => {
+        if (c.latitude != null && c.longitude != null) {
+          const dist = Math.hypot(c.latitude - lat, (c.longitude - lon) * kx)
+          if (dist < minDist) {
+            minDist = dist
+            closest = c
+          }
         }
       })
-      const data = await res.json()
-      if (data && data.length > 0) {
-        const lat = parseFloat(data[0].lat)
-        const lon = parseFloat(data[0].lon)
-        
-        let closest: City | null = null
-        let minDist = Infinity
-        cities.forEach(c => {
-          if (c.latitude != null && c.longitude != null) {
-            const dist = Math.hypot(c.latitude - lat, c.longitude - lon)
-            if (dist < minDist) {
-              minDist = dist
-              closest = c
-            }
-          }
-        })
-        if (closest) {
-          zoomToCity(closest)
-        }
+
+      if (closest) {
+        zoomToCity(closest)
+      } else {
+        setGeoError('No surveyed community is available near that location yet.')
       }
     } catch (e) {
       console.error('Geocoding error:', e)
+      setGeoError('Search failed — please try again.')
     } finally {
       setIsGeocoding(false)
     }
@@ -887,6 +919,7 @@ export default function Explore() {
                 onChange={e => {
                   setSearchQuery(e.target.value)
                   setShowSuggestions(true)
+                  if (geoError) setGeoError(null)
                 }}
                 onFocus={() => setShowSuggestions(true)}
                 onKeyDown={e => {
@@ -900,7 +933,18 @@ export default function Explore() {
                 }}
               />
             </div>
-            {showSuggestions && (suggestions.length > 0 || searchQuery.trim() !== '') && (
+            {geoError && (
+              <div style={{
+                position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 6,
+                background: 'var(--color-surface)', backdropFilter: 'blur(20px)',
+                border: '0.5px solid var(--color-border)', borderRadius: 10,
+                padding: '10px 14px', boxShadow: '0 12px 40px rgba(0,0,0,0.1)', zIndex: 31,
+                fontSize: 12.5, color: 'var(--color-red)', fontFamily: 'var(--font-body)', lineHeight: 1.5
+              }}>
+                {geoError}
+              </div>
+            )}
+            {!geoError && showSuggestions && (suggestions.length > 0 || searchQuery.trim() !== '') && (
               <div style={{
                 position: 'absolute', top: '100%', left: 0, right: 0,
                 marginTop: 6, background: 'var(--color-surface)',
