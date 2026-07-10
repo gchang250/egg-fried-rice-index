@@ -11,6 +11,9 @@ posthog.init(POSTHOG_KEY, {
   api_host: POSTHOG_HOST,
   defaults: "2026-06-25",
   capture_pageview: false,
+  // Anonymous visitors get no person profile under the default 'identified_only',
+  // which would leave the Persons count empty for a site with no logins.
+  person_profiles: "always",
   ...(distinctID && sessionID ? { bootstrap: { distinctID, sessionID } } : {}),
 });
 
