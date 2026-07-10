@@ -110,7 +110,7 @@ const CENSUS_2021_BASELINES: Record<string, number> = {
   'Nunavut': 950,
   'Northwest Territories': 1200,
   'Yukon': 1100,
-  'Spadina-Fort York': 1850,
+  'Spadina—Harbourfront': 1850,
   'Vancouver Centre': 1900,
   'Calgary Centre': 1250,
   'Labrador': 680,

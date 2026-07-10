@@ -1802,7 +1802,7 @@
   {
     "riding_name": "Spadina—Harbourfront",
     "province": "ON",
-    "estimated_rent_1br_cad": 1217,
+    "estimated_rent_1br_cad": 2159,
     "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
