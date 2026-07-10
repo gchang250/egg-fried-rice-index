@@ -218,6 +218,11 @@ async function run() {
   }
 
   const ridings: Riding[] = JSON.parse(fs.readFileSync(ridingsFile, 'utf8'))
+  const assignmentsFile = `${dataDir}/metro-assignments.json`
+  const assignments = fs.existsSync(assignmentsFile)
+    ? JSON.parse(fs.readFileSync(assignmentsFile, 'utf8'))
+    : {}
+
   console.log(`Loaded ${ridings.length} federal ridings. Running upgraded hybrid pipeline...\n`)
 
   // 1. Deduplicate global listings
@@ -230,6 +235,10 @@ async function run() {
   for (const riding of ridings) {
     const ridingLat = (riding as any).latitude
     const ridingLon = (riding as any).longitude
+
+    // Find nearest polled center for baseline tracing transparency
+    const assign = assignments[riding.fed_num]
+    const polledCity = assign && assign.rent_metro ? assign.rent_metro.split(',')[0].trim() : riding.name
 
     // 2. Fetch listings with adaptive radius
     const rawRidingListings = getListingsForRiding(riding, dedupedListings, ridingLat, ridingLon)
@@ -260,10 +269,10 @@ async function run() {
       dataSource = `Market listings (N=${N}) adjusted for turnover bias (-${Math.round(premium*100)}%)`
       confidence = 'high'
     } else if (N > 0) {
-      dataSource = `Hybrid blend: market listings (N=${N}, ${Math.round(w*100)}% weight) + Census baseline (CPI-adjusted, ${Math.round((1-w)*100)}% weight)`
+      dataSource = `Hybrid blend: market listings (N=${N}, ${Math.round(w*100)}% weight) + Census baseline for ${polledCity} (CPI-adjusted, ${Math.round((1-w)*100)}% weight)`
       confidence = N >= 12 ? 'medium' : 'low'
     } else {
-      dataSource = `Statistics Canada Census baseline, adjusted for ${riding.province} Rent CPI inflation (no active listings in region)`
+      dataSource = `Statistics Canada Census baseline for ${polledCity}, adjusted for ${riding.province} Rent CPI inflation (no active listings in region)`
       confidence = 'baseline'
     }
 

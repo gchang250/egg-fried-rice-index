@@ -3,7 +3,7 @@
     "riding_name": "Nunavut",
     "province": "NU",
     "estimated_rent_1br_cad": 998,
-    "data_source": "Statistics Canada Census baseline, adjusted for NU Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Amos, adjusted for NU Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -11,7 +11,7 @@
     "riding_name": "Northwest Territories",
     "province": "NT",
     "estimated_rent_1br_cad": 1296,
-    "data_source": "Statistics Canada Census baseline, adjusted for NT Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Yellowknife, adjusted for NT Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -19,7 +19,7 @@
     "riding_name": "Yukon",
     "province": "YT",
     "estimated_rent_1br_cad": 1232,
-    "data_source": "Statistics Canada Census baseline, adjusted for YT Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Fort St. John, adjusted for YT Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -27,7 +27,7 @@
     "riding_name": "West Vancouver—Sunshine Coast—Sea to Sky Country",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Squamish, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -35,7 +35,7 @@
     "riding_name": "Victoria",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Victoria, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -43,7 +43,7 @@
     "riding_name": "Vernon—Lake Country—Monashee",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vernon, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -51,7 +51,7 @@
     "riding_name": "Kamloops—Shuswap—Central Rockies",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Salmon Arm, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -59,7 +59,7 @@
     "riding_name": "Fleetwood—Port Kells",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -67,7 +67,7 @@
     "riding_name": "Esquimalt—Saanich—Sooke",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Victoria, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -75,7 +75,7 @@
     "riding_name": "Delta",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -83,7 +83,7 @@
     "riding_name": "Cowichan—Malahat—Langford",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Duncan, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -91,7 +91,7 @@
     "riding_name": "Courtenay—Alberni",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Courtenay, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -99,7 +99,7 @@
     "riding_name": "Coquitlam—Port Coquitlam",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Squamish, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -107,7 +107,7 @@
     "riding_name": "Columbia—Kootenay—Southern Rockies",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cranbrook, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -115,7 +115,7 @@
     "riding_name": "Cloverdale—Langley City",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -123,7 +123,7 @@
     "riding_name": "Chilliwack—Hope",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Chilliwack, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -131,7 +131,7 @@
     "riding_name": "Cariboo—Prince George",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Quesnel, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -139,7 +139,7 @@
     "riding_name": "Burnaby North—Seymour",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -147,7 +147,7 @@
     "riding_name": "Burnaby Central",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -155,7 +155,7 @@
     "riding_name": "Abbotsford—South Langley",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Abbotsford-Mission, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -163,7 +163,7 @@
     "riding_name": "Yellowhead",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Canmore, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -171,7 +171,7 @@
     "riding_name": "St. Albert—Sturgeon River",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -179,7 +179,7 @@
     "riding_name": "Sherwood Park—Fort Saskatchewan",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -187,7 +187,7 @@
     "riding_name": "Red Deer",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Red Deer, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -195,7 +195,7 @@
     "riding_name": "Ponoka—Didsbury",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Lacombe, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -203,7 +203,7 @@
     "riding_name": "Peace River—Westlock",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Grande Prairie, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -211,7 +211,7 @@
     "riding_name": "Parkland",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -219,7 +219,7 @@
     "riding_name": "Medicine Hat—Cardston—Warner",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Medicine Hat, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -227,7 +227,7 @@
     "riding_name": "Lethbridge",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Lethbridge, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -235,7 +235,7 @@
     "riding_name": "Leduc—Wetaskiwin",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Wetaskiwin, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -243,7 +243,7 @@
     "riding_name": "Lakeland",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Lloydminster, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -251,7 +251,7 @@
     "riding_name": "Grande Prairie",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Grande Prairie, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -259,7 +259,7 @@
     "riding_name": "Fort McMurray—Cold Lake",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cold Lake, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -267,7 +267,7 @@
     "riding_name": "Foothills",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for High River, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -275,7 +275,7 @@
     "riding_name": "Edmonton West",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -283,7 +283,7 @@
     "riding_name": "Edmonton Strathcona",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -291,7 +291,7 @@
     "riding_name": "Edmonton Southeast",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -299,7 +299,7 @@
     "riding_name": "Edmonton Riverbend",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -307,7 +307,7 @@
     "riding_name": "Edmonton Northwest",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -315,7 +315,7 @@
     "riding_name": "Edmonton Manning",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -323,7 +323,7 @@
     "riding_name": "Edmonton Griesbach",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -331,7 +331,7 @@
     "riding_name": "Edmonton Gateway",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -339,7 +339,7 @@
     "riding_name": "Edmonton Centre",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Edmonton, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -347,7 +347,7 @@
     "riding_name": "Calgary Skyview",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Calgary, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -355,7 +355,7 @@
     "riding_name": "Calgary Signal Hill",
     "province": "AB",
     "estimated_rent_1br_cad": 1011,
-    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline for Calgary (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -363,7 +363,7 @@
     "riding_name": "Calgary Shepard",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Calgary, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -371,7 +371,7 @@
     "riding_name": "Calgary Nose Hill",
     "province": "AB",
     "estimated_rent_1br_cad": 1011,
-    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline for Calgary (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -379,7 +379,7 @@
     "riding_name": "Calgary Midnapore",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Calgary, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -387,7 +387,7 @@
     "riding_name": "Calgary McKnight",
     "province": "AB",
     "estimated_rent_1br_cad": 1011,
-    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline for Calgary (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -395,7 +395,7 @@
     "riding_name": "Calgary Heritage",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Calgary, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -403,7 +403,7 @@
     "riding_name": "Calgary East",
     "province": "AB",
     "estimated_rent_1br_cad": 1011,
-    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline for Calgary (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -411,7 +411,7 @@
     "riding_name": "Calgary Crowfoot",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Calgary, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -419,7 +419,7 @@
     "riding_name": "Calgary Confederation",
     "province": "AB",
     "estimated_rent_1br_cad": 1011,
-    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline for Calgary (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -427,7 +427,7 @@
     "riding_name": "Calgary Centre",
     "province": "AB",
     "estimated_rent_1br_cad": 1507,
-    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline (CPI-adjusted, 92% weight)",
+    "data_source": "Hybrid blend: market listings (N=2, 8% weight) + Census baseline for Calgary (CPI-adjusted, 92% weight)",
     "sample_size": 2,
     "confidence": "low"
   },
@@ -435,7 +435,7 @@
     "riding_name": "Bow River",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brooks, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -443,7 +443,7 @@
     "riding_name": "Battle River—Crowfoot",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Camrose, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -451,7 +451,7 @@
     "riding_name": "Airdrie—Cochrane",
     "province": "AB",
     "estimated_rent_1br_cad": 960,
-    "data_source": "Statistics Canada Census baseline, adjusted for AB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Calgary, adjusted for AB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -459,7 +459,7 @@
     "riding_name": "Yorkton—Melville",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Yorkton, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -467,7 +467,7 @@
     "riding_name": "Swift Current—Grasslands—Kindersley",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Swift Current, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -475,7 +475,7 @@
     "riding_name": "Souris—Moose Mountain",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Estevan, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -483,7 +483,7 @@
     "riding_name": "Saskatoon West",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saskatoon, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -491,7 +491,7 @@
     "riding_name": "Saskatoon—University",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saskatoon, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -499,7 +499,7 @@
     "riding_name": "Saskatoon South",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saskatoon, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -507,7 +507,7 @@
     "riding_name": "Regina—Wascana",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Regina, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -515,7 +515,7 @@
     "riding_name": "Regina—Qu'Appelle",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Regina, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -523,7 +523,7 @@
     "riding_name": "Regina—Lewvan",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Regina, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -531,7 +531,7 @@
     "riding_name": "Prince Albert",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Prince Albert, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -539,7 +539,7 @@
     "riding_name": "Moose Jaw—Lake Centre—Lanigan",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Moose Jaw, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -547,7 +547,7 @@
     "riding_name": "Desnethé—Missinippi—Churchill River",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Prince Albert, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -555,7 +555,7 @@
     "riding_name": "Pickering—Brooklin",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Oshawa, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -563,7 +563,7 @@
     "riding_name": "Peterborough",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Peterborough, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -571,7 +571,7 @@
     "riding_name": "Perth—Wellington",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for North Perth, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -579,7 +579,7 @@
     "riding_name": "Parry Sound—Muskoka",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Bracebridge, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -587,7 +587,7 @@
     "riding_name": "Oxford",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ingersoll, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -595,7 +595,7 @@
     "riding_name": "Ottawa West—Nepean",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -603,7 +603,7 @@
     "riding_name": "Ottawa—Vanier—Gloucester",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -611,7 +611,7 @@
     "riding_name": "Ottawa South",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -619,7 +619,7 @@
     "riding_name": "Ottawa Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -627,7 +627,7 @@
     "riding_name": "Oshawa",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Oshawa, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -635,7 +635,7 @@
     "riding_name": "Orléans",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -643,7 +643,7 @@
     "riding_name": "Oakville West",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hamilton, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -651,7 +651,7 @@
     "riding_name": "Oakville East",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hamilton, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -659,7 +659,7 @@
     "riding_name": "Northumberland—Clarke",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cobourg, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -667,7 +667,7 @@
     "riding_name": "Nipissing—Timiskaming",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for North Bay, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -675,7 +675,7 @@
     "riding_name": "Niagara West",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. Catharines-Niagara, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -683,7 +683,7 @@
     "riding_name": "Niagara South",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. Catharines-Niagara, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -691,7 +691,7 @@
     "riding_name": "Niagara Falls—Niagara-on-the-Lake",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. Catharines-Niagara, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -699,7 +699,7 @@
     "riding_name": "New Tecumseth—Gwillimbury",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Barrie, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -707,7 +707,7 @@
     "riding_name": "Newmarket—Aurora",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -715,7 +715,7 @@
     "riding_name": "Nepean",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -723,7 +723,7 @@
     "riding_name": "Mississauga—Streetsville",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -731,7 +731,7 @@
     "riding_name": "Mississauga—Malton",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -739,7 +739,7 @@
     "riding_name": "Mississauga—Lakeshore",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -747,7 +747,7 @@
     "riding_name": "Mississauga—Erin Mills",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -755,7 +755,7 @@
     "riding_name": "Mississauga East—Cooksville",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -763,7 +763,7 @@
     "riding_name": "Mississauga Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -771,7 +771,7 @@
     "riding_name": "Milton East—Halton Hills South",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Guelph, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -779,7 +779,7 @@
     "riding_name": "Middlesex—London",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ingersoll, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -787,7 +787,7 @@
     "riding_name": "Vancouver Quadra",
     "province": "BC",
     "estimated_rent_1br_cad": 1144,
-    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline for Vancouver (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
@@ -795,7 +795,7 @@
     "riding_name": "Vancouver Kingsway",
     "province": "BC",
     "estimated_rent_1br_cad": 1144,
-    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline for Vancouver (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
@@ -803,7 +803,7 @@
     "riding_name": "Vancouver Granville",
     "province": "BC",
     "estimated_rent_1br_cad": 1144,
-    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline for Vancouver (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
@@ -811,7 +811,7 @@
     "riding_name": "Vancouver Fraserview—South Burnaby",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -819,7 +819,7 @@
     "riding_name": "Vancouver East",
     "province": "BC",
     "estimated_rent_1br_cad": 1144,
-    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline for Vancouver (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
@@ -827,7 +827,7 @@
     "riding_name": "Vancouver Centre",
     "province": "BC",
     "estimated_rent_1br_cad": 2325,
-    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline (CPI-adjusted, 88% weight)",
+    "data_source": "Hybrid blend: market listings (N=3, 12% weight) + Census baseline for Vancouver (CPI-adjusted, 88% weight)",
     "sample_size": 3,
     "confidence": "low"
   },
@@ -835,7 +835,7 @@
     "riding_name": "Surrey Newton",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -843,7 +843,7 @@
     "riding_name": "Surrey Centre",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -851,7 +851,7 @@
     "riding_name": "South Surrey—White Rock",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -859,7 +859,7 @@
     "riding_name": "Skeena—Bulkley Valley",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Prince Rupert, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -867,7 +867,7 @@
     "riding_name": "Similkameen—South Okanagan—West Kootenay",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Penticton, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -875,7 +875,7 @@
     "riding_name": "Saanich—Gulf Islands",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Victoria, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -883,7 +883,7 @@
     "riding_name": "Richmond East—Steveston",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -891,7 +891,7 @@
     "riding_name": "Richmond Centre—Marpole",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -899,7 +899,7 @@
     "riding_name": "Prince George—Peace River—Northern Rockies",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Dawson Creek, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -907,7 +907,7 @@
     "riding_name": "Port Moody—Coquitlam",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -915,7 +915,7 @@
     "riding_name": "Pitt Meadows—Maple Ridge",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Abbotsford-Mission, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -923,7 +923,7 @@
     "riding_name": "Okanagan Lake West—South Kelowna",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Summerland, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -931,7 +931,7 @@
     "riding_name": "North Vancouver—Capilano",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -939,7 +939,7 @@
     "riding_name": "North Island—Powell River",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Campbell River, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -947,7 +947,7 @@
     "riding_name": "New Westminster—Burnaby—Maillardville",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Vancouver, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -955,7 +955,7 @@
     "riding_name": "Nanaimo—Ladysmith",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Nanaimo, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -963,7 +963,7 @@
     "riding_name": "Mission—Matsqui—Abbotsford",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Abbotsford-Mission, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -971,7 +971,7 @@
     "riding_name": "Langley Township—Fraser Heights",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Abbotsford-Mission, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -979,7 +979,7 @@
     "riding_name": "Kelowna",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kelowna, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -987,7 +987,7 @@
     "riding_name": "Kamloops—Thompson—Nicola",
     "province": "BC",
     "estimated_rent_1br_cad": 976,
-    "data_source": "Statistics Canada Census baseline, adjusted for BC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kamloops, adjusted for BC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -995,7 +995,7 @@
     "riding_name": "Markham—Unionville",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1003,7 +1003,7 @@
     "riding_name": "Markham—Thornhill",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1011,7 +1011,7 @@
     "riding_name": "Markham—Stouffville",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1019,7 +1019,7 @@
     "riding_name": "London West",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for London, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1027,7 +1027,7 @@
     "riding_name": "London—Fanshawe",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for London, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1035,7 +1035,7 @@
     "riding_name": "London Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for London, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1043,7 +1043,7 @@
     "riding_name": "Leeds—Grenville—Thousand Islands—Rideau Lakes",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brockville, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1051,7 +1051,7 @@
     "riding_name": "Lanark—Frontenac",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kingston, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1059,7 +1059,7 @@
     "riding_name": "Kitchener South—Hespeler",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kitchener-Cambridge-Waterloo, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1067,7 +1067,7 @@
     "riding_name": "Kitchener—Conestoga",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kitchener-Cambridge-Waterloo, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1075,7 +1075,7 @@
     "riding_name": "Kitchener Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kitchener-Cambridge-Waterloo, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1083,7 +1083,7 @@
     "riding_name": "King—Vaughan",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1091,7 +1091,7 @@
     "riding_name": "Kingston and the Islands",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kingston, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1099,7 +1099,7 @@
     "riding_name": "Kenora—Kiiwetinoong",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kenora, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1107,7 +1107,7 @@
     "riding_name": "Kapuskasing—Timmins—Mushkegowuk",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Timmins, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1115,7 +1115,7 @@
     "riding_name": "Kanata",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1123,7 +1123,7 @@
     "riding_name": "Huron—Bruce",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saugeen Shores, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1131,7 +1131,7 @@
     "riding_name": "Humber River—Black Creek",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1139,7 +1139,7 @@
     "riding_name": "Hastings—Lennox and Addington—Tyendinaga",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Greater Napanee, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1147,7 +1147,7 @@
     "riding_name": "Hamilton West—Ancaster—Dundas",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brock, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1155,7 +1155,7 @@
     "riding_name": "Hamilton Mountain",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hamilton, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1163,7 +1163,7 @@
     "riding_name": "Hamilton East—Stoney Creek",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hamilton, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1171,7 +1171,7 @@
     "riding_name": "Hamilton Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hamilton, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1179,7 +1179,7 @@
     "riding_name": "Haliburton—Kawartha Lakes",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kawartha Lakes, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1187,7 +1187,7 @@
     "riding_name": "Haldimand—Norfolk",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Haldimand County, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1195,7 +1195,7 @@
     "riding_name": "Guelph",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Guelph, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1203,7 +1203,7 @@
     "riding_name": "Flamborough—Glanbrook—Brant North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brock, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1211,7 +1211,7 @@
     "riding_name": "Etobicoke North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1219,7 +1219,7 @@
     "riding_name": "Etobicoke—Lakeshore",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1227,7 +1227,7 @@
     "riding_name": "Etobicoke Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1235,7 +1235,7 @@
     "riding_name": "Essex",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Windsor, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1243,7 +1243,7 @@
     "riding_name": "Elgin—St. Thomas—London South",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for London, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1251,7 +1251,7 @@
     "riding_name": "Eglinton—Lawrence",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1259,7 +1259,7 @@
     "riding_name": "Dufferin—Caledon",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Centre Wellington, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1267,7 +1267,7 @@
     "riding_name": "Burlington",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hamilton, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1275,7 +1275,7 @@
     "riding_name": "Bruce—Grey—Owen Sound",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Meaford, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1283,7 +1283,7 @@
     "riding_name": "Brantford—Brant South—Six Nations",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brantford, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1291,7 +1291,7 @@
     "riding_name": "Brampton West",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Guelph, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1299,7 +1299,7 @@
     "riding_name": "Brampton South",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1307,7 +1307,7 @@
     "riding_name": "Brampton North—Caledon",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1315,7 +1315,7 @@
     "riding_name": "Brampton East",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1323,7 +1323,7 @@
     "riding_name": "Brampton—Chinguacousy Park",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1331,7 +1331,7 @@
     "riding_name": "Brampton Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1339,7 +1339,7 @@
     "riding_name": "Bowmanville—Oshawa North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Oshawa, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1347,7 +1347,7 @@
     "riding_name": "Beaches—East York",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1355,7 +1355,7 @@
     "riding_name": "Bay of Quinte",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Prince Edward, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1363,7 +1363,7 @@
     "riding_name": "Barrie—Springwater—Oro-Medonte",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Barrie, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1371,7 +1371,7 @@
     "riding_name": "Barrie South—Innisfil",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Barrie, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1379,7 +1379,7 @@
     "riding_name": "Aurora—Oak Ridges—Richmond Hill",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1387,7 +1387,7 @@
     "riding_name": "Algonquin—Renfrew—Pembroke",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Pembroke, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1395,7 +1395,7 @@
     "riding_name": "Ajax",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Oshawa, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1403,7 +1403,7 @@
     "riding_name": "Vimy",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1411,7 +1411,7 @@
     "riding_name": "Ville-Marie—Le Sud-Ouest—Île-des-Soeurs",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1419,7 +1419,7 @@
     "riding_name": "Vaudreuil",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Lachute, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1427,7 +1427,7 @@
     "riding_name": "Trois-Rivières",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Trois-Rivières, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1435,7 +1435,7 @@
     "riding_name": "Thérèse-De Blainville",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sainte- Sophie, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1443,7 +1443,7 @@
     "riding_name": "Terrebonne",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sainte- Sophie, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1451,7 +1451,7 @@
     "riding_name": "Sherbrooke",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sherbrooke, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1459,7 +1459,7 @@
     "riding_name": "Shefford",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Granby, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1467,7 +1467,7 @@
     "riding_name": "Saint-Maurice—Champlain",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for La Tuque, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1475,7 +1475,7 @@
     "riding_name": "Saint-Léonard—Saint-Michel",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1483,7 +1483,7 @@
     "riding_name": "Saint-Laurent",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1491,7 +1491,7 @@
     "riding_name": "Saint-Jean",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1499,7 +1499,7 @@
     "riding_name": "Carlton Trail—Eagle Creek",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saskatoon, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1507,7 +1507,7 @@
     "riding_name": "Battlefords—Lloydminster—Meadow Lake",
     "province": "SK",
     "estimated_rent_1br_cad": 880,
-    "data_source": "Statistics Canada Census baseline, adjusted for SK Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Lloydminster, adjusted for SK Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1515,7 +1515,7 @@
     "riding_name": "Winnipeg West",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1523,7 +1523,7 @@
     "riding_name": "Winnipeg South Centre",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1531,7 +1531,7 @@
     "riding_name": "Winnipeg South",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1539,7 +1539,7 @@
     "riding_name": "Winnipeg North",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1547,7 +1547,7 @@
     "riding_name": "Winnipeg Centre",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1555,7 +1555,7 @@
     "riding_name": "Selkirk—Interlake—Eastman",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1563,7 +1563,7 @@
     "riding_name": "St. Boniface—St. Vital",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1571,7 +1571,7 @@
     "riding_name": "Riding Mountain",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brandon, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1579,7 +1579,7 @@
     "riding_name": "Provencher",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Steinbach, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1587,7 +1587,7 @@
     "riding_name": "Portage—Lisgar",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Portage La Prairie, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1595,7 +1595,7 @@
     "riding_name": "Kildonan—St. Paul",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1603,7 +1603,7 @@
     "riding_name": "Elmwood—Transcona",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Winnipeg, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1611,7 +1611,7 @@
     "riding_name": "Churchill—Keewatinook Aski",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Thompson, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1619,7 +1619,7 @@
     "riding_name": "Brandon—Souris",
     "province": "MB",
     "estimated_rent_1br_cad": 896,
-    "data_source": "Statistics Canada Census baseline, adjusted for MB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Brandon, adjusted for MB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1627,7 +1627,7 @@
     "riding_name": "York South—Weston—Etobicoke",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1635,7 +1635,7 @@
     "riding_name": "York—Durham",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Scugog, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1643,7 +1643,7 @@
     "riding_name": "York Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1651,7 +1651,7 @@
     "riding_name": "Windsor West",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Windsor, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1659,7 +1659,7 @@
     "riding_name": "Windsor—Tecumseh—Lakeshore",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Windsor, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1667,7 +1667,7 @@
     "riding_name": "Willowdale",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1675,7 +1675,7 @@
     "riding_name": "Whitby",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Oshawa, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1683,7 +1683,7 @@
     "riding_name": "Wellington—Halton Hills North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Centre Wellington, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1691,7 +1691,7 @@
     "riding_name": "Waterloo",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kitchener-Cambridge-Waterloo, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1699,7 +1699,7 @@
     "riding_name": "Vaughan—Woodbridge",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1707,7 +1707,7 @@
     "riding_name": "University—Rosedale",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1715,7 +1715,7 @@
     "riding_name": "Toronto—St. Paul's",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1723,7 +1723,7 @@
     "riding_name": "Toronto—Danforth",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1731,7 +1731,7 @@
     "riding_name": "Toronto Centre",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1739,7 +1739,7 @@
     "riding_name": "Thunder Bay—Superior North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Thunder Bay, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1747,7 +1747,7 @@
     "riding_name": "Thunder Bay—Rainy River",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Thunder Bay, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1755,7 +1755,7 @@
     "riding_name": "Thornhill",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1763,7 +1763,7 @@
     "riding_name": "Taiaiako'n—Parkdale—High Park",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1771,7 +1771,7 @@
     "riding_name": "Sudbury East—Manitoulin—Nickel Belt",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Greater Sudbury, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1779,7 +1779,7 @@
     "riding_name": "Sudbury",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Greater Sudbury, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1787,7 +1787,7 @@
     "riding_name": "Stormont—Dundas—Glengarry",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cornwall, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1795,7 +1795,7 @@
     "riding_name": "St. Catharines",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. Catharines-Niagara, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1803,7 +1803,7 @@
     "riding_name": "Spadina—Harbourfront",
     "province": "ON",
     "estimated_rent_1br_cad": 2159,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -1811,7 +1811,7 @@
     "riding_name": "Simcoe North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Midland, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1819,7 +1819,7 @@
     "riding_name": "Simcoe—Grey",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Collingwood, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1827,7 +1827,7 @@
     "riding_name": "Scarborough—Woburn",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1835,7 +1835,7 @@
     "riding_name": "Scarborough Southwest",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1843,7 +1843,7 @@
     "riding_name": "Scarborough North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1851,7 +1851,7 @@
     "riding_name": "Scarborough—Guildwood—Rouge Park",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1859,7 +1859,7 @@
     "riding_name": "Scarborough Centre—Don Valley East",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1867,7 +1867,7 @@
     "riding_name": "Scarborough—Agincourt",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1875,7 +1875,7 @@
     "riding_name": "Sault Ste. Marie—Algoma",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Elliot Lake, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1883,7 +1883,7 @@
     "riding_name": "Sarnia—Lambton—Bkejwanong",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sarnia, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1891,7 +1891,7 @@
     "riding_name": "Richmond Hill South",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1899,7 +1899,7 @@
     "riding_name": "Prescott—Russell—Cumberland",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Hawkesbury, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1907,7 +1907,7 @@
     "riding_name": "Saint-Hyacinthe—Bagot—Acton",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saint-Hyacinthe, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1915,7 +1915,7 @@
     "riding_name": "Rosemont—La Petite-Patrie",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1923,7 +1923,7 @@
     "riding_name": "Rivière-du-Nord",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sainte- Sophie, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1931,7 +1931,7 @@
     "riding_name": "Rivière-des-Mille-Îles",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sainte- Sophie, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1939,7 +1939,7 @@
     "riding_name": "Rimouski—La Matapédia",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Rimouski, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1947,7 +1947,7 @@
     "riding_name": "Richmond—Arthabaska",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Victoriaville, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1955,7 +1955,7 @@
     "riding_name": "Repentigny",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Joliette, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1963,7 +1963,7 @@
     "riding_name": "Québec Centre",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1971,7 +1971,7 @@
     "riding_name": "Portneuf—Jacques-Cartier",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1979,7 +1979,7 @@
     "riding_name": "Pontiac—Kitigan Zibi",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1987,7 +1987,7 @@
     "riding_name": "Pierrefonds—Dollard",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -1995,7 +1995,7 @@
     "riding_name": "Pierre-Boucher—Les Patriotes—Verchères",
     "province": "QC",
     "estimated_rent_1br_cad": 828,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sorel-Tracy, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2003,7 +2003,7 @@
     "riding_name": "Papineau",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2011,7 +2011,7 @@
     "riding_name": "Outremont",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2019,7 +2019,7 @@
     "riding_name": "Notre-Dame-de-Grâce—Westmount",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2027,7 +2027,7 @@
     "riding_name": "Montmorency—Charlevoix",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2035,7 +2035,7 @@
     "riding_name": "Montcalm",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Rawdon, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2043,7 +2043,7 @@
     "riding_name": "Mont-Saint-Bruno—L’Acadie",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2051,7 +2051,7 @@
     "riding_name": "Mount Royal",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2059,7 +2059,7 @@
     "riding_name": "Mirabel",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sainte- Sophie, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2067,7 +2067,7 @@
     "riding_name": "Mégantic—L’Érable—Lotbinière",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Thetford Mines, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2075,7 +2075,7 @@
     "riding_name": "Marc-Aurèle-Fortin",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2083,7 +2083,7 @@
     "riding_name": "Louis-Saint-Laurent—Akiawenhrahk",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2091,7 +2091,7 @@
     "riding_name": "Louis-Hébert",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2099,7 +2099,7 @@
     "riding_name": "Longueuil—Saint-Hubert",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2107,7 +2107,7 @@
     "riding_name": "Longueuil—Charles-LeMoyne",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2115,7 +2115,7 @@
     "riding_name": "Lévis—Lotbinière",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2123,7 +2123,7 @@
     "riding_name": "Les Pays-d'en-Haut",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Prévost, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2131,7 +2131,7 @@
     "riding_name": "Laval—Les Îles",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2139,7 +2139,7 @@
     "riding_name": "Laurier—Sainte-Marie",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2147,7 +2147,7 @@
     "riding_name": "Laurentides—Labelle",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Mont-Laurier, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2155,7 +2155,7 @@
     "riding_name": "LaSalle—Émard—Verdun",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2163,7 +2163,7 @@
     "riding_name": "Lac-Saint-Louis",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2171,7 +2171,7 @@
     "riding_name": "Lac-Saint-Jean",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Alma, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2179,7 +2179,7 @@
     "riding_name": "La Prairie—Atateken",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2187,7 +2187,7 @@
     "riding_name": "La Pointe-de-l'Île",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2195,7 +2195,7 @@
     "riding_name": "Jonquière",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Alma, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2203,7 +2203,7 @@
     "riding_name": "Joliette—Manawan",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Joliette, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2211,7 +2211,7 @@
     "riding_name": "Hull—Aylmer",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2219,7 +2219,7 @@
     "riding_name": "Honoré-Mercier",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2227,7 +2227,7 @@
     "riding_name": "Hochelaga—Rosemont-Est",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2235,7 +2235,7 @@
     "riding_name": "Gatineau",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2243,7 +2243,7 @@
     "riding_name": "Gaspésie—Les Îles-de-la-Madeleine—Listuguj",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Gaspé, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2251,7 +2251,7 @@
     "riding_name": "Drummond",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Drummondville, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2259,7 +2259,7 @@
     "riding_name": "Dorval—Lachine—LaSalle",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2267,7 +2267,7 @@
     "riding_name": "Côte-Nord—Kawawachikamach—Nitassinan",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Baie-Comeau, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2275,7 +2275,7 @@
     "riding_name": "Côte-du-Sud—Rivière-du-Loup—Kataskomiq—Témiscouata",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montmagny, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2283,7 +2283,7 @@
     "riding_name": "Compton—Stanstead",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sherbrooke, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2291,7 +2291,7 @@
     "riding_name": "Chicoutimi—Le Fjord",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saguenay, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2299,7 +2299,7 @@
     "riding_name": "Châteauguay—Les Jardins-de-Napierville",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Salaberry-de-Valleyfield, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2307,7 +2307,7 @@
     "riding_name": "Charlesbourg—Haute-Saint-Charles",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2315,7 +2315,7 @@
     "riding_name": "Brossard—Saint-Lambert",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2323,7 +2323,7 @@
     "riding_name": "Brome—Missisquoi",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cowansville, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2331,7 +2331,7 @@
     "riding_name": "Bourassa",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2339,7 +2339,7 @@
     "riding_name": "Berthier—Maskinongé",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sorel-Tracy, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2347,7 +2347,7 @@
     "riding_name": "Beloeil—Chambly",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saint-Hyacinthe, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2355,7 +2355,7 @@
     "riding_name": "Bellechasse—Les Etchemins—Lévis",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2363,7 +2363,7 @@
     "riding_name": "Bécancour—Nicolet—Saurel—Alnôbak",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Sorel-Tracy, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2371,7 +2371,7 @@
     "riding_name": "Beauport—Limoilou",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Québec, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2379,7 +2379,7 @@
     "riding_name": "Beauharnois—Salaberry—Soulanges—Huntingdon",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Salaberry-de-Valleyfield, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2387,7 +2387,7 @@
     "riding_name": "Beauce",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saint-Georges, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2395,7 +2395,7 @@
     "riding_name": "Argenteuil—La Petite-Nation",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Lachute, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2403,7 +2403,7 @@
     "riding_name": "Alfred-Pellan",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2411,7 +2411,7 @@
     "riding_name": "Don Valley West",
     "province": "ON",
     "estimated_rent_1br_cad": 1163,
-    "data_source": "Hybrid blend: market listings (N=5, 20% weight) + Census baseline (CPI-adjusted, 80% weight)",
+    "data_source": "Hybrid blend: market listings (N=5, 20% weight) + Census baseline for Toronto (CPI-adjusted, 80% weight)",
     "sample_size": 5,
     "confidence": "low"
   },
@@ -2419,7 +2419,7 @@
     "riding_name": "Don Valley North",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Toronto, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2427,7 +2427,7 @@
     "riding_name": "Davenport",
     "province": "ON",
     "estimated_rent_1br_cad": 1217,
-    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline (CPI-adjusted, 76% weight)",
+    "data_source": "Hybrid blend: market listings (N=6, 24% weight) + Census baseline for Toronto (CPI-adjusted, 76% weight)",
     "sample_size": 6,
     "confidence": "low"
   },
@@ -2435,7 +2435,7 @@
     "riding_name": "Chatham-Kent—Leamington",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Chatham-Kent, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2443,7 +2443,7 @@
     "riding_name": "Carleton",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Ottawa-Gatineau, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2451,7 +2451,7 @@
     "riding_name": "Cambridge",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kitchener-Cambridge-Waterloo, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2459,7 +2459,7 @@
     "riding_name": "Burlington North—Milton West",
     "province": "ON",
     "estimated_rent_1br_cad": 944,
-    "data_source": "Statistics Canada Census baseline, adjusted for ON Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Guelph, adjusted for ON Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2467,7 +2467,7 @@
     "riding_name": "Ahuntsic-Cartierville",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Montréal, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2475,7 +2475,7 @@
     "riding_name": "Abitibi—Témiscamingue",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Amos, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2483,7 +2483,7 @@
     "riding_name": "Abitibi—Baie-James—Nunavik—Eeyou",
     "province": "QC",
     "estimated_rent_1br_cad": 920,
-    "data_source": "Statistics Canada Census baseline, adjusted for QC Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Val-d'Or, adjusted for QC Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2491,7 +2491,7 @@
     "riding_name": "Tobique—Mactaquac",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Fredericton, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2499,7 +2499,7 @@
     "riding_name": "Saint John—St. Croix",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saint John, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2507,7 +2507,7 @@
     "riding_name": "Saint John—Kennebecasis",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Saint John, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2515,7 +2515,7 @@
     "riding_name": "Moncton—Dieppe",
     "province": "NB",
     "estimated_rent_1br_cad": 936,
-    "data_source": "Hybrid blend: market listings (N=1, 4% weight) + Census baseline (CPI-adjusted, 96% weight)",
+    "data_source": "Hybrid blend: market listings (N=1, 4% weight) + Census baseline for Moncton (CPI-adjusted, 96% weight)",
     "sample_size": 1,
     "confidence": "low"
   },
@@ -2523,7 +2523,7 @@
     "riding_name": "Miramichi—Grand Lake",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Miramichi, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2531,7 +2531,7 @@
     "riding_name": "Madawaska—Restigouche",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Campbellton, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2539,7 +2539,7 @@
     "riding_name": "Fundy Royal",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Moncton, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2547,7 +2547,7 @@
     "riding_name": "Fredericton—Oromocto",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Fredericton, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2555,7 +2555,7 @@
     "riding_name": "Beauséjour",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Moncton, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2563,7 +2563,7 @@
     "riding_name": "Acadie—Bathurst",
     "province": "NB",
     "estimated_rent_1br_cad": 928,
-    "data_source": "Statistics Canada Census baseline, adjusted for NB Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Bathurst, adjusted for NB Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2571,7 +2571,7 @@
     "riding_name": "Sydney—Glace Bay",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cape Breton, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2579,7 +2579,7 @@
     "riding_name": "South Shore—St. Margarets",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kentville, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2587,7 +2587,7 @@
     "riding_name": "Sackville—Bedford—Preston",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Halifax, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2595,7 +2595,7 @@
     "riding_name": "Kings—Hants",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kentville, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2603,7 +2603,7 @@
     "riding_name": "Halifax West",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Halifax, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2611,7 +2611,7 @@
     "riding_name": "Halifax",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Halifax, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2619,7 +2619,7 @@
     "riding_name": "Dartmouth—Cole Harbour",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Halifax, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2627,7 +2627,7 @@
     "riding_name": "Cumberland—Colchester",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Truro, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2635,7 +2635,7 @@
     "riding_name": "Central Nova",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for New Glasgow, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2643,7 +2643,7 @@
     "riding_name": "Cape Breton—Canso—Antigonish",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Cape Breton, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2651,7 +2651,7 @@
     "riding_name": "Acadie—Annapolis",
     "province": "NS",
     "estimated_rent_1br_cad": 1000,
-    "data_source": "Statistics Canada Census baseline, adjusted for NS Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Kentville, adjusted for NS Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2659,7 +2659,7 @@
     "riding_name": "Malpeque",
     "province": "PE",
     "estimated_rent_1br_cad": 912,
-    "data_source": "Statistics Canada Census baseline, adjusted for PE Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Charlottetown, adjusted for PE Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2667,7 +2667,7 @@
     "riding_name": "Egmont",
     "province": "PE",
     "estimated_rent_1br_cad": 912,
-    "data_source": "Statistics Canada Census baseline, adjusted for PE Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Summerside, adjusted for PE Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2675,7 +2675,7 @@
     "riding_name": "Charlottetown",
     "province": "PE",
     "estimated_rent_1br_cad": 912,
-    "data_source": "Statistics Canada Census baseline, adjusted for PE Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Charlottetown, adjusted for PE Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2683,7 +2683,7 @@
     "riding_name": "Cardigan",
     "province": "PE",
     "estimated_rent_1br_cad": 912,
-    "data_source": "Statistics Canada Census baseline, adjusted for PE Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Charlottetown, adjusted for PE Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2691,7 +2691,7 @@
     "riding_name": "Terra Nova—The Peninsulas",
     "province": "NL",
     "estimated_rent_1br_cad": 888,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Gander, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2699,7 +2699,7 @@
     "riding_name": "St. John's East",
     "province": "NL",
     "estimated_rent_1br_cad": 888,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. John's, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2707,7 +2707,7 @@
     "riding_name": "Long Range Mountains",
     "province": "NL",
     "estimated_rent_1br_cad": 722,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Corner Brook, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2715,7 +2715,7 @@
     "riding_name": "Labrador",
     "province": "NL",
     "estimated_rent_1br_cad": 755,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Corner Brook, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2723,7 +2723,7 @@
     "riding_name": "Central Newfoundland",
     "province": "NL",
     "estimated_rent_1br_cad": 888,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for Gander, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2731,7 +2731,7 @@
     "riding_name": "Cape Spear",
     "province": "NL",
     "estimated_rent_1br_cad": 888,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. John's, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   },
@@ -2739,7 +2739,7 @@
     "riding_name": "Avalon",
     "province": "NL",
     "estimated_rent_1br_cad": 888,
-    "data_source": "Statistics Canada Census baseline, adjusted for NL Rent CPI inflation (no active listings in region)",
+    "data_source": "Statistics Canada Census baseline for St. John's, adjusted for NL Rent CPI inflation (no active listings in region)",
     "sample_size": 0,
     "confidence": "baseline"
   }
