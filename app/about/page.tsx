@@ -29,6 +29,13 @@ const CARDS = [
       "Note that municipal income taxes do not exist in Canada. Municipal property taxes are property-owner levies generally factored directly into CMHC rents. While we model federal and provincial taxes, other household costs (such as food, transport, and childcare) are not subtracted from disposable income and vary by household."
     ],
   },
+  {
+    title: 'Index averages vs. general renter statistics',
+    body: [
+      "You may notice that our calculated average rent burdens (~28% for single individuals and ~23% for families) are lower than some news reports or studies citing average renter burdens of 40% or more. This is due to differences in definitions.",
+      "First, our denominator is the median income of all residents (including homeowners and retirees), which is higher than the median income of tenant households specifically. Second, our standard rent burden metric divides rent by gross (pre-tax) income; calculating against net take-home pay yields much higher burdens. Finally, we baseline strictly against 1-bedroom apartments rather than larger, more expensive multi-bedroom rentals."
+    ],
+  },
 ]
 
 export default function AboutPage() {
