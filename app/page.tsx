@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useMemo, type CSSProperties } from 'react'
 import NavBar from './components/NavBar'
 import { supabase } from '@/lib/supabase'
+import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import * as d3 from 'd3'
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -31,23 +32,8 @@ const colorFor = (p: number) => p < 9.5 ? 'var(--color-green)' : p < 12.5 ? 'var
 const fmt = (n: number) => `CA$${Math.round(n).toLocaleString('en-CA')}`
 
 function getNetDisposable(monthlyGross: number, monthlyRent: number, prov: string | null): number {
-  const annualGross = monthlyGross * 12
-  let baseRate = 0.15
-  const p = prov?.toUpperCase() || ''
-  if (p === 'QC') baseRate = 0.205
-  else if (p === 'ON') baseRate = 0.150
-  else if (p === 'BC') baseRate = 0.135
-  else if (p === 'AB') baseRate = 0.140
-  else if (['NS', 'NB', 'PE', 'NL'].includes(p)) baseRate = 0.180
-  else if (['MB', 'SK'].includes(p)) baseRate = 0.165
-  else if (['YT', 'NT', 'NU'].includes(p)) baseRate = 0.125
-  else baseRate = 0.150
-
-  const progressiveRate = baseRate + (annualGross - 42600) * 0.000002
-  const finalRate = Math.max(0.08, Math.min(0.38, progressiveRate))
-  
-  const netIncome = monthlyGross * (1 - finalRate)
-  return Math.round(netIncome - monthlyRent)
+  const takeHome = estimateMonthlyTakeHome(monthlyGross, prov) ?? monthlyGross * 0.75
+  return Math.round(takeHome - monthlyRent)
 }
 
 const PROVINCE_NAMES: Record<string, string> = {
@@ -156,9 +142,16 @@ export default function Home() {
     
     const draw = () => {
       svg.innerHTML = ''
-      const W = svg.clientWidth || 1100, H = 450, m = { t: 30, r: 30, b: 50, l: 60 }
+      const W = svg.clientWidth || 1100
+      // On phones the fixed desktop margins ate most of the plot and the axis
+      // titles collided with tick labels; use tighter margins, a taller canvas,
+      // and a horizontal y-caption instead of a rotated axis title.
+      const narrow = W < 500
+      const H = narrow ? 350 : 450
+      const m = narrow ? { t: 40, r: 16, b: 48, l: 48 } : { t: 30, r: 30, b: 50, l: 60 }
       svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
-      
+      svg.style.height = H + 'px'
+
       const bVals = data.map(c => c.rentBurden), yVals = data.map(c => c.bowlsAfterRent)
       const bmin = Math.min(...bVals), bmax = Math.max(...bVals)
       const ymin = Math.min(0, ...yVals), ymax = Math.max(...yVals)
@@ -166,13 +159,13 @@ export default function Home() {
       const yS = (v: number) => H - m.b - (v - ymin) / (ymax - ymin) * (H - m.t - m.b)
 
       // X grid
-      const step = 5
+      const step = narrow ? 10 : 5
       for (let v = Math.ceil(bmin / step) * step; v <= bmax; v += step) {
         svg.appendChild(d3.create('svg:line')
           .attr('x1', xS(v)).attr('x2', xS(v)).attr('y1', m.t).attr('y2', H - m.b)
           .attr('stroke', 'var(--color-border)').attr('stroke-dasharray', '1 4').node()!)
         const t = d3.create('svg:text')
-          .attr('x', xS(v)).attr('y', H - m.b + 18).attr('text-anchor', 'middle')
+          .attr('x', xS(v)).attr('y', H - m.b + 15).attr('text-anchor', 'middle')
           .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
           .attr('fill', 'var(--color-text-3)').text(v + '%').node()!
         svg.appendChild(t)
@@ -184,32 +177,44 @@ export default function Home() {
         svg.appendChild(d3.create('svg:line')
           .attr('x1', m.l).attr('x2', W - m.r).attr('y1', yS(v)).attr('y2', yS(v))
           .attr('stroke', 'var(--color-border)').attr('stroke-dasharray', '1 4').node()!)
+        const yLabel = narrow
+          ? (Math.abs(v) >= 1000 ? `$${v / 1000}k` : `$${v}`)
+          : '$' + v.toLocaleString()
         const t = d3.create('svg:text')
-          .attr('x', m.l - 10).attr('y', yS(v) + 3).attr('text-anchor', 'end')
+          .attr('x', m.l - 6).attr('y', yS(v) + 3).attr('text-anchor', 'end')
           .attr('font-family', 'var(--font-mono)').attr('font-size', '9.5')
-          .attr('fill', 'var(--color-text-3)').text('$' + v.toLocaleString()).node()!
+          .attr('fill', 'var(--color-text-3)').text(yLabel).node()!
         svg.appendChild(t)
       }
 
       // X/Y Titles
       const xt = d3.create('svg:text')
-        .attr('x', (m.l + W - m.r) / 2).attr('y', H - 10).attr('text-anchor', 'middle')
-        .attr('font-family', 'var(--font-body)').attr('font-size', '12')
+        .attr('x', (m.l + W - m.r) / 2).attr('y', H - 6).attr('text-anchor', 'middle')
+        .attr('font-family', 'var(--font-body)').attr('font-size', narrow ? '11' : '12')
         .attr('fill', 'var(--color-text-2)')
         .text('Rent burden (% of local median income)').node()!
       svg.appendChild(xt)
 
-      const yt = d3.create('svg:text')
-        .attr('transform', `translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle')
-        .attr('font-family', 'var(--font-body)').attr('font-size', '12')
-        .attr('fill', 'var(--color-text-2)')
-        .text('Disposable monthly income after housing (CAD)').node()!
-      svg.appendChild(yt)
+      if (narrow) {
+        const yt = d3.create('svg:text')
+          .attr('x', 4).attr('y', 18).attr('text-anchor', 'start')
+          .attr('font-family', 'var(--font-body)').attr('font-size', '11')
+          .attr('fill', 'var(--color-text-2)')
+          .text('Disposable monthly income after housing (CAD)').node()!
+        svg.appendChild(yt)
+      } else {
+        const yt = d3.create('svg:text')
+          .attr('transform', `translate(14 ${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle')
+          .attr('font-family', 'var(--font-body)').attr('font-size', '12')
+          .attr('fill', 'var(--color-text-2)')
+          .text('Disposable monthly income after housing (CAD)').node()!
+        svg.appendChild(yt)
+      }
 
       // Plot data points
       data.forEach((c) => {
         const gx = xS(c.rentBurden), gy = yS(c.bowlsAfterRent)
-        const rs = 6 
+        const rs = narrow ? 3 : 6
 
         const g = d3.create('svg:g')
           .attr('class', 'grain')
@@ -237,6 +242,11 @@ export default function Home() {
         else if (party.includes('green')) fill = '#3d9b35'
         else if (party.includes('independent')) fill = '#6e6e73'
 
+        // Invisible halo so dots stay tappable on touch screens
+        if (narrow) {
+          g.append('circle').attr('r', 10).attr('fill', 'transparent')
+        }
+
         g.append('circle')
           .attr('r', rs)
           .attr('fill', fill)
@@ -246,7 +256,7 @@ export default function Home() {
 
         svg.appendChild(g.node()!)
 
-        if (NOTABLE.includes(c.city)) {
+        if (!narrow && NOTABLE.includes(c.city)) {
           const t = d3.create('svg:text')
             .attr('x', gx + rs + 6).attr('y', gy + 4)
             .attr('font-family', 'var(--font-body)').attr('font-size', '11')
@@ -314,11 +324,41 @@ export default function Home() {
         @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
         a[data-btn="primary"]:hover { opacity: .85; }
+        .board-card {
+          background: var(--color-surface);
+          padding: 36px 30px;
+        }
+        .bar-container {
+          position: relative;
+          height: 20px;
+          width: clamp(64px, 20vw, 250px);
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        }
+        .scatter-card {
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-lg);
+          background: var(--color-surface);
+          overflow: hidden;
+          padding: 28px 24px;
+        }
         @media(max-width: 900px) {
           .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .board-grid { grid-template-columns: 1fr !important; }
           .metrics-grid { grid-template-columns: 1fr !important; }
           .method-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+        @media(max-width: 600px) {
+          .board-card {
+            padding: 20px 14px !important;
+          }
+          .bar-container {
+            width: clamp(48px, 15vw, 100px) !important;
+          }
+          .scatter-card {
+            padding: 16px 8px !important;
+          }
         }
       `}</style>
 
@@ -467,22 +507,22 @@ export default function Home() {
 
           <div ref={boardRef} className="board-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--color-border)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
             {/* Cheapest */}
-            <div style={{ background: 'var(--color-surface)', padding: '36px 30px' }}>
+            <div className="board-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-green)' }} />
                 <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Lowest Rent Burden %</span>
               </div>
               {cheapTop.map((c, i) => (
-                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0,1fr) auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
                   <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontSize: 14.5, fontWeight: 500 }}>
+                  <span style={{ fontSize: 14.5, fontWeight: 500, minWidth: 0, overflowWrap: 'anywhere' }}>
                     {c.city}, {c.region}
                     <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
                       {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
                     </small>
                   </span>
-                  <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${(c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                  <span className="bar-container">
+                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${Math.min(100, c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
                     <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
                   </span>
                 </div>
@@ -490,22 +530,22 @@ export default function Home() {
             </div>
 
             {/* Priciest */}
-            <div style={{ background: 'var(--color-surface)', padding: '36px 30px' }}>
+            <div className="board-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-accent)' }} />
                 <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Highest Rent Burden %</span>
               </div>
               {priceTop.map((c, i) => (
-                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px 1fr auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0,1fr) auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
                   <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontSize: 14.5, fontWeight: 500 }}>
+                  <span style={{ fontSize: 14.5, fontWeight: 500, minWidth: 0, overflowWrap: 'anywhere' }}>
                     {c.city}, {c.region}
                     <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
                       {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
                     </small>
                   </span>
-                  <span style={{ position: 'relative', height: 20, width: 'min(34vw,250px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${(c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                  <span className="bar-container">
+                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${Math.min(100, c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
                     <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
                   </span>
                 </div>
@@ -522,7 +562,7 @@ export default function Home() {
             title="Rent burden against disposable income"
             blurb="Ridings further right spend more of their local salary on housing. Ridings higher up keep more of it. Each dot is coloured by the party holding the seat."
           />
-          <div style={{ ...CARD, padding: '28px 24px' }}>
+          <div className="scatter-card">
             <svg ref={scatRef} style={{ display: 'block', width: '100%', height: 450 }} />
           </div>
         </div>

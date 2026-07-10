@@ -1,6 +1,7 @@
 'use client'
 
 import { supabase } from '@/lib/supabase'
+import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import NavBar from '@/app/components/NavBar'
 import { useEffect, useRef, useState, useMemo } from 'react'
 import * as d3 from 'd3'
@@ -86,6 +87,7 @@ export default function Explore() {
   const [geoError, setGeoError] = useState<string | null>(null)
   const [colorMode, setColorMode] = useState<'party' | 'burden'>('party')
   const [profile, setProfile] = useState<'single_renter' | 'family_homeowner'>('single_renter')
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
 
   const cvt = (cad: number) => `CA$${cad.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
 
@@ -246,13 +248,13 @@ export default function Explore() {
         return burdenA - burdenB
       })
 
+    const leftover = (c: City) => {
+      const takeHome = estimateMonthlyTakeHome(c.median_monthly_salary_cad, c.region)
+      return takeHome == null ? -Infinity : takeHome - (c.median_rent_1br_cad ?? 0)
+    }
     const leftoverSorted = [...cities]
       .filter(c => c.median_rent_1br_cad != null && c.median_monthly_salary_cad != null)
-      .sort((a, b) => {
-        const leftA = (a.median_monthly_salary_cad ?? 0) - (a.median_rent_1br_cad ?? 0)
-        const leftB = (b.median_monthly_salary_cad ?? 0) - (b.median_rent_1br_cad ?? 0)
-        return leftB - leftA
-      })
+      .sort((a, b) => leftover(b) - leftover(a))
 
     const burdenRankMap: Record<string, number> = {}
     burdenSorted.forEach((c, idx) => { burdenRankMap[c.city] = idx + 1 })
@@ -293,32 +295,54 @@ export default function Explore() {
       const isFullPostal = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$/.test(compact)
       const isFsa = /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]$/.test(compact)
 
-      // Free-text search resolves full postal codes, FSAs and place names alike
-      // (OSM's structured postalcode= param returns nothing for full Canadian
-      // codes). countrycodes=ca stops a weak match from wandering to another
-      // country; addressdetails lets us verify the hit is actually in Canada.
-      const url =
-        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1` +
-        `&countrycodes=ca&limit=1&q=${encodeURIComponent(raw + ', Canada')}`
+      let lat: number | null = null
+      let lon: number | null = null
 
-      const res = await fetch(url)
-      const data = await res.json()
-      const hit = Array.isArray(data) ? data[0] : null
-
-      // Reject anything OSM couldn't place inside Canada rather than silently
-      // zooming to a wrong location (the old behaviour: a bad postal match in
-      // Toronto could land the map in Newfoundland).
-      if (!hit || hit.address?.country_code !== 'ca') {
-        setGeoError(
-          (isFullPostal || isFsa)
-            ? `Couldn't locate postal code "${raw}". Try the first 3 characters or a community name.`
-            : `Couldn't find "${raw}" in Canada. Try a community name or postal code.`
-        )
-        return
+      if (isFullPostal || isFsa) {
+        const fsa = compact.substring(0, 3)
+        try {
+          const zRes = await fetch(`https://api.zippopotam.us/ca/${fsa}`)
+          if (zRes.ok) {
+            const zData = await zRes.json()
+            const place = zData.places?.[0]
+            if (place && place.latitude && place.longitude) {
+              lat = parseFloat(place.latitude)
+              lon = parseFloat(place.longitude)
+            }
+          }
+        } catch (err) {
+          console.warn('Zippopotam lookup failed, falling back to OSM:', err)
+        }
       }
 
-      const lat = parseFloat(hit.lat)
-      const lon = parseFloat(hit.lon)
+      if (lat === null || lon === null) {
+        // Free-text search resolves full postal codes, FSAs and place names alike
+        // (OSM's structured postalcode= param returns nothing for full Canadian
+        // codes). countrycodes=ca stops a weak match from wandering to another
+        // country; addressdetails lets us verify the hit is actually in Canada.
+        const url =
+          `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1` +
+          `&countrycodes=ca&limit=1&q=${encodeURIComponent(raw + ', Canada')}`
+
+        const res = await fetch(url)
+        const data = await res.json()
+        const hit = Array.isArray(data) ? data[0] : null
+
+        // Reject anything OSM couldn't place inside Canada rather than silently
+        // zooming to a wrong location (the old behaviour: a bad postal match in
+        // Toronto could land the map in Newfoundland).
+        if (!hit || hit.address?.country_code !== 'ca') {
+          setGeoError(
+            (isFullPostal || isFsa)
+              ? `Couldn't locate postal code "${raw}". Try the first 3 characters or a community name.`
+              : `Couldn't find "${raw}" in Canada. Try a community name or postal code.`
+          )
+          return
+        }
+
+        lat = parseFloat(hit.lat)
+        lon = parseFloat(hit.lon)
+      }
 
       // Nearest surveyed community. Scale longitude by cos(latitude) so the
       // distance is geographically correct at Canadian latitudes (a degree of
@@ -564,11 +588,17 @@ export default function Explore() {
         })
 
       // Declarative zoom transitions based on selectedProvince and selectedCity
-      if (selectedCity && selectedCity.latitude != null && selectedCity.longitude != null) {
-        const projected = projection([Number(selectedCity.longitude), Number(selectedCity.latitude)])
-        if (projected) {
-          const [x, y] = projected
-          const scale = 5.5
+      if (selectedCity) {
+        const feature = ridingFeatures.find((f: any) => f.properties.name === selectedCity.city)
+        if (feature) {
+          const [[x0, y0], [x1, y1]] = pathGen.bounds(feature)
+          const dx = x1 - x0
+          const dy = y1 - y0
+          const x = (x0 + x1) / 2
+          const y = (y0 + y1) / 2
+          // Fit bounds but with a maximum scale (e.g. 18) so it doesn't zoom in infinitely
+          // and a minimum scale (e.g. 5.5) so it zooms in enough for small ridings.
+          const scale = Math.max(5.5, Math.min(18, 0.7 / Math.max(dx / W, dy / H)))
           const targetTransform = d3.zoomIdentity
             .translate(W / 2 - x * scale, H / 2 - y * scale)
             .scale(scale)
@@ -576,6 +606,19 @@ export default function Explore() {
           svg.transition()
             .duration(750)
             .call(zoom.transform, targetTransform)
+        } else if (selectedCity.latitude != null && selectedCity.longitude != null) {
+          const projected = projection([Number(selectedCity.longitude), Number(selectedCity.latitude)])
+          if (projected) {
+            const [x, y] = projected
+            const scale = 8
+            const targetTransform = d3.zoomIdentity
+              .translate(W / 2 - x * scale, H / 2 - y * scale)
+              .scale(scale)
+            
+            svg.transition()
+              .duration(750)
+              .call(zoom.transform, targetTransform)
+          }
         }
       } else if (selectedProvince) {
         const provFeature = canada.features.find((f: any) => PROVINCE_TO_ABBR[f.properties.name] === selectedProvince)
@@ -727,7 +770,17 @@ export default function Explore() {
         {selectedCity && (() => {
           const burden = rentBurden(selectedCity)
           const provName = selectedCity.region ? PROVINCE_NAMES[selectedCity.region] || selectedCity.region : ''
-          const disposableVal = selectedCity.median_monthly_salary_cad != null && selectedCity.median_rent_1br_cad != null ? selectedCity.median_monthly_salary_cad - selectedCity.median_rent_1br_cad : null
+          
+          const isSingle = profile === 'single_renter'
+          const rent = isSingle
+            ? (selectedCity.median_rent_1br_cad != null ? Number(selectedCity.median_rent_1br_cad) : null)
+            : (selectedCity.median_rent_1br_cad != null ? Number(selectedCity.median_rent_1br_cad) * 1.65 : null)
+          const salary = isSingle
+            ? (selectedCity.median_monthly_salary_cad != null ? Number(selectedCity.median_monthly_salary_cad) : null)
+            : (selectedCity.tech_salary_cad != null ? Number(selectedCity.tech_salary_cad) : selectedCity.median_monthly_salary_cad != null ? Number(selectedCity.median_monthly_salary_cad) * 1.5 : null)
+
+          const takeHomeMonthly = salary != null ? estimateMonthlyTakeHome(salary, selectedCity.region) : null
+          const disposableVal = takeHomeMonthly != null && rent != null ? takeHomeMonthly - rent : null
           
           let displayPopulation = selectedCity.population ? Number(selectedCity.population) : null
           let displayVoters: number | null = null
@@ -784,7 +837,7 @@ export default function Explore() {
                   ) : null}
                   {ranks.leftoverRank[selectedCity.city] ? (
                     <div style={{ background: 'var(--color-surface)', borderRadius: 10, padding: '8px', textAlign: 'center', border: '0.5px solid var(--color-border)' }}>
-                      <p style={{ fontSize: 13, color: 'var(--color-text-3)', margin: '0 0 4px' }}>Disposable income</p>
+                      <p style={{ fontSize: 13, color: 'var(--color-text-3)', margin: '0 0 4px' }}>After tax &amp; rent</p>
                       <p style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--color-accent)', margin: 0, fontWeight: 500 }}>
                         #{ranks.leftoverRank[selectedCity.city]}
                       </p>
@@ -799,15 +852,21 @@ export default function Explore() {
                 <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-3)', margin: '0 0 0.75rem' }}>Local affordability</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
                   <div>
-                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>Median gross pay:</span>
+                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>{isSingle ? 'Median gross pay:' : 'Median gross pay (Family):'}</span>
                     <p style={{ fontSize: 15, margin: '2px 0 0', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
-                      {selectedCity.median_monthly_salary_cad ? cvt(selectedCity.median_monthly_salary_cad) : 'N/A'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>/mo</span>
+                      {salary ? cvt(salary) : 'N/A'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>/mo</span>
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>Median 1BR rent:</span>
+                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>Est. take-home:</span>
                     <p style={{ fontSize: 15, margin: '2px 0 0', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
-                      {selectedCity.median_rent_1br_cad ? cvt(selectedCity.median_rent_1br_cad) : 'N/A'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>/mo</span>
+                      {takeHomeMonthly != null ? cvt(takeHomeMonthly) : 'N/A'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>/mo</span>
+                    </p>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>{isSingle ? 'Median 1BR rent:' : 'Typical housing cost:'}</span>
+                    <p style={{ fontSize: 15, margin: '2px 0 0', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
+                      {rent ? cvt(rent) : 'N/A'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>/mo</span>
                     </p>
                   </div>
                 </div>
@@ -824,9 +883,12 @@ export default function Explore() {
 
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
-                    <span style={{ color: 'var(--color-text-3)' }}>Disposable income:</span>
-                    <span style={{ fontWeight: 600, color: 'var(--color-green)' }}>{disposableVal ? cvt(disposableVal) : 'N/A'}</span>
+                    <span style={{ color: 'var(--color-text-3)' }}>Left after tax &amp; rent:</span>
+                    <span style={{ fontWeight: 600, color: disposableVal != null && disposableVal < 0 ? 'var(--color-red)' : 'var(--color-green)' }}>{disposableVal != null ? `${disposableVal < 0 ? '−' : ''}${cvt(Math.abs(disposableVal))}` : 'N/A'}</span>
                   </div>
+                  <p style={{ fontSize: 9, color: 'var(--color-text-4)', margin: '2px 0 0', lineHeight: 1.4 }}>
+                    Take-home est. after federal &amp; provincial tax, CPP &amp; EI ({isSingle ? 'single individual' : 'family estimation'}). Excludes provincial surtaxes &amp; health premiums.
+                  </p>
                 </div>
               </div>
 
@@ -905,33 +967,61 @@ export default function Explore() {
         }}>
           {/* Search bar */}
           <div style={{ position: 'relative' }}>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 10,
-              background: 'var(--color-surface)', backdropFilter: 'blur(16px)',
-              border: '0.5px solid var(--color-border)', borderRadius: 10,
-              padding: '8px 14px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
-            }}>
-              <Search size={16} style={{ color: 'var(--color-text-3)' }} />
-              <input
-                type="text"
-                placeholder={isGeocoding ? "Geocoding address..." : "Search community or postal code..."}
-                value={searchQuery}
-                onChange={e => {
-                  setSearchQuery(e.target.value)
-                  setShowSuggestions(true)
-                  if (geoError) setGeoError(null)
-                }}
-                onFocus={() => setShowSuggestions(true)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') {
-                    handleAddressSearch(searchQuery)
-                  }
-                }}
-                style={{
-                  background: 'none', border: 'none', color: 'var(--color-text-1)',
-                  fontSize: 13.5, width: '100%', outline: 'none', fontFamily: 'var(--font-body)'
-                }}
-              />
+            <div style={{ display: 'flex', gap: 8, width: '100%' }}>
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 10,
+                background: 'var(--color-surface)', backdropFilter: 'blur(16px)',
+                border: '0.5px solid var(--color-border)', borderRadius: 10,
+                padding: '8px 14px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                flex: 1
+              }}>
+                <Search size={16} style={{ color: 'var(--color-text-3)' }} />
+                <input
+                  type="text"
+                  placeholder={isGeocoding ? "Geocoding address..." : "Search community or postal code..."}
+                  value={searchQuery}
+                  onChange={e => {
+                    setSearchQuery(e.target.value)
+                    setShowSuggestions(true)
+                    if (geoError) setGeoError(null)
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      handleAddressSearch(searchQuery)
+                    }
+                  }}
+                  style={{
+                    background: 'none', border: 'none', color: 'var(--color-text-1)',
+                    fontSize: 13.5, width: '100%', outline: 'none', fontFamily: 'var(--font-body)'
+                  }}
+                />
+              </div>
+              {isMobile && (
+                <button
+                  onClick={() => setShowMobileFilters(!showMobileFilters)}
+                  style={{
+                    background: showMobileFilters ? 'var(--color-accent)' : 'var(--color-surface)',
+                    color: showMobileFilters ? '#fff' : 'var(--color-text-1)',
+                    border: '0.5px solid var(--color-border)',
+                    borderRadius: 10,
+                    padding: '8px 12px',
+                    fontSize: 13,
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                    backdropFilter: 'blur(16px)',
+                    transition: 'all 0.2s',
+                    fontFamily: 'var(--font-body)',
+                    flexShrink: 0
+                  }}
+                >
+                  ⚙️ {showMobileFilters ? 'Hide' : 'Filters'}
+                </button>
+              )}
             </div>
             {geoError && (
               <div style={{
@@ -993,12 +1083,13 @@ export default function Explore() {
           </div>
 
           {/* Filter Card */}
-          <div style={{
-            background: 'var(--color-surface)', backdropFilter: 'blur(16px)',
-            border: '0.5px solid var(--color-border)', borderRadius: 10,
-            padding: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-            display: 'flex', flexDirection: 'column', gap: 12
-          }}>
+          {(!isMobile || showMobileFilters) && (
+            <div style={{
+              background: 'var(--color-surface)', backdropFilter: 'blur(16px)',
+              border: '0.5px solid var(--color-border)', borderRadius: 10,
+              padding: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+              display: 'flex', flexDirection: 'column', gap: 12
+            }}>
             {/* Expanded toggle */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--color-text-1)' }}>Index controls</span>
@@ -1133,6 +1224,7 @@ export default function Explore() {
               </div>
             )}
           </div>
+          )}
         </div>
 
         {/* Floating Map Utility Buttons (Zoom +/- Reset) */}

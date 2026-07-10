@@ -22,6 +22,13 @@ const CARDS = [
       "Rent is real CMHC 2025 survey data applied by nearest surveyed metro, since CMHC surveys metro areas rather than individual ridings."
     ],
   },
+  {
+    title: 'Taxation & disposable income model',
+    body: [
+      "All median salary figures reported on the website represent gross (before-tax) income. To estimate realistic purchasing power, the index calculates estimated net disposable income by subtracting progressive federal and provincial income taxes, CPP/QPP contributions, and Employment Insurance (EI) deductions.",
+      "Note that municipal income taxes do not exist in Canada. Municipal property taxes are property-owner levies generally factored directly into CMHC rents. While we model federal and provincial taxes, other household costs (such as food, transport, and childcare) are not subtracted from disposable income and vary by household."
+    ],
+  },
 ]
 
 export default function AboutPage() {
@@ -60,8 +67,10 @@ export default function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
             {[
               ['Housing burden', 'Real Statistics Canada median income compared against real CMHC 1BR rent (applied by nearest surveyed metro).'],
+              ['Take-home pay', 'Median gross pay is a Statistics Canada figure. "Take-home" and "left after tax & rent" apply an estimate of 2026 federal and provincial income tax, CPP and EI for a single individual — an approximation, not tax advice.'],
               ['Represented party', 'Real Elections Canada results from the 2025 general election: the actual elected candidate and party per riding.'],
               ['Safety quality', 'Real Statistics Canada Crime Severity Index data for safety (applied by nearest surveyed metro).'],
+              ['Taxation parameters', 'All salary baselines are gross (before-tax). Net disposable income estimates subtract progressive federal and provincial taxes, CPP/QPP and EI. There is no municipal income tax in Canada; municipal property taxes are property-owner levies factored directly into CMHC rents. Other non-housing household expenses (e.g. utilities, food, transport) are not subtracted.'],
             ].map(([title, body]) => (
               <div key={title} style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '1.5rem' }}>
                 <h3 style={{ fontSize: 16, fontWeight: 600, margin: '0 0 .5rem', color: 'var(--color-text-1)' }}>{title}</h3>
