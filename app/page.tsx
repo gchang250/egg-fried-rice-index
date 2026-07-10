@@ -22,8 +22,20 @@ type CityRow = {
   tech_salary_cad:          number | null
   blurb: string | null
   price_source:             string | null
+  rent_data_source?:        string | null
   rentBurden?:    number | null
   bowlsAfterRent?: number | null // renamed to plates left
+}
+
+function getProxyName(source: string | null | undefined, city: string): string | null {
+  if (!source) return null
+  const m = source.match(/average one-bedroom rent for ([^(]+)/)
+  if (!m) return null
+  const name = m[1].trim().replace(/,\s*$/, '').split(',')[0]
+  if (name.toLowerCase() !== city.toLowerCase()) {
+    return name
+  }
+  return null
 }
 
 type Tip = { city: string; province: string; price: number; burden: number | null; plates: number | null; x: number; y: number }
@@ -99,7 +111,7 @@ export default function Home() {
   useEffect(() => {
     supabase
       .from('cities')
-      .select('city,country,region,flag,price_cad,latitude,longitude,median_rent_1br_cad,median_monthly_salary_cad,tech_salary_cad,blurb,median_rent_local,price_source')
+      .select('city,country,region,flag,price_cad,latitude,longitude,median_rent_1br_cad,median_monthly_salary_cad,tech_salary_cad,blurb,median_rent_local,price_source,rent_data_source')
       .order('city', { ascending: true })
       .then(({ data }) => {
         if (!data) return
@@ -122,6 +134,7 @@ export default function Home() {
         price_cad: c.price_cad ? Number(c.price_cad) : 0,
         median_rent_1br_cad: rent,
         median_monthly_salary_cad: salary,
+        rent_data_source: c.rent_data_source,
         rentBurden: rent && salary ? Math.round(rent / salary * 100) : null,
         bowlsAfterRent: rent && salary ? getNetDisposable(salary, rent, c.region) : null,
       }
@@ -512,21 +525,25 @@ export default function Home() {
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-green)' }} />
                 <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Lowest Rent Burden %</span>
               </div>
-              {cheapTop.map((c, i) => (
-                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0,1fr) auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
-                  <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontSize: 14.5, fontWeight: 500, minWidth: 0, overflowWrap: 'anywhere' }}>
-                    {c.city}, {c.region}
-                    <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
-                      {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
-                    </small>
-                  </span>
-                  <span className="bar-container">
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${Math.min(100, c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
-                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
-                  </span>
-                </div>
-              ))}
+              {cheapTop.map((c, i) => {
+                const proxy = getProxyName(c.rent_data_source, c.city)
+                return (
+                  <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0,1fr) auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < cheapTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                    <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
+                    <span style={{ fontSize: 14.5, fontWeight: 500, minWidth: 0, overflowWrap: 'anywhere' }}>
+                      {c.city}, {c.region}
+                      <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
+                        {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
+                        {proxy ? ` (via ${proxy})` : ''}
+                      </small>
+                    </span>
+                    <span className="bar-container">
+                      <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-green)', width: boardIn ? `${Math.min(100, c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                      <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
+                    </span>
+                  </div>
+                )
+              })}
             </div>
 
             {/* Priciest */}
@@ -535,21 +552,25 @@ export default function Home() {
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-accent)' }} />
                 <span style={{ ...LABEL, color: 'var(--color-text-1)' }}>Highest Rent Burden %</span>
               </div>
-              {priceTop.map((c, i) => (
-                <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0,1fr) auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
-                  <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontSize: 14.5, fontWeight: 500, minWidth: 0, overflowWrap: 'anywhere' }}>
-                    {c.city}, {c.region}
-                    <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
-                      {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
-                    </small>
-                  </span>
-                  <span className="bar-container">
-                    <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${Math.min(100, c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
-                    <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
-                  </span>
-                </div>
-              ))}
+              {priceTop.map((c, i) => {
+                const proxy = getProxyName(c.rent_data_source, c.city)
+                return (
+                  <div key={c.city} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0,1fr) auto', alignItems: 'center', gap: 16, padding: '12px 0', borderBottom: i < priceTop.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                    <span style={{ ...MONO, fontSize: 10, color: 'var(--color-text-3)' }}>{String(i + 1).padStart(2, '0')}</span>
+                    <span style={{ fontSize: 14.5, fontWeight: 500, minWidth: 0, overflowWrap: 'anywhere' }}>
+                      {c.city}, {c.region}
+                      <small style={{ display: 'block', fontSize: 11, color: 'var(--color-text-3)', fontWeight: 400, marginTop: 2 }}>
+                        {c.bowlsAfterRent != null ? (c.bowlsAfterRent < 0 ? `CA$${Math.abs(c.bowlsAfterRent).toLocaleString()} shortfall after rent` : `CA$${c.bowlsAfterRent.toLocaleString()} disposable after rent`) : ''}
+                        {proxy ? ` (via ${proxy})` : ''}
+                      </small>
+                    </span>
+                    <span className="bar-container">
+                      <span style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 2, background: 'var(--color-accent)', width: boardIn ? `${Math.min(100, c.rentBurden ?? 0)}%` : '0%', transition: `width 1.2s cubic-bezier(.2,.8,.2,1) ${i * 50}ms` }} />
+                      <span style={{ position: 'relative', ...MONO, fontSize: 12, background: 'var(--color-surface)', paddingLeft: 8 }}>{c.rentBurden}%</span>
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

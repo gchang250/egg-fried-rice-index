@@ -25,6 +25,7 @@ type City = {
   median_monthly_salary_cad: number | null
   safety_index: number | null
   tech_salary_cad: number | null
+  rent_data_source: string | null
 }
 
 const PROVINCE_NAMES: Record<string, string> = {
@@ -222,7 +223,7 @@ export default function Explore() {
           population, blurb, price_cad,
           price_source, price_updated_at, confidence_score,
           median_rent_1br_cad, median_monthly_salary_cad,
-          safety_index, tech_salary_cad
+          safety_index, tech_salary_cad, rent_data_source
         `)
         .order('city', { ascending: true })
 
@@ -782,6 +783,21 @@ export default function Explore() {
           const takeHomeMonthly = salary != null ? estimateMonthlyTakeHome(salary, selectedCity.region) : null
           const disposableVal = takeHomeMonthly != null && rent != null ? takeHomeMonthly - rent : null
           
+          let rentDisclaimer = ''
+          if (selectedCity.rent_data_source) {
+            const parts = selectedCity.rent_data_source.split('; ')
+            if (parts.length > 1) {
+              const geoInfo = parts[1]
+              const centreMatch = selectedCity.rent_data_source.match(/average one-bedroom rent for ([^(]+)/)
+              if (centreMatch) {
+                const centreName = centreMatch[1].trim().replace(/,\s*$/, '').split(',')[0]
+                if (centreName.toLowerCase() !== selectedCity.city.toLowerCase()) {
+                  rentDisclaimer = `Sourced from ${centreName} (${geoInfo.replace('nearest surveyed centre, ', '')})`
+                }
+              }
+            }
+          }
+
           let displayPopulation = selectedCity.population ? Number(selectedCity.population) : null
           let displayVoters: number | null = null
           try {
@@ -870,6 +886,12 @@ export default function Explore() {
                     </p>
                   </div>
                 </div>
+
+                {rentDisclaimer && (
+                  <div style={{ fontSize: 9.5, color: 'var(--color-text-4)', lineHeight: 1.3, marginTop: -4, marginBottom: 12 }}>
+                    ℹ️ {rentDisclaimer}
+                  </div>
+                )}
 
                 <div style={{ marginBottom: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>

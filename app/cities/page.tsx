@@ -14,11 +14,23 @@ type CityRow = {
   median_rent_1br_cad: number | null; median_monthly_salary_cad: number | null
   safety_index: number | null
   tech_salary_cad: number | null
+  rent_data_source: string | null
 }
 
 function getNetDisposable(monthlyGross: number, monthlyRent: number, prov: string | null): number {
   const takeHome = estimateMonthlyTakeHome(monthlyGross, prov) ?? monthlyGross * 0.75
   return Math.round(takeHome - monthlyRent)
+}
+
+function getProxyName(source: string | null | undefined, city: string): string | null {
+  if (!source) return null
+  const m = source.match(/average one-bedroom rent for ([^(]+)/)
+  if (!m) return null
+  const name = m[1].trim().replace(/,\s*$/, '').split(',')[0]
+  if (name.toLowerCase() !== city.toLowerCase()) {
+    return name
+  }
+  return null
 }
 
 function slugifyCity(city: string) {
@@ -90,7 +102,7 @@ export default function CitiesPage() {
         city, country, region, flag, population, price_cad, price_updated_at,
         confidence_score, baseline_entry_count, market_entry_count, data_quality_label,
         median_rent_1br_cad, median_monthly_salary_cad,
-        safety_index, tech_salary_cad
+        safety_index, tech_salary_cad, rent_data_source
       `).order('price_cad', { ascending: true, nullsFirst: false })
       if (error) { setLoading(false); return }
       setCities((data ?? []) as CityRow[])
@@ -135,6 +147,7 @@ export default function CitiesPage() {
           ...c, 
           burden, 
           disposable,
+          rent_data_source: c.rent_data_source,
           median_rent_1br_cad: Math.round(rent),
           median_monthly_salary_cad: Math.round(salary)
         }
@@ -298,6 +311,14 @@ export default function CitiesPage() {
                       </div>
                       <div style={{ textAlign:'right' }}>
                         <div style={{ fontFamily:'var(--font-display)', fontSize:20, color:'var(--color-accent)', whiteSpace:'nowrap', fontWeight:400 }}>${city.median_rent_1br_cad}/mo</div>
+                        {(() => {
+                          const proxy = getProxyName(city.rent_data_source, city.city)
+                          return proxy ? (
+                            <p style={{ fontSize: 9.5, color: 'var(--color-text-4)', margin: '2px 0 0', whiteSpace: 'nowrap' }}>
+                              via {proxy}
+                            </p>
+                          ) : null
+                        })()}
                       </div>
                     </div>
                   </a>
@@ -319,7 +340,17 @@ export default function CitiesPage() {
                       </p>
                     </div>
 
-                    <div style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-accent)', fontWeight:400 }}>${city.median_rent_1br_cad}/mo</div>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-accent)', fontWeight:400 }}>${city.median_rent_1br_cad}/mo</div>
+                      {(() => {
+                        const proxy = getProxyName(city.rent_data_source, city.city)
+                        return proxy ? (
+                          <p style={{ fontSize: 9.5, color: 'var(--color-text-4)', margin: '2px 0 0' }} title={city.rent_data_source ?? undefined}>
+                            via {proxy}
+                          </p>
+                        ) : null
+                      })()}
+                    </div>
 
                     <div style={{ fontSize:14, color:'var(--color-text-2)', fontFamily:'var(--font-mono)' }}>
                       ${city.median_monthly_salary_cad}/mo
