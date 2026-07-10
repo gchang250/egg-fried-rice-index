@@ -1,0 +1,2060 @@
+[
+  {
+    "fed_num": "10001",
+    "riding_name": "Avalon",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 938.0
+  },
+  {
+    "fed_num": "10002",
+    "riding_name": "Cape Spear",
+    "median_rent_2021": 920.0,
+    "average_rent_2021": 939.0
+  },
+  {
+    "fed_num": "10003",
+    "riding_name": "Central Newfoundland",
+    "median_rent_2021": 800.0,
+    "average_rent_2021": 825.0
+  },
+  {
+    "fed_num": "10004",
+    "riding_name": "Labrador",
+    "median_rent_2021": 870.0,
+    "average_rent_2021": 873.0
+  },
+  {
+    "fed_num": "10005",
+    "riding_name": "Long Range Mountains",
+    "median_rent_2021": 780.0,
+    "average_rent_2021": 811.0
+  },
+  {
+    "fed_num": "10006",
+    "riding_name": "St. John's East",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1038.0
+  },
+  {
+    "fed_num": "10007",
+    "riding_name": "Terra Nova--The Peninsulas",
+    "median_rent_2021": 740.0,
+    "average_rent_2021": 731.0
+  },
+  {
+    "fed_num": "11001",
+    "riding_name": "Cardigan",
+    "median_rent_2021": 950.0,
+    "average_rent_2021": 957.0
+  },
+  {
+    "fed_num": "11002",
+    "riding_name": "Charlottetown",
+    "median_rent_2021": 980.0,
+    "average_rent_2021": 1061.0
+  },
+  {
+    "fed_num": "11003",
+    "riding_name": "Egmont",
+    "median_rent_2021": 840.0,
+    "average_rent_2021": 872.0
+  },
+  {
+    "fed_num": "11004",
+    "riding_name": "Malpeque",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1038.0
+  },
+  {
+    "fed_num": "12001",
+    "riding_name": "Acadie--Annapolis",
+    "median_rent_2021": 750.0,
+    "average_rent_2021": 785.0
+  },
+  {
+    "fed_num": "12002",
+    "riding_name": "Cape Breton--Canso--Antigonish",
+    "median_rent_2021": 760.0,
+    "average_rent_2021": 830.0
+  },
+  {
+    "fed_num": "12003",
+    "riding_name": "Central Nova",
+    "median_rent_2021": 775.0,
+    "average_rent_2021": 821.0
+  },
+  {
+    "fed_num": "12004",
+    "riding_name": "Cumberland--Colchester",
+    "median_rent_2021": 820.0,
+    "average_rent_2021": 854.0
+  },
+  {
+    "fed_num": "12005",
+    "riding_name": "Dartmouth--Cole Harbour",
+    "median_rent_2021": 1010.0,
+    "average_rent_2021": 1129.0
+  },
+  {
+    "fed_num": "12006",
+    "riding_name": "Halifax",
+    "median_rent_2021": 1240.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "12007",
+    "riding_name": "Halifax West",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1259.0
+  },
+  {
+    "fed_num": "12008",
+    "riding_name": "Kings--Hants",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 956.0
+  },
+  {
+    "fed_num": "12009",
+    "riding_name": "Sackville--Bedford--Preston",
+    "median_rent_2021": 1380.0,
+    "average_rent_2021": 1370.0
+  },
+  {
+    "fed_num": "12010",
+    "riding_name": "South Shore--St. Margarets",
+    "median_rent_2021": 830.0,
+    "average_rent_2021": 866.0
+  },
+  {
+    "fed_num": "12011",
+    "riding_name": "Sydney--Glace Bay",
+    "median_rent_2021": 800.0,
+    "average_rent_2021": 829.0
+  },
+  {
+    "fed_num": "13001",
+    "riding_name": "Acadie--Bathurst",
+    "median_rent_2021": 624.0,
+    "average_rent_2021": 646.0
+  },
+  {
+    "fed_num": "13002",
+    "riding_name": "Beausjour",
+    "median_rent_2021": 800.0,
+    "average_rent_2021": 860.0
+  },
+  {
+    "fed_num": "13003",
+    "riding_name": "Fredericton--Oromocto",
+    "median_rent_2021": 1010.0,
+    "average_rent_2021": 1059.0
+  },
+  {
+    "fed_num": "13004",
+    "riding_name": "Fundy Royal",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 876.0
+  },
+  {
+    "fed_num": "13005",
+    "riding_name": "Madawaska--Restigouche",
+    "median_rent_2021": 624.0,
+    "average_rent_2021": 649.0
+  },
+  {
+    "fed_num": "13006",
+    "riding_name": "Miramichi--Grand Lake",
+    "median_rent_2021": 700.0,
+    "average_rent_2021": 730.0
+  },
+  {
+    "fed_num": "13007",
+    "riding_name": "Moncton--Dieppe",
+    "median_rent_2021": 950.0,
+    "average_rent_2021": 1013.0
+  },
+  {
+    "fed_num": "13008",
+    "riding_name": "Saint John--Kennebecasis",
+    "median_rent_2021": 840.0,
+    "average_rent_2021": 872.0
+  },
+  {
+    "fed_num": "13009",
+    "riding_name": "Saint John--St. Croix",
+    "median_rent_2021": 770.0,
+    "average_rent_2021": 788.0
+  },
+  {
+    "fed_num": "13010",
+    "riding_name": "Tobique--Mactaquac",
+    "median_rent_2021": 700.0,
+    "average_rent_2021": 704.0
+  },
+  {
+    "fed_num": "24001",
+    "riding_name": "Abitibi--Baie-James--Nunavik--Eeyou",
+    "median_rent_2021": 645.0,
+    "average_rent_2021": 656.0
+  },
+  {
+    "fed_num": "24002",
+    "riding_name": "Abitibi--Tmiscamingue",
+    "median_rent_2021": 655.0,
+    "average_rent_2021": 688.0
+  },
+  {
+    "fed_num": "24003",
+    "riding_name": "Ahuntsic-Cartierville",
+    "median_rent_2021": 800.0,
+    "average_rent_2021": 852.0
+  },
+  {
+    "fed_num": "24004",
+    "riding_name": "Alfred-Pellan",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 933.0
+  },
+  {
+    "fed_num": "24005",
+    "riding_name": "Argenteuil--La Petite-Nation",
+    "median_rent_2021": 755.0,
+    "average_rent_2021": 796.0
+  },
+  {
+    "fed_num": "24006",
+    "riding_name": "Beauce",
+    "median_rent_2021": 604.0,
+    "average_rent_2021": 652.0
+  },
+  {
+    "fed_num": "24007",
+    "riding_name": "Beauharnois--Salaberry--Soulanges--Huntingdon",
+    "median_rent_2021": 765.0,
+    "average_rent_2021": 800.0
+  },
+  {
+    "fed_num": "24008",
+    "riding_name": "Beauport--Limoilou",
+    "median_rent_2021": 770.0,
+    "average_rent_2021": 832.0
+  },
+  {
+    "fed_num": "24009",
+    "riding_name": "Bcancour--Nicolet--Saurel--Alnbak",
+    "median_rent_2021": 612.0,
+    "average_rent_2021": 638.0
+  },
+  {
+    "fed_num": "24010",
+    "riding_name": "Bellechasse--Les Etchemins--Lvis",
+    "median_rent_2021": 755.0,
+    "average_rent_2021": 795.0
+  },
+  {
+    "fed_num": "24011",
+    "riding_name": "Beloeil--Chambly",
+    "median_rent_2021": 880.0,
+    "average_rent_2021": 952.0
+  },
+  {
+    "fed_num": "24012",
+    "riding_name": "Berthier--Maskinong",
+    "median_rent_2021": 660.0,
+    "average_rent_2021": 704.0
+  },
+  {
+    "fed_num": "24013",
+    "riding_name": "Bourassa",
+    "median_rent_2021": 785.0,
+    "average_rent_2021": 831.0
+  },
+  {
+    "fed_num": "24014",
+    "riding_name": "Brome--Missisquoi",
+    "median_rent_2021": 700.0,
+    "average_rent_2021": 776.0
+  },
+  {
+    "fed_num": "24015",
+    "riding_name": "Brossard--Saint-Lambert",
+    "median_rent_2021": 1080.0,
+    "average_rent_2021": 1175.0
+  },
+  {
+    "fed_num": "24016",
+    "riding_name": "Charlesbourg--Haute-Saint-Charles",
+    "median_rent_2021": 830.0,
+    "average_rent_2021": 898.0
+  },
+  {
+    "fed_num": "24017",
+    "riding_name": "Chteauguay--Les Jardins-de-Napierville",
+    "median_rent_2021": 840.0,
+    "average_rent_2021": 906.0
+  },
+  {
+    "fed_num": "24018",
+    "riding_name": "Chicoutimi--Le Fjord",
+    "median_rent_2021": 636.0,
+    "average_rent_2021": 698.0
+  },
+  {
+    "fed_num": "24019",
+    "riding_name": "Compton--Stanstead",
+    "median_rent_2021": 695.0,
+    "average_rent_2021": 754.0
+  },
+  {
+    "fed_num": "24020",
+    "riding_name": "Cte-du-Sud--Rivire-du-Loup--Kataskomiq--Tmiscouata",
+    "median_rent_2021": 560.0,
+    "average_rent_2021": 575.0
+  },
+  {
+    "fed_num": "24021",
+    "riding_name": "Cte-Nord--Kawawachikamach--Nitassinan",
+    "median_rent_2021": 620.0,
+    "average_rent_2021": 638.0
+  },
+  {
+    "fed_num": "24022",
+    "riding_name": "Dorval--Lachine--LaSalle",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 912.0
+  },
+  {
+    "fed_num": "24023",
+    "riding_name": "Drummond",
+    "median_rent_2021": 670.0,
+    "average_rent_2021": 699.0
+  },
+  {
+    "fed_num": "24024",
+    "riding_name": "Gaspsie--Les les-de-la-Madeleine--Listuguj",
+    "median_rent_2021": 576.0,
+    "average_rent_2021": 586.0
+  },
+  {
+    "fed_num": "24025",
+    "riding_name": "Gatineau",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 886.0
+  },
+  {
+    "fed_num": "24026",
+    "riding_name": "Hochelaga--Rosemont-Est",
+    "median_rent_2021": 820.0,
+    "average_rent_2021": 884.0
+  },
+  {
+    "fed_num": "24027",
+    "riding_name": "Honor-Mercier",
+    "median_rent_2021": 840.0,
+    "average_rent_2021": 901.0
+  },
+  {
+    "fed_num": "24028",
+    "riding_name": "Hull--Aylmer",
+    "median_rent_2021": 890.0,
+    "average_rent_2021": 951.0
+  },
+  {
+    "fed_num": "24029",
+    "riding_name": "Joliette--Manawan",
+    "median_rent_2021": 755.0,
+    "average_rent_2021": 819.0
+  },
+  {
+    "fed_num": "24030",
+    "riding_name": "Jonquire",
+    "median_rent_2021": 604.0,
+    "average_rent_2021": 642.0
+  },
+  {
+    "fed_num": "24031",
+    "riding_name": "La Pointe-de-l'le",
+    "median_rent_2021": 790.0,
+    "average_rent_2021": 818.0
+  },
+  {
+    "fed_num": "24032",
+    "riding_name": "La Prairie--Atateken",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1073.0
+  },
+  {
+    "fed_num": "24033",
+    "riding_name": "Lac-Saint-Jean",
+    "median_rent_2021": 548.0,
+    "average_rent_2021": 575.0
+  },
+  {
+    "fed_num": "24034",
+    "riding_name": "Lac-Saint-Louis",
+    "median_rent_2021": 1090.0,
+    "average_rent_2021": 1253.0
+  },
+  {
+    "fed_num": "24035",
+    "riding_name": "LaSalle--mard--Verdun",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 904.0
+  },
+  {
+    "fed_num": "24036",
+    "riding_name": "Laurentides--Labelle",
+    "median_rent_2021": 695.0,
+    "average_rent_2021": 748.0
+  },
+  {
+    "fed_num": "24037",
+    "riding_name": "Laurier--Sainte-Marie",
+    "median_rent_2021": 990.0,
+    "average_rent_2021": 1083.0
+  },
+  {
+    "fed_num": "24038",
+    "riding_name": "Laval--Les les",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1070.0
+  },
+  {
+    "fed_num": "24039",
+    "riding_name": "Les Pays-d'en-Haut",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 923.0
+  },
+  {
+    "fed_num": "24040",
+    "riding_name": "Lvis--Lotbinire",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 910.0
+  },
+  {
+    "fed_num": "24041",
+    "riding_name": "Longueuil--Charles-LeMoyne",
+    "median_rent_2021": 840.0,
+    "average_rent_2021": 883.0
+  },
+  {
+    "fed_num": "24042",
+    "riding_name": "Longueuil--Saint-Hubert",
+    "median_rent_2021": 830.0,
+    "average_rent_2021": 912.0
+  },
+  {
+    "fed_num": "24043",
+    "riding_name": "Louis-Hbert",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 985.0
+  },
+  {
+    "fed_num": "24044",
+    "riding_name": "Louis-Saint-Laurent--Akiawenhrahk",
+    "median_rent_2021": 880.0,
+    "average_rent_2021": 1001.0
+  },
+  {
+    "fed_num": "24045",
+    "riding_name": "Marc-Aurle-Fortin",
+    "median_rent_2021": 940.0,
+    "average_rent_2021": 1040.0
+  },
+  {
+    "fed_num": "24046",
+    "riding_name": "Mgantic--Lrable--Lotbinire",
+    "median_rent_2021": 536.0,
+    "average_rent_2021": 588.0
+  },
+  {
+    "fed_num": "24047",
+    "riding_name": "Mirabel",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 987.0
+  },
+  {
+    "fed_num": "24048",
+    "riding_name": "Mount Royal",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1077.0
+  },
+  {
+    "fed_num": "24049",
+    "riding_name": "Mont-Saint-Bruno--LAcadie",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1064.0
+  },
+  {
+    "fed_num": "24050",
+    "riding_name": "Montcalm",
+    "median_rent_2021": 880.0,
+    "average_rent_2021": 899.0
+  },
+  {
+    "fed_num": "24051",
+    "riding_name": "Montmorency--Charlevoix",
+    "median_rent_2021": 670.0,
+    "average_rent_2021": 721.0
+  },
+  {
+    "fed_num": "24052",
+    "riding_name": "Notre-Dame-de-Grce--Westmount",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1140.0
+  },
+  {
+    "fed_num": "24053",
+    "riding_name": "Outremont",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1117.0
+  },
+  {
+    "fed_num": "24054",
+    "riding_name": "Papineau",
+    "median_rent_2021": 810.0,
+    "average_rent_2021": 871.0
+  },
+  {
+    "fed_num": "24055",
+    "riding_name": "Pierre-Boucher--Les Patriotes--Verchres",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 941.0
+  },
+  {
+    "fed_num": "24056",
+    "riding_name": "Pierrefonds--Dollard",
+    "median_rent_2021": 930.0,
+    "average_rent_2021": 1025.0
+  },
+  {
+    "fed_num": "24057",
+    "riding_name": "Pontiac--Kitigan Zibi",
+    "median_rent_2021": 980.0,
+    "average_rent_2021": 1002.0
+  },
+  {
+    "fed_num": "24058",
+    "riding_name": "Portneuf--Jacques-Cartier",
+    "median_rent_2021": 735.0,
+    "average_rent_2021": 825.0
+  },
+  {
+    "fed_num": "24059",
+    "riding_name": "Qubec Centre",
+    "median_rent_2021": 810.0,
+    "average_rent_2021": 886.0
+  },
+  {
+    "fed_num": "24060",
+    "riding_name": "Repentigny",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 959.0
+  },
+  {
+    "fed_num": "24061",
+    "riding_name": "Richmond--Arthabaska",
+    "median_rent_2021": 604.0,
+    "average_rent_2021": 644.0
+  },
+  {
+    "fed_num": "24062",
+    "riding_name": "Rimouski--La Matapdia",
+    "median_rent_2021": 608.0,
+    "average_rent_2021": 641.0
+  },
+  {
+    "fed_num": "24063",
+    "riding_name": "Rivire-des-Mille-les",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 971.0
+  },
+  {
+    "fed_num": "24064",
+    "riding_name": "Rivire-du-Nord",
+    "median_rent_2021": 830.0,
+    "average_rent_2021": 883.0
+  },
+  {
+    "fed_num": "24065",
+    "riding_name": "Rosemont--La Petite-Patrie",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 930.0
+  },
+  {
+    "fed_num": "24066",
+    "riding_name": "Saint-Hyacinthe--Bagot--Acton",
+    "median_rent_2021": 715.0,
+    "average_rent_2021": 755.0
+  },
+  {
+    "fed_num": "24067",
+    "riding_name": "Saint-Jean",
+    "median_rent_2021": 785.0,
+    "average_rent_2021": 846.0
+  },
+  {
+    "fed_num": "24068",
+    "riding_name": "Saint-Laurent",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1053.0
+  },
+  {
+    "fed_num": "24069",
+    "riding_name": "Saint-Lonard--Saint-Michel",
+    "median_rent_2021": 840.0,
+    "average_rent_2021": 874.0
+  },
+  {
+    "fed_num": "24070",
+    "riding_name": "Saint-Maurice--Champlain",
+    "median_rent_2021": 540.0,
+    "average_rent_2021": 600.0
+  },
+  {
+    "fed_num": "24071",
+    "riding_name": "Shefford",
+    "median_rent_2021": 690.0,
+    "average_rent_2021": 748.0
+  },
+  {
+    "fed_num": "24072",
+    "riding_name": "Sherbrooke",
+    "median_rent_2021": 685.0,
+    "average_rent_2021": 747.0
+  },
+  {
+    "fed_num": "24073",
+    "riding_name": "Terrebonne",
+    "median_rent_2021": 920.0,
+    "average_rent_2021": 990.0
+  },
+  {
+    "fed_num": "24074",
+    "riding_name": "Thrse-De Blainville",
+    "median_rent_2021": 910.0,
+    "average_rent_2021": 1008.0
+  },
+  {
+    "fed_num": "24075",
+    "riding_name": "Trois-Rivires",
+    "median_rent_2021": 624.0,
+    "average_rent_2021": 666.0
+  },
+  {
+    "fed_num": "24076",
+    "riding_name": "Vaudreuil",
+    "median_rent_2021": 940.0,
+    "average_rent_2021": 1059.0
+  },
+  {
+    "fed_num": "24077",
+    "riding_name": "Ville-Marie--Le Sud-Ouest--le-des-Surs",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "24078",
+    "riding_name": "Vimy",
+    "median_rent_2021": 890.0,
+    "average_rent_2021": 996.0
+  },
+  {
+    "fed_num": "35001",
+    "riding_name": "Ajax",
+    "median_rent_2021": 1600.0,
+    "average_rent_2021": 1662.0
+  },
+  {
+    "fed_num": "35002",
+    "riding_name": "Algonquin--Renfrew--Pembroke",
+    "median_rent_2021": 940.0,
+    "average_rent_2021": 984.0
+  },
+  {
+    "fed_num": "35003",
+    "riding_name": "Aurora--Oak Ridges--Richmond Hill",
+    "median_rent_2021": 2060.0,
+    "average_rent_2021": 2078.0
+  },
+  {
+    "fed_num": "35004",
+    "riding_name": "Barrie South--Innisfil",
+    "median_rent_2021": 1800.0,
+    "average_rent_2021": 1756.0
+  },
+  {
+    "fed_num": "35005",
+    "riding_name": "Barrie--Springwater--Oro-Medonte",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1408.0
+  },
+  {
+    "fed_num": "35006",
+    "riding_name": "Bay of Quinte",
+    "median_rent_2021": 1040.0,
+    "average_rent_2021": 1114.0
+  },
+  {
+    "fed_num": "35007",
+    "riding_name": "Beaches--East York",
+    "median_rent_2021": 1270.0,
+    "average_rent_2021": 1370.0
+  },
+  {
+    "fed_num": "35008",
+    "riding_name": "Bowmanville--Oshawa North",
+    "median_rent_2021": 1780.0,
+    "average_rent_2021": 1780.0
+  },
+  {
+    "fed_num": "35009",
+    "riding_name": "Brampton Centre",
+    "median_rent_2021": 1370.0,
+    "average_rent_2021": 1428.0
+  },
+  {
+    "fed_num": "35010",
+    "riding_name": "Brampton--Chinguacousy Park",
+    "median_rent_2021": 1550.0,
+    "average_rent_2021": 1562.0
+  },
+  {
+    "fed_num": "35011",
+    "riding_name": "Brampton East",
+    "median_rent_2021": 1800.0,
+    "average_rent_2021": 1890.0
+  },
+  {
+    "fed_num": "35012",
+    "riding_name": "Brampton North--Caledon",
+    "median_rent_2021": 1800.0,
+    "average_rent_2021": 1830.0
+  },
+  {
+    "fed_num": "35013",
+    "riding_name": "Brampton South",
+    "median_rent_2021": 1440.0,
+    "average_rent_2021": 1580.0
+  },
+  {
+    "fed_num": "35014",
+    "riding_name": "Brampton West",
+    "median_rent_2021": 2400.0,
+    "average_rent_2021": 2182.0
+  },
+  {
+    "fed_num": "35015",
+    "riding_name": "Brantford--Brant South--Six Nations",
+    "median_rent_2021": 1120.0,
+    "average_rent_2021": 1184.0
+  },
+  {
+    "fed_num": "35016",
+    "riding_name": "Bruce--Grey--Owen Sound",
+    "median_rent_2021": 940.0,
+    "average_rent_2021": 1001.0
+  },
+  {
+    "fed_num": "35017",
+    "riding_name": "Burlington",
+    "median_rent_2021": 1620.0,
+    "average_rent_2021": 1650.0
+  },
+  {
+    "fed_num": "35018",
+    "riding_name": "Burlington North--Milton West",
+    "median_rent_2021": 2120.0,
+    "average_rent_2021": 2050.0
+  },
+  {
+    "fed_num": "35019",
+    "riding_name": "Cambridge",
+    "median_rent_2021": 1190.0,
+    "average_rent_2021": 1274.0
+  },
+  {
+    "fed_num": "35020",
+    "riding_name": "Carleton",
+    "median_rent_2021": 1860.0,
+    "average_rent_2021": 1762.0
+  },
+  {
+    "fed_num": "35021",
+    "riding_name": "Chatham-Kent--Leamington",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 947.0
+  },
+  {
+    "fed_num": "35022",
+    "riding_name": "Davenport",
+    "median_rent_2021": 1460.0,
+    "average_rent_2021": 1528.0
+  },
+  {
+    "fed_num": "35023",
+    "riding_name": "Don Valley North",
+    "median_rent_2021": 1760.0,
+    "average_rent_2021": 1782.0
+  },
+  {
+    "fed_num": "35024",
+    "riding_name": "Don Valley West",
+    "median_rent_2021": 1480.0,
+    "average_rent_2021": 1604.0
+  },
+  {
+    "fed_num": "35025",
+    "riding_name": "Dufferin--Caledon",
+    "median_rent_2021": 1380.0,
+    "average_rent_2021": 1496.0
+  },
+  {
+    "fed_num": "35026",
+    "riding_name": "Eglinton--Lawrence",
+    "median_rent_2021": 1460.0,
+    "average_rent_2021": 1588.0
+  },
+  {
+    "fed_num": "35027",
+    "riding_name": "Elgin--St. Thomas--London South",
+    "median_rent_2021": 1020.0,
+    "average_rent_2021": 1143.0
+  },
+  {
+    "fed_num": "35028",
+    "riding_name": "Essex",
+    "median_rent_2021": 1020.0,
+    "average_rent_2021": 1131.0
+  },
+  {
+    "fed_num": "35029",
+    "riding_name": "Etobicoke Centre",
+    "median_rent_2021": 1550.0,
+    "average_rent_2021": 1566.0
+  },
+  {
+    "fed_num": "35030",
+    "riding_name": "Etobicoke--Lakeshore",
+    "median_rent_2021": 1450.0,
+    "average_rent_2021": 1600.0
+  },
+  {
+    "fed_num": "35031",
+    "riding_name": "Etobicoke North",
+    "median_rent_2021": 1340.0,
+    "average_rent_2021": 1338.0
+  },
+  {
+    "fed_num": "35032",
+    "riding_name": "Flamborough--Glanbrook--Brant North",
+    "median_rent_2021": 1470.0,
+    "average_rent_2021": 1538.0
+  },
+  {
+    "fed_num": "35033",
+    "riding_name": "Guelph",
+    "median_rent_2021": 1330.0,
+    "average_rent_2021": 1358.0
+  },
+  {
+    "fed_num": "35034",
+    "riding_name": "Haldimand--Norfolk",
+    "median_rent_2021": 960.0,
+    "average_rent_2021": 1066.0
+  },
+  {
+    "fed_num": "35035",
+    "riding_name": "Haliburton--Kawartha Lakes",
+    "median_rent_2021": 1050.0,
+    "average_rent_2021": 1089.0
+  },
+  {
+    "fed_num": "35036",
+    "riding_name": "Hamilton Centre",
+    "median_rent_2021": 1060.0,
+    "average_rent_2021": 1127.0
+  },
+  {
+    "fed_num": "35037",
+    "riding_name": "Hamilton East--Stoney Creek",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "35038",
+    "riding_name": "Hamilton Mountain",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1196.0
+  },
+  {
+    "fed_num": "35039",
+    "riding_name": "Hamilton West--Ancaster--Dundas",
+    "median_rent_2021": 1250.0,
+    "average_rent_2021": 1388.0
+  },
+  {
+    "fed_num": "35040",
+    "riding_name": "Hastings--Lennox and Addington--Tyendinaga",
+    "median_rent_2021": 990.0,
+    "average_rent_2021": 1076.0
+  },
+  {
+    "fed_num": "35041",
+    "riding_name": "Humber River--Black Creek",
+    "median_rent_2021": 1250.0,
+    "average_rent_2021": 1261.0
+  },
+  {
+    "fed_num": "35042",
+    "riding_name": "Huron--Bruce",
+    "median_rent_2021": 940.0,
+    "average_rent_2021": 1014.0
+  },
+  {
+    "fed_num": "35043",
+    "riding_name": "Kanata",
+    "median_rent_2021": 1900.0,
+    "average_rent_2021": 1836.0
+  },
+  {
+    "fed_num": "35044",
+    "riding_name": "Kapuskasing--Timmins--Mushkegowuk",
+    "median_rent_2021": 810.0,
+    "average_rent_2021": 857.0
+  },
+  {
+    "fed_num": "35045",
+    "riding_name": "Kenora--Kiiwetinoong",
+    "median_rent_2021": 960.0,
+    "average_rent_2021": 989.0
+  },
+  {
+    "fed_num": "35046",
+    "riding_name": "Kingston and the Islands",
+    "median_rent_2021": 1250.0,
+    "average_rent_2021": 1316.0
+  },
+  {
+    "fed_num": "35047",
+    "riding_name": "King--Vaughan",
+    "median_rent_2021": 2060.0,
+    "average_rent_2021": 2090.0
+  },
+  {
+    "fed_num": "35048",
+    "riding_name": "Kitchener Centre",
+    "median_rent_2021": 1210.0,
+    "average_rent_2021": 1238.0
+  },
+  {
+    "fed_num": "35049",
+    "riding_name": "Kitchener--Conestoga",
+    "median_rent_2021": 1490.0,
+    "average_rent_2021": 1486.0
+  },
+  {
+    "fed_num": "35050",
+    "riding_name": "Kitchener South--Hespeler",
+    "median_rent_2021": 1410.0,
+    "average_rent_2021": 1438.0
+  },
+  {
+    "fed_num": "35051",
+    "riding_name": "Lanark--Frontenac",
+    "median_rent_2021": 1050.0,
+    "average_rent_2021": 1134.0
+  },
+  {
+    "fed_num": "35052",
+    "riding_name": "Leeds--Grenville--Thousand Islands--Rideau Lakes",
+    "median_rent_2021": 980.0,
+    "average_rent_2021": 1036.0
+  },
+  {
+    "fed_num": "35053",
+    "riding_name": "London Centre",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1147.0
+  },
+  {
+    "fed_num": "35054",
+    "riding_name": "London--Fanshawe",
+    "median_rent_2021": 1020.0,
+    "average_rent_2021": 1106.0
+  },
+  {
+    "fed_num": "35055",
+    "riding_name": "London West",
+    "median_rent_2021": 1230.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "35056",
+    "riding_name": "Markham--Stouffville",
+    "median_rent_2021": 1980.0,
+    "average_rent_2021": 1874.0
+  },
+  {
+    "fed_num": "35057",
+    "riding_name": "Markham--Thornhill",
+    "median_rent_2021": 1530.0,
+    "average_rent_2021": 1646.0
+  },
+  {
+    "fed_num": "35058",
+    "riding_name": "Markham--Unionville",
+    "median_rent_2021": 2060.0,
+    "average_rent_2021": 2090.0
+  },
+  {
+    "fed_num": "35059",
+    "riding_name": "Middlesex--London",
+    "median_rent_2021": 1220.0,
+    "average_rent_2021": 1356.0
+  },
+  {
+    "fed_num": "35060",
+    "riding_name": "Milton East--Halton Hills South",
+    "median_rent_2021": 1860.0,
+    "average_rent_2021": 1804.0
+  },
+  {
+    "fed_num": "35061",
+    "riding_name": "Mississauga Centre",
+    "median_rent_2021": 1860.0,
+    "average_rent_2021": 1752.0
+  },
+  {
+    "fed_num": "35062",
+    "riding_name": "Mississauga East--Cooksville",
+    "median_rent_2021": 1500.0,
+    "average_rent_2021": 1500.0
+  },
+  {
+    "fed_num": "35063",
+    "riding_name": "Mississauga--Erin Mills",
+    "median_rent_2021": 2000.0,
+    "average_rent_2021": 1956.0
+  },
+  {
+    "fed_num": "35064",
+    "riding_name": "Mississauga--Lakeshore",
+    "median_rent_2021": 1440.0,
+    "average_rent_2021": 1578.0
+  },
+  {
+    "fed_num": "35065",
+    "riding_name": "Mississauga--Malton",
+    "median_rent_2021": 1480.0,
+    "average_rent_2021": 1574.0
+  },
+  {
+    "fed_num": "35066",
+    "riding_name": "Mississauga--Streetsville",
+    "median_rent_2021": 1640.0,
+    "average_rent_2021": 1700.0
+  },
+  {
+    "fed_num": "35067",
+    "riding_name": "Nepean",
+    "median_rent_2021": 1840.0,
+    "average_rent_2021": 1798.0
+  },
+  {
+    "fed_num": "35068",
+    "riding_name": "Newmarket--Aurora",
+    "median_rent_2021": 1640.0,
+    "average_rent_2021": 1714.0
+  },
+  {
+    "fed_num": "35069",
+    "riding_name": "New Tecumseth--Gwillimbury",
+    "median_rent_2021": 1600.0,
+    "average_rent_2021": 1666.0
+  },
+  {
+    "fed_num": "35070",
+    "riding_name": "Niagara Falls--Niagara-on-the-Lake",
+    "median_rent_2021": 1150.0,
+    "average_rent_2021": 1249.0
+  },
+  {
+    "fed_num": "35071",
+    "riding_name": "Niagara South",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1102.0
+  },
+  {
+    "fed_num": "35072",
+    "riding_name": "Niagara West",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1294.0
+  },
+  {
+    "fed_num": "35073",
+    "riding_name": "Nipissing--Timiskaming",
+    "median_rent_2021": 950.0,
+    "average_rent_2021": 971.0
+  },
+  {
+    "fed_num": "35074",
+    "riding_name": "Northumberland--Clarke",
+    "median_rent_2021": 1150.0,
+    "average_rent_2021": 1254.0
+  },
+  {
+    "fed_num": "35075",
+    "riding_name": "Oakville East",
+    "median_rent_2021": 2240.0,
+    "average_rent_2021": 2346.0
+  },
+  {
+    "fed_num": "35076",
+    "riding_name": "Oakville West",
+    "median_rent_2021": 1840.0,
+    "average_rent_2021": 1968.0
+  },
+  {
+    "fed_num": "35077",
+    "riding_name": "Orlans",
+    "median_rent_2021": 1800.0,
+    "average_rent_2021": 1750.0
+  },
+  {
+    "fed_num": "35078",
+    "riding_name": "Oshawa",
+    "median_rent_2021": 1260.0,
+    "average_rent_2021": 1312.0
+  },
+  {
+    "fed_num": "35079",
+    "riding_name": "Ottawa Centre",
+    "median_rent_2021": 1340.0,
+    "average_rent_2021": 1394.0
+  },
+  {
+    "fed_num": "35080",
+    "riding_name": "Ottawa South",
+    "median_rent_2021": 1270.0,
+    "average_rent_2021": 1286.0
+  },
+  {
+    "fed_num": "35081",
+    "riding_name": "Ottawa--Vanier--Gloucester",
+    "median_rent_2021": 1250.0,
+    "average_rent_2021": 1284.0
+  },
+  {
+    "fed_num": "35082",
+    "riding_name": "Ottawa West--Nepean",
+    "median_rent_2021": 1330.0,
+    "average_rent_2021": 1350.0
+  },
+  {
+    "fed_num": "35083",
+    "riding_name": "Oxford",
+    "median_rent_2021": 1080.0,
+    "average_rent_2021": 1187.0
+  },
+  {
+    "fed_num": "35084",
+    "riding_name": "Parry Sound--Muskoka",
+    "median_rent_2021": 1020.0,
+    "average_rent_2021": 1111.0
+  },
+  {
+    "fed_num": "35085",
+    "riding_name": "Perth--Wellington",
+    "median_rent_2021": 1050.0,
+    "average_rent_2021": 1094.0
+  },
+  {
+    "fed_num": "35086",
+    "riding_name": "Peterborough",
+    "median_rent_2021": 1110.0,
+    "average_rent_2021": 1200.0
+  },
+  {
+    "fed_num": "35087",
+    "riding_name": "Pickering--Brooklin",
+    "median_rent_2021": 1740.0,
+    "average_rent_2021": 1738.0
+  },
+  {
+    "fed_num": "35088",
+    "riding_name": "Prescott--Russell--Cumberland",
+    "median_rent_2021": 980.0,
+    "average_rent_2021": 1047.0
+  },
+  {
+    "fed_num": "35089",
+    "riding_name": "Richmond Hill South",
+    "median_rent_2021": 1800.0,
+    "average_rent_2021": 1788.0
+  },
+  {
+    "fed_num": "35090",
+    "riding_name": "Sarnia--Lambton--Bkejwanong",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 1051.0
+  },
+  {
+    "fed_num": "35091",
+    "riding_name": "Sault Ste. Marie--Algoma",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 875.0
+  },
+  {
+    "fed_num": "35092",
+    "riding_name": "Scarborough--Agincourt",
+    "median_rent_2021": 1450.0,
+    "average_rent_2021": 1428.0
+  },
+  {
+    "fed_num": "35093",
+    "riding_name": "Scarborough Centre--Don Valley East",
+    "median_rent_2021": 1360.0,
+    "average_rent_2021": 1416.0
+  },
+  {
+    "fed_num": "35094",
+    "riding_name": "Scarborough--Guildwood--Rouge Park",
+    "median_rent_2021": 1210.0,
+    "average_rent_2021": 1256.0
+  },
+  {
+    "fed_num": "35095",
+    "riding_name": "Scarborough North",
+    "median_rent_2021": 1370.0,
+    "average_rent_2021": 1366.0
+  },
+  {
+    "fed_num": "35096",
+    "riding_name": "Scarborough Southwest",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1205.0
+  },
+  {
+    "fed_num": "35097",
+    "riding_name": "Scarborough--Woburn",
+    "median_rent_2021": 1260.0,
+    "average_rent_2021": 1278.0
+  },
+  {
+    "fed_num": "35098",
+    "riding_name": "Simcoe--Grey",
+    "median_rent_2021": 1300.0,
+    "average_rent_2021": 1422.0
+  },
+  {
+    "fed_num": "35099",
+    "riding_name": "Simcoe North",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1181.0
+  },
+  {
+    "fed_num": "35100",
+    "riding_name": "Spadina--Harbourfront",
+    "median_rent_2021": 2040.0,
+    "average_rent_2021": 2098.0
+  },
+  {
+    "fed_num": "35101",
+    "riding_name": "St. Catharines",
+    "median_rent_2021": 1110.0,
+    "average_rent_2021": 1174.0
+  },
+  {
+    "fed_num": "35102",
+    "riding_name": "Stormont--Dundas--Glengarry",
+    "median_rent_2021": 890.0,
+    "average_rent_2021": 944.0
+  },
+  {
+    "fed_num": "35103",
+    "riding_name": "Sudbury",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1038.0
+  },
+  {
+    "fed_num": "35104",
+    "riding_name": "Sudbury East--Manitoulin--Nickel Belt",
+    "median_rent_2021": 950.0,
+    "average_rent_2021": 968.0
+  },
+  {
+    "fed_num": "35105",
+    "riding_name": "Taiaiako'n--Parkdale--High Park",
+    "median_rent_2021": 1410.0,
+    "average_rent_2021": 1508.0
+  },
+  {
+    "fed_num": "35106",
+    "riding_name": "Thornhill",
+    "median_rent_2021": 1920.0,
+    "average_rent_2021": 1932.0
+  },
+  {
+    "fed_num": "35107",
+    "riding_name": "Thunder Bay--Rainy River",
+    "median_rent_2021": 890.0,
+    "average_rent_2021": 925.0
+  },
+  {
+    "fed_num": "35108",
+    "riding_name": "Thunder Bay--Superior North",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 979.0
+  },
+  {
+    "fed_num": "35109",
+    "riding_name": "Toronto Centre",
+    "median_rent_2021": 1500.0,
+    "average_rent_2021": 1498.0
+  },
+  {
+    "fed_num": "35110",
+    "riding_name": "Toronto--Danforth",
+    "median_rent_2021": 1300.0,
+    "average_rent_2021": 1424.0
+  },
+  {
+    "fed_num": "35111",
+    "riding_name": "Toronto--St. Paul's",
+    "median_rent_2021": 1660.0,
+    "average_rent_2021": 1798.0
+  },
+  {
+    "fed_num": "35112",
+    "riding_name": "University--Rosedale",
+    "median_rent_2021": 1820.0,
+    "average_rent_2021": 1906.0
+  },
+  {
+    "fed_num": "35113",
+    "riding_name": "Vaughan--Woodbridge",
+    "median_rent_2021": 2060.0,
+    "average_rent_2021": 2000.0
+  },
+  {
+    "fed_num": "35114",
+    "riding_name": "Waterloo",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1440.0
+  },
+  {
+    "fed_num": "35115",
+    "riding_name": "Wellington--Halton Hills North",
+    "median_rent_2021": 1350.0,
+    "average_rent_2021": 1426.0
+  },
+  {
+    "fed_num": "35116",
+    "riding_name": "Whitby",
+    "median_rent_2021": 1410.0,
+    "average_rent_2021": 1520.0
+  },
+  {
+    "fed_num": "35117",
+    "riding_name": "Willowdale",
+    "median_rent_2021": 1860.0,
+    "average_rent_2021": 1880.0
+  },
+  {
+    "fed_num": "35118",
+    "riding_name": "Windsor--Tecumseh--Lakeshore",
+    "median_rent_2021": 990.0,
+    "average_rent_2021": 1066.0
+  },
+  {
+    "fed_num": "35119",
+    "riding_name": "Windsor West",
+    "median_rent_2021": 950.0,
+    "average_rent_2021": 1041.0
+  },
+  {
+    "fed_num": "35120",
+    "riding_name": "York Centre",
+    "median_rent_2021": 1430.0,
+    "average_rent_2021": 1448.0
+  },
+  {
+    "fed_num": "35121",
+    "riding_name": "York--Durham",
+    "median_rent_2021": 1330.0,
+    "average_rent_2021": 1418.0
+  },
+  {
+    "fed_num": "35122",
+    "riding_name": "York South--Weston--Etobicoke",
+    "median_rent_2021": 1210.0,
+    "average_rent_2021": 1216.0
+  },
+  {
+    "fed_num": "46001",
+    "riding_name": "Brandon--Souris",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 928.0
+  },
+  {
+    "fed_num": "46002",
+    "riding_name": "Churchill--Keewatinook Aski",
+    "median_rent_2021": 850.0,
+    "average_rent_2021": 888.0
+  },
+  {
+    "fed_num": "46003",
+    "riding_name": "Elmwood--Transcona",
+    "median_rent_2021": 1170.0,
+    "average_rent_2021": 1193.0
+  },
+  {
+    "fed_num": "46004",
+    "riding_name": "Kildonan--St. Paul",
+    "median_rent_2021": 1090.0,
+    "average_rent_2021": 1154.0
+  },
+  {
+    "fed_num": "46005",
+    "riding_name": "Portage--Lisgar",
+    "median_rent_2021": 920.0,
+    "average_rent_2021": 937.0
+  },
+  {
+    "fed_num": "46006",
+    "riding_name": "Provencher",
+    "median_rent_2021": 1020.0,
+    "average_rent_2021": 1045.0
+  },
+  {
+    "fed_num": "46007",
+    "riding_name": "Riding Mountain",
+    "median_rent_2021": 670.0,
+    "average_rent_2021": 707.0
+  },
+  {
+    "fed_num": "46008",
+    "riding_name": "St. Boniface--St. Vital",
+    "median_rent_2021": 1120.0,
+    "average_rent_2021": 1154.0
+  },
+  {
+    "fed_num": "46009",
+    "riding_name": "Selkirk--Interlake--Eastman",
+    "median_rent_2021": 860.0,
+    "average_rent_2021": 908.0
+  },
+  {
+    "fed_num": "46010",
+    "riding_name": "Winnipeg Centre",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 945.0
+  },
+  {
+    "fed_num": "46011",
+    "riding_name": "Winnipeg North",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1093.0
+  },
+  {
+    "fed_num": "46012",
+    "riding_name": "Winnipeg South",
+    "median_rent_2021": 1330.0,
+    "average_rent_2021": 1358.0
+  },
+  {
+    "fed_num": "46013",
+    "riding_name": "Winnipeg South Centre",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1263.0
+  },
+  {
+    "fed_num": "46014",
+    "riding_name": "Winnipeg West",
+    "median_rent_2021": 1140.0,
+    "average_rent_2021": 1148.0
+  },
+  {
+    "fed_num": "47001",
+    "riding_name": "Battlefords--Lloydminster--Meadow Lake",
+    "median_rent_2021": 970.0,
+    "average_rent_2021": 999.0
+  },
+  {
+    "fed_num": "47002",
+    "riding_name": "Carlton Trail--Eagle Creek",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1074.0
+  },
+  {
+    "fed_num": "47003",
+    "riding_name": "Desneth--Missinippi--Churchill River",
+    "median_rent_2021": 830.0,
+    "average_rent_2021": 835.0
+  },
+  {
+    "fed_num": "47004",
+    "riding_name": "Moose Jaw--Lake Centre--Lanigan",
+    "median_rent_2021": 870.0,
+    "average_rent_2021": 928.0
+  },
+  {
+    "fed_num": "47005",
+    "riding_name": "Prince Albert",
+    "median_rent_2021": 900.0,
+    "average_rent_2021": 952.0
+  },
+  {
+    "fed_num": "47006",
+    "riding_name": "Regina--Lewvan",
+    "median_rent_2021": 1220.0,
+    "average_rent_2021": 1288.0
+  },
+  {
+    "fed_num": "47007",
+    "riding_name": "Regina--Qu'Appelle",
+    "median_rent_2021": 1050.0,
+    "average_rent_2021": 1084.0
+  },
+  {
+    "fed_num": "47008",
+    "riding_name": "Regina--Wascana",
+    "median_rent_2021": 1120.0,
+    "average_rent_2021": 1209.0
+  },
+  {
+    "fed_num": "47009",
+    "riding_name": "Saskatoon South",
+    "median_rent_2021": 1220.0,
+    "average_rent_2021": 1280.0
+  },
+  {
+    "fed_num": "47010",
+    "riding_name": "Saskatoon--University",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1251.0
+  },
+  {
+    "fed_num": "47011",
+    "riding_name": "Saskatoon West",
+    "median_rent_2021": 1060.0,
+    "average_rent_2021": 1120.0
+  },
+  {
+    "fed_num": "47012",
+    "riding_name": "Souris--Moose Mountain",
+    "median_rent_2021": 810.0,
+    "average_rent_2021": 885.0
+  },
+  {
+    "fed_num": "47013",
+    "riding_name": "Swift Current--Grasslands--Kindersley",
+    "median_rent_2021": 810.0,
+    "average_rent_2021": 877.0
+  },
+  {
+    "fed_num": "47014",
+    "riding_name": "Yorkton--Melville",
+    "median_rent_2021": 800.0,
+    "average_rent_2021": 877.0
+  },
+  {
+    "fed_num": "48001",
+    "riding_name": "Airdrie--Cochrane",
+    "median_rent_2021": 1500.0,
+    "average_rent_2021": 1594.0
+  },
+  {
+    "fed_num": "48002",
+    "riding_name": "Battle River--Crowfoot",
+    "median_rent_2021": 1010.0,
+    "average_rent_2021": 1064.0
+  },
+  {
+    "fed_num": "48003",
+    "riding_name": "Bow River",
+    "median_rent_2021": 1150.0,
+    "average_rent_2021": 1200.0
+  },
+  {
+    "fed_num": "48004",
+    "riding_name": "Calgary Centre",
+    "median_rent_2021": 1260.0,
+    "average_rent_2021": 1334.0
+  },
+  {
+    "fed_num": "48005",
+    "riding_name": "Calgary Confederation",
+    "median_rent_2021": 1250.0,
+    "average_rent_2021": 1342.0
+  },
+  {
+    "fed_num": "48006",
+    "riding_name": "Calgary Crowfoot",
+    "median_rent_2021": 1580.0,
+    "average_rent_2021": 1658.0
+  },
+  {
+    "fed_num": "48007",
+    "riding_name": "Calgary East",
+    "median_rent_2021": 1260.0,
+    "average_rent_2021": 1284.0
+  },
+  {
+    "fed_num": "48008",
+    "riding_name": "Calgary Heritage",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1476.0
+  },
+  {
+    "fed_num": "48009",
+    "riding_name": "Calgary McKnight",
+    "median_rent_2021": 1350.0,
+    "average_rent_2021": 1348.0
+  },
+  {
+    "fed_num": "48010",
+    "riding_name": "Calgary Midnapore",
+    "median_rent_2021": 1310.0,
+    "average_rent_2021": 1410.0
+  },
+  {
+    "fed_num": "48011",
+    "riding_name": "Calgary Nose Hill",
+    "median_rent_2021": 1390.0,
+    "average_rent_2021": 1414.0
+  },
+  {
+    "fed_num": "48012",
+    "riding_name": "Calgary Shepard",
+    "median_rent_2021": 1660.0,
+    "average_rent_2021": 1710.0
+  },
+  {
+    "fed_num": "48013",
+    "riding_name": "Calgary Signal Hill",
+    "median_rent_2021": 1350.0,
+    "average_rent_2021": 1468.0
+  },
+  {
+    "fed_num": "48014",
+    "riding_name": "Calgary Skyview",
+    "median_rent_2021": 1500.0,
+    "average_rent_2021": 1572.0
+  },
+  {
+    "fed_num": "48015",
+    "riding_name": "Edmonton Centre",
+    "median_rent_2021": 1090.0,
+    "average_rent_2021": 1167.0
+  },
+  {
+    "fed_num": "48016",
+    "riding_name": "Edmonton Gateway",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1420.0
+  },
+  {
+    "fed_num": "48017",
+    "riding_name": "Edmonton Griesbach",
+    "median_rent_2021": 1090.0,
+    "average_rent_2021": 1164.0
+  },
+  {
+    "fed_num": "48018",
+    "riding_name": "Edmonton Manning",
+    "median_rent_2021": 1330.0,
+    "average_rent_2021": 1370.0
+  },
+  {
+    "fed_num": "48019",
+    "riding_name": "Edmonton Northwest",
+    "median_rent_2021": 1440.0,
+    "average_rent_2021": 1430.0
+  },
+  {
+    "fed_num": "48020",
+    "riding_name": "Edmonton Riverbend",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1474.0
+  },
+  {
+    "fed_num": "48021",
+    "riding_name": "Edmonton Southeast",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1444.0
+  },
+  {
+    "fed_num": "48022",
+    "riding_name": "Edmonton Strathcona",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1276.0
+  },
+  {
+    "fed_num": "48023",
+    "riding_name": "Edmonton West",
+    "median_rent_2021": 1390.0,
+    "average_rent_2021": 1460.0
+  },
+  {
+    "fed_num": "48024",
+    "riding_name": "Foothills",
+    "median_rent_2021": 1210.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "48025",
+    "riding_name": "Fort McMurray--Cold Lake",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1528.0
+  },
+  {
+    "fed_num": "48026",
+    "riding_name": "Grande Prairie",
+    "median_rent_2021": 1340.0,
+    "average_rent_2021": 1384.0
+  },
+  {
+    "fed_num": "48027",
+    "riding_name": "Lakeland",
+    "median_rent_2021": 1000.0,
+    "average_rent_2021": 1075.0
+  },
+  {
+    "fed_num": "48028",
+    "riding_name": "Leduc--Wetaskiwin",
+    "median_rent_2021": 1300.0,
+    "average_rent_2021": 1344.0
+  },
+  {
+    "fed_num": "48029",
+    "riding_name": "Lethbridge",
+    "median_rent_2021": 1140.0,
+    "average_rent_2021": 1173.0
+  },
+  {
+    "fed_num": "48030",
+    "riding_name": "Medicine Hat--Cardston--Warner",
+    "median_rent_2021": 1030.0,
+    "average_rent_2021": 1075.0
+  },
+  {
+    "fed_num": "48031",
+    "riding_name": "Parkland",
+    "median_rent_2021": 1300.0,
+    "average_rent_2021": 1350.0
+  },
+  {
+    "fed_num": "48032",
+    "riding_name": "Peace River--Westlock",
+    "median_rent_2021": 1080.0,
+    "average_rent_2021": 1136.0
+  },
+  {
+    "fed_num": "48033",
+    "riding_name": "Ponoka--Didsbury",
+    "median_rent_2021": 1230.0,
+    "average_rent_2021": 1243.0
+  },
+  {
+    "fed_num": "48034",
+    "riding_name": "Red Deer",
+    "median_rent_2021": 1170.0,
+    "average_rent_2021": 1210.0
+  },
+  {
+    "fed_num": "48035",
+    "riding_name": "Sherwood Park--Fort Saskatchewan",
+    "median_rent_2021": 1500.0,
+    "average_rent_2021": 1516.0
+  },
+  {
+    "fed_num": "48036",
+    "riding_name": "St. Albert--Sturgeon River",
+    "median_rent_2021": 1420.0,
+    "average_rent_2021": 1476.0
+  },
+  {
+    "fed_num": "48037",
+    "riding_name": "Yellowhead",
+    "median_rent_2021": 1300.0,
+    "average_rent_2021": 1382.0
+  },
+  {
+    "fed_num": "59001",
+    "riding_name": "Abbotsford--South Langley",
+    "median_rent_2021": 1180.0,
+    "average_rent_2021": 1304.0
+  },
+  {
+    "fed_num": "59002",
+    "riding_name": "Burnaby Central",
+    "median_rent_2021": 1450.0,
+    "average_rent_2021": 1516.0
+  },
+  {
+    "fed_num": "59003",
+    "riding_name": "Burnaby North--Seymour",
+    "median_rent_2021": 1620.0,
+    "average_rent_2021": 1698.0
+  },
+  {
+    "fed_num": "59004",
+    "riding_name": "Cariboo--Prince George",
+    "median_rent_2021": 960.0,
+    "average_rent_2021": 1011.0
+  },
+  {
+    "fed_num": "59005",
+    "riding_name": "Chilliwack--Hope",
+    "median_rent_2021": 1150.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "59006",
+    "riding_name": "Cloverdale--Langley City",
+    "median_rent_2021": 1290.0,
+    "average_rent_2021": 1428.0
+  },
+  {
+    "fed_num": "59007",
+    "riding_name": "Columbia--Kootenay--Southern Rockies",
+    "median_rent_2021": 980.0,
+    "average_rent_2021": 1066.0
+  },
+  {
+    "fed_num": "59008",
+    "riding_name": "Coquitlam--Port Coquitlam",
+    "median_rent_2021": 1600.0,
+    "average_rent_2021": 1660.0
+  },
+  {
+    "fed_num": "59009",
+    "riding_name": "Courtenay--Alberni",
+    "median_rent_2021": 1110.0,
+    "average_rent_2021": 1213.0
+  },
+  {
+    "fed_num": "59010",
+    "riding_name": "Cowichan--Malahat--Langford",
+    "median_rent_2021": 1410.0,
+    "average_rent_2021": 1430.0
+  },
+  {
+    "fed_num": "59011",
+    "riding_name": "Delta",
+    "median_rent_2021": 1400.0,
+    "average_rent_2021": 1602.0
+  },
+  {
+    "fed_num": "59012",
+    "riding_name": "Esquimalt--Saanich--Sooke",
+    "median_rent_2021": 1310.0,
+    "average_rent_2021": 1410.0
+  },
+  {
+    "fed_num": "59013",
+    "riding_name": "Fleetwood--Port Kells",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1316.0
+  },
+  {
+    "fed_num": "59014",
+    "riding_name": "Kamloops--Shuswap--Central Rockies",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1207.0
+  },
+  {
+    "fed_num": "59015",
+    "riding_name": "Kamloops--Thompson--Nicola",
+    "median_rent_2021": 1100.0,
+    "average_rent_2021": 1160.0
+  },
+  {
+    "fed_num": "59016",
+    "riding_name": "Kelowna",
+    "median_rent_2021": 1440.0,
+    "average_rent_2021": 1522.0
+  },
+  {
+    "fed_num": "59017",
+    "riding_name": "Langley Township--Fraser Heights",
+    "median_rent_2021": 1560.0,
+    "average_rent_2021": 1702.0
+  },
+  {
+    "fed_num": "59018",
+    "riding_name": "Mission--Matsqui--Abbotsford",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1364.0
+  },
+  {
+    "fed_num": "59019",
+    "riding_name": "Nanaimo--Ladysmith",
+    "median_rent_2021": 1230.0,
+    "average_rent_2021": 1298.0
+  },
+  {
+    "fed_num": "59020",
+    "riding_name": "New Westminster--Burnaby--Maillardville",
+    "median_rent_2021": 1350.0,
+    "average_rent_2021": 1414.0
+  },
+  {
+    "fed_num": "59021",
+    "riding_name": "North Island--Powell River",
+    "median_rent_2021": 1040.0,
+    "average_rent_2021": 1142.0
+  },
+  {
+    "fed_num": "59022",
+    "riding_name": "North Vancouver--Capilano",
+    "median_rent_2021": 1700.0,
+    "average_rent_2021": 1946.0
+  },
+  {
+    "fed_num": "59023",
+    "riding_name": "Okanagan Lake West--South Kelowna",
+    "median_rent_2021": 1440.0,
+    "average_rent_2021": 1578.0
+  },
+  {
+    "fed_num": "59024",
+    "riding_name": "Pitt Meadows--Maple Ridge",
+    "median_rent_2021": 1300.0,
+    "average_rent_2021": 1458.0
+  },
+  {
+    "fed_num": "59025",
+    "riding_name": "Port Moody--Coquitlam",
+    "median_rent_2021": 1500.0,
+    "average_rent_2021": 1604.0
+  },
+  {
+    "fed_num": "59026",
+    "riding_name": "Prince George--Peace River--Northern Rockies",
+    "median_rent_2021": 1010.0,
+    "average_rent_2021": 1085.0
+  },
+  {
+    "fed_num": "59027",
+    "riding_name": "Richmond Centre--Marpole",
+    "median_rent_2021": 1490.0,
+    "average_rent_2021": 1596.0
+  },
+  {
+    "fed_num": "59028",
+    "riding_name": "Richmond East--Steveston",
+    "median_rent_2021": 1600.0,
+    "average_rent_2021": 1650.0
+  },
+  {
+    "fed_num": "59029",
+    "riding_name": "Saanich--Gulf Islands",
+    "median_rent_2021": 1380.0,
+    "average_rent_2021": 1498.0
+  },
+  {
+    "fed_num": "59030",
+    "riding_name": "Similkameen--South Okanagan--West Kootenay",
+    "median_rent_2021": 1080.0,
+    "average_rent_2021": 1196.0
+  },
+  {
+    "fed_num": "59031",
+    "riding_name": "Skeena--Bulkley Valley",
+    "median_rent_2021": 950.0,
+    "average_rent_2021": 1033.0
+  },
+  {
+    "fed_num": "59032",
+    "riding_name": "South Surrey--White Rock",
+    "median_rent_2021": 1600.0,
+    "average_rent_2021": 1858.0
+  },
+  {
+    "fed_num": "59033",
+    "riding_name": "Surrey Centre",
+    "median_rent_2021": 1310.0,
+    "average_rent_2021": 1356.0
+  },
+  {
+    "fed_num": "59034",
+    "riding_name": "Surrey Newton",
+    "median_rent_2021": 1200.0,
+    "average_rent_2021": 1258.0
+  },
+  {
+    "fed_num": "59035",
+    "riding_name": "Vancouver Centre",
+    "median_rent_2021": 1780.0,
+    "average_rent_2021": 1868.0
+  },
+  {
+    "fed_num": "59036",
+    "riding_name": "Vancouver East",
+    "median_rent_2021": 1270.0,
+    "average_rent_2021": 1342.0
+  },
+  {
+    "fed_num": "59037",
+    "riding_name": "Vancouver Fraserview--South Burnaby",
+    "median_rent_2021": 1350.0,
+    "average_rent_2021": 1416.0
+  },
+  {
+    "fed_num": "59038",
+    "riding_name": "Vancouver Granville",
+    "median_rent_2021": 1620.0,
+    "average_rent_2021": 1748.0
+  },
+  {
+    "fed_num": "59039",
+    "riding_name": "Vancouver Kingsway",
+    "median_rent_2021": 1450.0,
+    "average_rent_2021": 1498.0
+  },
+  {
+    "fed_num": "59040",
+    "riding_name": "Vancouver Quadra",
+    "median_rent_2021": 1800.0,
+    "average_rent_2021": 2050.0
+  },
+  {
+    "fed_num": "59041",
+    "riding_name": "Vernon--Lake Country--Monashee",
+    "median_rent_2021": 1170.0,
+    "average_rent_2021": 1282.0
+  },
+  {
+    "fed_num": "59042",
+    "riding_name": "Victoria",
+    "median_rent_2021": 1310.0,
+    "average_rent_2021": 1404.0
+  },
+  {
+    "fed_num": "59043",
+    "riding_name": "West Vancouver--Sunshine Coast--Sea to Sky Country",
+    "median_rent_2021": 1680.0,
+    "average_rent_2021": 2078.0
+  },
+  {
+    "fed_num": "60001",
+    "riding_name": "Yukon",
+    "median_rent_2021": 1180.0,
+    "average_rent_2021": 1290.0
+  },
+  {
+    "fed_num": "61001",
+    "riding_name": "Northwest Territories",
+    "median_rent_2021": 1450.0,
+    "average_rent_2021": 1356.0
+  },
+  {
+    "fed_num": "62001",
+    "riding_name": "Nunavut",
+    "median_rent_2021": 408.0,
+    "average_rent_2021": 822.0
+  }
+]

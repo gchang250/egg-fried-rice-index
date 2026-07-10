@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
 import { supabase } from '@/lib/supabase'
+import { previewRent } from '@/lib/rent-preview'
 
 export type MapCity = {
   city: string; country: string | null; region: string | null; flag: string | null
@@ -56,7 +57,7 @@ const WorldMap = forwardRef<WorldMapHandle, Props>(function WorldMap({ onSelect,
       .select('city,country,region,flag,latitude,longitude,population,blurb,price_cad,price_source,price_updated_at,confidence_score,median_rent_1br_cad,median_monthly_salary_cad')
       .order('city', { ascending: true })
       .then(({ data }) => {
-        if (data) setCities((data as MapCity[]).filter(c =>
+        if (data) setCities(previewRent(data as MapCity[]).filter(c =>
           c.latitude != null && c.longitude != null &&
           Number.isFinite(+c.latitude!) && Number.isFinite(+c.longitude!)))
       })

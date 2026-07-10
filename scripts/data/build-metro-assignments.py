@@ -161,18 +161,104 @@ for base, val in csi_raw.items():
 print(f'rent centres: {len(centres)}   csi metros: {len(csi_pts)}', file=sys.stderr)
 
 
-def nearest(pool, geom, prov):
+CMA_CENTRES = {
+    'Montréal, Quebec',
+    'Toronto, Ontario',
+    'Vancouver, British Columbia',
+    'Calgary, Alberta',
+    'Edmonton, Alberta',
+    'Ottawa-Gatineau, Ontario part, Ontario/Quebec',
+    'Ottawa-Gatineau, Quebec part, Ontario/Quebec',
+    'Winnipeg, Manitoba',
+    'Québec, Quebec',
+    'Hamilton, Ontario',
+    'Kitchener-Cambridge-Waterloo, Ontario',
+    'London, Ontario',
+    'Halifax, Nova Scotia',
+    'St. Catharines-Niagara, Ontario',
+    'Windsor, Ontario',
+    'Oshawa, Ontario',
+    'Victoria, British Columbia',
+    'Saskatoon, Saskatchewan',
+    'Regina, Saskatchewan',
+    'Sherbrooke, Quebec',
+    "St. John's, Newfoundland and Labrador",
+    'Barrie, Ontario',
+    'Kelowna, British Columbia',
+    'Abbotsford-Mission, British Columbia',
+    'Greater Sudbury, Ontario',
+    'Kingston, Ontario',
+    'Saguenay, Quebec',
+    'Trois-Rivières, Quebec',
+    'Moncton, New Brunswick',
+    'Saint John, New Brunswick',
+    'Peterborough, Ontario',
+    'Thunder Bay, Ontario',
+    'Lethbridge, Alberta',
+    'Nanaimo, British Columbia',
+    'Kamloops, British Columbia',
+    'Chilliwack, British Columbia',
+    'Fredericton, New Brunswick',
+    'Red Deer, Alberta',
+    'Drummondville, Quebec',
+}
+
+# Pre-calculate distance to closest CMA for all rent and CSI centres
+for c in centres:
+    if c['name'] in CMA_CENTRES:
+        c['dist_to_cma'] = 0.0
+    else:
+        cma_same = [x for x in centres if x['name'] in CMA_CENTRES and x['prov'] == c['prov']]
+        if cma_same:
+            c['dist_to_cma'] = min(hav(c['lat'], c['lon'], x['lat'], x['lon']) for x in cma_same)
+        else:
+            c['dist_to_cma'] = 999.0
+
+for c in csi_pts:
+    if c['name'] in CMA_CENTRES:
+        c['dist_to_cma'] = 0.0
+    else:
+        cma_same = [x for x in csi_pts if x['name'] in CMA_CENTRES and x['prov'] == c['prov']]
+        if cma_same:
+            c['dist_to_cma'] = min(hav(c['lat'], c['lon'], x['lat'], x['lon']) for x in cma_same)
+        else:
+            c['dist_to_cma'] = 999.0
+
+
+def nearest(pool, geom, prov, centroid):
     same = [p for p in pool if p['prov'] == prov]
     use = same or pool
-    scored = sorted(use, key=lambda p: bbox_lower_bound(p['lat'], p['lon'], geom['bbox']))
-    best, best_d = None, float('inf')
-    for p in scored:
-        if bbox_lower_bound(p['lat'], p['lon'], geom['bbox']) > best_d:
-            break                       # bbox bound already exceeds the best real distance
+    
+    candidates = []
+    for p in use:
         d = dist_to_riding(p['lat'], p['lon'], geom)
-        if d < best_d:
-            best, best_d = p, d
-    return best, best_d
+        d_centroid = hav(p['lat'], p['lon'], centroid[0], centroid[1])
+        candidates.append((p, d, d_centroid))
+        
+    # 1. CMA Core Overrides: CMA within 20 km of boundary
+    cma_20 = [(p, d, dc) for p, d, dc in candidates if p['name'] in CMA_CENTRES and d <= 20.0]
+    if cma_20:
+        best_p, best_d, _ = min(cma_20, key=lambda x: x[1])
+        return best_p, best_d
+        
+    # 2. Exact matches (inside the riding)
+    exacts = [(p, d, dc) for p, d, dc in candidates if d == 0.0]
+    if exacts:
+        # Prioritize independent centres (distance to closest CMA > 50 km) to avoid suburban distortion (e.g. Sainte-Marie vs Saint-Georges)
+        independents = [x for x in exacts if x[0].get('dist_to_cma', 999.0) > 50.0]
+        targets = independents if independents else exacts
+        best_p, best_d, _ = max(targets, key=lambda x: x[0].get('rent', x[0].get('csi', 0)))
+        return best_p, best_d
+        
+    # 3. CMA candidates within commuting range (35 km)
+    cma_candidates = [(p, d, dc) for p, d, dc in candidates if p['name'] in CMA_CENTRES and d <= 35.0]
+    if cma_candidates:
+        best_p, best_d, _ = min(cma_candidates, key=lambda x: x[1])
+        return best_p, best_d
+        
+    # 4. Absolute closest centre
+    best_p, best_d, _ = min(candidates, key=lambda x: x[1])
+    return best_p, best_d
 
 
 ridings = json.load(open(f'{REPO}/scripts/data/ridings-real-data.json'))
@@ -180,13 +266,14 @@ out = {}
 for r in ridings:
     fed, prov = r['fed_num'], r['province']
     geom = ridings_geom[fed]
+    centroid = (r['latitude'], r['longitude'])
 
-    rc, rd = nearest(centres, geom, prov)
+    rc, rd = nearest(centres, geom, prov, centroid)
 
     if prov in csi_prov and not any(p['prov'] == prov for p in csi_pts):
         csi_val, csi_geo, csi_d = csi_prov[prov], f'{prov} (province/territory)', None
     else:
-        cc, cd = nearest(csi_pts, geom, prov)
+        cc, cd = nearest(csi_pts, geom, prov, centroid)
         csi_val, csi_geo, csi_d = cc['csi'], cc['name'], round(cd, 1)
 
     out[fed] = {

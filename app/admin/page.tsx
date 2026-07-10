@@ -538,7 +538,7 @@ export default function AdminPage() {
               <a href="/admin/cities" style={dashboardCardStyle}>
                 <span style={dashboardTitleStyle}>Cities</span>
                 <span style={dashboardTextStyle}>
-                  Add or edit cities — name, country, region, flag, population, coordinates, climate, and blurb.
+                  Add or edit cities - name, country, region, flag, population, coordinates, climate, and blurb.
                 </span>
               </a>
             </div>
@@ -692,7 +692,7 @@ export default function AdminPage() {
                             <strong>Notes:</strong>{' '}
                             {isEditing ? (
                               <textarea value={draft!.notes} onChange={(e) => setEditDraft({ ...draft!, notes: e.target.value })} style={{ ...inlineInputStyle, display: 'block', width: '100%', minHeight: 60, resize: 'vertical', marginTop: '0.25rem' }} />
-                            ) : (request.notes || '—')}
+                            ) : (request.notes || '-')}
                           </p>
                         </div>
                       ) : (

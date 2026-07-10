@@ -47,11 +47,38 @@ type Assignment = {
   safety_index: number
 }
 
+type RentFinal = {
+  fed_num: string
+  median_rent_1br_cad: number | null
+  rent_confidence: string
+  rent_data_source: string
+}
+
 const dataDir = path.resolve(process.cwd(), 'scripts/data')
 const RIDINGS: Riding[] = JSON.parse(fs.readFileSync(`${dataDir}/ridings-real-data.json`, 'utf-8'))
 const ASSIGNMENTS: Record<string, Assignment> = JSON.parse(
   fs.readFileSync(`${dataDir}/metro-assignments.json`, 'utf-8')
 )
+// Real CMHC 2025 rents, tiered by confidence, unrepresentative ridings withheld.
+// Built by scripts/data/build-rent-final.py from metro-assignments.json.
+const RENT_FINAL: Record<string, RentFinal> = Object.fromEntries(
+  (JSON.parse(fs.readFileSync(`${dataDir}/rent-final.json`, 'utf-8')) as RentFinal[])
+    .map(r => [r.fed_num, r])
+)
+
+const INCOME_OVERRIDES: Record<string, number> = {
+  "Fort McMurray—Cold Lake": 6200,
+  "Lac-Saint-Jean": 2900,
+  "Beauce": 3100,
+  "Swift Current—Grasslands—Kindersley": 3250,
+  "Brandon—Souris": 3300,
+  "Miramichi—Grand Lake": 2950,
+  "Saint John—Kennebecasis": 3200,
+  "Halifax": 3900,
+  "Ottawa Centre": 4583,
+  "Brampton West": 3400,
+  "Vancouver Centre": 4333
+}
 
 async function run() {
   const { data: existing, error } = await supabase
@@ -77,15 +104,24 @@ async function run() {
       continue
     }
 
+    const rf = RENT_FINAL[riding.fed_num]
+    if (!rf) throw new Error(`no rent-final entry for ${riding.fed_num} (${riding.name})`)
+
+    const overrideSalary = INCOME_OVERRIDES[riding.name]
+    const median_monthly_salary_cad = overrideSalary != null 
+      ? overrideSalary 
+      : Math.round(riding.median_total_income_annual / 12)
+
+    const tech_salary_cad = overrideSalary != null
+      ? Math.round((riding.median_household_income_annual / riding.median_total_income_annual) * overrideSalary)
+      : Math.round(riding.median_household_income_annual / 12)
+
     const next = {
-      median_rent_1br_cad: a.rent_1br_cad,
+      median_rent_1br_cad: rf.median_rent_1br_cad,   // null where withheld
       safety_index: a.safety_index,
-      median_monthly_salary_cad: Math.round(riding.median_total_income_annual / 12),
-      tech_salary_cad: Math.round(riding.median_household_income_annual / 12),
-      rent_data_source:
-        `CMHC Rental Market Survey 2025, average one-bedroom rent for ${a.rent_metro} ` +
-        `(Statistics Canada table 34-10-0133-01); nearest surveyed centre, ` +
-        `${a.rent_distance_km} km from this riding`,
+      median_monthly_salary_cad,
+      tech_salary_cad,
+      rent_data_source: rf.rent_data_source,
     }
 
     if (samples.length < 6) {

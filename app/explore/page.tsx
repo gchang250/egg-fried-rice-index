@@ -1,6 +1,7 @@
 'use client'
 
 import { supabase } from '@/lib/supabase'
+import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import NavBar from '@/app/components/NavBar'
 import { useEffect, useRef, useState, useMemo } from 'react'
@@ -229,7 +230,7 @@ export default function Explore() {
 
       if (error) { setLoadingCities(false); return }
       setCities(
-        (data ?? []).filter(c =>
+        previewRent((data ?? []) as City[]).filter(c =>
           c.latitude != null && c.longitude != null &&
           Number.isFinite(Number(c.latitude)) && Number.isFinite(Number(c.longitude))
         ) as City[]
@@ -368,7 +369,7 @@ export default function Explore() {
       }
     } catch (e) {
       console.error('Geocoding error:', e)
-      setGeoError('Search failed — please try again.')
+      setGeoError('Search failed - please try again.')
     } finally {
       setIsGeocoding(false)
     }
@@ -687,7 +688,6 @@ export default function Explore() {
           animation: 'fadeIn 0.15s ease-out'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-            <span style={{ fontSize: 16 }}>🇨🇦</span>
             <span style={{ fontSize: 13, fontWeight: 600 }}>{hoveredCity.city}</span>
           </div>
           <div style={{ fontSize: 11, color: 'var(--color-text-3)', marginBottom: 2 }}>
@@ -812,7 +812,6 @@ export default function Explore() {
             <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
                 <div>
-                  <div style={{ fontSize: 32, marginBottom: 6 }}>🇨🇦</div>
                   <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 30, letterSpacing: -0.5, margin: 0, color: 'var(--color-text-1)', fontWeight: 400 }}>
                     {selectedCity.city}
                   </h2>
@@ -882,7 +881,7 @@ export default function Explore() {
                   <div>
                     <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>{isSingle ? 'Median 1BR rent:' : 'Typical housing cost:'}</span>
                     <p style={{ fontSize: 15, margin: '2px 0 0', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
-                      {rent ? cvt(rent) : 'N/A'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>/mo</span>
+                      {rent ? cvt(rent) : 'Pending'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>{rent ? '/mo' : ''}</span>
                     </p>
                   </div>
                 </div>
@@ -891,7 +890,7 @@ export default function Explore() {
                   <div style={{ fontSize: 10, color: 'var(--color-text-4)', lineHeight: 1.4, marginTop: -4, marginBottom: 12 }}>
                     ℹ️ {selectedCity.rent_data_source}.{' '}
                     <a href="/about" style={{ color: 'var(--color-text-2)', textDecoration: 'underline', fontWeight: 500 }}>
-                      Learn about our hybrid methodology
+                      Learn how rent is sourced
                     </a>
                   </div>
                 )}
@@ -899,7 +898,7 @@ export default function Explore() {
                 <div style={{ marginBottom: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
                     <span style={{ color: 'var(--color-text-3)' }}>Rent burden share:</span>
-                    <span style={{ fontWeight: 600, color: burden && burden > 50 ? 'var(--color-red)' : burden && burden > 35 ? 'var(--color-accent)' : 'var(--color-green)' }}>{burden ? `${burden}%` : 'N/A'}</span>
+                    <span style={{ fontWeight: 600, color: burden && burden > 50 ? 'var(--color-red)' : burden && burden > 35 ? 'var(--color-accent)' : 'var(--color-green)' }}>{burden ? `${burden}%` : 'Pending'}</span>
                   </div>
                   <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
                     <div style={{ height: '100%', width: burden ? `${burden}%` : '0%', background: burden && burden > 50 ? 'var(--color-red)' : burden && burden > 35 ? 'var(--color-accent)' : 'var(--color-green)', borderRadius: 3 }} />
@@ -909,7 +908,7 @@ export default function Explore() {
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
                     <span style={{ color: 'var(--color-text-3)' }}>Left after tax &amp; rent:</span>
-                    <span style={{ fontWeight: 600, color: disposableVal != null && disposableVal < 0 ? 'var(--color-red)' : 'var(--color-green)' }}>{disposableVal != null ? `${disposableVal < 0 ? '−' : ''}${cvt(Math.abs(disposableVal))}` : 'N/A'}</span>
+                    <span style={{ fontWeight: 600, color: disposableVal != null && disposableVal < 0 ? 'var(--color-red)' : 'var(--color-green)' }}>{disposableVal != null ? `${disposableVal < 0 ? '−' : ''}${cvt(Math.abs(disposableVal))}` : 'Pending'}</span>
                   </div>
                   <p style={{ fontSize: 9, color: 'var(--color-text-4)', margin: '2px 0 0', lineHeight: 1.4 }}>
                     Take-home est. after federal &amp; provincial tax, CPP &amp; EI ({isSingle ? 'single individual' : 'family estimation'}). Excludes provincial surtaxes &amp; health premiums.
@@ -1080,7 +1079,6 @@ export default function Explore() {
                     onMouseEnter={e => e.currentTarget.style.background = 'var(--color-surface-2)'}
                     onMouseLeave={e => e.currentTarget.style.background = 'none'}
                   >
-                    <span style={{ fontSize: 16 }}>🇨🇦</span>
                     <div>
                       <span style={{ fontSize: 13, color: 'var(--color-text-1)', fontWeight: 500 }}>{c.city}</span>
                       <span style={{ fontSize: 11, color: 'var(--color-text-3)', marginLeft: 8 }}>{PROVINCE_NAMES[c.region ?? ''] || c.region}</span>
@@ -1270,7 +1268,7 @@ export default function Explore() {
           padding: '10px 14px', boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
           display: 'flex', flexDirection: 'column', gap: 6
         }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-3)', marginBottom: 2 }}>Represented party</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text-3)', marginBottom: 2 }}>{colorMode === 'party' ? 'Represented party' : 'Housing burden'}</span>
           {legendTiers.map(tier => (
             <div key={tier.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: tier.color }} />

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useMemo, type CSSProperties } from 'react'
 import NavBar from './components/NavBar'
 import { supabase } from '@/lib/supabase'
+import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import * as d3 from 'd3'
 
@@ -115,7 +116,7 @@ export default function Home() {
       .order('city', { ascending: true })
       .then(({ data }) => {
         if (!data) return
-        setCities((data ?? []) as CityRow[])
+        setCities(previewRent((data ?? []) as CityRow[]))
       })
   }, [])
 
@@ -270,8 +271,12 @@ export default function Home() {
         svg.appendChild(g.node()!)
 
         if (!narrow && NOTABLE.includes(c.city)) {
+          // Flip the label to the left of the dot when it sits too close to the
+          // right edge, otherwise long names (e.g. Vancouver Centre) get clipped.
+          const flip = gx > W - m.r - 110
           const t = d3.create('svg:text')
-            .attr('x', gx + rs + 6).attr('y', gy + 4)
+            .attr('x', flip ? gx - rs - 6 : gx + rs + 6).attr('y', gy + 4)
+            .attr('text-anchor', flip ? 'end' : 'start')
             .attr('font-family', 'var(--font-body)').attr('font-size', '11')
             .attr('fill', 'var(--color-text-2)')
             .text(c.city).node()!
@@ -311,8 +316,9 @@ export default function Home() {
   const avgBurden = burdens.length ? Math.round(burdens.reduce((sum, b) => sum + b, 0) / burdens.length) : 41
   const spread   = rents.length >= 2 ? rmax / rmin : 2.4
   const maxPlates = parsedCities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
-  const cheapTop = [...parsedCities].sort((a,b) => (a.rentBurden ?? 0) - (b.rentBurden ?? 0)).slice(0, 8)
-  const priceTop = [...parsedCities].sort((a,b) => (b.rentBurden ?? 0) - (a.rentBurden ?? 0)).slice(0, 8)
+  const activeCities = parsedCities.filter(c => c.rentBurden != null && c.bowlsAfterRent != null)
+  const cheapTop = [...activeCities].sort((a,b) => (a.rentBurden ?? 0) - (b.rentBurden ?? 0)).slice(0, 8)
+  const priceTop = [...activeCities].sort((a,b) => (b.rentBurden ?? 0) - (a.rentBurden ?? 0)).slice(0, 8)
 
   /* Rent distribution across every riding. Reported rents are quantized to round
      figures, so bin on a $100 edge — narrower bins alternate empty and read as gaps. */
@@ -426,7 +432,7 @@ export default function Home() {
         <div style={{ ...WRAP, borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
           <div className="stats-grid">
             {[
-              { val: String(cities.length), label: 'Ridings indexed' },
+              { val: String(cities.filter(c => c.median_rent_1br_cad != null).length || 339), label: 'Ridings indexed' },
               { val: fmt(rmin),            label: 'Lowest 1BR rent' },
               { val: fmt(rmax),            label: 'Highest 1BR rent' },
               { val: `${avgBurden}%`,      label: 'Average rent burden' },
@@ -447,7 +453,7 @@ export default function Home() {
         <div style={WRAP}>
           <SectionHead
             title="Where the rent actually lands"
-            blurb={`Every riding placed by its median one-bedroom rent. Most cluster well below the headline maximum — the median riding pays ${fmt(rentMedian)}.`}
+            blurb={`Every riding placed by its median one-bedroom rent. Most cluster well below the headline maximum - the median riding pays ${fmt(rentMedian)}.`}
           />
           <div style={{ ...CARD, padding: '28px 28px 20px' }}>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 160 }}>

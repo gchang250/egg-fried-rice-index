@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { previewRent } from '@/lib/rent-preview'
 import { notFound } from 'next/navigation'
 import CityPageContent from './CityPageContent'
 import type { CityRow } from './CityPageContent'
@@ -20,7 +21,7 @@ export default async function CityDetailPage({ params }: PageProps) {
     .from('cities').select('*').order('city')
   if (cityErr) throw new Error(cityErr.message)
 
-  const city = ((rows ?? []) as CityRow[]).find(r => slugify(r.city) === slug)
+  const city = previewRent((rows ?? []) as CityRow[]).find(r => slugify(r.city) === slug)
   if (!city) notFound()
 
   return <CityPageContent city={city} />

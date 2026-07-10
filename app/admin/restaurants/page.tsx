@@ -51,12 +51,12 @@ const tierOptions = [
 ]
 
 function formatCad(value: number | null): string {
-  if (value === null || !Number.isFinite(Number(value))) return '—'
+  if (value === null || !Number.isFinite(Number(value))) return '-'
   return `CA$${Number(value).toFixed(2)}`
 }
 
 function formatDate(value: string | null): string {
-  if (!value) return '—'
+  if (!value) return '-'
   return new Date(value).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
@@ -325,8 +325,8 @@ export default function AdminRestaurantsPage() {
 
                   return (
                     <tr key={row.id} style={{ opacity: row.active === false ? 0.5 : 1 }}>
-                      <td style={tdStyle}>{row.restaurant_name ?? '—'}</td>
-                      <td style={tdStyle}>{row.dish_name ?? '—'}</td>
+                      <td style={tdStyle}>{row.restaurant_name ?? '-'}</td>
+                      <td style={tdStyle}>{row.dish_name ?? '-'}</td>
 
                       <td style={tdStyle}>
                         {isEditing ? (
@@ -338,7 +338,7 @@ export default function AdminRestaurantsPage() {
                             {dishCategories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                           </select>
                         ) : (
-                          row.dish_category ?? '—'
+                          row.dish_category ?? '-'
                         )}
                       </td>
 
@@ -352,12 +352,12 @@ export default function AdminRestaurantsPage() {
                             {tierOptions.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
                           </select>
                         ) : (
-                          row.tier ?? '—'
+                          row.tier ?? '-'
                         )}
                       </td>
 
                       <td style={tdStyle}>
-                        {row.local_price ? `${row.local_currency ?? ''} ${row.local_price}` : '—'}
+                        {row.local_price ? `${row.local_currency ?? ''} ${row.local_price}` : '-'}
                       </td>
 
                       <td style={tdStyle}>
@@ -398,7 +398,7 @@ export default function AdminRestaurantsPage() {
                             style={{ ...cellInputStyle, width: 70 }}
                           />
                         ) : (
-                          row.confidence_score !== null ? `${Math.round(Number(row.confidence_score) * 100)}%` : '—'
+                          row.confidence_score !== null ? `${Math.round(Number(row.confidence_score) * 100)}%` : '-'
                         )}
                       </td>
 

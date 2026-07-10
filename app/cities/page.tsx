@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
-import { Search, Download, Building2, X } from 'lucide-react'
+import { Search, Building2, X } from 'lucide-react'
 import NavBar from '@/app/components/NavBar'
 import { supabase } from '@/lib/supabase'
+import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 
 type CityRow = {
@@ -105,7 +106,7 @@ export default function CitiesPage() {
         safety_index, tech_salary_cad, rent_data_source
       `).order('price_cad', { ascending: true, nullsFirst: false })
       if (error) { setLoading(false); return }
-      setCities((data ?? []) as CityRow[])
+      setCities(previewRent((data ?? []) as CityRow[]))
       setLoading(false)
     }
     fetchCities()
@@ -258,9 +259,6 @@ export default function CitiesPage() {
                 Family Homeowner
               </button>
             </div>
-            <a href="/api/download-report" download style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'7px 14px', background:'var(--color-surface)', color:'var(--color-text-2)', borderRadius:8, fontSize:12, textDecoration:'none', whiteSpace:'nowrap', border:'0.5px solid var(--color-border)' }}>
-              <Download size={12} /> Export CSV
-            </a>
           </div>
         </div>
 
@@ -332,7 +330,6 @@ export default function CitiesPage() {
 
                     <div>
                       <div style={{ display:'flex', alignItems: 'center', gap:8 }}>
-                        <span style={{ fontSize:16, lineHeight:1 }}>🇨🇦</span>
                         <span style={{ fontFamily:'var(--font-display)', fontSize:17, color:'var(--color-text-1)', fontWeight:400 }}>{city.city}</span>
                       </div>
                       <p style={{ fontSize:11, color:'var(--color-text-3)', margin:'0.15rem 0 0' }}>
@@ -396,7 +393,7 @@ export default function CitiesPage() {
               <select value={compareA} onChange={e => setCompareA(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-text-1)', cursor: 'pointer' }}>
                 <option value="">Select a riding...</option>
                 {cleanCities.map(c => (
-                  <option key={c.city} value={c.city}>🇨🇦 {c.city} ({c.region})</option>
+                  <option key={c.city} value={c.city}>{c.city} ({c.region})</option>
                 ))}
               </select>
             </div>
@@ -405,7 +402,7 @@ export default function CitiesPage() {
               <select value={compareB} onChange={e => setCompareB(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: 8, border: '0.5px solid var(--color-border)', background: 'var(--color-bg)', fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-text-1)', cursor: 'pointer' }}>
                 <option value="">Select a riding...</option>
                 {cleanCities.map(c => (
-                  <option key={c.city} value={c.city}>🇨🇦 {c.city} ({c.region})</option>
+                  <option key={c.city} value={c.city}>{c.city} ({c.region})</option>
                 ))}
               </select>
             </div>
@@ -472,12 +469,10 @@ export default function CitiesPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', borderBottom: '1px solid var(--color-border)', paddingBottom: '1.25rem', marginBottom: '1.25rem', alignItems: 'center', gap: '0.5rem' }}>
                   <div style={{ fontSize: 11, color: 'var(--color-text-3)' }}>Comparative Indicators</div>
                   <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: 22, lineHeight: 1 }}>🇨🇦</span>
                     <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, margin: '4px 0 0', color: 'var(--color-text-1)', fontWeight: 500 }}>{cityDataA.city}</h3>
                     <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: 0 }}>{PROVINCE_NAMES[cityDataA.region ?? '']}</p>
                   </div>
                   <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: 22, lineHeight: 1 }}>🇨🇦</span>
                     <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 18, margin: '4px 0 0', color: 'var(--color-text-1)', fontWeight: 500 }}>{cityDataB.city}</h3>
                     <p style={{ fontSize: 11, color: 'var(--color-text-3)', margin: 0 }}>{PROVINCE_NAMES[cityDataB.region ?? '']}</p>
                   </div>

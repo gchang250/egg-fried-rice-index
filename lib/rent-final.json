@@ -1,0 +1,1374 @@
+{
+"Nunavut": {
+"rent": null,
+"source": "No CMHC rental survey covers this riding; the nearest surveyed centre (Amos, Quebec) is 312 km away in a different housing market, so no one-bedroom figure is shown."
+},
+"Northwest Territories": {
+"rent": 1757,
+"source": "Estimated from the 2021 Census profile for Northwest Territories ($1,450 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Yellowknife, Northwest Territories ($1,757) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Yukon": {
+"rent": null,
+"source": "No CMHC rental survey covers this riding; the nearest surveyed centre (Fort St. John, British Columbia) is 451 km away in a different housing market, so no one-bedroom figure is shown."
+},
+"West Vancouver—Sunshine Coast—Sea to Sky Country": {
+"rent": 2039,
+"source": "Estimated from the 2021 Census profile for West Vancouver—Sunshine Coast—Sea to Sky Country ($1,680 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Victoria": {
+"rent": 1573,
+"source": "Estimated from the 2021 Census profile for Victoria ($1,310 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Victoria, British Columbia ($1,624) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Vernon—Lake Country—Monashee": {
+"rent": 1457,
+"source": "Estimated from the 2021 Census profile for Vernon—Lake Country—Monashee ($1,170 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kelowna, British Columbia ($1,597) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kamloops—Shuswap—Central Rockies": {
+"rent": 1345,
+"source": "Estimated from the 2021 Census profile for Kamloops—Shuswap—Central Rockies ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kamloops, British Columbia ($1,345) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Fleetwood—Port Kells": {
+"rent": 1457,
+"source": "Estimated from the 2021 Census profile for Fleetwood—Port Kells ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 23.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Esquimalt—Saanich—Sooke": {
+"rent": 1573,
+"source": "Estimated from the 2021 Census profile for Esquimalt—Saanich—Sooke ($1,310 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Victoria, British Columbia ($1,624) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Delta": {
+"rent": 1699,
+"source": "Estimated from the 2021 Census profile for Delta ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Cowichan—Malahat—Langford": {
+"rent": 1693,
+"source": "Estimated from the 2021 Census profile for Cowichan—Malahat—Langford ($1,410 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Victoria, British Columbia ($1,624) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Courtenay—Alberni": {
+"rent": 1449,
+"source": "Estimated from the 2021 Census profile for Courtenay—Alberni ($1,110 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Nanaimo, British Columbia ($1,527) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Coquitlam—Port Coquitlam": {
+"rent": 1942,
+"source": "Estimated from the 2021 Census profile for Coquitlam—Port Coquitlam ($1,600 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 21.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Columbia—Kootenay—Southern Rockies": {
+"rent": 1052,
+"source": "Estimated from the 2021 Census profile for Columbia—Kootenay—Southern Rockies ($980 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Cranbrook, British Columbia ($1,052) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Cloverdale—Langley City": {
+"rent": 1566,
+"source": "Estimated from the 2021 Census profile for Cloverdale—Langley City ($1,290 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 26 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Chilliwack—Hope": {
+"rent": 1222,
+"source": "Estimated from the 2021 Census profile for Chilliwack—Hope ($1,150 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Chilliwack, British Columbia ($1,222) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Cariboo—Prince George": {
+"rent": 1082,
+"source": "Estimated from the 2021 Census profile for Cariboo—Prince George ($960 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Williams Lake, British Columbia ($1,082) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Burnaby North—Seymour": {
+"rent": 1967,
+"source": "Estimated from the 2021 Census profile for Burnaby North—Seymour ($1,620 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Burnaby Central": {
+"rent": 1760,
+"source": "Estimated from the 2021 Census profile for Burnaby Central ($1,450 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Abbotsford—South Langley": {
+"rent": 1151,
+"source": "Estimated from the 2021 Census profile for Abbotsford—South Langley ($1,180 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Abbotsford-Mission, British Columbia ($1,278) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Yellowhead": {
+"rent": 1506,
+"source": "Estimated from the 2021 Census profile for Yellowhead ($1,300 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 12.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"St. Albert—Sturgeon River": {
+"rent": 1391,
+"source": "Estimated from the 2021 Census profile for St. Albert—Sturgeon River ($1,420 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 11.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Sherwood Park—Fort Saskatchewan": {
+"rent": 1470,
+"source": "Estimated from the 2021 Census profile for Sherwood Park—Fort Saskatchewan ($1,500 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Red Deer": {
+"rent": 1190,
+"source": "Estimated from the 2021 Census profile for Red Deer ($1,170 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Red Deer, Alberta ($1,220) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Ponoka—Didsbury": {
+"rent": 1250,
+"source": "Estimated from the 2021 Census profile for Ponoka—Didsbury ($1,230 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Red Deer, Alberta ($1,220) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Peace River—Westlock": {
+"rent": 1092,
+"source": "Estimated from the 2021 Census profile for Peace River—Westlock ($1,080 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Grande Prairie, Alberta ($1,223) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 34 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Parkland": {
+"rent": 1274,
+"source": "Estimated from the 2021 Census profile for Parkland ($1,300 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Medicine Hat—Cardston—Warner": {
+"rent": 1301,
+"source": "Estimated from the 2021 Census profile for Medicine Hat—Cardston—Warner ($1,030 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Lethbridge, Alberta ($1,370) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Lethbridge": {
+"rent": 1439,
+"source": "Estimated from the 2021 Census profile for Lethbridge ($1,140 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Lethbridge, Alberta ($1,370) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Leduc—Wetaskiwin": {
+"rent": 1274,
+"source": "Estimated from the 2021 Census profile for Leduc—Wetaskiwin ($1,300 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 15.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Lakeland": {
+"rent": 1130,
+"source": "Estimated from the 2021 Census profile for Lakeland ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Lloydminster, Alberta part, Saskachewan/Alberta ($1,130) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Grande Prairie": {
+"rent": 1354,
+"source": "Estimated from the 2021 Census profile for Grande Prairie ($1,340 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Grande Prairie, Alberta ($1,223) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Fort McMurray—Cold Lake": {
+"rent": 1350,
+"source": "Estimated from the 2021 Census profile for Fort McMurray—Cold Lake ($1,400 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $1350 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Wood Buffalo, Alberta."
+},
+"Foothills": {
+"rent": 1402,
+"source": "Estimated from the 2021 Census profile for Foothills ($1,210 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton West": {
+"rent": 1362,
+"source": "Estimated from the 2021 Census profile for Edmonton West ($1,390 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Strathcona": {
+"rent": 1176,
+"source": "Estimated from the 2021 Census profile for Edmonton Strathcona ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Southeast": {
+"rent": 1372,
+"source": "Estimated from the 2021 Census profile for Edmonton Southeast ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Riverbend": {
+"rent": 1372,
+"source": "Estimated from the 2021 Census profile for Edmonton Riverbend ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Northwest": {
+"rent": 1411,
+"source": "Estimated from the 2021 Census profile for Edmonton Northwest ($1,440 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Manning": {
+"rent": 1303,
+"source": "Estimated from the 2021 Census profile for Edmonton Manning ($1,330 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Griesbach": {
+"rent": 1068,
+"source": "Estimated from the 2021 Census profile for Edmonton Griesbach ($1,090 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Gateway": {
+"rent": 1372,
+"source": "Estimated from the 2021 Census profile for Edmonton Gateway ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Edmonton Centre": {
+"rent": 1068,
+"source": "Estimated from the 2021 Census profile for Edmonton Centre ($1,090 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Edmonton, Alberta ($1,301) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Calgary Skyview": {
+"rent": 1738,
+"source": "Estimated from the 2021 Census profile for Calgary Skyview ($1,500 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 11.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Signal Hill": {
+"rent": 1564,
+"source": "Estimated from the 2021 Census profile for Calgary Signal Hill ($1,350 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Shepard": {
+"rent": 1923,
+"source": "Estimated from the 2021 Census profile for Calgary Shepard ($1,660 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Nose Hill": {
+"rent": 1610,
+"source": "Estimated from the 2021 Census profile for Calgary Nose Hill ($1,390 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Midnapore": {
+"rent": 1518,
+"source": "Estimated from the 2021 Census profile for Calgary Midnapore ($1,310 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary McKnight": {
+"rent": 1564,
+"source": "Estimated from the 2021 Census profile for Calgary McKnight ($1,350 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Heritage": {
+"rent": 1622,
+"source": "Estimated from the 2021 Census profile for Calgary Heritage ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary East": {
+"rent": 1460,
+"source": "Estimated from the 2021 Census profile for Calgary East ($1,260 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Crowfoot": {
+"rent": 1830,
+"source": "Estimated from the 2021 Census profile for Calgary Crowfoot ($1,580 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Confederation": {
+"rent": 1448,
+"source": "Estimated from the 2021 Census profile for Calgary Confederation ($1,250 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Calgary Centre": {
+"rent": 1460,
+"source": "Estimated from the 2021 Census profile for Calgary Centre ($1,260 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Bow River": {
+"rent": 1332,
+"source": "Estimated from the 2021 Census profile for Bow River ($1,150 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Battle River—Crowfoot": {
+"rent": 1228,
+"source": "Estimated from the 2021 Census profile for Battle River—Crowfoot ($1,010 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Camrose, Alberta ($1,228) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Airdrie—Cochrane": {
+"rent": 1738,
+"source": "Estimated from the 2021 Census profile for Airdrie—Cochrane ($1,500 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Calgary, Alberta ($1,581) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 15.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Yorkton—Melville": {
+"rent": 1076,
+"source": "Estimated from the 2021 Census profile for Yorkton—Melville ($800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Yorkton, Saskatchewan ($1,076) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Swift Current—Grasslands—Kindersley": {
+"rent": 980,
+"source": "Estimated from the 2021 Census profile for Swift Current—Grasslands—Kindersley ($810 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $980 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Swift Current, Saskatchewan."
+},
+"Souris—Moose Mountain": {
+"rent": 991,
+"source": "Estimated from the 2021 Census profile for Souris—Moose Mountain ($810 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Regina, Saskatchewan ($1,240) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 11.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saskatoon West": {
+"rent": 1212,
+"source": "Estimated from the 2021 Census profile for Saskatoon West ($1,060 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saskatoon, Saskatchewan ($1,281) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Saskatoon—University": {
+"rent": 1372,
+"source": "Estimated from the 2021 Census profile for Saskatoon—University ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saskatoon, Saskatchewan ($1,281) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saskatoon South": {
+"rent": 1395,
+"source": "Estimated from the 2021 Census profile for Saskatoon South ($1,220 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saskatoon, Saskatchewan ($1,281) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Regina—Wascana": {
+"rent": 1370,
+"source": "Estimated from the 2021 Census profile for Regina—Wascana ($1,120 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Regina, Saskatchewan ($1,240) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Regina—Qu'Appelle": {
+"rent": 1284,
+"source": "Estimated from the 2021 Census profile for Regina—Qu'Appelle ($1,050 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Regina, Saskatchewan ($1,240) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Regina—Lewvan": {
+"rent": 1492,
+"source": "Estimated from the 2021 Census profile for Regina—Lewvan ($1,220 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Regina, Saskatchewan ($1,240) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Prince Albert": {
+"rent": 1073,
+"source": "Estimated from the 2021 Census profile for Prince Albert ($900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Prince Albert, Saskatchewan ($1,073) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Moose Jaw—Lake Centre—Lanigan": {
+"rent": 1064,
+"source": "Estimated from the 2021 Census profile for Moose Jaw—Lake Centre—Lanigan ($870 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Regina, Saskatchewan ($1,240) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Desnethé—Missinippi—Churchill River": {
+"rent": null,
+"source": "No CMHC rental survey covers this riding; the nearest surveyed centre (Prince Albert, Saskatchewan) is 79 km away in a different housing market, so no one-bedroom figure is shown."
+},
+"Pickering—Brooklin": {
+"rent": 1852,
+"source": "Estimated from the 2021 Census profile for Pickering—Brooklin ($1,740 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Oshawa, Ontario ($1,586) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Peterborough": {
+"rent": 1266,
+"source": "Estimated from the 2021 Census profile for Peterborough ($1,110 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Peterborough, Ontario ($1,232) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Perth—Wellington": {
+"rent": 1398,
+"source": "Estimated from the 2021 Census profile for Perth—Wellington ($1,050 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for North Perth, Ontario ($1,398) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Parry Sound—Muskoka": {
+"rent": 1514,
+"source": "Estimated from the 2021 Census profile for Parry Sound—Muskoka ($1,020 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Huntsville, Ontario ($1,514) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Oxford": {
+"rent": 1277,
+"source": "Estimated from the 2021 Census profile for Oxford ($1,080 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Ottawa West—Nepean": {
+"rent": 1405,
+"source": "Estimated from the 2021 Census profile for Ottawa West—Nepean ($1,330 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Ottawa—Vanier—Gloucester": {
+"rent": 1321,
+"source": "Estimated from the 2021 Census profile for Ottawa—Vanier—Gloucester ($1,250 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Ottawa South": {
+"rent": 1342,
+"source": "Estimated from the 2021 Census profile for Ottawa South ($1,270 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Ottawa Centre": {
+"rent": 2050,
+"source": "Estimated from the 2021 Census profile for Ottawa Centre ($1,340 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $2050 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Ottawa-Gatineau, Ontario part, Ontario/Quebec."
+},
+"Oshawa": {
+"rent": 1341,
+"source": "Estimated from the 2021 Census profile for Oshawa ($1,260 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Oshawa, Ontario ($1,586) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Orléans": {
+"rent": 1902,
+"source": "Estimated from the 2021 Census profile for Orléans ($1,800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Oakville West": {
+"rent": 1745,
+"source": "Estimated from the 2021 Census profile for Oakville West ($1,840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 16.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Oakville East": {
+"rent": 2124,
+"source": "Estimated from the 2021 Census profile for Oakville East ($2,240 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 24.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Northumberland—Clarke": {
+"rent": 1224,
+"source": "Estimated from the 2021 Census profile for Northumberland—Clarke ($1,150 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Oshawa, Ontario ($1,586) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 18.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Nipissing—Timiskaming": {
+"rent": 1078,
+"source": "Estimated from the 2021 Census profile for Nipissing—Timiskaming ($950 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for North Bay, Ontario ($1,078) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Niagara West": {
+"rent": 1418,
+"source": "Estimated from the 2021 Census profile for Niagara West ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. Catharines-Niagara, Ontario ($1,318) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Niagara South": {
+"rent": 1182,
+"source": "Estimated from the 2021 Census profile for Niagara South ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. Catharines-Niagara, Ontario ($1,318) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Niagara Falls—Niagara-on-the-Lake": {
+"rent": 1359,
+"source": "Estimated from the 2021 Census profile for Niagara Falls—Niagara-on-the-Lake ($1,150 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. Catharines-Niagara, Ontario ($1,318) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"New Tecumseth—Gwillimbury": {
+"rent": 1704,
+"source": "Estimated from the 2021 Census profile for New Tecumseth—Gwillimbury ($1,600 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Barrie, Ontario ($1,583) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 21.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Newmarket—Aurora": {
+"rent": 1798,
+"source": "Estimated from the 2021 Census profile for Newmarket—Aurora ($1,640 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 30 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Nepean": {
+"rent": 1944,
+"source": "Estimated from the 2021 Census profile for Nepean ($1,840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mississauga—Streetsville": {
+"rent": 1798,
+"source": "Estimated from the 2021 Census profile for Mississauga—Streetsville ($1,640 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 31 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Mississauga—Malton": {
+"rent": 1623,
+"source": "Estimated from the 2021 Census profile for Mississauga—Malton ($1,480 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 19.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mississauga—Lakeshore": {
+"rent": 1579,
+"source": "Estimated from the 2021 Census profile for Mississauga—Lakeshore ($1,440 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 21.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mississauga—Erin Mills": {
+"rent": 2193,
+"source": "Estimated from the 2021 Census profile for Mississauga—Erin Mills ($2,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 31 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Mississauga East—Cooksville": {
+"rent": 1645,
+"source": "Estimated from the 2021 Census profile for Mississauga East—Cooksville ($1,500 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 19.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mississauga Centre": {
+"rent": 2040,
+"source": "Estimated from the 2021 Census profile for Mississauga Centre ($1,860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 27 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Milton East—Halton Hills South": {
+"rent": 1764,
+"source": "Estimated from the 2021 Census profile for Milton East—Halton Hills South ($1,860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 24.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Middlesex—London": {
+"rent": 1496,
+"source": "Estimated from the 2021 Census profile for Middlesex—London ($1,220 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for London, Ontario ($1,371) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vancouver Quadra": {
+"rent": 2185,
+"source": "Estimated from the 2021 Census profile for Vancouver Quadra ($1,800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vancouver Kingsway": {
+"rent": 1760,
+"source": "Estimated from the 2021 Census profile for Vancouver Kingsway ($1,450 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vancouver Granville": {
+"rent": 1967,
+"source": "Estimated from the 2021 Census profile for Vancouver Granville ($1,620 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Vancouver Fraserview—South Burnaby": {
+"rent": 1639,
+"source": "Estimated from the 2021 Census profile for Vancouver Fraserview—South Burnaby ($1,350 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vancouver East": {
+"rent": 1542,
+"source": "Estimated from the 2021 Census profile for Vancouver East ($1,270 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vancouver Centre": {
+"rent": 2600,
+"source": "Estimated from the 2021 Census profile for Vancouver Centre ($1,780 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $2600 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Vancouver, British Columbia."
+},
+"Surrey Newton": {
+"rent": 1457,
+"source": "Estimated from the 2021 Census profile for Surrey Newton ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 19.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Surrey Centre": {
+"rent": 1590,
+"source": "Estimated from the 2021 Census profile for Surrey Centre ($1,310 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 16.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"South Surrey—White Rock": {
+"rent": 1942,
+"source": "Estimated from the 2021 Census profile for South Surrey—White Rock ($1,600 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 24.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Skeena—Bulkley Valley": {
+"rent": 1143,
+"source": "Estimated from the 2021 Census profile for Skeena—Bulkley Valley ($950 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Prince Rupert, British Columbia ($1,143) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Similkameen—South Okanagan—West Kootenay": {
+"rent": 1345,
+"source": "Estimated from the 2021 Census profile for Similkameen—South Okanagan—West Kootenay ($1,080 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kelowna, British Columbia ($1,597) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saanich—Gulf Islands": {
+"rent": 1657,
+"source": "Estimated from the 2021 Census profile for Saanich—Gulf Islands ($1,380 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Victoria, British Columbia ($1,624) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Richmond East—Steveston": {
+"rent": 1942,
+"source": "Estimated from the 2021 Census profile for Richmond East—Steveston ($1,600 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Richmond Centre—Marpole": {
+"rent": 1809,
+"source": "Estimated from the 2021 Census profile for Richmond Centre—Marpole ($1,490 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Prince George—Peace River—Northern Rockies": {
+"rent": 1214,
+"source": "Estimated from the 2021 Census profile for Prince George—Peace River—Northern Rockies ($1,010 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Prince George, British Columbia ($1,214) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Port Moody—Coquitlam": {
+"rent": 1821,
+"source": "Estimated from the 2021 Census profile for Port Moody—Coquitlam ($1,500 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 12.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Pitt Meadows—Maple Ridge": {
+"rent": 1268,
+"source": "Estimated from the 2021 Census profile for Pitt Meadows—Maple Ridge ($1,300 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Abbotsford-Mission, British Columbia ($1,278) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Okanagan Lake West—South Kelowna": {
+"rent": 1793,
+"source": "Estimated from the 2021 Census profile for Okanagan Lake West—South Kelowna ($1,440 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kelowna, British Columbia ($1,597) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"North Vancouver—Capilano": {
+"rent": 2064,
+"source": "Estimated from the 2021 Census profile for North Vancouver—Capilano ($1,700 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"North Island—Powell River": {
+"rent": 1282,
+"source": "Estimated from the 2021 Census profile for North Island—Powell River ($1,040 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Campbell River, British Columbia ($1,282) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"New Westminster—Burnaby—Maillardville": {
+"rent": 1639,
+"source": "Estimated from the 2021 Census profile for New Westminster—Burnaby—Maillardville ($1,350 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Vancouver, British Columbia ($1,807) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 11.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Nanaimo—Ladysmith": {
+"rent": 1605,
+"source": "Estimated from the 2021 Census profile for Nanaimo—Ladysmith ($1,230 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Nanaimo, British Columbia ($1,527) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Mission—Matsqui—Abbotsford": {
+"rent": 1171,
+"source": "Estimated from the 2021 Census profile for Mission—Matsqui—Abbotsford ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Abbotsford-Mission, British Columbia ($1,278) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Langley Township—Fraser Heights": {
+"rent": 1522,
+"source": "Estimated from the 2021 Census profile for Langley Township—Fraser Heights ($1,560 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Abbotsford-Mission, British Columbia ($1,278) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kelowna": {
+"rent": 1793,
+"source": "Estimated from the 2021 Census profile for Kelowna ($1,440 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kelowna, British Columbia ($1,597) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Kamloops—Thompson—Nicola": {
+"rent": 1345,
+"source": "Estimated from the 2021 Census profile for Kamloops—Thompson—Nicola ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kamloops, British Columbia ($1,345) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Markham—Unionville": {
+"rent": 2259,
+"source": "Estimated from the 2021 Census profile for Markham—Unionville ($2,060 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Markham—Thornhill": {
+"rent": 1678,
+"source": "Estimated from the 2021 Census profile for Markham—Thornhill ($1,530 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Markham—Stouffville": {
+"rent": 2171,
+"source": "Estimated from the 2021 Census profile for Markham—Stouffville ($1,980 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"London West": {
+"rent": 1508,
+"source": "Estimated from the 2021 Census profile for London West ($1,230 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for London, Ontario ($1,371) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"London—Fanshawe": {
+"rent": 1251,
+"source": "Estimated from the 2021 Census profile for London—Fanshawe ($1,020 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for London, Ontario ($1,371) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"London Centre": {
+"rent": 1349,
+"source": "Estimated from the 2021 Census profile for London Centre ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for London, Ontario ($1,371) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Leeds—Grenville—Thousand Islands—Rideau Lakes": {
+"rent": 1140,
+"source": "Estimated from the 2021 Census profile for Leeds—Grenville—Thousand Islands—Rideau Lakes ($980 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Brockville, Ontario ($1,140) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Lanark—Frontenac": {
+"rent": 1458,
+"source": "Estimated from the 2021 Census profile for Lanark—Frontenac ($1,050 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kingston, Ontario ($1,503) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 11.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kitchener South—Hespeler": {
+"rent": 1667,
+"source": "Estimated from the 2021 Census profile for Kitchener South—Hespeler ($1,410 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Kitchener—Conestoga": {
+"rent": 1762,
+"source": "Estimated from the 2021 Census profile for Kitchener—Conestoga ($1,490 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kitchener Centre": {
+"rent": 1431,
+"source": "Estimated from the 2021 Census profile for Kitchener Centre ($1,210 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"King—Vaughan": {
+"rent": 2259,
+"source": "Estimated from the 2021 Census profile for King—Vaughan ($2,060 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kingston and the Islands": {
+"rent": 1736,
+"source": "Estimated from the 2021 Census profile for Kingston and the Islands ($1,250 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kingston, Ontario ($1,503) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Kenora—Kiiwetinoong": {
+"rent": 1005,
+"source": "Estimated from the 2021 Census profile for Kenora—Kiiwetinoong ($960 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kenora, Ontario ($1,005) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Kapuskasing—Timmins—Mushkegowuk": {
+"rent": 1177,
+"source": "Estimated from the 2021 Census profile for Kapuskasing—Timmins—Mushkegowuk ($810 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Timmins, Ontario ($1,177) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Kanata": {
+"rent": 2007,
+"source": "Estimated from the 2021 Census profile for Kanata ($1,900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 17.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Huron—Bruce": {
+"rent": 1177,
+"source": "Estimated from the 2021 Census profile for Huron—Bruce ($940 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saugeen Shores, Ontario ($1,177) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Humber River—Black Creek": {
+"rent": 1371,
+"source": "Estimated from the 2021 Census profile for Humber River—Black Creek ($1,250 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Hastings—Lennox and Addington—Tyendinaga": {
+"rent": 1375,
+"source": "Estimated from the 2021 Census profile for Hastings—Lennox and Addington—Tyendinaga ($990 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kingston, Ontario ($1,503) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Hamilton West—Ancaster—Dundas": {
+"rent": 1185,
+"source": "Estimated from the 2021 Census profile for Hamilton West—Ancaster—Dundas ($1,250 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Hamilton Mountain": {
+"rent": 1043,
+"source": "Estimated from the 2021 Census profile for Hamilton Mountain ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Hamilton East—Stoney Creek": {
+"rent": 1043,
+"source": "Estimated from the 2021 Census profile for Hamilton East—Stoney Creek ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Hamilton Centre": {
+"rent": 1005,
+"source": "Estimated from the 2021 Census profile for Hamilton Centre ($1,060 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Haliburton—Kawartha Lakes": {
+"rent": 1198,
+"source": "Estimated from the 2021 Census profile for Haliburton—Kawartha Lakes ($1,050 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Peterborough, Ontario ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Haldimand—Norfolk": {
+"rent": 910,
+"source": "Estimated from the 2021 Census profile for Haldimand—Norfolk ($960 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 17.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Guelph": {
+"rent": 1573,
+"source": "Estimated from the 2021 Census profile for Guelph ($1,330 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 17.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Flamborough—Glanbrook—Brant North": {
+"rent": 1394,
+"source": "Estimated from the 2021 Census profile for Flamborough—Glanbrook—Brant North ($1,470 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Etobicoke North": {
+"rent": 1469,
+"source": "Estimated from the 2021 Census profile for Etobicoke North ($1,340 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Etobicoke—Lakeshore": {
+"rent": 1590,
+"source": "Estimated from the 2021 Census profile for Etobicoke—Lakeshore ($1,450 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Etobicoke Centre": {
+"rent": 1700,
+"source": "Estimated from the 2021 Census profile for Etobicoke Centre ($1,550 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 12.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Essex": {
+"rent": 1239,
+"source": "Estimated from the 2021 Census profile for Essex ($1,020 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Windsor, Ontario ($1,193) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Elgin—St. Thomas—London South": {
+"rent": 1251,
+"source": "Estimated from the 2021 Census profile for Elgin—St. Thomas—London South ($1,020 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for London, Ontario ($1,371) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Eglinton—Lawrence": {
+"rent": 1601,
+"source": "Estimated from the 2021 Census profile for Eglinton—Lawrence ($1,460 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Dufferin—Caledon": {
+"rent": 1513,
+"source": "Estimated from the 2021 Census profile for Dufferin—Caledon ($1,380 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 28 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Burlington": {
+"rent": 1536,
+"source": "Estimated from the 2021 Census profile for Burlington ($1,620 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Bruce—Grey—Owen Sound": {
+"rent": 1130,
+"source": "Estimated from the 2021 Census profile for Bruce—Grey—Owen Sound ($940 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Owen Sound, Ontario ($1,130) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Brantford—Brant South—Six Nations": {
+"rent": 1062,
+"source": "Estimated from the 2021 Census profile for Brantford—Brant South—Six Nations ($1,120 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 17.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Brampton West": {
+"rent": 1950,
+"source": "Estimated from the 2021 Census profile for Brampton West ($2,400 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $1950 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Toronto, Ontario."
+},
+"Brampton South": {
+"rent": 1579,
+"source": "Estimated from the 2021 Census profile for Brampton South ($1,440 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 27 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Brampton North—Caledon": {
+"rent": 1974,
+"source": "Estimated from the 2021 Census profile for Brampton North—Caledon ($1,800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 30 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Brampton East": {
+"rent": 1974,
+"source": "Estimated from the 2021 Census profile for Brampton East ($1,800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 20.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Brampton—Chinguacousy Park": {
+"rent": 1700,
+"source": "Estimated from the 2021 Census profile for Brampton—Chinguacousy Park ($1,550 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 24.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Brampton Centre": {
+"rent": 1502,
+"source": "Estimated from the 2021 Census profile for Brampton Centre ($1,370 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 28 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Bowmanville—Oshawa North": {
+"rent": 1895,
+"source": "Estimated from the 2021 Census profile for Bowmanville—Oshawa North ($1,780 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Oshawa, Ontario ($1,586) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Beaches—East York": {
+"rent": 1393,
+"source": "Estimated from the 2021 Census profile for Beaches—East York ($1,270 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Bay of Quinte": {
+"rent": 1444,
+"source": "Estimated from the 2021 Census profile for Bay of Quinte ($1,040 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kingston, Ontario ($1,503) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 20.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Barrie—Springwater—Oro-Medonte": {
+"rent": 1491,
+"source": "Estimated from the 2021 Census profile for Barrie—Springwater—Oro-Medonte ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Barrie, Ontario ($1,583) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Barrie South—Innisfil": {
+"rent": 1917,
+"source": "Estimated from the 2021 Census profile for Barrie South—Innisfil ($1,800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Barrie, Ontario ($1,583) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Aurora—Oak Ridges—Richmond Hill": {
+"rent": 2259,
+"source": "Estimated from the 2021 Census profile for Aurora—Oak Ridges—Richmond Hill ($2,060 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 17.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Algonquin—Renfrew—Pembroke": {
+"rent": 1079,
+"source": "Estimated from the 2021 Census profile for Algonquin—Renfrew—Pembroke ($940 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Petawawa, Ontario ($1,079) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Ajax": {
+"rent": 1703,
+"source": "Estimated from the 2021 Census profile for Ajax ($1,600 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Oshawa, Ontario ($1,586) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 11.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vimy": {
+"rent": 1110,
+"source": "Estimated from the 2021 Census profile for Vimy ($890 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Ville-Marie—Le Sud-Ouest—Île-des-Soeurs": {
+"rent": 1497,
+"source": "Estimated from the 2021 Census profile for Ville-Marie—Le Sud-Ouest—Île-des-Soeurs ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vaudreuil": {
+"rent": 1173,
+"source": "Estimated from the 2021 Census profile for Vaudreuil ($940 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 23.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Trois-Rivières": {
+"rent": 848,
+"source": "Estimated from the 2021 Census profile for Trois-Rivières ($624 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Trois-Rivières, Quebec ($828) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Thérèse-De Blainville": {
+"rent": 1135,
+"source": "Estimated from the 2021 Census profile for Thérèse-De Blainville ($910 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 22.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Terrebonne": {
+"rent": 1148,
+"source": "Estimated from the 2021 Census profile for Terrebonne ($920 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 20.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Sherbrooke": {
+"rent": 919,
+"source": "Estimated from the 2021 Census profile for Sherbrooke ($685 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sherbrooke, Quebec ($905) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Shefford": {
+"rent": 925,
+"source": "Estimated from the 2021 Census profile for Shefford ($690 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sherbrooke, Quebec ($905) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 19.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint-Maurice—Champlain": {
+"rent": 734,
+"source": "Estimated from the 2021 Census profile for Saint-Maurice—Champlain ($540 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Trois-Rivières, Quebec ($828) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint-Léonard—Saint-Michel": {
+"rent": 1048,
+"source": "Estimated from the 2021 Census profile for Saint-Léonard—Saint-Michel ($840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint-Laurent": {
+"rent": 1210,
+"source": "Estimated from the 2021 Census profile for Saint-Laurent ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint-Jean": {
+"rent": 979,
+"source": "Estimated from the 2021 Census profile for Saint-Jean ($785 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 16.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Carlton Trail—Eagle Creek": {
+"rent": 1144,
+"source": "Estimated from the 2021 Census profile for Carlton Trail—Eagle Creek ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saskatoon, Saskatchewan ($1,281) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Battlefords—Lloydminster—Meadow Lake": {
+"rent": 1123,
+"source": "Estimated from the 2021 Census profile for Battlefords—Lloydminster—Meadow Lake ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Lloydminster, Saskatchewan part, Saskatchewan/Alberta ($1,123) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Winnipeg West": {
+"rent": 1304,
+"source": "Estimated from the 2021 Census profile for Winnipeg West ($1,140 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Winnipeg South Centre": {
+"rent": 1372,
+"source": "Estimated from the 2021 Census profile for Winnipeg South Centre ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Winnipeg South": {
+"rent": 1521,
+"source": "Estimated from the 2021 Census profile for Winnipeg South ($1,330 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Winnipeg North": {
+"rent": 1258,
+"source": "Estimated from the 2021 Census profile for Winnipeg North ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Winnipeg Centre": {
+"rent": 1029,
+"source": "Estimated from the 2021 Census profile for Winnipeg Centre ($900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Selkirk—Interlake—Eastman": {
+"rent": 984,
+"source": "Estimated from the 2021 Census profile for Selkirk—Interlake—Eastman ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 17.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"St. Boniface—St. Vital": {
+"rent": 1281,
+"source": "Estimated from the 2021 Census profile for St. Boniface—St. Vital ($1,120 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Riding Mountain": {
+"rent": 691,
+"source": "Estimated from the 2021 Census profile for Riding Mountain ($670 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Brandon, Manitoba ($810) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Provencher": {
+"rent": 1167,
+"source": "Estimated from the 2021 Census profile for Provencher ($1,020 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 12.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Portage—Lisgar": {
+"rent": 1052,
+"source": "Estimated from the 2021 Census profile for Portage—Lisgar ($920 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kildonan—St. Paul": {
+"rent": 1247,
+"source": "Estimated from the 2021 Census profile for Kildonan—St. Paul ($1,090 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Elmwood—Transcona": {
+"rent": 1338,
+"source": "Estimated from the 2021 Census profile for Elmwood—Transcona ($1,170 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Winnipeg, Manitoba ($1,232) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Churchill—Keewatinook Aski": {
+"rent": 1007,
+"source": "Estimated from the 2021 Census profile for Churchill—Keewatinook Aski ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Thompson, Manitoba ($1,007) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Brandon—Souris": {
+"rent": 1020,
+"source": "Estimated from the 2021 Census profile for Brandon—Souris ($900 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $1020 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Brandon, Manitoba."
+},
+"York South—Weston—Etobicoke": {
+"rent": 1327,
+"source": "Estimated from the 2021 Census profile for York South—Weston—Etobicoke ($1,210 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"York—Durham": {
+"rent": 1417,
+"source": "Estimated from the 2021 Census profile for York—Durham ($1,330 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Barrie, Ontario ($1,583) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"York Centre": {
+"rent": 1568,
+"source": "Estimated from the 2021 Census profile for York Centre ($1,430 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Windsor West": {
+"rent": 1154,
+"source": "Estimated from the 2021 Census profile for Windsor West ($950 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Windsor, Ontario ($1,193) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Windsor—Tecumseh—Lakeshore": {
+"rent": 1202,
+"source": "Estimated from the 2021 Census profile for Windsor—Tecumseh—Lakeshore ($990 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Windsor, Ontario ($1,193) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Willowdale": {
+"rent": 2040,
+"source": "Estimated from the 2021 Census profile for Willowdale ($1,860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Whitby": {
+"rent": 1501,
+"source": "Estimated from the 2021 Census profile for Whitby ($1,410 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Oshawa, Ontario ($1,586) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Wellington—Halton Hills North": {
+"rent": 1596,
+"source": "Estimated from the 2021 Census profile for Wellington—Halton Hills North ($1,350 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Waterloo": {
+"rent": 1655,
+"source": "Estimated from the 2021 Census profile for Waterloo ($1,400 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Vaughan—Woodbridge": {
+"rent": 2259,
+"source": "Estimated from the 2021 Census profile for Vaughan—Woodbridge ($2,060 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"University—Rosedale": {
+"rent": 1996,
+"source": "Estimated from the 2021 Census profile for University—Rosedale ($1,820 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Toronto—St. Paul's": {
+"rent": 1820,
+"source": "Estimated from the 2021 Census profile for Toronto—St. Paul's ($1,660 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Toronto—Danforth": {
+"rent": 1426,
+"source": "Estimated from the 2021 Census profile for Toronto—Danforth ($1,300 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Toronto Centre": {
+"rent": 1645,
+"source": "Estimated from the 2021 Census profile for Toronto Centre ($1,500 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Thunder Bay—Superior North": {
+"rent": 1223,
+"source": "Estimated from the 2021 Census profile for Thunder Bay—Superior North ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Thunder Bay, Ontario ($1,173) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 0.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Thunder Bay—Rainy River": {
+"rent": 1123,
+"source": "Estimated from the 2021 Census profile for Thunder Bay—Rainy River ($890 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Thunder Bay, Ontario ($1,173) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Thornhill": {
+"rent": 2105,
+"source": "Estimated from the 2021 Census profile for Thornhill ($1,920 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Taiaiako'n—Parkdale—High Park": {
+"rent": 1546,
+"source": "Estimated from the 2021 Census profile for Taiaiako'n—Parkdale—High Park ($1,410 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Sudbury East—Manitoulin—Nickel Belt": {
+"rent": 1212,
+"source": "Estimated from the 2021 Census profile for Sudbury East—Manitoulin—Nickel Belt ($950 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Greater Sudbury, Ontario ($1,244) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Sudbury": {
+"rent": 1276,
+"source": "Estimated from the 2021 Census profile for Sudbury ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Greater Sudbury, Ontario ($1,244) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Stormont—Dundas—Glengarry": {
+"rent": 1082,
+"source": "Estimated from the 2021 Census profile for Stormont—Dundas—Glengarry ($890 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Cornwall, Ontario ($1,082) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"St. Catharines": {
+"rent": 1312,
+"source": "Estimated from the 2021 Census profile for St. Catharines ($1,110 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. Catharines-Niagara, Ontario ($1,318) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Spadina—Harbourfront": {
+"rent": 2237,
+"source": "Estimated from the 2021 Census profile for Spadina—Harbourfront ($2,040 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Simcoe North": {
+"rent": 1475,
+"source": "Estimated from the 2021 Census profile for Simcoe North ($1,100 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Orillia, Ontario ($1,475) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Simcoe—Grey": {
+"rent": 1385,
+"source": "Estimated from the 2021 Census profile for Simcoe—Grey ($1,300 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Barrie, Ontario ($1,583) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Scarborough—Woburn": {
+"rent": 1382,
+"source": "Estimated from the 2021 Census profile for Scarborough—Woburn ($1,260 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Scarborough Southwest": {
+"rent": 1316,
+"source": "Estimated from the 2021 Census profile for Scarborough Southwest ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Scarborough North": {
+"rent": 1502,
+"source": "Estimated from the 2021 Census profile for Scarborough North ($1,370 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Scarborough—Guildwood—Rouge Park": {
+"rent": 1327,
+"source": "Estimated from the 2021 Census profile for Scarborough—Guildwood—Rouge Park ($1,210 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 12.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Scarborough Centre—Don Valley East": {
+"rent": 1491,
+"source": "Estimated from the 2021 Census profile for Scarborough Centre—Don Valley East ($1,360 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Scarborough—Agincourt": {
+"rent": 1590,
+"source": "Estimated from the 2021 Census profile for Scarborough—Agincourt ($1,450 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Sault Ste. Marie—Algoma": {
+"rent": 1167,
+"source": "Estimated from the 2021 Census profile for Sault Ste. Marie—Algoma ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sault Ste. Marie, Ontario ($1,167) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Sarnia—Lambton—Bkejwanong": {
+"rent": 1178,
+"source": "Estimated from the 2021 Census profile for Sarnia—Lambton—Bkejwanong ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Windsor, Ontario ($1,193) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 18.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Richmond Hill South": {
+"rent": 1974,
+"source": "Estimated from the 2021 Census profile for Richmond Hill South ($1,800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Prescott—Russell—Cumberland": {
+"rent": 1035,
+"source": "Estimated from the 2021 Census profile for Prescott—Russell—Cumberland ($980 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint-Hyacinthe—Bagot—Acton": {
+"rent": 933,
+"source": "Estimated from the 2021 Census profile for Saint-Hyacinthe—Bagot—Acton ($715 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Drummondville, Quebec ($904) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Rosemont—La Petite-Patrie": {
+"rent": 1060,
+"source": "Estimated from the 2021 Census profile for Rosemont—La Petite-Patrie ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Rivière-du-Nord": {
+"rent": 997,
+"source": "Estimated from the 2021 Census profile for Rivière-du-Nord ($830 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sainte- Sophie, Quebec ($997) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Rivière-des-Mille-Îles": {
+"rent": 1073,
+"source": "Estimated from the 2021 Census profile for Rivière-des-Mille-Îles ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 22.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Rimouski—La Matapédia": {
+"rent": 756,
+"source": "Estimated from the 2021 Census profile for Rimouski—La Matapédia ($608 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Rimouski, Quebec ($756) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Richmond—Arthabaska": {
+"rent": 810,
+"source": "Estimated from the 2021 Census profile for Richmond—Arthabaska ($604 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sherbrooke, Quebec ($905) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Repentigny": {
+"rent": 1073,
+"source": "Estimated from the 2021 Census profile for Repentigny ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 22.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Québec Centre": {
+"rent": 1121,
+"source": "Estimated from the 2021 Census profile for Québec Centre ($810 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Portneuf—Jacques-Cartier": {
+"rent": 1017,
+"source": "Estimated from the 2021 Census profile for Portneuf—Jacques-Cartier ($735 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 13.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Pontiac—Kitigan Zibi": {
+"rent": 1536,
+"source": "Estimated from the 2021 Census profile for Pontiac—Kitigan Zibi ($980 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Quebec part, Ontario/Quebec ($1,362) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Pierrefonds—Dollard": {
+"rent": 1160,
+"source": "Estimated from the 2021 Census profile for Pierrefonds—Dollard ($930 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 15.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Pierre-Boucher—Les Patriotes—Verchères": {
+"rent": 1073,
+"source": "Estimated from the 2021 Census profile for Pierre-Boucher—Les Patriotes—Verchères ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Papineau": {
+"rent": 1011,
+"source": "Estimated from the 2021 Census profile for Papineau ($810 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Outremont": {
+"rent": 1248,
+"source": "Estimated from the 2021 Census profile for Outremont ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Notre-Dame-de-Grâce—Westmount": {
+"rent": 1210,
+"source": "Estimated from the 2021 Census profile for Notre-Dame-de-Grâce—Westmount ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Montmorency—Charlevoix": {
+"rent": 927,
+"source": "Estimated from the 2021 Census profile for Montmorency—Charlevoix ($670 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Montcalm": {
+"rent": 1098,
+"source": "Estimated from the 2021 Census profile for Montcalm ($880 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 23.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mont-Saint-Bruno—L’Acadie": {
+"rent": 1210,
+"source": "Estimated from the 2021 Census profile for Mont-Saint-Bruno—L’Acadie ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mount Royal": {
+"rent": 1210,
+"source": "Estimated from the 2021 Census profile for Mount Royal ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Mirabel": {
+"rent": 1210,
+"source": "Estimated from the 2021 Census profile for Mirabel ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 27 km away. Regional proxy only - no survey is conducted in this riding, treat as low-confidence."
+},
+"Mégantic—L’Érable—Lotbinière": {
+"rent": 663,
+"source": "Estimated from the 2021 Census profile for Mégantic—L’Érable—Lotbinière ($536 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Thetford Mines, Quebec ($663) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Marc-Aurèle-Fortin": {
+"rent": 1173,
+"source": "Estimated from the 2021 Census profile for Marc-Aurèle-Fortin ($940 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 15.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Louis-Saint-Laurent—Akiawenhrahk": {
+"rent": 1218,
+"source": "Estimated from the 2021 Census profile for Louis-Saint-Laurent—Akiawenhrahk ($880 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Louis-Hébert": {
+"rent": 1245,
+"source": "Estimated from the 2021 Census profile for Louis-Hébert ($900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Longueuil—Saint-Hubert": {
+"rent": 1035,
+"source": "Estimated from the 2021 Census profile for Longueuil—Saint-Hubert ($830 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Longueuil—Charles-LeMoyne": {
+"rent": 1048,
+"source": "Estimated from the 2021 Census profile for Longueuil—Charles-LeMoyne ($840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Lévis—Lotbinière": {
+"rent": 1176,
+"source": "Estimated from the 2021 Census profile for Lévis—Lotbinière ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Les Pays-d'en-Haut": {
+"rent": 773,
+"source": "Estimated from the 2021 Census profile for Les Pays-d'en-Haut ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sainte-Adèle, Quebec ($773) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Laval—Les Îles": {
+"rent": 1248,
+"source": "Estimated from the 2021 Census profile for Laval—Les Îles ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 14.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Laurier—Sainte-Marie": {
+"rent": 1235,
+"source": "Estimated from the 2021 Census profile for Laurier—Sainte-Marie ($990 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Laurentides—Labelle": {
+"rent": 598,
+"source": "Estimated from the 2021 Census profile for Laurentides—Labelle ($695 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Mont-Laurier, Quebec ($598) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"LaSalle—Émard—Verdun": {
+"rent": 1073,
+"source": "Estimated from the 2021 Census profile for LaSalle—Émard—Verdun ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Lac-Saint-Louis": {
+"rent": 1360,
+"source": "Estimated from the 2021 Census profile for Lac-Saint-Louis ($1,090 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 18.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Lac-Saint-Jean": {
+"rent": 850,
+"source": "Estimated from the 2021 Census profile for Lac-Saint-Jean ($548 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $850 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Saint-Félicien, Quebec."
+},
+"La Prairie—Atateken": {
+"rent": 1210,
+"source": "Estimated from the 2021 Census profile for La Prairie—Atateken ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"La Pointe-de-l'Île": {
+"rent": 986,
+"source": "Estimated from the 2021 Census profile for La Pointe-de-l'Île ($790 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Jonquière": {
+"rent": 742,
+"source": "Estimated from the 2021 Census profile for Jonquière ($604 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saguenay, Quebec ($762) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Joliette—Manawan": {
+"rent": 796,
+"source": "Estimated from the 2021 Census profile for Joliette—Manawan ($755 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Joliette, Quebec ($796) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Hull—Aylmer": {
+"rent": 1395,
+"source": "Estimated from the 2021 Census profile for Hull—Aylmer ($890 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Quebec part, Ontario/Quebec ($1,362) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Honoré-Mercier": {
+"rent": 1048,
+"source": "Estimated from the 2021 Census profile for Honoré-Mercier ($840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 8.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Hochelaga—Rosemont-Est": {
+"rent": 1023,
+"source": "Estimated from the 2021 Census profile for Hochelaga—Rosemont-Est ($820 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Gatineau": {
+"rent": 1333,
+"source": "Estimated from the 2021 Census profile for Gatineau ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Quebec part, Ontario/Quebec ($1,362) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Gaspésie—Les Îles-de-la-Madeleine—Listuguj": {
+"rent": 780,
+"source": "Estimated from the 2021 Census profile for Gaspésie—Les Îles-de-la-Madeleine—Listuguj ($576 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Les Îles-de-la-Madeleine, Quebec ($780) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Drummond": {
+"rent": 875,
+"source": "Estimated from the 2021 Census profile for Drummond ($670 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Drummondville, Quebec ($904) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Dorval—Lachine—LaSalle": {
+"rent": 1060,
+"source": "Estimated from the 2021 Census profile for Dorval—Lachine—LaSalle ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Côte-Nord—Kawawachikamach—Nitassinan": {
+"rent": 819,
+"source": "Estimated from the 2021 Census profile for Côte-Nord—Kawawachikamach—Nitassinan ($620 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sept-Îles, Quebec ($819) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Côte-du-Sud—Rivière-du-Loup—Kataskomiq—Témiscouata": {
+"rent": 693,
+"source": "Estimated from the 2021 Census profile for Côte-du-Sud—Rivière-du-Loup—Kataskomiq—Témiscouata ($560 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Rivière-du-Loup, Quebec ($693) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Compton—Stanstead": {
+"rent": 932,
+"source": "Estimated from the 2021 Census profile for Compton—Stanstead ($695 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sherbrooke, Quebec ($905) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Chicoutimi—Le Fjord": {
+"rent": 782,
+"source": "Estimated from the 2021 Census profile for Chicoutimi—Le Fjord ($636 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saguenay, Quebec ($762) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Châteauguay—Les Jardins-de-Napierville": {
+"rent": 1048,
+"source": "Estimated from the 2021 Census profile for Châteauguay—Les Jardins-de-Napierville ($840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 18.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Charlesbourg—Haute-Saint-Charles": {
+"rent": 1149,
+"source": "Estimated from the 2021 Census profile for Charlesbourg—Haute-Saint-Charles ($830 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 4.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Brossard—Saint-Lambert": {
+"rent": 1347,
+"source": "Estimated from the 2021 Census profile for Brossard—Saint-Lambert ($1,080 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Brome—Missisquoi": {
+"rent": 939,
+"source": "Estimated from the 2021 Census profile for Brome—Missisquoi ($700 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Sherbrooke, Quebec ($905) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 16.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Bourassa": {
+"rent": 979,
+"source": "Estimated from the 2021 Census profile for Bourassa ($785 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 9.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Berthier—Maskinongé": {
+"rent": 897,
+"source": "Estimated from the 2021 Census profile for Berthier—Maskinongé ($660 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Trois-Rivières, Quebec ($828) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Beloeil—Chambly": {
+"rent": 1098,
+"source": "Estimated from the 2021 Census profile for Beloeil—Chambly ($880 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 19.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Bellechasse—Les Etchemins—Lévis": {
+"rent": 1045,
+"source": "Estimated from the 2021 Census profile for Bellechasse—Les Etchemins—Lévis ($755 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Bécancour—Nicolet—Saurel—Alnôbak": {
+"rent": 832,
+"source": "Estimated from the 2021 Census profile for Bécancour—Nicolet—Saurel—Alnôbak ($612 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Trois-Rivières, Quebec ($828) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Beauport—Limoilou": {
+"rent": 1065,
+"source": "Estimated from the 2021 Census profile for Beauport—Limoilou ($770 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Québec, Quebec ($1,107) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Beauharnois—Salaberry—Soulanges—Huntingdon": {
+"rent": 773,
+"source": "Estimated from the 2021 Census profile for Beauharnois—Salaberry—Soulanges—Huntingdon ($765 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Salaberry-de-Valleyfield, Quebec ($773) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Beauce": {
+"rent": 920,
+"source": "Estimated from the 2021 Census profile for Beauce ($604 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $920 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Saint-Georges, Quebec."
+},
+"Argenteuil—La Petite-Nation": {
+"rent": 1184,
+"source": "Estimated from the 2021 Census profile for Argenteuil—La Petite-Nation ($755 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Quebec part, Ontario/Quebec ($1,362) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Alfred-Pellan": {
+"rent": 1073,
+"source": "Estimated from the 2021 Census profile for Alfred-Pellan ($860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.9 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Don Valley West": {
+"rent": 1623,
+"source": "Estimated from the 2021 Census profile for Don Valley West ($1,480 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Don Valley North": {
+"rent": 1930,
+"source": "Estimated from the 2021 Census profile for Don Valley North ($1,760 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Davenport": {
+"rent": 1601,
+"source": "Estimated from the 2021 Census profile for Davenport ($1,460 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Toronto, Ontario ($1,761) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Chatham-Kent—Leamington": {
+"rent": 1203,
+"source": "Estimated from the 2021 Census profile for Chatham-Kent—Leamington ($900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Chatham-Kent, Ontario ($1,203) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Carleton": {
+"rent": 1965,
+"source": "Estimated from the 2021 Census profile for Carleton ($1,860 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Ottawa-Gatineau, Ontario part, Ontario/Quebec ($1,593) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Cambridge": {
+"rent": 1407,
+"source": "Estimated from the 2021 Census profile for Cambridge ($1,190 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kitchener-Cambridge-Waterloo, Ontario ($1,546) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Burlington North—Milton West": {
+"rent": 2011,
+"source": "Estimated from the 2021 Census profile for Burlington North—Milton West ($2,120 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Hamilton, Ontario ($1,402) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 12.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Ahuntsic-Cartierville": {
+"rent": 998,
+"source": "Estimated from the 2021 Census profile for Ahuntsic-Cartierville ($800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Montréal, Quebec ($1,131) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 7.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Abitibi—Témiscamingue": {
+"rent": 930,
+"source": "Estimated from the 2021 Census profile for Abitibi—Témiscamingue ($655 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Amos, Quebec ($930) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Abitibi—Baie-James—Nunavik—Eeyou": {
+"rent": 793,
+"source": "Estimated from the 2021 Census profile for Abitibi—Baie-James—Nunavik—Eeyou ($645 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Val-d'Or, Quebec ($793) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Tobique—Mactaquac": {
+"rent": 1053,
+"source": "Estimated from the 2021 Census profile for Tobique—Mactaquac ($700 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Fredericton, New Brunswick ($1,208) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.3 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint John—St. Croix": {
+"rent": 957,
+"source": "Estimated from the 2021 Census profile for Saint John—St. Croix ($770 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Saint John, New Brunswick ($1,001) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.4 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Saint John—Kennebecasis": {
+"rent": 1150,
+"source": "Estimated from the 2021 Census profile for Saint John—Kennebecasis ($840 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $1150 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Saint John, New Brunswick."
+},
+"Moncton—Dieppe": {
+"rent": 1276,
+"source": "Estimated from the 2021 Census profile for Moncton—Dieppe ($950 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Moncton, New Brunswick ($1,164) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Miramichi—Grand Lake": {
+"rent": 950,
+"source": "Estimated from the 2021 Census profile for Miramichi—Grand Lake ($700 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $950 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Fredericton, New Brunswick."
+},
+"Madawaska—Restigouche": {
+"rent": 851,
+"source": "Estimated from the 2021 Census profile for Madawaska—Restigouche ($624 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Campbellton, New Brunswick part, New Brunswick/Quebec ($851) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Fundy Royal": {
+"rent": 1142,
+"source": "Estimated from the 2021 Census profile for Fundy Royal ($850 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Moncton, New Brunswick ($1,164) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.6 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Fredericton—Oromocto": {
+"rent": 1519,
+"source": "Estimated from the 2021 Census profile for Fredericton—Oromocto ($1,010 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Fredericton, New Brunswick ($1,208) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Beauséjour": {
+"rent": 1074,
+"source": "Estimated from the 2021 Census profile for Beauséjour ($800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Moncton, New Brunswick ($1,164) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 5.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Acadie—Bathurst": {
+"rent": 776,
+"source": "Estimated from the 2021 Census profile for Acadie—Bathurst ($624 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Bathurst, New Brunswick ($776) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Sydney—Glace Bay": {
+"rent": 862,
+"source": "Estimated from the 2021 Census profile for Sydney—Glace Bay ($800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Cape Breton, Nova Scotia ($840) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"South Shore—St. Margarets": {
+"rent": 1191,
+"source": "Estimated from the 2021 Census profile for South Shore—St. Margarets ($830 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Halifax, Nova Scotia ($1,539) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 21.5 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Sackville—Bedford—Preston": {
+"rent": 1980,
+"source": "Estimated from the 2021 Census profile for Sackville—Bedford—Preston ($1,380 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Halifax, Nova Scotia ($1,539) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 3.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Kings—Hants": {
+"rent": 1139,
+"source": "Estimated from the 2021 Census profile for Kings—Hants ($900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kentville, Nova Scotia ($1,044) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Halifax West": {
+"rent": 1722,
+"source": "Estimated from the 2021 Census profile for Halifax West ($1,200 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Halifax, Nova Scotia ($1,539) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 2.0 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Halifax": {
+"rent": 1750,
+"source": "Estimated from the 2021 Census profile for Halifax ($1,240 median tenant shelter cost) re-based to the representative CMHC market-rate asking rent baseline of $1750 (Statistics Canada table 34-10-0133-01); nearest surveyed centre is Halifax, Nova Scotia."
+},
+"Dartmouth—Cole Harbour": {
+"rent": 1449,
+"source": "Estimated from the 2021 Census profile for Dartmouth—Cole Harbour ($1,010 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Halifax, Nova Scotia ($1,539) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Cumberland—Colchester": {
+"rent": 1011,
+"source": "Estimated from the 2021 Census profile for Cumberland—Colchester ($820 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Truro, Nova Scotia ($1,011) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Central Nova": {
+"rent": 1112,
+"source": "Estimated from the 2021 Census profile for Central Nova ($775 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Halifax, Nova Scotia ($1,539) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 10.1 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Cape Breton—Canso—Antigonish": {
+"rent": 818,
+"source": "Estimated from the 2021 Census profile for Cape Breton—Canso—Antigonish ($760 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Cape Breton, Nova Scotia ($840) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Acadie—Annapolis": {
+"rent": 949,
+"source": "Estimated from the 2021 Census profile for Acadie—Annapolis ($750 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Kentville, Nova Scotia ($1,044) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 23.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Malpeque": {
+"rent": 1091,
+"source": "Estimated from the 2021 Census profile for Malpeque ($1,000 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Charlottetown, Prince Edward Island ($1,066) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Egmont": {
+"rent": 963,
+"source": "Estimated from the 2021 Census profile for Egmont ($840 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Summerside, Prince Edward Island ($963) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Charlottetown": {
+"rent": 1070,
+"source": "Estimated from the 2021 Census profile for Charlottetown ($980 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Charlottetown, Prince Edward Island ($1,066) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Cardigan": {
+"rent": 1037,
+"source": "Estimated from the 2021 Census profile for Cardigan ($950 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Charlottetown, Prince Edward Island ($1,066) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Terra Nova—The Peninsulas": {
+"rent": 816,
+"source": "Estimated from the 2021 Census profile for Terra Nova—The Peninsulas ($740 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Gander, Newfoundland and Labrador ($849) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 22.8 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"St. John's East": {
+"rent": 1110,
+"source": "Estimated from the 2021 Census profile for St. John's East ($970 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. John's, Newfoundland and Labrador ($1,064) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 6.2 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Long Range Mountains": {
+"rent": 776,
+"source": "Estimated from the 2021 Census profile for Long Range Mountains ($780 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Corner Brook, Newfoundland and Labrador ($776) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Labrador": {
+"rent": null,
+"source": "No CMHC rental survey covers this riding; the nearest surveyed centre (Corner Brook, Newfoundland and Labrador) is 268 km away in a different housing market, so no one-bedroom figure is shown."
+},
+"Central Newfoundland": {
+"rent": 882,
+"source": "Estimated from the 2021 Census profile for Central Newfoundland ($800 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for Gander, Newfoundland and Labrador ($849) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+},
+"Cape Spear": {
+"rent": 1053,
+"source": "Estimated from the 2021 Census profile for Cape Spear ($920 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. John's, Newfoundland and Labrador ($1,064) (Statistics Canada table 34-10-0133-01); nearest surveyed centre, 1.7 km away. Applied as a metro-area proxy, not measured within this riding."
+},
+"Avalon": {
+"rent": 1030,
+"source": "Estimated from the 2021 Census profile for Avalon ($900 median tenant shelter cost) re-based to the CMHC Rental Market Survey 2025 average 1-bedroom rent for St. John's, Newfoundland and Labrador ($1,064) (Statistics Canada table 34-10-0133-01); this riding contains the surveyed centre."
+}
+}

@@ -223,7 +223,7 @@ export default function CityPageContent({
 
   const rentBurden = (rent != null && salary != null && salary > 0)
     ? `${Math.round((rent / salary) * 100)}%`
-    : '-'
+    : 'Pending'
 
   const sym = SYMBOLS[currency] ?? currency
   const exchangeRateMonth = new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
@@ -320,7 +320,7 @@ export default function CityPageContent({
             />
             <PriceCard
               label="Disposable Income"
-              value={convert(disposable, currency, rates)}
+              value={disposable != null ? convert(disposable, currency, rates) : 'Pending'}
               sub="Remaining monthly take-home after tax & rent"
             />
             <PriceCard
@@ -351,7 +351,7 @@ export default function CityPageContent({
                       <span>
                         {city.rent_data_source}.{' '}
                         <a href="/about" style={{ color: 'var(--color-text-2)', textDecoration: 'underline', fontWeight: 500 }}>
-                          Learn about our hybrid methodology
+                          Learn how rent is sourced
                         </a>
                       </span>
                     ) : undefined

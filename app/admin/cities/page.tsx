@@ -419,13 +419,13 @@ export default function AdminCitiesPage() {
                     <td style={tdStyle}>
                       <strong>{row.flag ? `${row.flag} ` : ''}{row.city}</strong>
                     </td>
-                    <td style={tdStyle}>{row.country ?? '—'}</td>
-                    <td style={tdStyle}>{row.region ?? '—'}</td>
-                    <td style={tdStyle}>{row.population ?? '—'}</td>
-                    <td style={tdStyle}>{row.price_cad !== null ? `CA$${Number(row.price_cad).toFixed(2)}` : '—'}</td>
-                    <td style={tdStyle}>{row.data_quality_label ?? '—'}</td>
-                    <td style={tdStyle}>{row.baseline_entry_count ?? '—'}</td>
-                    <td style={tdStyle}>{row.market_entry_count ?? '—'}</td>
+                    <td style={tdStyle}>{row.country ?? '-'}</td>
+                    <td style={tdStyle}>{row.region ?? '-'}</td>
+                    <td style={tdStyle}>{row.population ?? '-'}</td>
+                    <td style={tdStyle}>{row.price_cad !== null ? `CA$${Number(row.price_cad).toFixed(2)}` : '-'}</td>
+                    <td style={tdStyle}>{row.data_quality_label ?? '-'}</td>
+                    <td style={tdStyle}>{row.baseline_entry_count ?? '-'}</td>
+                    <td style={tdStyle}>{row.market_entry_count ?? '-'}</td>
                     <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>
                       <button onClick={() => startEdit(row)} style={{ ...secondaryButtonStyle, padding: '0.35rem 0.65rem', fontSize: 12 }}>
                         Edit

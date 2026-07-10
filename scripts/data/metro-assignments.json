@@ -120,9 +120,9 @@
   "csi": 73.95,
   "csi_distance_km": 10.1,
   "csi_geo": "Halifax, Nova Scotia",
-  "rent_1br_cad": 842,
-  "rent_distance_km": 0.0,
-  "rent_metro": "New Glasgow, Nova Scotia",
+  "rent_1br_cad": 1539,
+  "rent_distance_km": 10.1,
+  "rent_metro": "Halifax, Nova Scotia",
   "safety_index": 63
  },
  "12004": {
@@ -183,9 +183,9 @@
   "csi": 73.95,
   "csi_distance_km": 21.5,
   "csi_geo": "Halifax, Nova Scotia",
-  "rent_1br_cad": 1044,
-  "rent_distance_km": 20.5,
-  "rent_metro": "Kentville, Nova Scotia",
+  "rent_1br_cad": 1539,
+  "rent_distance_km": 21.5,
+  "rent_metro": "Halifax, Nova Scotia",
   "safety_index": 63
  },
  "12011": {
@@ -246,9 +246,9 @@
   "csi": 73.61,
   "csi_distance_km": 7.5,
   "csi_geo": "Fredericton, New Brunswick",
-  "rent_1br_cad": 662,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Miramichi, New Brunswick",
+  "rent_1br_cad": 1208,
+  "rent_distance_km": 7.5,
+  "rent_metro": "Fredericton, New Brunswick",
   "safety_index": 63
  },
  "13007": {
@@ -327,9 +327,9 @@
   "csi": 61.09,
   "csi_distance_km": 3.9,
   "csi_geo": "Ottawa-Gatineau, Quebec part",
-  "rent_1br_cad": 806,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Lachute, Quebec",
+  "rent_1br_cad": 1362,
+  "rent_distance_km": 3.9,
+  "rent_metro": "Ottawa-Gatineau, Quebec part, Ontario/Quebec",
   "safety_index": 69
  },
  "24006": {
@@ -363,9 +363,9 @@
   "csi": 61.2,
   "csi_distance_km": 1.7,
   "csi_geo": "Trois-Rivières, Quebec",
-  "rent_1br_cad": 677,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Sorel-Tracy, Quebec",
+  "rent_1br_cad": 828,
+  "rent_distance_km": 1.7,
+  "rent_metro": "Trois-Rivières, Quebec",
   "safety_index": 69
  },
  "24010": {
@@ -381,18 +381,18 @@
   "csi": 61.67,
   "csi_distance_km": 19.3,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 964,
-  "rent_distance_km": 16.5,
-  "rent_metro": "Saint-Hyacinthe, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 19.3,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24012": {
   "csi": 61.2,
   "csi_distance_km": 7.8,
   "csi_geo": "Trois-Rivières, Quebec",
-  "rent_1br_cad": 677,
-  "rent_distance_km": 1.5,
-  "rent_metro": "Sorel-Tracy, Quebec",
+  "rent_1br_cad": 828,
+  "rent_distance_km": 7.8,
+  "rent_metro": "Trois-Rivières, Quebec",
   "safety_index": 69
  },
  "24013": {
@@ -408,9 +408,9 @@
   "csi": 53.9,
   "csi_distance_km": 16.5,
   "csi_geo": "Sherbrooke, Quebec",
-  "rent_1br_cad": 796,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Cowansville, Quebec",
+  "rent_1br_cad": 905,
+  "rent_distance_km": 16.5,
+  "rent_metro": "Sherbrooke, Quebec",
   "safety_index": 73
  },
  "24015": {
@@ -435,9 +435,9 @@
   "csi": 61.67,
   "csi_distance_km": 18.5,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 773,
-  "rent_distance_km": 17.5,
-  "rent_metro": "Salaberry-de-Valleyfield, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 18.5,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24018": {
@@ -462,18 +462,18 @@
   "csi": 55.32,
   "csi_distance_km": 32.5,
   "csi_geo": "Québec, Quebec",
-  "rent_1br_cad": 654,
+  "rent_1br_cad": 693,
   "rent_distance_km": 0.0,
-  "rent_metro": "Montmagny, Quebec",
+  "rent_metro": "Rivière-du-Loup, Quebec",
   "safety_index": 72
  },
  "24021": {
   "csi": 55.11,
   "csi_distance_km": 75.2,
   "csi_geo": "Saguenay, Quebec",
-  "rent_1br_cad": 728,
+  "rent_1br_cad": 819,
   "rent_distance_km": 0.0,
-  "rent_metro": "Baie-Comeau, Quebec",
+  "rent_metro": "Sept-Îles, Quebec",
   "safety_index": 72
  },
  "24022": {
@@ -498,9 +498,9 @@
   "csi": 55.11,
   "csi_distance_km": 213.9,
   "csi_geo": "Saguenay, Quebec",
-  "rent_1br_cad": 688,
+  "rent_1br_cad": 780,
   "rent_distance_km": 0.0,
-  "rent_metro": "Gaspé, Quebec",
+  "rent_metro": "Les Îles-de-la-Madeleine, Quebec",
   "safety_index": 72
  },
  "24025": {
@@ -552,9 +552,9 @@
   "csi": 55.11,
   "csi_distance_km": 4.6,
   "csi_geo": "Saguenay, Quebec",
-  "rent_1br_cad": 583,
-  "rent_distance_km": 2.8,
-  "rent_metro": "Alma, Quebec",
+  "rent_1br_cad": 762,
+  "rent_distance_km": 4.6,
+  "rent_metro": "Saguenay, Quebec",
   "safety_index": 72
  },
  "24031": {
@@ -579,9 +579,9 @@
   "csi": 55.11,
   "csi_distance_km": 36.6,
   "csi_geo": "Saguenay, Quebec",
-  "rent_1br_cad": 583,
+  "rent_1br_cad": 542,
   "rent_distance_km": 0.0,
-  "rent_metro": "Alma, Quebec",
+  "rent_metro": "Saint-Félicien, Quebec",
   "safety_index": 72
  },
  "24034": {
@@ -633,9 +633,9 @@
   "csi": 61.67,
   "csi_distance_km": 46.3,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 747,
+  "rent_1br_cad": 773,
   "rent_distance_km": 0.0,
-  "rent_metro": "Prévost, Quebec",
+  "rent_metro": "Sainte-Adèle, Quebec",
   "safety_index": 69
  },
  "24040": {
@@ -705,9 +705,9 @@
   "csi": 61.67,
   "csi_distance_km": 27.1,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 997,
-  "rent_distance_km": 4.8,
-  "rent_metro": "Sainte- Sophie, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 27.1,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24048": {
@@ -732,9 +732,9 @@
   "csi": 61.67,
   "csi_distance_km": 23.2,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 743,
-  "rent_distance_km": 1.1,
-  "rent_metro": "Rawdon, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 23.2,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24051": {
@@ -777,9 +777,9 @@
   "csi": 61.67,
   "csi_distance_km": 9.8,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 677,
-  "rent_distance_km": 8.7,
-  "rent_metro": "Sorel-Tracy, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 9.8,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24056": {
@@ -822,18 +822,18 @@
   "csi": 61.67,
   "csi_distance_km": 22.1,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 796,
-  "rent_distance_km": 12.7,
-  "rent_metro": "Joliette, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 22.1,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24061": {
   "csi": 53.9,
   "csi_distance_km": 7.8,
   "csi_geo": "Sherbrooke, Quebec",
-  "rent_1br_cad": 817,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Victoriaville, Quebec",
+  "rent_1br_cad": 905,
+  "rent_distance_km": 7.8,
+  "rent_metro": "Sherbrooke, Quebec",
   "safety_index": 73
  },
  "24062": {
@@ -849,9 +849,9 @@
   "csi": 61.67,
   "csi_distance_km": 22.2,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 997,
-  "rent_distance_km": 18.7,
-  "rent_metro": "Sainte- Sophie, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 22.2,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24064": {
@@ -876,9 +876,9 @@
   "csi": 69.0,
   "csi_distance_km": 13.4,
   "csi_geo": "Drummondville, Quebec",
-  "rent_1br_cad": 964,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Saint-Hyacinthe, Quebec",
+  "rent_1br_cad": 904,
+  "rent_distance_km": 13.4,
+  "rent_metro": "Drummondville, Quebec",
   "safety_index": 66
  },
  "24067": {
@@ -912,18 +912,18 @@
   "csi": 61.2,
   "csi_distance_km": 3.6,
   "csi_geo": "Trois-Rivières, Quebec",
-  "rent_1br_cad": 523,
-  "rent_distance_km": 0.0,
-  "rent_metro": "La Tuque, Quebec",
+  "rent_1br_cad": 828,
+  "rent_distance_km": 3.6,
+  "rent_metro": "Trois-Rivières, Quebec",
   "safety_index": 69
  },
  "24071": {
   "csi": 53.9,
   "csi_distance_km": 19.9,
   "csi_geo": "Sherbrooke, Quebec",
-  "rent_1br_cad": 884,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Granby, Quebec",
+  "rent_1br_cad": 905,
+  "rent_distance_km": 19.9,
+  "rent_metro": "Sherbrooke, Quebec",
   "safety_index": 73
  },
  "24072": {
@@ -939,18 +939,18 @@
   "csi": 61.67,
   "csi_distance_km": 20.4,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 997,
-  "rent_distance_km": 5.9,
-  "rent_metro": "Sainte- Sophie, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 20.4,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24074": {
   "csi": 61.67,
   "csi_distance_km": 22.8,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 997,
-  "rent_distance_km": 10.9,
-  "rent_metro": "Sainte- Sophie, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 22.8,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24075": {
@@ -966,9 +966,9 @@
   "csi": 61.67,
   "csi_distance_km": 23.1,
   "csi_geo": "Montréal, Quebec",
-  "rent_1br_cad": 806,
-  "rent_distance_km": 10.5,
-  "rent_metro": "Lachute, Quebec",
+  "rent_1br_cad": 1131,
+  "rent_distance_km": 23.1,
+  "rent_metro": "Montréal, Quebec",
   "safety_index": 69
  },
  "24077": {
@@ -1002,9 +1002,9 @@
   "csi": 53.81,
   "csi_distance_km": 46.9,
   "csi_geo": "Ottawa-Gatineau, Ontario part",
-  "rent_1br_cad": 953,
+  "rent_1br_cad": 1079,
   "rent_distance_km": 0.0,
-  "rent_metro": "Pembroke, Ontario",
+  "rent_metro": "Petawawa, Ontario",
   "safety_index": 73
  },
  "35003": {
@@ -1035,13 +1035,13 @@
   "safety_index": 76
  },
  "35006": {
-  "csi": 64.5,
-  "csi_distance_km": 5.7,
-  "csi_geo": "Belleville-Quinte West, Ontario",
-  "rent_1br_cad": 1337,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Prince Edward, Ontario",
-  "safety_index": 68
+  "csi": 59.26,
+  "csi_distance_km": 20.0,
+  "csi_geo": "Kingston, Ontario",
+  "rent_1br_cad": 1503,
+  "rent_distance_km": 20.0,
+  "rent_metro": "Kingston, Ontario",
+  "safety_index": 70
  },
  "35007": {
   "csi": 59.35,
@@ -1107,30 +1107,30 @@
   "safety_index": 70
  },
  "35014": {
-  "csi": 56.0,
-  "csi_distance_km": 31.5,
-  "csi_geo": "Guelph, Ontario",
-  "rent_1br_cad": 1627,
-  "rent_distance_km": 31.5,
-  "rent_metro": "Guelph, Ontario",
-  "safety_index": 72
+  "csi": 59.35,
+  "csi_distance_km": 33.5,
+  "csi_geo": "Toronto, Ontario",
+  "rent_1br_cad": 1761,
+  "rent_distance_km": 33.5,
+  "rent_metro": "Toronto, Ontario",
+  "safety_index": 70
  },
  "35015": {
-  "csi": 70.71,
-  "csi_distance_km": 0.0,
-  "csi_geo": "Brantford, Ontario",
-  "rent_1br_cad": 1448,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Brantford, Ontario",
-  "safety_index": 65
+  "csi": 58.28,
+  "csi_distance_km": 17.1,
+  "csi_geo": "Hamilton, Ontario",
+  "rent_1br_cad": 1402,
+  "rent_distance_km": 17.1,
+  "rent_metro": "Hamilton, Ontario",
+  "safety_index": 71
  },
  "35016": {
   "csi": 48.1,
   "csi_distance_km": 45.8,
   "csi_geo": "Barrie, Ontario",
-  "rent_1br_cad": 919,
+  "rent_1br_cad": 1130,
   "rent_distance_km": 0.0,
-  "rent_metro": "Meaford, Ontario",
+  "rent_metro": "Owen Sound, Ontario",
   "safety_index": 76
  },
  "35017": {
@@ -1143,13 +1143,13 @@
   "safety_index": 71
  },
  "35018": {
-  "csi": 56.0,
-  "csi_distance_km": 6.2,
-  "csi_geo": "Guelph, Ontario",
-  "rent_1br_cad": 1627,
-  "rent_distance_km": 6.2,
-  "rent_metro": "Guelph, Ontario",
-  "safety_index": 72
+  "csi": 58.28,
+  "csi_distance_km": 12.2,
+  "csi_geo": "Hamilton, Ontario",
+  "rent_1br_cad": 1402,
+  "rent_distance_km": 12.2,
+  "rent_metro": "Hamilton, Ontario",
+  "safety_index": 71
  },
  "35019": {
   "csi": 72.68,
@@ -1206,13 +1206,13 @@
   "safety_index": 70
  },
  "35025": {
-  "csi": 56.0,
-  "csi_distance_km": 25.2,
-  "csi_geo": "Guelph, Ontario",
-  "rent_1br_cad": 1298,
-  "rent_distance_km": 10.0,
-  "rent_metro": "Centre Wellington, Ontario",
-  "safety_index": 72
+  "csi": 59.35,
+  "csi_distance_km": 28.4,
+  "csi_geo": "Toronto, Ontario",
+  "rent_1br_cad": 1761,
+  "rent_distance_km": 28.4,
+  "rent_metro": "Toronto, Ontario",
+  "safety_index": 70
  },
  "35026": {
   "csi": 59.35,
@@ -1269,39 +1269,39 @@
   "safety_index": 70
  },
  "35032": {
-  "csi": 70.71,
-  "csi_distance_km": 4.3,
-  "csi_geo": "Brantford, Ontario",
-  "rent_1br_cad": 1030,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Brock, Ontario",
-  "safety_index": 65
+  "csi": 58.28,
+  "csi_distance_km": 6.6,
+  "csi_geo": "Hamilton, Ontario",
+  "rent_1br_cad": 1402,
+  "rent_distance_km": 6.6,
+  "rent_metro": "Hamilton, Ontario",
+  "safety_index": 71
  },
  "35033": {
-  "csi": 56.0,
-  "csi_distance_km": 0.0,
-  "csi_geo": "Guelph, Ontario",
-  "rent_1br_cad": 1627,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Guelph, Ontario",
-  "safety_index": 72
+  "csi": 72.68,
+  "csi_distance_km": 17.4,
+  "csi_geo": "Kitchener-Cambridge-Waterloo, Ontario",
+  "rent_1br_cad": 1546,
+  "rent_distance_km": 17.4,
+  "rent_metro": "Kitchener-Cambridge-Waterloo, Ontario",
+  "safety_index": 64
  },
  "35034": {
-  "csi": 70.71,
-  "csi_distance_km": 13.9,
-  "csi_geo": "Brantford, Ontario",
-  "rent_1br_cad": 1132,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Haldimand County, Ontario",
-  "safety_index": 65
+  "csi": 58.28,
+  "csi_distance_km": 17.1,
+  "csi_geo": "Hamilton, Ontario",
+  "rent_1br_cad": 1402,
+  "rent_distance_km": 17.1,
+  "rent_metro": "Hamilton, Ontario",
+  "safety_index": 71
  },
  "35035": {
   "csi": 61.3,
   "csi_distance_km": 3.8,
   "csi_geo": "Peterborough, Ontario",
-  "rent_1br_cad": 1311,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Kawartha Lakes, Ontario",
+  "rent_1br_cad": 1232,
+  "rent_distance_km": 3.8,
+  "rent_metro": "Peterborough, Ontario",
   "safety_index": 69
  },
  "35036": {
@@ -1335,19 +1335,19 @@
   "csi": 58.28,
   "csi_distance_km": 3.0,
   "csi_geo": "Hamilton, Ontario",
-  "rent_1br_cad": 1030,
-  "rent_distance_km": 2.9,
-  "rent_metro": "Brock, Ontario",
+  "rent_1br_cad": 1402,
+  "rent_distance_km": 3.0,
+  "rent_metro": "Hamilton, Ontario",
   "safety_index": 71
  },
  "35040": {
-  "csi": 64.5,
-  "csi_distance_km": 0.0,
-  "csi_geo": "Belleville-Quinte West, Ontario",
-  "rent_1br_cad": 1066,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Greater Napanee, Ontario",
-  "safety_index": 68
+  "csi": 59.26,
+  "csi_distance_km": 9.1,
+  "csi_geo": "Kingston, Ontario",
+  "rent_1br_cad": 1503,
+  "rent_distance_km": 9.1,
+  "rent_metro": "Kingston, Ontario",
+  "safety_index": 70
  },
  "35041": {
   "csi": 59.35,
@@ -1515,19 +1515,19 @@
   "csi": 61.22,
   "csi_distance_km": 7.8,
   "csi_geo": "London, Ontario",
-  "rent_1br_cad": 1124,
-  "rent_distance_km": 6.0,
-  "rent_metro": "Ingersoll, Ontario",
+  "rent_1br_cad": 1371,
+  "rent_distance_km": 7.8,
+  "rent_metro": "London, Ontario",
   "safety_index": 69
  },
  "35060": {
-  "csi": 56.0,
-  "csi_distance_km": 19.3,
-  "csi_geo": "Guelph, Ontario",
-  "rent_1br_cad": 1627,
-  "rent_distance_km": 19.3,
-  "rent_metro": "Guelph, Ontario",
-  "safety_index": 72
+  "csi": 58.28,
+  "csi_distance_km": 24.8,
+  "csi_geo": "Hamilton, Ontario",
+  "rent_1br_cad": 1402,
+  "rent_distance_km": 24.8,
+  "rent_metro": "Hamilton, Ontario",
+  "safety_index": 71
  },
  "35061": {
   "csi": 59.35,
@@ -1629,9 +1629,9 @@
   "safety_index": 71
  },
  "35072": {
-  "csi": 58.97,
-  "csi_distance_km": 1.0,
-  "csi_geo": "St.Catharines-Niagara, Ontario",
+  "csi": 58.28,
+  "csi_distance_km": 14.6,
+  "csi_geo": "Hamilton, Ontario",
   "rent_1br_cad": 1318,
   "rent_distance_km": 1.0,
   "rent_metro": "St. Catharines-Niagara, Ontario",
@@ -1650,9 +1650,9 @@
   "csi": 61.3,
   "csi_distance_km": 18.8,
   "csi_geo": "Peterborough, Ontario",
-  "rent_1br_cad": 1320,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Cobourg, Ontario",
+  "rent_1br_cad": 1586,
+  "rent_distance_km": 18.1,
+  "rent_metro": "Oshawa, Ontario",
   "safety_index": 69
  },
  "35075": {
@@ -1731,18 +1731,18 @@
   "csi": 72.68,
   "csi_distance_km": 8.2,
   "csi_geo": "Kitchener-Cambridge-Waterloo, Ontario",
-  "rent_1br_cad": 1124,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Ingersoll, Ontario",
+  "rent_1br_cad": 1546,
+  "rent_distance_km": 8.2,
+  "rent_metro": "Kitchener-Cambridge-Waterloo, Ontario",
   "safety_index": 64
  },
  "35084": {
   "csi": 48.1,
   "csi_distance_km": 44.7,
   "csi_geo": "Barrie, Ontario",
-  "rent_1br_cad": 1165,
+  "rent_1br_cad": 1514,
   "rent_distance_km": 0.0,
-  "rent_metro": "Bracebridge, Ontario",
+  "rent_metro": "Huntsville, Ontario",
   "safety_index": 76
  },
  "35085": {
@@ -1776,9 +1776,9 @@
   "csi": 53.81,
   "csi_distance_km": 6.9,
   "csi_geo": "Ottawa-Gatineau, Ontario part",
-  "rent_1br_cad": 764,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Hawkesbury, Ontario part, Ontario/Quebec",
+  "rent_1br_cad": 1593,
+  "rent_distance_km": 4.8,
+  "rent_metro": "Ottawa-Gatineau, Ontario part, Ontario/Quebec",
   "safety_index": 73
  },
  "35089": {
@@ -1794,18 +1794,18 @@
   "csi": 63.16,
   "csi_distance_km": 18.9,
   "csi_geo": "Windsor, Ontario",
-  "rent_1br_cad": 1235,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Sarnia, Ontario",
+  "rent_1br_cad": 1193,
+  "rent_distance_km": 18.9,
+  "rent_metro": "Windsor, Ontario",
   "safety_index": 68
  },
  "35091": {
   "csi": 66.36,
   "csi_distance_km": 67.1,
   "csi_geo": "Greater Sudbury, Ontario",
-  "rent_1br_cad": 789,
+  "rent_1br_cad": 1167,
   "rent_distance_km": 0.0,
-  "rent_metro": "Elliot Lake, Ontario",
+  "rent_metro": "Sault Ste. Marie, Ontario",
   "safety_index": 67
  },
  "35092": {
@@ -1866,18 +1866,18 @@
   "csi": 48.1,
   "csi_distance_km": 5.5,
   "csi_geo": "Barrie, Ontario",
-  "rent_1br_cad": 1418,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Collingwood, Ontario",
+  "rent_1br_cad": 1583,
+  "rent_distance_km": 5.5,
+  "rent_metro": "Barrie, Ontario",
   "safety_index": 76
  },
  "35099": {
   "csi": 48.1,
   "csi_distance_km": 28.6,
   "csi_geo": "Barrie, Ontario",
-  "rent_1br_cad": 1290,
+  "rent_1br_cad": 1475,
   "rent_distance_km": 0.0,
-  "rent_metro": "Midland, Ontario",
+  "rent_metro": "Orillia, Ontario",
   "safety_index": 76
  },
  "35100": {
@@ -2016,13 +2016,13 @@
   "safety_index": 64
  },
  "35115": {
-  "csi": 56.0,
-  "csi_distance_km": 0.0,
-  "csi_geo": "Guelph, Ontario",
-  "rent_1br_cad": 1298,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Centre Wellington, Ontario",
-  "safety_index": 72
+  "csi": 72.68,
+  "csi_distance_km": 14.4,
+  "csi_geo": "Kitchener-Cambridge-Waterloo, Ontario",
+  "rent_1br_cad": 1546,
+  "rent_distance_km": 14.4,
+  "rent_metro": "Kitchener-Cambridge-Waterloo, Ontario",
+  "safety_index": 64
  },
  "35116": {
   "csi": 59.35,
@@ -2073,9 +2073,9 @@
   "csi": 48.1,
   "csi_distance_km": 13.4,
   "csi_geo": "Barrie, Ontario",
-  "rent_1br_cad": 1117,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Scugog, Ontario",
+  "rent_1br_cad": 1583,
+  "rent_distance_km": 13.4,
+  "rent_metro": "Barrie, Ontario",
   "safety_index": 76
  },
  "35122": {
@@ -2127,18 +2127,18 @@
   "csi": 124.41,
   "csi_distance_km": 9.4,
   "csi_geo": "Winnipeg, Manitoba",
-  "rent_1br_cad": 829,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Portage La Prairie, Manitoba",
+  "rent_1br_cad": 1232,
+  "rent_distance_km": 9.4,
+  "rent_metro": "Winnipeg, Manitoba",
   "safety_index": 38
  },
  "46006": {
   "csi": 124.41,
   "csi_distance_km": 12.4,
   "csi_geo": "Winnipeg, Manitoba",
-  "rent_1br_cad": 944,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Steinbach, Manitoba",
+  "rent_1br_cad": 1232,
+  "rent_distance_km": 12.4,
+  "rent_metro": "Winnipeg, Manitoba",
   "safety_index": 38
  },
  "46007": {
@@ -2244,9 +2244,9 @@
   "csi": 100.31,
   "csi_distance_km": 5.1,
   "csi_geo": "Regina, Saskatchewan",
-  "rent_1br_cad": 997,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Moose Jaw, Saskatchewan",
+  "rent_1br_cad": 1240,
+  "rent_distance_km": 5.1,
+  "rent_metro": "Regina, Saskatchewan",
   "safety_index": 50
  },
  "47005": {
@@ -2316,9 +2316,9 @@
   "csi": 100.31,
   "csi_distance_km": 11.0,
   "csi_geo": "Regina, Saskatchewan",
-  "rent_1br_cad": 863,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Estevan, Saskatchewan",
+  "rent_1br_cad": 1240,
+  "rent_distance_km": 11.0,
+  "rent_metro": "Regina, Saskatchewan",
   "safety_index": 50
  },
  "47013": {
@@ -2361,9 +2361,9 @@
   "csi": 62.32,
   "csi_distance_km": 10.3,
   "csi_geo": "Calgary, Alberta",
-  "rent_1br_cad": 1176,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Brooks, Alberta",
+  "rent_1br_cad": 1581,
+  "rent_distance_km": 10.3,
+  "rent_metro": "Calgary, Alberta",
   "safety_index": 69
  },
  "48004": {
@@ -2550,18 +2550,18 @@
   "csi": 62.32,
   "csi_distance_km": 7.2,
   "csi_geo": "Calgary, Alberta",
-  "rent_1br_cad": 1106,
-  "rent_distance_km": 0.0,
-  "rent_metro": "High River, Alberta",
+  "rent_1br_cad": 1581,
+  "rent_distance_km": 7.2,
+  "rent_metro": "Calgary, Alberta",
   "safety_index": 69
  },
  "48025": {
   "csi": 101.12,
   "csi_distance_km": 136.1,
   "csi_geo": "Edmonton, Alberta",
-  "rent_1br_cad": 1092,
+  "rent_1br_cad": 1199,
   "rent_distance_km": 0.0,
-  "rent_metro": "Cold Lake, Alberta",
+  "rent_metro": "Wood Buffalo, Alberta",
   "safety_index": 49
  },
  "48026": {
@@ -2586,9 +2586,9 @@
   "csi": 101.12,
   "csi_distance_km": 15.5,
   "csi_geo": "Edmonton, Alberta",
-  "rent_1br_cad": 984,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Wetaskiwin, Alberta",
+  "rent_1br_cad": 1301,
+  "rent_distance_km": 15.5,
+  "rent_metro": "Edmonton, Alberta",
   "safety_index": 49
  },
  "48029": {
@@ -2604,9 +2604,9 @@
   "csi": 105.51,
   "csi_distance_km": 14.1,
   "csi_geo": "Lethbridge, Alberta",
-  "rent_1br_cad": 1120,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Medicine Hat, Alberta",
+  "rent_1br_cad": 1370,
+  "rent_distance_km": 14.1,
+  "rent_metro": "Lethbridge, Alberta",
   "safety_index": 47
  },
  "48031": {
@@ -2631,9 +2631,9 @@
   "csi": 118.65,
   "csi_distance_km": 3.6,
   "csi_geo": "Red Deer, Alberta",
-  "rent_1br_cad": 1157,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Lacombe, Alberta",
+  "rent_1br_cad": 1220,
+  "rent_distance_km": 3.6,
+  "rent_metro": "Red Deer, Alberta",
   "safety_index": 41
  },
  "48034": {
@@ -2667,9 +2667,9 @@
   "csi": 62.32,
   "csi_distance_km": 12.6,
   "csi_geo": "Calgary, Alberta",
-  "rent_1br_cad": 1858,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Canmore, Alberta",
+  "rent_1br_cad": 1581,
+  "rent_distance_km": 12.6,
+  "rent_metro": "Calgary, Alberta",
   "safety_index": 69
  },
  "59001": {
@@ -2703,9 +2703,9 @@
   "csi": 129.87,
   "csi_distance_km": 85.8,
   "csi_geo": "Kamloops, British Columbia",
-  "rent_1br_cad": 889,
+  "rent_1br_cad": 1082,
   "rent_distance_km": 0.0,
-  "rent_metro": "Quesnel, British Columbia",
+  "rent_metro": "Williams Lake, British Columbia",
   "safety_index": 35
  },
  "59005": {
@@ -2739,27 +2739,27 @@
   "csi": 81.2,
   "csi_distance_km": 21.7,
   "csi_geo": "Vancouver, British Columbia",
-  "rent_1br_cad": 1626,
-  "rent_distance_km": 20.8,
-  "rent_metro": "Squamish, British Columbia",
+  "rent_1br_cad": 1807,
+  "rent_distance_km": 21.7,
+  "rent_metro": "Vancouver, British Columbia",
   "safety_index": 59
  },
  "59009": {
   "csi": 106.71,
   "csi_distance_km": 9.9,
   "csi_geo": "Nanaimo, British Columbia",
-  "rent_1br_cad": 1459,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Courtenay, British Columbia",
+  "rent_1br_cad": 1527,
+  "rent_distance_km": 9.9,
+  "rent_metro": "Nanaimo, British Columbia",
   "safety_index": 47
  },
  "59010": {
   "csi": 71.04,
   "csi_distance_km": 8.0,
   "csi_geo": "Victoria, British Columbia",
-  "rent_1br_cad": 1283,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Duncan, British Columbia",
+  "rent_1br_cad": 1624,
+  "rent_distance_km": 8.0,
+  "rent_metro": "Victoria, British Columbia",
   "safety_index": 64
  },
  "59011": {
@@ -2793,9 +2793,9 @@
   "csi": 129.87,
   "csi_distance_km": 0.9,
   "csi_geo": "Kamloops, British Columbia",
-  "rent_1br_cad": 1151,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Salmon Arm, British Columbia",
+  "rent_1br_cad": 1345,
+  "rent_distance_km": 0.9,
+  "rent_metro": "Kamloops, British Columbia",
   "safety_index": 35
  },
  "59015": {
@@ -2874,9 +2874,9 @@
   "csi": 108.82,
   "csi_distance_km": 0.6,
   "csi_geo": "Kelowna, British Columbia",
-  "rent_1br_cad": 1349,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Summerland, British Columbia",
+  "rent_1br_cad": 1597,
+  "rent_distance_km": 0.6,
+  "rent_metro": "Kelowna, British Columbia",
   "safety_index": 46
  },
  "59024": {
@@ -2901,9 +2901,9 @@
   "csi": 129.87,
   "csi_distance_km": 198.0,
   "csi_geo": "Kamloops, British Columbia",
-  "rent_1br_cad": 959,
+  "rent_1br_cad": 1214,
   "rent_distance_km": 0.0,
-  "rent_metro": "Dawson Creek, British Columbia",
+  "rent_metro": "Prince George, British Columbia",
   "safety_index": 35
  },
  "59027": {
@@ -2937,9 +2937,9 @@
   "csi": 108.82,
   "csi_distance_km": 14.9,
   "csi_geo": "Kelowna, British Columbia",
-  "rent_1br_cad": 1197,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Penticton, British Columbia",
+  "rent_1br_cad": 1597,
+  "rent_distance_km": 14.9,
+  "rent_metro": "Kelowna, British Columbia",
   "safety_index": 46
  },
  "59031": {
@@ -3036,9 +3036,9 @@
   "csi": 108.82,
   "csi_distance_km": 9.3,
   "csi_geo": "Kelowna, British Columbia",
-  "rent_1br_cad": 1234,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Vernon, British Columbia",
+  "rent_1br_cad": 1597,
+  "rent_distance_km": 9.3,
+  "rent_metro": "Kelowna, British Columbia",
   "safety_index": 46
  },
  "59042": {
@@ -3054,9 +3054,9 @@
   "csi": 81.2,
   "csi_distance_km": 4.3,
   "csi_geo": "Vancouver, British Columbia",
-  "rent_1br_cad": 1626,
-  "rent_distance_km": 0.0,
-  "rent_metro": "Squamish, British Columbia",
+  "rent_1br_cad": 1807,
+  "rent_distance_km": 4.3,
+  "rent_metro": "Vancouver, British Columbia",
   "safety_index": 59
  },
  "60001": {
