@@ -251,6 +251,7 @@ export default function Explore() {
       })
 
     const leftover = (c: City) => {
+      if (c.median_monthly_salary_cad == null) return -Infinity
       const takeHome = estimateMonthlyTakeHome(c.median_monthly_salary_cad, c.region)
       return takeHome == null ? -Infinity : takeHome - (c.median_rent_1br_cad ?? 0)
     }
