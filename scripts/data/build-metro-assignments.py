@@ -225,28 +225,43 @@ for c in csi_pts:
             c['dist_to_cma'] = 999.0
 
 
-def nearest(pool, geom, prov, centroid):
+def nearest(pool, geom, prov, centroid, independent_exact_wins=False):
     same = [p for p in pool if p['prov'] == prov]
     use = same or pool
-    
+
     candidates = []
     for p in use:
         d = dist_to_riding(p['lat'], p['lon'], geom)
         d_centroid = hav(p['lat'], p['lon'], centroid[0], centroid[1])
         candidates.append((p, d, d_centroid))
-        
-    # 1. CMA Core Overrides: CMA within 20 km of boundary
+
+    # Exact matches (surveyed centre inside the riding) and, among them, the
+    # INDEPENDENT ones: a self-standing market >50 km from any CMA.
+    exacts = [(p, d, dc) for p, d, dc in candidates if d == 0.0]
+    independents = [x for x in exacts if x[0].get('dist_to_cma', 999.0) > 50.0]
+
+    # 1. CMA Core Override: a CMA whose urban edge falls within 20 km of the riding
+    #    boundary. Skipped when the riding actually CONTAINS an independent surveyed
+    #    centre (its own market) -- a self-standing city inside the riding must not be
+    #    overwritten by a neighbouring CMA that merely grazes the boundary. e.g. Moose
+    #    Jaw (own CMHC survey, 70 km from Regina) sits in a riding whose east edge runs
+    #    within 5 km of Regina. Guarded to rent only (independent_exact_wins) so CSI
+    #    assignment is unchanged.
     cma_20 = [(p, d, dc) for p, d, dc in candidates if p['name'] in CMA_CENTRES and d <= 20.0]
-    if cma_20:
+    if cma_20 and not (independent_exact_wins and independents):
         best_p, best_d, _ = min(cma_20, key=lambda x: x[1])
         return best_p, best_d
-        
+
     # 2. Exact matches (inside the riding)
-    exacts = [(p, d, dc) for p, d, dc in candidates if d == 0.0]
     if exacts:
         # Prioritize independent centres (distance to closest CMA > 50 km) to avoid suburban distortion (e.g. Sainte-Marie vs Saint-Georges)
-        independents = [x for x in exacts if x[0].get('dist_to_cma', 999.0) > 50.0]
         targets = independents if independents else exacts
+        # Prefer a wholly-in-province centre over a cross-border split ('... part')
+        # city whose market straddles into another province/riding, e.g. represent
+        # Battlefords—Lloydminster—Meadow Lake by North Battleford, not by Lloydminster
+        # (half of which lies in Alberta, outside the riding).
+        whole = [x for x in targets if ' part' not in x[0]['name']]
+        targets = whole if whole else targets
         best_p, best_d, _ = max(targets, key=lambda x: x[0].get('rent', x[0].get('csi', 0)))
         return best_p, best_d
         
@@ -268,7 +283,7 @@ for r in ridings:
     geom = ridings_geom[fed]
     centroid = (r['latitude'], r['longitude'])
 
-    rc, rd = nearest(centres, geom, prov, centroid)
+    rc, rd = nearest(centres, geom, prov, centroid, independent_exact_wins=True)
 
     if prov in csi_prov and not any(p['prov'] == prov for p in csi_pts):
         csi_val, csi_geo, csi_d = csi_prov[prov], f'{prov} (province/territory)', None

@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase'
 import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import * as d3 from 'd3'
+import { getSanitizedHistogram } from '@/lib/histogram';
 
 /* ═══════════════════════════════════════════════════════════════════
    Types & helpers
@@ -25,7 +26,7 @@ type CityRow = {
   price_source:             string | null
   rent_data_source?:        string | null
   rentBurden?:    number | null
-  bowlsAfterRent?: number | null // renamed to plates left
+  bowlsAfterRent?: number | null 
 }
 
 function getProxyName(source: string | null | undefined, city: string): string | null {
@@ -87,7 +88,6 @@ const BTN_GHOST: CSSProperties = {
   fontWeight: 500, cursor: 'pointer', transition: 'border-color .15s',
 }
 
-/** Section heading: one sentence, one color, an optional standfirst beside it. */
 function SectionHead({ title, blurb }: { title: string; blurb: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 48, marginBottom: 32, flexWrap: 'wrap' }}>
@@ -157,9 +157,6 @@ export default function Home() {
     const draw = () => {
       svg.innerHTML = ''
       const W = svg.clientWidth || 1100
-      // On phones the fixed desktop margins ate most of the plot and the axis
-      // titles collided with tick labels; use tighter margins, a taller canvas,
-      // and a horizontal y-caption instead of a rotated axis title.
       const narrow = W < 500
       const H = narrow ? 350 : 450
       const m = narrow ? { t: 40, r: 16, b: 48, l: 48 } : { t: 30, r: 30, b: 50, l: 60 }
@@ -256,7 +253,6 @@ export default function Home() {
         else if (party.includes('green')) fill = '#3d9b35'
         else if (party.includes('independent')) fill = '#6e6e73'
 
-        // Invisible halo so dots stay tappable on touch screens
         if (narrow) {
           g.append('circle').attr('r', 10).attr('fill', 'transparent')
         }
@@ -271,8 +267,6 @@ export default function Home() {
         svg.appendChild(g.node()!)
 
         if (!narrow && NOTABLE.includes(c.city)) {
-          // Flip the label to the left of the dot when it sits too close to the
-          // right edge, otherwise long names (e.g. Vancouver Centre) get clipped.
           const flip = gx > W - m.r - 110
           const t = d3.create('svg:text')
             .attr('x', flip ? gx - rs - 6 : gx + rs + 6).attr('y', gy + 4)
@@ -309,28 +303,26 @@ export default function Home() {
   }, [sel])
 
   /* ── Stats Calculations ────────────────────────────────────────── */
-  const rents    = parsedCities.map(c => c.median_rent_1br_cad).filter((r): r is number => r != null && r > 0).sort((a, b) => a - b)
-  const rmin     = rents[0] ?? 1050
-  const rmax     = rents[rents.length - 1] ?? 2800
   const burdens  = parsedCities.map(c => c.rentBurden).filter((b): b is number => b !== null)
   const avgBurden = burdens.length ? Math.round(burdens.reduce((sum, b) => sum + b, 0) / burdens.length) : 41
-  const spread   = rents.length >= 2 ? rmax / rmin : 2.4
-  const maxPlates = parsedCities.reduce((m, c) => Math.max(m, c.bowlsAfterRent ?? 0), 0)
+  
   const activeCities = parsedCities.filter(c => c.rentBurden != null && c.bowlsAfterRent != null)
   const cheapTop = [...activeCities].sort((a,b) => (a.rentBurden ?? 0) - (b.rentBurden ?? 0)).slice(0, 8)
   const priceTop = [...activeCities].sort((a,b) => (b.rentBurden ?? 0) - (a.rentBurden ?? 0)).slice(0, 8)
 
-  /* Rent distribution across every riding. Reported rents are quantized to round
-     figures, so bin on a $100 edge — narrower bins alternate empty and read as gaps. */
-  const BIN_WIDTH = 100
-  const rentMedian = rents.length ? rents[Math.floor(rents.length / 2)] : 0
-  const binFloor = Math.floor(rmin / BIN_WIDTH) * BIN_WIDTH
-  const binCount = Math.max(1, Math.ceil((rmax - binFloor + 1) / BIN_WIDTH))
-  const rentBins = (() => {
-    const counts = new Array(binCount).fill(0)
-    for (const r of rents) counts[Math.min(binCount - 1, Math.floor((r - binFloor) / BIN_WIDTH))]++
-    return counts
-  })()
+  /* ── Safe Histogram Integration ────────────────────────────────── */
+  const { 
+    bins: rentBins, 
+    medianRent: rentMedian, 
+    minRent: rminTemp, 
+    maxRent: rmaxTemp 
+  } = getSanitizedHistogram(
+    parsedCities.map(c => ({ rent: c.median_rent_1br_cad })), 
+    19
+  )
+
+  const rmin = rminTemp > 0 ? rminTemp : 1050
+  const rmax = rmaxTemp > 0 ? rmaxTemp : 2800
   const binPeak = Math.max(...rentBins, 1)
 
   return (
@@ -391,12 +383,12 @@ export default function Home() {
           </h1>
 
           <p style={{ maxWidth: '58ch', color: 'var(--color-text-2)', fontSize: 19, lineHeight: 1.55, margin: '0 0 32px' }}>
-            Median rent on a one-bedroom runs from {fmt(rmin)} to {fmt(rmax)} a month.
+            Average rent on a one-bedroom runs from {fmt(rmin)} to {fmt(rmax)} a month.
             The index weighs that against local median income, riding by riding.
           </p>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
-            <a href="/cities" style={BTN_PRIMARY}>Browse ridings</a>
+            <a href="/ridings" style={BTN_PRIMARY}>Browse ridings</a>
             <a href="/explore" style={BTN_GHOST}>Open the map</a>
           </div>
 
@@ -453,7 +445,7 @@ export default function Home() {
         <div style={WRAP}>
           <SectionHead
             title="Where the rent actually lands"
-            blurb={`Every riding placed by its median one-bedroom rent. Most cluster well below the headline maximum - the median riding pays ${fmt(rentMedian)}.`}
+            blurb={`Every riding placed by its average one-bedroom rent. Most cluster well below the headline maximum - the median riding pays ${fmt(rentMedian)}.`}
           />
           <div style={{ ...CARD, padding: '28px 28px 20px' }}>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 160 }}>
@@ -473,7 +465,7 @@ export default function Home() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--color-border)', paddingTop: 12, marginTop: 4 }}>
               <span style={{ ...LABEL, ...MONO }}>{fmt(rmin)}</span>
-              <span style={LABEL}>{rents.length} ridings by median 1BR rent</span>
+              <span style={LABEL}>{activeCities.length} ridings by average 1BR rent</span>
               <span style={{ ...LABEL, ...MONO }}>{fmt(rmax)}</span>
             </div>
           </div>
@@ -491,9 +483,9 @@ export default function Home() {
           <div className="metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: 'var(--color-border)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
             {[
               {
-                val: 'CA$3,550',
-                title: 'Median monthly income',
-                body: 'The national median monthly individual income in Canada, per current Statistics Canada benchmarks.',
+                val: 'CA$5,580',
+                title: 'Median full-time income',
+                body: 'The national median monthly income for full-time, year-round workers, ensuring a realistic baseline for independent renters.',
               },
               {
                 val: `${avgBurden}%`,
@@ -605,7 +597,7 @@ export default function Home() {
             <p style={{ maxWidth: '52ch', margin: '0 auto 28px', color: 'var(--color-text-2)', fontSize: 16, lineHeight: 1.6 }}>
               Local median income, marginal tax brackets, and housing costs across all {cities.length || 343} federal ridings.
             </p>
-            <a href="/cities" style={BTN_PRIMARY}>Browse ridings</a>
+            <a href="/ridings" style={BTN_PRIMARY}>Browse ridings</a>
           </div>
         </div>
       </section>
@@ -621,7 +613,7 @@ export default function Home() {
               <div>Socio-economic data across federal ridings. Free, forever.</div>
             </div>
             <div style={{ display: 'flex', gap: 24 }}>
-              {[['Ridings','/cities'],['Explore','/explore'],['About','/about']].map(([l,h]) => (
+              {[['Ridings','/ridings'],['Explore','/explore'],['About','/about']].map(([l,h]) => (
                 <a key={h} href={h} style={{ fontSize: 13, color: 'var(--color-text-2)', textDecoration: 'none' }}>{l}</a>
               ))}
             </div>
@@ -653,7 +645,7 @@ export default function Home() {
                 </div>
 
                 <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 20, marginBottom: 24 }}>
-                  <div style={LABEL}>Median 1BR rent</div>
+                  <div style={LABEL}>Average 1BR rent</div>
                   <div data-nums style={{ fontSize: 40, fontWeight: 600, color: 'var(--color-text-1)', letterSpacing: '-.03em', lineHeight: 1.1, marginTop: 6 }}>{sel.median_rent_1br_cad ? `CA$${sel.median_rent_1br_cad}` : 'Pending'}<span style={{ fontSize: 18, fontWeight: 400, color: 'var(--color-text-3)' }}>{sel.median_rent_1br_cad ? '/mo' : ''}</span></div>
                 </div>
 
@@ -705,7 +697,7 @@ export default function Home() {
 
                 {sel.blurb && <p style={{ fontSize: 13, color: 'var(--color-text-2)', lineHeight: 1.6, margin: '20px 0' }}>{sel.blurb}</p>}
 
-                <a href={`/cities/${slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: 'var(--color-text-1)', textDecoration: 'underline', textUnderlineOffset: 3, fontWeight: 500 }}>
+                <a href={`/ridings/${slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: 'var(--color-text-1)', textDecoration: 'underline', textUnderlineOffset: 3, fontWeight: 500 }}>
                   See detailed profile →
                 </a>
               </div>

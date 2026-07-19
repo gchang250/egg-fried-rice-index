@@ -11,7 +11,7 @@ const CARDS = [
   {
     title: 'What the index does',
     body: [
-      "For all Canadian federal ridings, it compares a real median 1BR rental cost against each riding's real median individual monthly income.",
+      "For all Canadian federal ridings, it compares a local 1BR rental cost — real CMHC survey data, or a Census-indexed estimate grounded in it — against each riding's real median individual monthly income.",
       "By calculating the resulting Rent Burden (the percentage of income spent on a single housing unit), the index provides a currency-neutral view of relative regional affordability and discretionary purchasing power."
     ],
   },
@@ -19,7 +19,10 @@ const CARDS = [
     title: 'Data status',
     body: [
       "Riding boundaries, median income, represented party, population, registered electors, and the safety score are all real, sourced government data from Elections Canada and Statistics Canada.",
-      "Rent is estimated by index-linking the 2021 Census riding-level rental patterns to current 2025 CMHC Rental Market Survey levels (Statistics Canada table 34-10-0133-01). Because CMHC surveys average rents at the metropolitan level (CMA) rather than per riding, using raw CMHC averages would smear the same rent across every riding in a city. To capture real local variations honestly, we take each riding's relative rental cost from the 2021 Census (median monthly shelter costs for rented dwellings) and re-base it so that the average rent across the metropolitan area matches the CMHC 2025 1-bedroom average. This provides a distinct, current, and real-data-grounded estimate for each riding. Because CMHC and Census profiles measure the rent of occupied stock (what existing tenants actually pay) rather than active online asking prices, these figures will naturally be lower than current rental listings for vacant units."
+      "Rent uses the 2025 CMHC Rental Market Survey (Statistics Canada table 34-10-0133-01). Because CMHC's headline figure is a metropolitan (CMA) average rather than a per-riding number, using it raw would smear the same rent across every riding in a city. We avoid that in two ways, and each riding's rent card names exactly which one applies to it.",
+      "Where CMHC publishes neighbourhood-level (survey-zone) 1-bedroom rents — currently the Vancouver, Toronto, Montreal, Calgary, Edmonton, Ottawa, and Kitchener–Waterloo areas — we use those real measured rents directly: each riding's figure is the average of the CMHC survey neighbourhoods that cover it. These are actual 1-bedroom survey values, not an estimate.",
+      "For most remaining multi-riding metros, we index-link each riding's relative rental cost from the 2021 Census (median monthly shelter cost for rented dwellings) and re-base the group so its average matches the CMHC 2025 1-bedroom level for that metro. This yields a distinct, current, real-data-grounded estimate for every riding and is labelled as an estimate on the card. Where that Census proxy would distort the one-bedroom figure and CMHC publishes no neighbourhood breakdown to correct it — the Saskatchewan metros, for instance — and for single-riding metros, we show the measured CMHC metro average directly.",
+      "Because CMHC and Census profiles measure the rent of occupied stock (what existing tenants actually pay) rather than active online asking prices, these figures will naturally be lower than current rental listings for vacant units. Where no survey is representative (four remote ridings), rent is withheld."
     ],
   },
   {
@@ -82,7 +85,7 @@ export default function AboutPage() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
             {[
-              ['Housing burden', 'Real Statistics Canada median income compared against the estimated local average one-bedroom rent, derived by index-linking 2021 Census riding-level rental patterns to 2025 CMHC Rental Market Survey levels (measuring occupied stock rather than active asking rents). No figure is shown where no survey is representative.'],
+              ['Housing burden', 'Real Statistics Canada median income compared against the local one-bedroom rent: real CMHC 2025 survey-neighbourhood rents where CMHC publishes them, otherwise a Census-indexed estimate re-based to the CMHC 2025 metro level (both measure occupied stock, not active asking rents). Each riding card names its exact basis. No figure is shown where no survey is representative.'],
               ['Take-home pay', 'Median gross pay is a Statistics Canada figure. "Take-home" and "left after tax & rent" apply an estimate of 2026 federal and provincial income tax, CPP and EI for a single individual - an approximation, not tax advice.'],
               ['Represented party', 'Real Elections Canada results from the 2025 general election: the actual elected candidate and party per riding.'],
               ['Safety quality', 'Real Statistics Canada Crime Severity Index data for safety (applied by nearest surveyed metro).'],
@@ -96,7 +99,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <a href="/cities" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', borderRadius: 980, border: '1px solid var(--color-ink)', background: 'var(--color-ink)', color: 'var(--color-ink-fg)', textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>
+        <a href="/ridings" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '11px 22px', borderRadius: 980, border: '1px solid var(--color-ink)', background: 'var(--color-ink)', color: 'var(--color-ink-fg)', textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>
           Browse ridings
         </a>
       </div>

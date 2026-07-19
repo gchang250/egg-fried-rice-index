@@ -429,7 +429,7 @@ export default function CityPageContent({
             ))}
             <p style={{ fontSize: 12, color: 'var(--color-text-2)', margin: '0.5rem 0 0', lineHeight: 1.6 }}>
               All monetary values stored in CAD and converted client-side.
-              Rent and safety are applied by nearest surveyed metro, not measured per riding.
+              Rent is sourced per riding — see the rent source above for the exact basis (CMHC neighbourhood, a Census-indexed estimate, or the nearest CMHC metro). Safety uses the nearest surveyed metro&rsquo;s crime index.
             </p>
           </div>
         </div>

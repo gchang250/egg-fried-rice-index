@@ -279,7 +279,7 @@ export default function CitiesPage() {
           <div style={{ background:'var(--color-surface)', border:'0.5px solid var(--color-border)', borderRadius:12, overflow:'hidden' }}>
             {!isMobile && (
               <div style={{ display:'grid', gridTemplateColumns:'62px 2fr 1fr 1fr 1fr 1fr 1.2fr', gap:'0.75rem', padding:'0.75rem 1rem', borderBottom:'0.5px solid var(--color-border)', fontSize:11, color:'var(--color-text-3)' }}>
-                <div>Rank</div><div>Riding / Community</div><div>Median Rent (1BR)</div>
+                <div>Rank</div><div>Riding / Community</div><div>Average Rent (1BR)</div>
                 <div>Median Income</div>
                 <div>Rent Burden</div><div>Net Disposable</div><div>Quality Metrics</div>
               </div>
@@ -289,7 +289,7 @@ export default function CitiesPage() {
               <div style={{ padding:'2rem 1rem', color:'var(--color-text-3)', fontSize:14, textAlign:'center' }}>No communities match your search.</div>
             ) : (
               filtered.map((city, index) => {
-                const href = `/cities/${slugifyCity(city.city)}`
+                const href = `/ridings/${slugifyCity(city.city)}`
                 const burden = city.burden
                 const disposable = city.disposable
                 const rank = index + 1
@@ -435,7 +435,7 @@ export default function CitiesPage() {
                 desc: salA && salB ? (salA > salB ? `${cityDataA.city} is higher by $${(salA - salB).toLocaleString()}` : `${cityDataB.city} is higher by $${(salB - salA).toLocaleString()}`) : '-'
               },
               {
-                label: 'Median 1BR Rent',
+                label: 'Average 1BR Rent',
                 valA: rentA ? `$${rentA.toLocaleString()}/mo` : '-',
                 valB: rentB ? `$${rentB.toLocaleString()}/mo` : '-',
                 better: rentA && rentB ? (rentA < rentB ? 'A' : rentA > rentB ? 'B' : 'draw') : 'draw',

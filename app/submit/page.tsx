@@ -9,7 +9,7 @@ import { supabase } from '@/lib/supabase'
 type CityRow = { city: string; region: string | null }
 
 const indicatorCategories = [
-  { value: 'median_rent_1br',    label: 'Median 1BR Rent (monthly CAD)' },
+  { value: 'median_rent_1br',    label: 'Average 1BR Rent (monthly CAD)' },
   { value: 'median_gross_wage',  label: 'Median Income (monthly CAD)' },
   { value: 'prov_tax_bracket',   label: 'Provincial Tax Bracket Pressure' },
   { value: 'safety_index',       label: 'Safety Index (/100)' },

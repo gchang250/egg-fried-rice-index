@@ -1,0 +1,40 @@
+{
+  "_meta": "CMHC RMS Oct 2025 average 1BR rent by neighbourhood (n) and survey zone (z), extracted from HMIP. grade a=excellent b=very good c=good d=poor. Values are 1-bedroom average rent CAD.",
+  "Vancouver": {
+    "n": {
+      "Ambleside": [2071, "c"], "Capital Hill/Brentwood": [1634, "b"], "Cedar Cottage": [1770, "b"],
+      "Central Lonsdale": [1970, "a"], "Central Park": [1974, "c"], "Collingwood": [1628, "a"],
+      "Coquitlam West": [1691, "b"], "Downtown": [1688, "b"], "Downtown Central": [2020, "a"],
+      "Downtown North": [2431, "a"], "Dundarave/West Vancouver Remainder": [2221, "b"], "Edmonds": [1511, "a"],
+      "English Bay": [1950, "a"], "Fraser View/Killarney": [1795, "b"], "Guildford": [1384, "a"],
+      "Hastings/Sunrise/Grandview/Woodlands": [1675, "a"], "Kerrisdale": [1666, "b"],
+      "Kitsilano/Point Grey North": [1914, "a"], "Kitsilano/Point Grey South": [1923, "a"],
+      "Ladner": [1179, "b"], "Langley CY": [1667, "b"], "Langley DM": [1942, "a"],
+      "Lonsdale East": [1783, "b"], "Lonsdale North": [1851, "b"], "Lonsdale West": [1942, "d"],
+      "Maple Ridge": [1390, "a"], "Marpole Remainder": [1248, "d"], "Marpole South": [1534, "b"],
+      "Metrotown": [1664, "b"], "Mount Pleasant": [1641, "a"], "New Westminster East": [1821, "b"],
+      "Newton": [1492, "b"], "North Delta": [1135, "b"], "North False Creek": [2605, "d"],
+      "North Vancouver DM East": [2273, "a"], "North Vancouver DM West": [2549, "b"],
+      "Pitt Meadows": [1600, "a"], "Point Grey": [1903, "b"], "Port Coquitlam": [1634, "b"],
+      "Renfrew": [1878, "c"], "Richmond City Centre": [1538, "a"], "Richmond South": [1838, "b"],
+      "Richmond West": [1838, "a"], "Riley Park": [2082, "c"], "South Cambie": [1668, "b"],
+      "South False Creek": [2183, "b"], "South Granville": [1820, "a"], "South Surrey": [1586, "c"],
+      "Southeast Burnaby South": [1456, "b"], "Sunset": [1706, "c"], "Surrey City Centre": [1738, "a"],
+      "Tsawwassen": [1905, "a"], "University Endowment Lands": [2469, "a"], "University/Lougheed": [1848, "a"],
+      "Uptown": [1505, "a"], "West End/Stanley Park North": [1803, "b"], "West End/Stanley Park South": [1843, "b"],
+      "Westside Heights": [1528, "a"], "Westside/Kerrisdale Remainder": [2213, "a"], "Whalley": [1712, "a"],
+      "White Rock": [1435, "a"]
+    },
+    "z": {
+      "Vancouver CMA": [1807, "a"], "West End/Stanley Park": [1830, "a"], "English Bay": [1950, "a"],
+      "Downtown": [2112, "a"], "South Granville/Oak": [1863, "a"], "Kitsilano/Point Grey": [1915, "a"],
+      "Westside/Kerrisdale": [1905, "a"], "Marpole": [1494, "b"], "Mount Pleasant/Renfrew Heights": [1704, "a"],
+      "East Hastings": [1692, "a"], "Southeast Vancouver": [1714, "a"], "University Endowment Lands": [2469, "a"],
+      "Central Park/Metrotown": [1813, "b"], "Southeast Burnaby": [1564, "b"], "North Burnaby": [1710, "a"],
+      "New Westminster": [1645, "a"], "North Vancouver CY": [1918, "a"], "North Vancouver DM": [2350, "a"],
+      "West Vancouver": [2153, "b"], "Richmond": [1676, "a"], "Delta": [1550, "b"], "Surrey": [1602, "a"],
+      "White Rock": [1435, "a"], "Langley City and Langley DM": [1765, "a"], "Tri-Cities": [1708, "a"],
+      "Maple Ridge/Pitt Meadows": [1426, "a"]
+    }
+  }
+}

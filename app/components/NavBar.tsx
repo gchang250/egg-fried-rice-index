@@ -2,10 +2,13 @@
 
 import { useState } from 'react'
 import { X, Menu } from 'lucide-react'
+// components/Nav.tsx
+import Link from 'next/link';
+
 
 const LINKS = [
   ['Explore', '/explore'],
-  ['Ridings', '/cities'],
+  ['Ridings', '/ridings'],
   ['About',   '/about'],
 ] as const
 

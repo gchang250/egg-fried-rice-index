@@ -879,7 +879,7 @@ export default function Explore() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>{isSingle ? 'Median 1BR rent:' : 'Typical housing cost:'}</span>
+                    <span style={{ fontSize: 11, color: 'var(--color-text-3)' }}>{isSingle ? 'Average 1BR rent:' : 'Typical housing cost:'}</span>
                     <p style={{ fontSize: 15, margin: '2px 0 0', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
                       {rent ? cvt(rent) : 'Pending'}<span style={{ fontSize: 10, color: 'var(--color-text-3)' }}>{rent ? '/mo' : ''}</span>
                     </p>
@@ -926,7 +926,7 @@ export default function Explore() {
               )}
 
               <div style={{ borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem', marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between' }}>
-                <a href={`/cities/${selectedCity.city.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} style={{ fontSize: 12.5, color: 'var(--color-accent)', textDecoration: 'none', fontWeight: 500 }}>
+                <a href={`/ridings/${selectedCity.city.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} style={{ fontSize: 12.5, color: 'var(--color-accent)', textDecoration: 'none', fontWeight: 500 }}>
                   Detailed profile & stats →
                 </a>
               </div>

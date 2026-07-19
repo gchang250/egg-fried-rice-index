@@ -32,20 +32,6 @@ WEAK_KM = 25          # beyond this it is a flagged regional proxy
 CITE_CMHC = 'Statistics Canada table 34-10-0133-01'
 CITE_CENSUS = 'Statistics Canada Census Profile 2021 (98-401-X2021029)'
 
-REPRESENTATIVE_OVERRIDES = {
-    "Fort McMurray—Cold Lake": 1350,
-    "Lac-Saint-Jean": 850,
-    "Beauce": 920,
-    "Swift Current—Grasslands—Kindersley": 980,
-    "Brandon—Souris": 1020,
-    "Miramichi—Grand Lake": 950,
-    "Saint John—Kennebecasis": 1150,
-    "Halifax": 1750,
-    "Ottawa Centre": 2050,
-    "Brampton West": 1950,
-    "Vancouver Centre": 2600
-}
-
 # Group non-withheld ridings by metro to compute the census average for that metro area
 metro_groups = {}
 for r in ridings:
@@ -74,13 +60,7 @@ for r in ridings:
     c_data = census_rents[fed]
     c_rent = c_data['median_rent_2021']
     
-    if r['name'] in REPRESENTATIVE_OVERRIDES:
-        tier = 'exact' if d == 0 else 'metro'
-        rent_out = REPRESENTATIVE_OVERRIDES[r['name']]
-        source = (f"Estimated from the 2021 Census profile for {r['name']} (${c_rent:,.0f} median tenant shelter cost) "
-                  f"re-based to the representative CMHC market-rate asking rent baseline of ${rent_out} ({CITE_CMHC}); "
-                  f"nearest surveyed centre is {metro}.")
-    elif d > WITHHOLD_KM:
+    if d > WITHHOLD_KM:
         tier = 'withheld'
         rent_out = None
         source = (f'No CMHC rental survey covers this riding; the nearest surveyed '
