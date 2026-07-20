@@ -1,9 +1,16 @@
 # Rent-data handoff — read before touching rent
 
-## TL;DR
-The rent numbers on the **live site are fabricated** and must be replaced with real data.
-A real replacement is **staged locally but NOT deployed**. There is one open design
-decision about how to get *per-riding* variation. **Do not invent any numbers.**
+## TL;DR (updated 2026-07-18 — the fix is now LIVE)
+Rent, salary and climate are all real, sourced, and **deployed** (Supabase + Vercel).
+The fabricated rent pipeline described below is history — kept here because the
+failure pattern keeps recurring. **Do not invent any numbers.**
+
+**Current state:** every riding's rent traces to CMHC 2025 (neighbourhood zones where
+they exist, else the measured metro average, else withheld). Salary is Census Profile
+2021 (98-401-X2021029) for all 343 — the 11 hardcoded `INCOME_OVERRIDES` were removed
+after an audit found they matched no source while the page credited StatCan. Climate is
+per-riding ECCC 1981-2010 normals. Provincial tax uses real progressive brackets for all
+13 jurisdictions. See the memory note `data-audit-history` for the full audit trail.
 
 ---
 
@@ -88,11 +95,22 @@ re-verifiable here. The 150 `estimated` values are fully reproducible from on-di
 **About page** (`app/about/page.tsx`) rewritten to describe BOTH methods honestly, and the
 riding detail footer no longer claims rent is "applied by nearest surveyed metro."
 
-**Next action awaiting user decision:** the dataset is differentiated and honest end-to-end
-in dev. Remaining is going live: apply `rent-final.json` to Supabase
-(`patch-real-rent-safety.ts --apply`, **explicit approval required**) + deploy. Optional
-future accuracy bump: pull real CMHC HMIP zone data for the `estimated` metros to upgrade
-them from estimate → measured (do NOT interpolate; real zone rents only).
+**DONE and deployed** (2026-07-18). Applied via `patch-real-rent-safety.ts --apply` and
+pushed. Two corrections were needed on top of the above:
+- `build-metro-assignments.py` applied its CMA-within-20km override *before* checking for
+  a surveyed city inside the riding, so metros captured rural ridings (Moose Jaw showed
+  Regina's $1,240 rather than its own $997; Miramichi showed Fredericton's). Fixed —
+  26 ridings corrected nationally, nearly all moving down.
+- Saskatchewan now skips the census re-basing entirely (guard in `build-rent-zones.py`):
+  all-unit Census shelter cost over-states 1BR in family-suburb ridings and SK has no
+  neighbourhood data to correct it, which had pushed Regina—Lewvan to $1,492 — above
+  Regina's own measured $1,240.
+
+Optional future accuracy bump: pull real CMHC HMIP zone data for the `estimated` metros to
+upgrade them from estimate → measured (do NOT interpolate; real zone rents only).
+
+**Always run `npm run build` before pushing** — `next dev` skips type-checking, and a
+pre-existing type error silently blocked a Vercel deploy.
 
 ## Dev-only preview overlay (so localhost shows real data without a prod write)
 Because `next dev` reads the same production Supabase, a helper lets localhost show
