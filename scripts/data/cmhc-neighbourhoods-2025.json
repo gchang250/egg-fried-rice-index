@@ -1,0 +1,4145 @@
+{
+ "_meta": "CMHC Rental Market Survey October 2025, average rent by bedroom type at the neighbourhood level, captured from the Housing Market Information Portal (TableMatchingCriteria, RowField=24). Quality grades: a excellent, b very good, c good, d poor. Values are CAD/month; suppressed cells are omitted. Adapted from Canada Mortgage and Housing Corporation; this does not constitute an endorsement by CMHC of this product.",
+ "Vancouver": {
+  "Vancouver": {
+   "studio": 1667.0,
+   "studio_grade": "a",
+   "rent_1br": 1807.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2364.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2820.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1970.0,
+   "total_grade": "a"
+  },
+  "Ambleside": {
+   "rent_1br": 2071.0,
+   "rent_1br_grade": "c",
+   "total": 2172.0,
+   "total_grade": "c"
+  },
+  "Capital Hill/Brentwood": {
+   "studio": 1150.0,
+   "studio_grade": "c",
+   "rent_1br": 1634.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1698.0,
+   "rent_2br_grade": "c",
+   "total": 1581.0,
+   "total_grade": "b"
+  },
+  "Cedar Cottage": {
+   "studio": 1824.0,
+   "studio_grade": "b",
+   "rent_1br": 1770.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2747.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 3450.0,
+   "rent_3br_plus_grade": "c",
+   "total": 2117.0,
+   "total_grade": "c"
+  },
+  "Central Lonsdale": {
+   "studio": 1720.0,
+   "studio_grade": "a",
+   "rent_1br": 1970.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2654.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 4129.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2197.0,
+   "total_grade": "a"
+  },
+  "Central Park": {
+   "studio": 1692.0,
+   "studio_grade": "b",
+   "rent_1br": 1974.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2596.0,
+   "rent_2br_grade": "c",
+   "total": 2149.0,
+   "total_grade": "c"
+  },
+  "Collingwood": {
+   "studio": 1319.0,
+   "studio_grade": "b",
+   "rent_1br": 1628.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2291.0,
+   "rent_2br_grade": "a",
+   "total": 1830.0,
+   "total_grade": "b"
+  },
+  "Coquitlam West": {
+   "studio": 1637.0,
+   "studio_grade": "b",
+   "rent_1br": 1691.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2148.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2737.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1911.0,
+   "total_grade": "b"
+  },
+  "Downtown": {
+   "studio": 1618.0,
+   "studio_grade": "b",
+   "rent_1br": 1688.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2099.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2792.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1821.0,
+   "total_grade": "b"
+  },
+  "Downtown Central": {
+   "studio": 1767.0,
+   "studio_grade": "a",
+   "rent_1br": 2020.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 3181.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 5010.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2099.0,
+   "total_grade": "a"
+  },
+  "Downtown Eastside/Strathcona": {
+   "studio": 1890.0,
+   "studio_grade": "a",
+   "total": 1970.0,
+   "total_grade": "b"
+  },
+  "Downtown North": {
+   "studio": 2078.0,
+   "studio_grade": "a",
+   "rent_1br": 2431.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 3073.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 4083.0,
+   "rent_3br_plus_grade": "c",
+   "total": 2498.0,
+   "total_grade": "a"
+  },
+  "Dundrave/West Vancouver Remainder": {
+   "studio": 1951.0,
+   "studio_grade": "c",
+   "rent_1br": 2221.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 3348.0,
+   "rent_2br_grade": "b",
+   "total": 2779.0,
+   "total_grade": "b"
+  },
+  "Edmonds": {
+   "studio": 1128.0,
+   "studio_grade": "b",
+   "rent_1br": 1511.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1774.0,
+   "rent_2br_grade": "a",
+   "total": 1559.0,
+   "total_grade": "a"
+  },
+  "English Bay": {
+   "studio": 1746.0,
+   "studio_grade": "b",
+   "rent_1br": 1950.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2929.0,
+   "rent_2br_grade": "b",
+   "total": 2020.0,
+   "total_grade": "a"
+  },
+  "Fraser View/Killarny": {
+   "studio": 1332.0,
+   "studio_grade": "c",
+   "rent_1br": 1795.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2249.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2272.0,
+   "rent_3br_plus_grade": "c",
+   "total": 2018.0,
+   "total_grade": "b"
+  },
+  "Guildford": {
+   "rent_1br": 1384.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1509.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1716.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1459.0,
+   "total_grade": "a"
+  },
+  "Hastings/Sunrise/Grandview/Woodlands": {
+   "studio": 1537.0,
+   "studio_grade": "b",
+   "rent_1br": 1675.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2340.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2563.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1799.0,
+   "total_grade": "a"
+  },
+  "Kerrisdale": {
+   "studio": 1686.0,
+   "studio_grade": "c",
+   "rent_1br": 1666.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2366.0,
+   "rent_2br_grade": "b",
+   "total": 1914.0,
+   "total_grade": "b"
+  },
+  "Kitsilano/Point Grey North": {
+   "studio": 1648.0,
+   "studio_grade": "b",
+   "rent_1br": 1914.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2654.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 3656.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2045.0,
+   "total_grade": "a"
+  },
+  "Kitsilano/Point Grey South": {
+   "studio": 1700.0,
+   "studio_grade": "b",
+   "rent_1br": 1923.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2610.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 3821.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2106.0,
+   "total_grade": "b"
+  },
+  "Ladner": {
+   "rent_1br": 1179.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1377.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2950.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1408.0,
+   "total_grade": "b"
+  },
+  "Langley CY": {
+   "studio": 1344.0,
+   "studio_grade": "c",
+   "rent_1br": 1667.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2106.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2157.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1909.0,
+   "total_grade": "b"
+  },
+  "Langley DM": {
+   "rent_1br": 1942.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2353.0,
+   "rent_2br_grade": "a",
+   "total": 2185.0,
+   "total_grade": "a"
+  },
+  "Lonsdale East": {
+   "rent_1br": 1783.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2214.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 3284.0,
+   "rent_3br_plus_grade": "d",
+   "total": 2039.0,
+   "total_grade": "b"
+  },
+  "Lonsdale North": {
+   "studio": 1595.0,
+   "studio_grade": "b",
+   "rent_1br": 1851.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2161.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 3678.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2003.0,
+   "total_grade": "b"
+  },
+  "Lonsdale West": {
+   "studio": 1841.0,
+   "studio_grade": "d",
+   "rent_1br": 1942.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 2790.0,
+   "rent_2br_grade": "d",
+   "total": 2214.0,
+   "total_grade": "d"
+  },
+  "Maple Ridge": {
+   "studio": 980.0,
+   "studio_grade": "b",
+   "rent_1br": 1390.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1611.0,
+   "rent_2br_grade": "b",
+   "total": 1465.0,
+   "total_grade": "a"
+  },
+  "Marpole Remainder": {
+   "rent_1br": 1248.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1488.0,
+   "rent_2br_grade": "d",
+   "total": 1269.0,
+   "total_grade": "d"
+  },
+  "Marpole South": {
+   "studio": 1486.0,
+   "studio_grade": "b",
+   "rent_1br": 1534.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1948.0,
+   "rent_2br_grade": "b",
+   "total": 1585.0,
+   "total_grade": "b"
+  },
+  "Metrotown": {
+   "rent_1br": 1664.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2022.0,
+   "rent_2br_grade": "b",
+   "total": 1761.0,
+   "total_grade": "b"
+  },
+  "Mount Pleasant": {
+   "studio": 1785.0,
+   "studio_grade": "a",
+   "rent_1br": 1641.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2242.0,
+   "rent_2br_grade": "a",
+   "total": 1765.0,
+   "total_grade": "a"
+  },
+  "New Westminster East": {
+   "studio": 1636.0,
+   "studio_grade": "b",
+   "rent_1br": 1821.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2446.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 3093.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2036.0,
+   "total_grade": "b"
+  },
+  "New Westminster West": {
+   "rent_3br_plus": 2162.0,
+   "rent_3br_plus_grade": "c"
+  },
+  "Newton": {
+   "rent_1br": 1492.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1872.0,
+   "rent_2br_grade": "c",
+   "total": 1658.0,
+   "total_grade": "c"
+  },
+  "North Delta": {
+   "rent_1br": 1135.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1554.0,
+   "rent_2br_grade": "a",
+   "total": 1368.0,
+   "total_grade": "b"
+  },
+  "North False Creek": {
+   "studio": 1962.0,
+   "studio_grade": "d",
+   "rent_1br": 2605.0,
+   "rent_1br_grade": "d",
+   "total": 2526.0,
+   "total_grade": "d"
+  },
+  "North Vancouver DM East": {
+   "rent_1br": 2273.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2619.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2450.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2474.0,
+   "total_grade": "a"
+  },
+  "North Vancouver DM West": {
+   "rent_1br": 2549.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2941.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 3742.0,
+   "rent_3br_plus_grade": "c",
+   "total": 3120.0,
+   "total_grade": "c"
+  },
+  "Pitt Meadows": {
+   "rent_1br": 1600.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1816.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2111.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1721.0,
+   "total_grade": "a"
+  },
+  "Point Grey": {
+   "studio": 1886.0,
+   "studio_grade": "c",
+   "rent_1br": 1903.0,
+   "rent_1br_grade": "b",
+   "total": 1962.0,
+   "total_grade": "b"
+  },
+  "Port Coquitlam": {
+   "rent_1br": 1634.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2095.0,
+   "rent_2br_grade": "c",
+   "total": 1918.0,
+   "total_grade": "b"
+  },
+  "Port Moody": {
+   "rent_3br_plus": 1905.0,
+   "rent_3br_plus_grade": "d",
+   "total": 2284.0,
+   "total_grade": "d"
+  },
+  "Renfrew": {
+   "rent_1br": 1878.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2995.0,
+   "rent_2br_grade": "d",
+   "total": 2200.0,
+   "total_grade": "d"
+  },
+  "Richmond City Centre": {
+   "studio": 1366.0,
+   "studio_grade": "a",
+   "rent_1br": 1538.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1971.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2141.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1699.0,
+   "total_grade": "a"
+  },
+  "Richmond East": {
+   "total": 2192.0,
+   "total_grade": "b"
+  },
+  "Richmond South": {
+   "studio": 1839.0,
+   "studio_grade": "b",
+   "rent_1br": 1838.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2012.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2176.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1944.0,
+   "total_grade": "a"
+  },
+  "Richmond West": {
+   "rent_1br": 1838.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2265.0,
+   "rent_2br_grade": "b",
+   "total": 2150.0,
+   "total_grade": "c"
+  },
+  "Riley Park": {
+   "studio": 1955.0,
+   "studio_grade": "d",
+   "rent_1br": 2082.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2840.0,
+   "rent_2br_grade": "d",
+   "total": 2341.0,
+   "total_grade": "c"
+  },
+  "South Cambie": {
+   "studio": 1269.0,
+   "studio_grade": "d",
+   "rent_1br": 1668.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2164.0,
+   "rent_2br_grade": "b",
+   "total": 1793.0,
+   "total_grade": "b"
+  },
+  "South False Creek": {
+   "studio": 1698.0,
+   "studio_grade": "a",
+   "rent_1br": 2183.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2957.0,
+   "rent_2br_grade": "b",
+   "total": 2369.0,
+   "total_grade": "b"
+  },
+  "South Granville": {
+   "studio": 1496.0,
+   "studio_grade": "a",
+   "rent_1br": 1820.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2338.0,
+   "rent_2br_grade": "b",
+   "total": 1827.0,
+   "total_grade": "a"
+  },
+  "South Surrey": {
+   "rent_1br": 1586.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2034.0,
+   "rent_2br_grade": "c",
+   "total": 1836.0,
+   "total_grade": "c"
+  },
+  "Southeast Burnaby South": {
+   "rent_1br": 1456.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1573.0,
+   "rent_2br_grade": "c",
+   "total": 1491.0,
+   "total_grade": "b"
+  },
+  "Sunset": {
+   "studio": 1584.0,
+   "studio_grade": "c",
+   "rent_1br": 1706.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2787.0,
+   "rent_2br_grade": "b",
+   "total": 2072.0,
+   "total_grade": "c"
+  },
+  "Surrey City Centre": {
+   "rent_1br": 1738.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2008.0,
+   "rent_2br_grade": "b",
+   "total": 1853.0,
+   "total_grade": "a"
+  },
+  "Tsawwassen": {
+   "studio": 1565.0,
+   "studio_grade": "a",
+   "rent_1br": 1905.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2149.0,
+   "rent_2br_grade": "a",
+   "total": 2008.0,
+   "total_grade": "a"
+  },
+  "University Endowment Lands": {
+   "studio": 1883.0,
+   "studio_grade": "b",
+   "rent_1br": 2469.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 3281.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 3660.0,
+   "rent_3br_plus_grade": "c",
+   "total": 2805.0,
+   "total_grade": "a"
+  },
+  "University/Lougheed": {
+   "studio": 1647.0,
+   "studio_grade": "a",
+   "rent_1br": 1848.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2397.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2377.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2095.0,
+   "total_grade": "a"
+  },
+  "Uptown": {
+   "studio": 1357.0,
+   "studio_grade": "b",
+   "rent_1br": 1505.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1865.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2460.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1584.0,
+   "total_grade": "a"
+  },
+  "West End/Stanley Park North": {
+   "studio": 1865.0,
+   "studio_grade": "d",
+   "rent_1br": 1803.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2760.0,
+   "rent_2br_grade": "b",
+   "total": 2018.0,
+   "total_grade": "b"
+  },
+  "West End/Stanley Park South": {
+   "studio": 1628.0,
+   "studio_grade": "b",
+   "rent_1br": 1843.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2915.0,
+   "rent_2br_grade": "b",
+   "total": 1861.0,
+   "total_grade": "b"
+  },
+  "Westside Heights": {
+   "studio": 1256.0,
+   "studio_grade": "c",
+   "rent_1br": 1528.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1643.0,
+   "rent_2br_grade": "c",
+   "total": 1514.0,
+   "total_grade": "a"
+  },
+  "Westside/Kerrisdale Remainder": {
+   "studio": 2312.0,
+   "studio_grade": "b",
+   "rent_1br": 2213.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 3407.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 4885.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2869.0,
+   "total_grade": "a"
+  },
+  "Whalley": {
+   "studio": 1640.0,
+   "studio_grade": "a",
+   "rent_1br": 1712.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1986.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2004.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1833.0,
+   "total_grade": "a"
+  },
+  "White Rock": {
+   "studio": 1227.0,
+   "studio_grade": "a",
+   "rent_1br": 1435.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1813.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2646.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1547.0,
+   "total_grade": "b"
+  }
+ },
+ "Toronto": {
+  "Toronto": {
+   "studio": 1491.0,
+   "studio_grade": "a",
+   "rent_1br": 1761.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2045.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2294.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1917.0,
+   "total_grade": "a"
+  },
+  "Agincourt/Malvern": {
+   "rent_1br": 1632.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1716.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1757.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1691.0,
+   "total_grade": "b"
+  },
+  "Ajax/Pickering": {
+   "rent_1br": 1216.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1727.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1853.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1752.0,
+   "total_grade": "a"
+  },
+  "Aurora": {
+   "rent_1br": 1853.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2187.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2960.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2191.0,
+   "total_grade": "b"
+  },
+  "Banbury-Don Mills/York Mills": {
+   "rent_1br": 1628.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1834.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2262.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1789.0,
+   "total_grade": "b"
+  },
+  "Bathurst Manor": {
+   "rent_1br": 1710.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1831.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2067.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1828.0,
+   "total_grade": "a"
+  },
+  "Bay Street Corridor": {
+   "studio": 2048.0,
+   "studio_grade": "b",
+   "rent_1br": 2619.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 3811.0,
+   "rent_2br_grade": "c",
+   "total": 2975.0,
+   "total_grade": "c"
+  },
+  "Bayview Village": {
+   "total": 2438.0,
+   "total_grade": "c"
+  },
+  "Bayview Woods-Steeles/Hillcrest Village": {
+   "rent_1br": 2192.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2622.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2585.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2511.0,
+   "total_grade": "b"
+  },
+  "Bedford Park-Nortown": {
+   "studio": 1323.0,
+   "studio_grade": "b",
+   "rent_1br": 1576.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1943.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2790.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1756.0,
+   "total_grade": "b"
+  },
+  "Beechborough-Greenbrook": {
+   "studio": 1546.0,
+   "studio_grade": "b",
+   "rent_1br": 1410.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1674.0,
+   "rent_2br_grade": "b",
+   "total": 1555.0,
+   "total_grade": "b"
+  },
+  "Bendale": {
+   "rent_1br": 1697.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1664.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1659.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1666.0,
+   "total_grade": "b"
+  },
+  "Black Creek": {
+   "rent_1br": 1501.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1781.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2034.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1772.0,
+   "total_grade": "b"
+  },
+  "Bradford/West Gwillimbury/New Tecumseth": {
+   "rent_1br": 1310.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1507.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1244.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1407.0,
+   "total_grade": "b"
+  },
+  "Brampton (East)": {
+   "studio": 1320.0,
+   "studio_grade": "a",
+   "rent_1br": 1770.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1992.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1964.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1907.0,
+   "total_grade": "a"
+  },
+  "Brampton (West)": {
+   "studio": 1510.0,
+   "studio_grade": "b",
+   "rent_1br": 1782.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2047.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2161.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1953.0,
+   "total_grade": "a"
+  },
+  "Briar Hill-Belgravia": {
+   "rent_1br": 1840.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2124.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2344.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1991.0,
+   "total_grade": "b"
+  },
+  "Broadview North": {
+   "studio": 1463.0,
+   "studio_grade": "b",
+   "rent_1br": 1597.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1922.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2258.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1687.0,
+   "total_grade": "a"
+  },
+  "Brookhaven-Amesbury": {
+   "studio": 1322.0,
+   "studio_grade": "b",
+   "rent_1br": 1555.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1656.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2181.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1665.0,
+   "total_grade": "b"
+  },
+  "Cabbagetown-South St. James Town": {
+   "studio": 1349.0,
+   "studio_grade": "b",
+   "rent_1br": 1903.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2331.0,
+   "rent_2br_grade": "b",
+   "total": 1829.0,
+   "total_grade": "c"
+  },
+  "Caledonia-Fairbank": {
+   "studio": 1233.0,
+   "studio_grade": "d",
+   "rent_1br": 1584.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1927.0,
+   "rent_2br_grade": "c",
+   "total": 1753.0,
+   "total_grade": "c"
+  },
+  "Casa Loma": {
+   "studio": 1560.0,
+   "studio_grade": "b",
+   "rent_1br": 2001.0,
+   "rent_1br_grade": "b",
+   "total": 2677.0,
+   "total_grade": "d"
+  },
+  "Churchill Meadows/Erin Mills": {
+   "studio": 1576.0,
+   "studio_grade": "c",
+   "rent_1br": 1750.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1915.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2304.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1985.0,
+   "total_grade": "b"
+  },
+  "Church-Yonge Corridor": {
+   "studio": 1698.0,
+   "studio_grade": "a",
+   "rent_1br": 1922.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2536.0,
+   "rent_2br_grade": "b",
+   "total": 2008.0,
+   "total_grade": "a"
+  },
+  "Clairlea-Birchmount": {
+   "rent_1br": 1484.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1771.0,
+   "rent_2br_grade": "c",
+   "total": 1630.0,
+   "total_grade": "b"
+  },
+  "Clarkson/Lorne Park": {
+   "studio": 1311.0,
+   "studio_grade": "b",
+   "rent_1br": 1724.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1903.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1795.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1804.0,
+   "total_grade": "a"
+  },
+  "Cliffcrest": {
+   "rent_1br": 1657.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1866.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2132.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1813.0,
+   "total_grade": "b"
+  },
+  "Cooksville": {
+   "studio": 1375.0,
+   "studio_grade": "b",
+   "rent_1br": 1698.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1974.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2416.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1865.0,
+   "total_grade": "a"
+  },
+  "Crescent Town": {
+   "studio": 1208.0,
+   "studio_grade": "c",
+   "rent_1br": 1457.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1674.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1855.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1526.0,
+   "total_grade": "a"
+  },
+  "Don Valley Village/Pleasant View": {
+   "studio": 1467.0,
+   "studio_grade": "a",
+   "rent_1br": 1758.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2017.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2152.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1976.0,
+   "total_grade": "a"
+  },
+  "Dorset Park": {
+   "rent_2br": 1642.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1814.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1670.0,
+   "total_grade": "d"
+  },
+  "Dovercourt/Davenport/Junction": {
+   "studio": 1633.0,
+   "studio_grade": "d",
+   "rent_1br": 2054.0,
+   "rent_1br_grade": "d",
+   "total": 2410.0,
+   "total_grade": "d"
+  },
+  "Downsview": {
+   "studio": 1169.0,
+   "studio_grade": "c",
+   "rent_1br": 1522.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1736.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1912.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1665.0,
+   "total_grade": "a"
+  },
+  "East End-Danforth": {
+   "studio": 1124.0,
+   "studio_grade": "b",
+   "rent_1br": 1885.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1770.0,
+   "rent_2br_grade": "c",
+   "total": 1698.0,
+   "total_grade": "b"
+  },
+  "East Gwillimbury/Newmarket": {
+   "rent_1br": 1912.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2291.0,
+   "rent_2br_grade": "c",
+   "total": 2075.0,
+   "total_grade": "c"
+  },
+  "Edenbridge-Humber Valley": {
+   "rent_1br": 1809.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2062.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2593.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2080.0,
+   "total_grade": "a"
+  },
+  "Eglinton East": {
+   "studio": 1360.0,
+   "studio_grade": "b",
+   "rent_1br": 1486.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1676.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1971.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1665.0,
+   "total_grade": "b"
+  },
+  "Elms-Old Rexdale": {
+   "rent_1br": 1790.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1957.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2237.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2010.0,
+   "total_grade": "b"
+  },
+  "Englemount-Lawrence": {
+   "studio": 1423.0,
+   "studio_grade": "c",
+   "rent_1br": 1444.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1601.0,
+   "rent_2br_grade": "b",
+   "total": 1545.0,
+   "total_grade": "b"
+  },
+  "Etobicoke West Mall": {
+   "studio": 1450.0,
+   "studio_grade": "c",
+   "rent_1br": 1721.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2002.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2444.0,
+   "rent_3br_plus_grade": "d",
+   "total": 2019.0,
+   "total_grade": "c"
+  },
+  "Flemingdon Park": {
+   "rent_1br": 1595.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1802.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2152.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1759.0,
+   "total_grade": "a"
+  },
+  "Forest Hill North": {
+   "studio": 1535.0,
+   "studio_grade": "b",
+   "rent_1br": 1773.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2048.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2514.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1953.0,
+   "total_grade": "a"
+  },
+  "Henry Farm": {
+   "rent_1br": 1765.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2082.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2221.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2000.0,
+   "total_grade": "b"
+  },
+  "High Park North/Junction": {
+   "studio": 1422.0,
+   "studio_grade": "c",
+   "rent_1br": 1863.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2338.0,
+   "rent_2br_grade": "b",
+   "total": 2008.0,
+   "total_grade": "c"
+  },
+  "High Park-Swansea": {
+   "studio": 1342.0,
+   "studio_grade": "b",
+   "rent_1br": 1479.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1535.0,
+   "rent_2br_grade": "d",
+   "total": 1498.0,
+   "total_grade": "b"
+  },
+  "Humber Heights-Westmount": {
+   "rent_2br": 2118.0,
+   "rent_2br_grade": "c",
+   "total": 2140.0,
+   "total_grade": "c"
+  },
+  "Humewood-Cedarvale": {
+   "studio": 1394.0,
+   "studio_grade": "a",
+   "rent_1br": 1817.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2419.0,
+   "rent_2br_grade": "c",
+   "total": 2015.0,
+   "total_grade": "b"
+  },
+  "Ionview": {
+   "studio": 1546.0,
+   "studio_grade": "b",
+   "rent_1br": 1594.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1695.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1962.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1661.0,
+   "total_grade": "a"
+  },
+  "Islington/City Centre North": {
+   "studio": 1724.0,
+   "studio_grade": "a",
+   "rent_1br": 1867.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2074.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2199.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1979.0,
+   "total_grade": "a"
+  },
+  "Islington/City Centre South": {
+   "rent_2br": 2110.0,
+   "rent_2br_grade": "a",
+   "total": 2032.0,
+   "total_grade": "a"
+  },
+  "Kennedy Park": {
+   "rent_1br": 1638.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2073.0,
+   "rent_2br_grade": "c",
+   "total": 1874.0,
+   "total_grade": "c"
+  },
+  "Kensington-Chinatown": {
+   "total": 1497.0,
+   "total_grade": "d"
+  },
+  "Kingsview Village-The Westway": {
+   "rent_1br": 1790.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2066.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2371.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2039.0,
+   "total_grade": "b"
+  },
+  "Lambton Baby Point": {
+   "rent_1br": 1505.0,
+   "rent_1br_grade": "d",
+   "total": 1541.0,
+   "total_grade": "d"
+  },
+  "L&#39;Amoreaux/Steeles/Milliken": {
+   "rent_1br": 1575.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1724.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1765.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1663.0,
+   "total_grade": "a"
+  },
+  "Lansing-Westgate": {
+   "rent_1br": 1862.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2057.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2030.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1977.0,
+   "total_grade": "b"
+  },
+  "Lawrence Park North": {
+   "studio": 1407.0,
+   "studio_grade": "b",
+   "rent_1br": 1726.0,
+   "rent_1br_grade": "a",
+   "total": 1713.0,
+   "total_grade": "a"
+  },
+  "Lawrence Park South": {
+   "studio": 1458.0,
+   "studio_grade": "b",
+   "rent_1br": 1747.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2446.0,
+   "rent_2br_grade": "d",
+   "total": 1784.0,
+   "total_grade": "c"
+  },
+  "Leaside-Bennington": {
+   "rent_1br": 1713.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2055.0,
+   "rent_2br_grade": "a",
+   "total": 1809.0,
+   "total_grade": "b"
+  },
+  "Long Branch": {
+   "rent_1br": 1413.0,
+   "rent_1br_grade": "b",
+   "total": 1357.0,
+   "total_grade": "d"
+  },
+  "Maple Leaf": {
+   "rent_1br": 1755.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2206.0,
+   "rent_2br_grade": "b",
+   "total": 2039.0,
+   "total_grade": "b"
+  },
+  "Markham": {
+   "rent_1br": 1885.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1996.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1969.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1942.0,
+   "total_grade": "b"
+  },
+  "Meadowvale": {
+   "rent_1br": 2061.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2382.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2379.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2259.0,
+   "total_grade": "a"
+  },
+  "Milton/Halton Hills": {
+   "rent_1br": 1516.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1667.0,
+   "rent_2br_grade": "b",
+   "total": 1600.0,
+   "total_grade": "b"
+  },
+  "Mimico": {
+   "studio": 1237.0,
+   "studio_grade": "a",
+   "rent_1br": 1399.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1537.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2306.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1447.0,
+   "total_grade": "a"
+  },
+  "Mississauga Centre/Streetsville": {
+   "rent_1br": 1721.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1973.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2264.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1915.0,
+   "total_grade": "a"
+  },
+  "Moore Park": {
+   "rent_1br": 2063.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2552.0,
+   "rent_2br_grade": "c",
+   "total": 2222.0,
+   "total_grade": "b"
+  },
+  "Morningside": {
+   "studio": 1555.0,
+   "studio_grade": "c",
+   "rent_1br": 1447.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1614.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1784.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1580.0,
+   "total_grade": "a"
+  },
+  "Moss Park/Regent Park": {
+   "studio": 1278.0,
+   "studio_grade": "d",
+   "rent_1br": 1987.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2484.0,
+   "rent_2br_grade": "c",
+   "total": 1904.0,
+   "total_grade": "c"
+  },
+  "Mount Dennis": {
+   "rent_1br": 1634.0,
+   "rent_1br_grade": "c",
+   "total": 1875.0,
+   "total_grade": "d"
+  },
+  "Mount Olive-Silverstone-Jamestown/Thistletown": {
+   "rent_1br": 1759.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2108.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2596.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2182.0,
+   "total_grade": "b"
+  },
+  "Mount Pleasant East": {
+   "studio": 1550.0,
+   "studio_grade": "b",
+   "rent_1br": 1964.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2603.0,
+   "rent_2br_grade": "b",
+   "total": 2120.0,
+   "total_grade": "b"
+  },
+  "Mount Pleasant West": {
+   "studio": 1593.0,
+   "studio_grade": "a",
+   "rent_1br": 1973.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2528.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 3523.0,
+   "rent_3br_plus_grade": "c",
+   "total": 2075.0,
+   "total_grade": "a"
+  },
+  "New Toronto": {
+   "rent_1br": 1426.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1655.0,
+   "rent_2br_grade": "c",
+   "total": 1512.0,
+   "total_grade": "a"
+  },
+  "North St. James Town": {
+   "studio": 1448.0,
+   "studio_grade": "a",
+   "rent_1br": 1739.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2164.0,
+   "rent_2br_grade": "b",
+   "total": 1844.0,
+   "total_grade": "a"
+  },
+  "Oakridge": {
+   "studio": 1527.0,
+   "studio_grade": "a",
+   "rent_1br": 1718.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2197.0,
+   "rent_2br_grade": "b",
+   "total": 1914.0,
+   "total_grade": "b"
+  },
+  "Oakville (excl. Bronte)": {
+   "studio": 1476.0,
+   "studio_grade": "a",
+   "rent_1br": 1885.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2294.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2379.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2176.0,
+   "total_grade": "b"
+  },
+  "Oakwood-Vaughan": {
+   "studio": 1354.0,
+   "studio_grade": "c",
+   "rent_1br": 1757.0,
+   "rent_1br_grade": "b",
+   "total": 1788.0,
+   "total_grade": "c"
+  },
+  "O&#39;Connor-Parkview": {
+   "rent_1br": 1576.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1831.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2154.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1854.0,
+   "total_grade": "c"
+  },
+  "Orangeville/Mono": {
+   "studio": 1350.0,
+   "studio_grade": "b",
+   "rent_1br": 1463.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1671.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1334.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1532.0,
+   "total_grade": "b"
+  },
+  "Parkwoods-Donalda": {
+   "studio": 1660.0,
+   "studio_grade": "a",
+   "rent_1br": 1680.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1955.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2140.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1920.0,
+   "total_grade": "a"
+  },
+  "Playter Estates-Danforth": {
+   "studio": 1267.0,
+   "studio_grade": "b",
+   "rent_1br": 1599.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1926.0,
+   "rent_2br_grade": "a",
+   "total": 1633.0,
+   "total_grade": "a"
+  },
+  "Port Credit": {
+   "studio": 1312.0,
+   "studio_grade": "c",
+   "rent_1br": 1600.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1868.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2083.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1750.0,
+   "total_grade": "a"
+  },
+  "Princess-Rosethorn": {
+   "rent_1br": 2226.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2616.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 3111.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2582.0,
+   "total_grade": "a"
+  },
+  "Rexdale-Kipling": {
+   "rent_2br": 1397.0,
+   "rent_2br_grade": "b",
+   "total": 1533.0,
+   "total_grade": "c"
+  },
+  "Richmond Hill/Vaughan/King": {
+   "studio": 1328.0,
+   "studio_grade": "c",
+   "rent_1br": 1583.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1827.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2332.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1726.0,
+   "total_grade": "b"
+  },
+  "Riverdale": {
+   "rent_1br": 1656.0,
+   "rent_1br_grade": "a",
+   "total": 1593.0,
+   "total_grade": "d"
+  },
+  "Rockcliffe-Smythe": {
+   "studio": 1162.0,
+   "studio_grade": "c",
+   "rent_1br": 1593.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2050.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2201.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1837.0,
+   "total_grade": "c"
+  },
+  "Roncesvalles": {
+   "studio": 1286.0,
+   "studio_grade": "b",
+   "rent_1br": 1495.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1708.0,
+   "rent_2br_grade": "b",
+   "total": 1528.0,
+   "total_grade": "b"
+  },
+  "Rosedale": {
+   "rent_1br": 2203.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2488.0,
+   "rent_2br_grade": "c",
+   "total": 2358.0,
+   "total_grade": "c"
+  },
+  "Rouge": {
+   "rent_2br": 1635.0,
+   "rent_2br_grade": "a",
+   "total": 1649.0,
+   "total_grade": "a"
+  },
+  "Scarborough Village": {
+   "rent_1br": 1816.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2179.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2589.0,
+   "rent_3br_plus_grade": "c",
+   "total": 2096.0,
+   "total_grade": "b"
+  },
+  "South Parkdale/King West": {
+   "studio": 1436.0,
+   "studio_grade": "a",
+   "rent_1br": 1826.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2436.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 3747.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1931.0,
+   "total_grade": "c"
+  },
+  "St. Andrew-Windfields": {
+   "studio": 1260.0,
+   "studio_grade": "a",
+   "rent_1br": 1779.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2092.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2757.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2135.0,
+   "total_grade": "b"
+  },
+  "Stonegate-Queensway": {
+   "studio": 1244.0,
+   "studio_grade": "c",
+   "rent_1br": 1620.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2003.0,
+   "rent_2br_grade": "b",
+   "total": 1845.0,
+   "total_grade": "b"
+  },
+  "Tam O&#39;Shanter-Sullivan": {
+   "studio": 1466.0,
+   "studio_grade": "a",
+   "rent_1br": 1658.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1849.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1961.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1791.0,
+   "total_grade": "a"
+  },
+  "The Beaches": {
+   "studio": 1469.0,
+   "studio_grade": "a",
+   "rent_1br": 1683.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2141.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2183.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1826.0,
+   "total_grade": "b"
+  },
+  "Thorncliffe Park": {
+   "studio": 1221.0,
+   "studio_grade": "b",
+   "rent_1br": 1557.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1760.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2228.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1705.0,
+   "total_grade": "a"
+  },
+  "University/Annex": {
+   "studio": 1553.0,
+   "studio_grade": "a",
+   "rent_1br": 2050.0,
+   "rent_1br_grade": "c",
+   "total": 2199.0,
+   "total_grade": "d"
+  },
+  "Victoria Village": {
+   "studio": 1251.0,
+   "studio_grade": "c",
+   "rent_1br": 1608.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1816.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1834.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1688.0,
+   "total_grade": "a"
+  },
+  "Waterfront Communities-The Island": {
+   "studio": 2092.0,
+   "studio_grade": "b",
+   "rent_1br": 2489.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 3114.0,
+   "rent_2br_grade": "d",
+   "total": 2681.0,
+   "total_grade": "b"
+  },
+  "West Hill": {
+   "rent_1br": 1775.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1928.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2290.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1995.0,
+   "total_grade": "c"
+  },
+  "West Humber-Clairville": {
+   "rent_1br": 1712.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1869.0,
+   "rent_2br_grade": "a",
+   "total": 1824.0,
+   "total_grade": "a"
+  },
+  "Westminster-Branson": {
+   "rent_1br": 1782.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2106.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2370.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2082.0,
+   "total_grade": "b"
+  },
+  "Weston": {
+   "studio": 1562.0,
+   "studio_grade": "b",
+   "rent_1br": 1687.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1958.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2469.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1843.0,
+   "total_grade": "a"
+  },
+  "Wexford-Maryvale": {
+   "studio": 1685.0,
+   "studio_grade": "b",
+   "rent_1br": 1667.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1980.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1770.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1812.0,
+   "total_grade": "b"
+  },
+  "Willowdale East/Newtonbrook East": {
+   "rent_1br": 1847.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2319.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2745.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2098.0,
+   "total_grade": "a"
+  },
+  "Willowdale West/Newtonbrook West": {
+   "rent_1br": 1794.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2108.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2620.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1994.0,
+   "total_grade": "a"
+  },
+  "Willowridge-Martingrove-Richview": {
+   "rent_1br": 1966.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2334.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2657.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2345.0,
+   "total_grade": "a"
+  },
+  "Woburn": {
+   "studio": 1429.0,
+   "studio_grade": "b",
+   "rent_1br": 1663.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1867.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1937.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1811.0,
+   "total_grade": "a"
+  },
+  "Woodbine Corridor/Greenwood-Coxwell": {
+   "studio": 1525.0,
+   "studio_grade": "c",
+   "rent_1br": 1702.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1907.0,
+   "rent_2br_grade": "c",
+   "total": 1746.0,
+   "total_grade": "c"
+  },
+  "Wychwood": {
+   "studio": 1304.0,
+   "studio_grade": "b",
+   "rent_1br": 1681.0,
+   "rent_1br_grade": "c"
+  },
+  "Yonge-Eglinton": {
+   "studio": 1443.0,
+   "studio_grade": "d",
+   "rent_1br": 1605.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2215.0,
+   "rent_2br_grade": "a",
+   "total": 1728.0,
+   "total_grade": "b"
+  },
+  "Yonge-St. Clair": {
+   "studio": 1629.0,
+   "studio_grade": "a",
+   "rent_1br": 1868.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2296.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 3327.0,
+   "rent_3br_plus_grade": "b",
+   "total": 2008.0,
+   "total_grade": "a"
+  }
+ },
+ "Montreal": {
+  "Montr&#233;al": {
+   "studio": 1005.0,
+   "studio_grade": "a",
+   "rent_1br": 1131.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1346.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1625.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1291.0,
+   "total_grade": "a"
+  },
+  "Ahuntsic": {
+   "studio": 779.0,
+   "studio_grade": "c",
+   "rent_1br": 937.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1290.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1393.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1110.0,
+   "total_grade": "b"
+  },
+  "Anjou": {
+   "studio": 708.0,
+   "studio_grade": "b",
+   "rent_1br": 764.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1049.0,
+   "rent_2br_grade": "d"
+  },
+  "Auteuil": {
+   "rent_1br": 1466.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1655.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2311.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1645.0,
+   "total_grade": "b"
+  },
+  "Beaconsfield-Kirkland": {
+   "rent_2br": 1471.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1587.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1497.0,
+   "total_grade": "a"
+  },
+  "Bellefeuille/Saint-Colomban/Gore": {
+   "rent_1br": 912.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1417.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1593.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1260.0,
+   "total_grade": "c"
+  },
+  "Beloeil": {
+   "rent_1br": 1564.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1391.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1527.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1431.0,
+   "total_grade": "c"
+  },
+  "Boisbriand": {
+   "rent_1br": 1288.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1233.0,
+   "rent_2br_grade": "c",
+   "total": 1293.0,
+   "total_grade": "c"
+  },
+  "Boucherville": {
+   "rent_2br": 1542.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1476.0,
+   "rent_3br_plus_grade": "c"
+  },
+  "Brossard": {
+   "rent_1br": 1328.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1534.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1475.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1453.0,
+   "total_grade": "b"
+  },
+  "Candiac": {
+   "studio": 802.0,
+   "studio_grade": "a",
+   "rent_1br": 1440.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1942.0,
+   "rent_2br_grade": "b",
+   "total": 1773.0,
+   "total_grade": "b"
+  },
+  "Carignan/Chambly": {
+   "rent_1br": 786.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1375.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1391.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1279.0,
+   "total_grade": "c"
+  },
+  "Cartierville": {
+   "studio": 730.0,
+   "studio_grade": "a",
+   "rent_1br": 922.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1104.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1961.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1030.0,
+   "total_grade": "c"
+  },
+  "Charlemagne": {
+   "studio": 873.0,
+   "studio_grade": "a",
+   "rent_1br": 846.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1000.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1081.0,
+   "rent_3br_plus_grade": "c",
+   "total": 965.0,
+   "total_grade": "c"
+  },
+  "Ch&#226;teauguay/L&#233;ry": {
+   "studio": 1094.0,
+   "studio_grade": "c",
+   "rent_1br": 1177.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1277.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1575.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1281.0,
+   "total_grade": "c"
+  },
+  "Chomedey": {
+   "studio": 891.0,
+   "studio_grade": "b",
+   "rent_1br": 1288.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1540.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2023.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1497.0,
+   "total_grade": "b"
+  },
+  "Coteau-du-Lac/Les Coteaux/Les C&#232;dres/Saint-Zotique": {
+   "rent_1br": 977.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1319.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1453.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1303.0,
+   "total_grade": "b"
+  },
+  "C&#244;te-des-Neiges": {
+   "studio": 960.0,
+   "studio_grade": "b",
+   "rent_1br": 1123.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1349.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1872.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1227.0,
+   "total_grade": "b"
+  },
+  "C&#244;te-Saint-Luc/Montreal West": {
+   "studio": 1050.0,
+   "studio_grade": "c",
+   "rent_1br": 1226.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1575.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2070.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1402.0,
+   "total_grade": "b"
+  },
+  "Delson": {
+   "rent_1br": 1348.0,
+   "rent_1br_grade": "b",
+   "total": 1386.0,
+   "total_grade": "c"
+  },
+  "Deux-Montagnes": {
+   "rent_1br": 1194.0,
+   "rent_1br_grade": "c",
+   "rent_3br_plus": 1763.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1309.0,
+   "total_grade": "c"
+  },
+  "Dollard-des-Ormeaux": {
+   "studio": 941.0,
+   "studio_grade": "c",
+   "rent_1br": 1195.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1536.0,
+   "rent_2br_grade": "d",
+   "total": 1420.0,
+   "total_grade": "c"
+  },
+  "Dorval/&#206;le-Dorval": {
+   "studio": 816.0,
+   "studio_grade": "b",
+   "rent_1br": 1069.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1256.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1483.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1135.0,
+   "total_grade": "a"
+  },
+  "Duvernay": {
+   "rent_2br": 1065.0,
+   "rent_2br_grade": "c",
+   "total": 1028.0,
+   "total_grade": "c"
+  },
+  "East Ville-Marie": {
+   "studio": 979.0,
+   "studio_grade": "b",
+   "rent_1br": 1202.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1304.0,
+   "rent_2br_grade": "c",
+   "total": 1347.0,
+   "total_grade": "b"
+  },
+  "Fabreville": {
+   "rent_1br": 1055.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1351.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1683.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1360.0,
+   "total_grade": "b"
+  },
+  "Greenfield Park": {
+   "studio": 775.0,
+   "studio_grade": "c",
+   "rent_1br": 1064.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1418.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1649.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1375.0,
+   "total_grade": "b"
+  },
+  "Hochelaga-Maisonneuve": {
+   "studio": 901.0,
+   "studio_grade": "b",
+   "rent_1br": 1142.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1333.0,
+   "rent_2br_grade": "c",
+   "total": 1251.0,
+   "total_grade": "b"
+  },
+  "Iberville": {
+   "rent_1br": 905.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1143.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1033.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1081.0,
+   "total_grade": "b"
+  },
+  "&#206;le-des-Soeurs": {
+   "studio": 1093.0,
+   "studio_grade": "a",
+   "rent_1br": 1392.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1554.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1577.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1409.0,
+   "total_grade": "a"
+  },
+  "La Plaine": {
+   "rent_2br": 1079.0,
+   "rent_2br_grade": "c",
+   "total": 1081.0,
+   "total_grade": "d"
+  },
+  "La Prairie": {
+   "rent_1br": 1193.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1164.0,
+   "rent_2br_grade": "d",
+   "total": 1145.0,
+   "total_grade": "c"
+  },
+  "L&#39;Acadie/Saint-Luc": {
+   "rent_2br": 1072.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1122.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1093.0,
+   "total_grade": "c"
+  },
+  "Lachenaie": {
+   "studio": 1216.0,
+   "studio_grade": "a",
+   "rent_1br": 1466.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1842.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1987.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1692.0,
+   "total_grade": "a"
+  },
+  "Lachine": {
+   "studio": 919.0,
+   "studio_grade": "d",
+   "rent_1br": 904.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1089.0,
+   "rent_2br_grade": "b",
+   "total": 1138.0,
+   "total_grade": "c"
+  },
+  "Lafontaine": {
+   "rent_1br": 933.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1121.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1218.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1093.0,
+   "total_grade": "c"
+  },
+  "LaSalle": {
+   "studio": 862.0,
+   "studio_grade": "b",
+   "rent_1br": 1086.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1349.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1698.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1284.0,
+   "total_grade": "b"
+  },
+  "L&#39;Assomption/Saint-Sulpice": {
+   "rent_3br_plus": 1659.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1469.0,
+   "total_grade": "d"
+  },
+  "Laval-des-Rapides": {
+   "studio": 1028.0,
+   "studio_grade": "c",
+   "rent_1br": 1257.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1192.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1368.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1223.0,
+   "total_grade": "a"
+  },
+  "Laval-Ouest": {
+   "rent_1br": 1243.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1767.0,
+   "rent_2br_grade": "b",
+   "total": 1506.0,
+   "total_grade": "c"
+  },
+  "Le Gardeur": {
+   "rent_2br": 1139.0,
+   "rent_2br_grade": "c",
+   "total": 1125.0,
+   "total_grade": "c"
+  },
+  "Longueuil": {
+   "studio": 995.0,
+   "studio_grade": "c",
+   "rent_1br": 1106.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1194.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1494.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1236.0,
+   "total_grade": "a"
+  },
+  "Lorraine/Rosem&#232;re/Blainville": {
+   "total": 1554.0,
+   "total_grade": "d"
+  },
+  "Maple Grove/Beauharnois": {
+   "rent_1br": 1347.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1212.0,
+   "rent_2br_grade": "d",
+   "total": 1312.0,
+   "total_grade": "c"
+  },
+  "Mascouche": {
+   "rent_1br": 1295.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1750.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1939.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1597.0,
+   "total_grade": "b"
+  },
+  "Mercier": {
+   "studio": 819.0,
+   "studio_grade": "b",
+   "rent_2br": 1212.0,
+   "rent_2br_grade": "c"
+  },
+  "Mirabel/Saint-Placide": {
+   "rent_1br": 1444.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1379.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1569.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1444.0,
+   "total_grade": "c"
+  },
+  "Montr&#233;al-Nord": {
+   "studio": 801.0,
+   "studio_grade": "b",
+   "rent_1br": 1050.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1126.0,
+   "rent_2br_grade": "b",
+   "total": 1150.0,
+   "total_grade": "b"
+  },
+  "Mont-Royal": {
+   "rent_1br": 1214.0,
+   "rent_1br_grade": "d",
+   "total": 1357.0,
+   "total_grade": "d"
+  },
+  "Mont-Saint-Hilaire": {
+   "rent_1br": 1568.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1695.0,
+   "rent_2br_grade": "d",
+   "total": 1700.0,
+   "total_grade": "c"
+  },
+  "Notre-Dame-de-Gr&#226;ce": {
+   "studio": 846.0,
+   "studio_grade": "a",
+   "rent_1br": 1021.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1303.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1562.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1121.0,
+   "total_grade": "b"
+  },
+  "Notre-Dame-de-l&#39;&#206;le-Perrot/Pincourt/Terrasse-Vaudreuil/L&#39;&#206;le-Perrot": {
+   "studio": 899.0,
+   "studio_grade": "a",
+   "rent_1br": 904.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1134.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1709.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1141.0,
+   "total_grade": "b"
+  },
+  "Otterburn Park": {
+   "rent_1br": 1380.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1981.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1993.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1829.0,
+   "total_grade": "b"
+  },
+  "Outremont": {
+   "rent_1br": 1563.0,
+   "rent_1br_grade": "d"
+  },
+  "Parc-Extension": {
+   "studio": 737.0,
+   "studio_grade": "c",
+   "rent_1br": 941.0,
+   "rent_1br_grade": "c",
+   "total": 1028.0,
+   "total_grade": "d"
+  },
+  "Plateau-Mont-Royal": {
+   "studio": 1083.0,
+   "studio_grade": "b",
+   "rent_1br": 1298.0,
+   "rent_1br_grade": "b",
+   "total": 1433.0,
+   "total_grade": "b"
+  },
+  "Pointe-aux-Trembles": {
+   "studio": 763.0,
+   "studio_grade": "b",
+   "rent_1br": 975.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1056.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1071.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1037.0,
+   "total_grade": "b"
+  },
+  "Pointe-Claire": {
+   "studio": 834.0,
+   "studio_grade": "c",
+   "rent_1br": 1507.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1865.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1860.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1737.0,
+   "total_grade": "b"
+  },
+  "Pont-Viau": {
+   "studio": 1041.0,
+   "studio_grade": "a",
+   "rent_1br": 1148.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1142.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1116.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1128.0,
+   "total_grade": "a"
+  },
+  "Repentigny": {
+   "studio": 784.0,
+   "studio_grade": "a",
+   "rent_1br": 1123.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1268.0,
+   "rent_2br_grade": "c",
+   "total": 1212.0,
+   "total_grade": "b"
+  },
+  "Richelieu": {
+   "rent_2br": 1198.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1649.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1250.0,
+   "total_grade": "c"
+  },
+  "Rivi&#232;re-des-Prairies": {
+   "rent_2br": 1311.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1647.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1499.0,
+   "total_grade": "b"
+  },
+  "Rosemont/La Petite-Patrie": {
+   "studio": 1010.0,
+   "studio_grade": "c",
+   "rent_1br": 1055.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1348.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1750.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1237.0,
+   "total_grade": "c"
+  },
+  "Saint-Amable": {
+   "rent_3br_plus": 1499.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1329.0,
+   "total_grade": "d"
+  },
+  "Saint-Antoine": {
+   "rent_3br_plus": 1234.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1033.0,
+   "total_grade": "c"
+  },
+  "Saint-Basile-le-Grand": {
+   "total": 1495.0,
+   "total_grade": "d"
+  },
+  "Saint-Bruno-de-Montarville": {
+   "rent_2br": 1311.0,
+   "rent_2br_grade": "b",
+   "total": 1323.0,
+   "total_grade": "c"
+  },
+  "Saint-Constant/Saint-Mathieu/Saint-Philippe": {
+   "studio": 1083.0,
+   "studio_grade": "b",
+   "rent_1br": 1363.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1433.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1986.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1534.0,
+   "total_grade": "b"
+  },
+  "Sainte-Anne-de-Bellevue/Baie-d&#39;Urf&#233;": {
+   "studio": 857.0,
+   "studio_grade": "b",
+   "rent_1br": 1120.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1345.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1384.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1207.0,
+   "total_grade": "a"
+  },
+  "Sainte-Anne-des-Plaines": {
+   "rent_1br": 1009.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1335.0,
+   "rent_2br_grade": "c",
+   "total": 1324.0,
+   "total_grade": "c"
+  },
+  "Sainte-Doroth&#233;e": {
+   "rent_2br": 1356.0,
+   "rent_2br_grade": "b",
+   "total": 1360.0,
+   "total_grade": "b"
+  },
+  "Sainte-Julie/Saint-Mathieu-de-Beloeil": {
+   "studio": 1267.0,
+   "studio_grade": "a",
+   "rent_1br": 1354.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1590.0,
+   "rent_2br_grade": "c",
+   "total": 1472.0,
+   "total_grade": "b"
+  },
+  "Sainte-Marthe-sur-le-Lac": {
+   "rent_2br": 1750.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1773.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1766.0,
+   "total_grade": "a"
+  },
+  "Sainte-Rose": {
+   "studio": 849.0,
+   "studio_grade": "b",
+   "rent_1br": 1143.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1247.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1587.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1264.0,
+   "total_grade": "b"
+  },
+  "Sainte-Th&#233;r&#232;se": {
+   "rent_1br": 1057.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1122.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1476.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1137.0,
+   "total_grade": "b"
+  },
+  "Saint-Eustache": {
+   "studio": 719.0,
+   "studio_grade": "d",
+   "rent_1br": 912.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1078.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1445.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1082.0,
+   "total_grade": "c"
+  },
+  "Saint-Fran&#231;ois": {
+   "rent_1br": 1366.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1293.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1807.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1412.0,
+   "total_grade": "b"
+  },
+  "Saint-Hubert": {
+   "studio": 924.0,
+   "studio_grade": "d",
+   "rent_1br": 1271.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1393.0,
+   "rent_2br_grade": "d",
+   "total": 1423.0,
+   "total_grade": "c"
+  },
+  "Saint-Jean": {
+   "studio": 761.0,
+   "studio_grade": "c",
+   "rent_1br": 869.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1094.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1225.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1062.0,
+   "total_grade": "b"
+  },
+  "Saint-J&#233;r&#244;me": {
+   "studio": 953.0,
+   "studio_grade": "c",
+   "rent_1br": 1037.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1170.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1202.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1127.0,
+   "total_grade": "b"
+  },
+  "Saint-Lambert": {
+   "studio": 1074.0,
+   "studio_grade": "c",
+   "rent_1br": 1372.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1600.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2525.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1535.0,
+   "total_grade": "b"
+  },
+  "Saint-Laurent": {
+   "studio": 903.0,
+   "studio_grade": "a",
+   "rent_1br": 1163.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1365.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2125.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1270.0,
+   "total_grade": "b"
+  },
+  "Saint-L&#233;onard": {
+   "rent_1br": 1006.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1258.0,
+   "rent_2br_grade": "b",
+   "total": 1165.0,
+   "total_grade": "b"
+  },
+  "Saint-Lin-Laurentides/Saint-Roch-de-l&#39;Achigan": {
+   "rent_1br": 884.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1057.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1191.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1040.0,
+   "total_grade": "a"
+  },
+  "Saint-Michel": {
+   "rent_2br": 1184.0,
+   "rent_2br_grade": "d",
+   "total": 1121.0,
+   "total_grade": "d"
+  },
+  "Saint-Vincent-de-Paul": {
+   "rent_1br": 1043.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1061.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1103.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1047.0,
+   "total_grade": "a"
+  },
+  "Senneville/Roxboro-Pierrefonds": {
+   "studio": 912.0,
+   "studio_grade": "b",
+   "rent_1br": 1009.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1411.0,
+   "rent_2br_grade": "a",
+   "total": 1316.0,
+   "total_grade": "a"
+  },
+  "South West": {
+   "studio": 1190.0,
+   "studio_grade": "d",
+   "rent_1br": 1250.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1563.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1623.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1434.0,
+   "total_grade": "c"
+  },
+  "Terrebonne": {
+   "studio": 876.0,
+   "studio_grade": "c",
+   "rent_1br": 1181.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1327.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1484.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1277.0,
+   "total_grade": "c"
+  },
+  "Varennes": {
+   "rent_1br": 1284.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1510.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1442.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1472.0,
+   "total_grade": "c"
+  },
+  "Vaudreuil-Dorion/Vaudreuil-sur-le-Lac/L&#39;&#206;le-Cadieux/Pointe-des-Cascades": {
+   "rent_1br": 1375.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1567.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1669.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1498.0,
+   "total_grade": "b"
+  },
+  "Verdun": {
+   "studio": 796.0,
+   "studio_grade": "c",
+   "rent_1br": 1105.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1217.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1534.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1226.0,
+   "total_grade": "c"
+  },
+  "Ville-Marie": {
+   "studio": 1290.0,
+   "studio_grade": "a",
+   "rent_1br": 1642.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2250.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2553.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1724.0,
+   "total_grade": "b"
+  },
+  "Villeray": {
+   "studio": 906.0,
+   "studio_grade": "c",
+   "rent_1br": 1019.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1504.0,
+   "rent_2br_grade": "d",
+   "total": 1439.0,
+   "total_grade": "c"
+  },
+  "Vimont": {
+   "rent_1br": 1187.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1301.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1379.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1281.0,
+   "total_grade": "b"
+  },
+  "Westmount": {
+   "studio": 1063.0,
+   "studio_grade": "c",
+   "rent_1br": 1313.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1788.0,
+   "rent_2br_grade": "b",
+   "total": 1675.0,
+   "total_grade": "b"
+  }
+ },
+ "Calgary": {
+  "Calgary": {
+   "studio": 1438.0,
+   "studio_grade": "a",
+   "rent_1br": 1581.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1908.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2118.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1775.0,
+   "total_grade": "a"
+  },
+  "Airdrie": {
+   "rent_1br": 1448.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1851.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2581.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1764.0,
+   "total_grade": "a"
+  },
+  "Altadore/South Calgary/CFB Currie/Lincoln Park/Richmond/Upper Mount Royal/Elbow Park/Rideau Park": {
+   "studio": 1248.0,
+   "studio_grade": "d",
+   "rent_1br": 1512.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1640.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 3202.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1583.0,
+   "total_grade": "b"
+  },
+  "Bankview": {
+   "rent_1br": 1542.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1765.0,
+   "rent_2br_grade": "b",
+   "total": 1635.0,
+   "total_grade": "a"
+  },
+  "Bowness": {
+   "rent_1br": 1505.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1721.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2139.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1843.0,
+   "total_grade": "b"
+  },
+  "Braeside/Bayview/Palliser/Pump Hill/Oakridge/Cedarbrae": {
+   "rent_1br": 1728.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1944.0,
+   "rent_2br_grade": "a",
+   "total": 1884.0,
+   "total_grade": "a"
+  },
+  "Bridgeland/Riverside": {
+   "studio": 1525.0,
+   "studio_grade": "a",
+   "rent_1br": 1823.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2355.0,
+   "rent_2br_grade": "a",
+   "total": 2001.0,
+   "total_grade": "a"
+  },
+  "Bridlewood/Evergreen/Shawnee Slope/Millrise/Shawnessy/Somerset/Silverado/Midnapore/Parkland/Deer Ridge/Deer Run/Sundance/Chaparral/Walden/Legacy": {
+   "rent_1br": 1581.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1817.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1896.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1784.0,
+   "total_grade": "a"
+  },
+  "Calgary CMA (Rural Calgary City/Rocky View County/Chestermere/Crossfield/Irricana/Beiseker)": {
+   "rent_1br": 1670.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1825.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2075.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1867.0,
+   "total_grade": "a"
+  },
+  "Capitol Hill/Rosemont/Banff Trail": {
+   "rent_1br": 1521.0,
+   "rent_1br_grade": "b",
+   "total": 1421.0,
+   "total_grade": "c"
+  },
+  "Charleswood/Collingwood/Brentwood": {
+   "rent_2br": 1888.0,
+   "rent_2br_grade": "a",
+   "total": 1907.0,
+   "total_grade": "a"
+  },
+  "Cochrane": {
+   "rent_1br": 1503.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1880.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2054.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1932.0,
+   "total_grade": "a"
+  },
+  "Dover/Southview/Inglewood/Alyth/Bonnybrook/Erin Woods/Eastfield/Golden Triangle": {
+   "rent_1br": 1553.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1763.0,
+   "rent_2br_grade": "a",
+   "total": 1649.0,
+   "total_grade": "a"
+  },
+  "Downtown/Eau Claire": {
+   "studio": 1553.0,
+   "studio_grade": "b",
+   "rent_1br": 1651.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2086.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2836.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1828.0,
+   "total_grade": "a"
+  },
+  "Fairview Industrial/Fairview/Kingsland": {
+   "studio": 1631.0,
+   "studio_grade": "a",
+   "rent_1br": 1487.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1826.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1915.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1671.0,
+   "total_grade": "a"
+  },
+  "Falconridge/Castleridge/Coral Springs/Martindale/Skyview Ranch/Saddle Ridge/Taradale/Horizon/Sunridge/Westwinds": {
+   "rent_1br": 1530.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1818.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2093.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1802.0,
+   "total_grade": "a"
+  },
+  "Forest Lawn/Forest Heights/Penbrooke Meadows/Red Carpet/Applewood Park": {
+   "rent_1br": 1497.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1796.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1748.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1679.0,
+   "total_grade": "b"
+  },
+  "Glendale/Glenbrook": {
+   "rent_1br": 1461.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1673.0,
+   "rent_2br_grade": "b",
+   "total": 1623.0,
+   "total_grade": "b"
+  },
+  "Huntington Hills/Beddington Heights/Evanston/Panorama Hills/Country Hills/Coventry Hills/Country Hills Village/Harvest Hills/Hanson Ranch/Hidden Valley/Sandstone Valley/MacEwan Glen": {
+   "rent_1br": 1470.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1789.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2022.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1776.0,
+   "total_grade": "a"
+  },
+  "Killarney/Glengarry": {
+   "rent_1br": 1360.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1603.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 2059.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1573.0,
+   "total_grade": "d"
+  },
+  "Lower Mount Royal/Cliff Bungalow": {
+   "rent_1br": 1355.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1773.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2816.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1531.0,
+   "total_grade": "b"
+  },
+  "Marlborough Park/Marlborough/Abbeydale": {
+   "rent_1br": 1429.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1748.0,
+   "rent_2br_grade": "a",
+   "total": 1700.0,
+   "total_grade": "a"
+  },
+  "McKenzie Towne/New Brighton/Copperfield/Cranston/Auburn Bay/Mahogany/McKenzie Lake/Douglasdale/Glen": {
+   "rent_1br": 1685.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2000.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2230.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1874.0,
+   "total_grade": "a"
+  },
+  "Meridian/Franklin/Albert Park/Radisson Heights": {
+   "rent_2br": 1742.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2019.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1753.0,
+   "total_grade": "a"
+  },
+  "Misson/Beltline": {
+   "studio": 1373.0,
+   "studio_grade": "b",
+   "rent_1br": 1614.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2128.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2457.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1813.0,
+   "total_grade": "a"
+  },
+  "Montgomery/Point McKay/University Heights": {
+   "rent_1br": 1782.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2141.0,
+   "rent_2br_grade": "b",
+   "total": 1925.0,
+   "total_grade": "b"
+  },
+  "North Glenmore Park/Lakeview": {
+   "rent_1br": 1520.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1729.0,
+   "rent_2br_grade": "a",
+   "total": 1663.0,
+   "total_grade": "a"
+  },
+  "North Haven/Upper North Haven/Thorncliffe/Highwood/Greenview/Cambrian Heights/Queens Park Village": {
+   "rent_2br": 1754.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2055.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1728.0,
+   "total_grade": "a"
+  },
+  "Parkdale/St. Andrews Heights/Hounsfield Heights/Briar Hill/Hillhurst/West Hillhurst": {
+   "rent_1br": 1347.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1807.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2636.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1586.0,
+   "total_grade": "b"
+  },
+  "Ranchlands/Hawkwood/Arbour Lake/Citadel/Rocky Ridge/Royal Oak": {
+   "rent_1br": 1629.0,
+   "rent_1br_grade": "b",
+   "rent_3br_plus": 2315.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1974.0,
+   "total_grade": "c"
+  },
+  "Rosedale/Sunnyside/Crescent Heights/Renfrew": {
+   "studio": 1052.0,
+   "studio_grade": "a",
+   "rent_1br": 1363.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1638.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2035.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1495.0,
+   "total_grade": "a"
+  },
+  "Rundle/Pine Ridge/Monterey Park": {
+   "rent_2br": 1617.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1978.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1662.0,
+   "total_grade": "a"
+  },
+  "Rutland Park/Glamorgan": {
+   "rent_1br": 1553.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1790.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1980.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1717.0,
+   "total_grade": "a"
+  },
+  "Scarboro/Sunalta": {
+   "studio": 1047.0,
+   "studio_grade": "a",
+   "rent_1br": 1362.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1524.0,
+   "rent_2br_grade": "b",
+   "total": 1391.0,
+   "total_grade": "a"
+  },
+  "Sherwood/Kincora/Hamptons/Edgemont": {
+   "studio": 1355.0,
+   "studio_grade": "a",
+   "rent_1br": 1635.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1868.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2121.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1829.0,
+   "total_grade": "a"
+  },
+  "Silver Springs/Scenic Acres/Tuscany": {
+   "rent_3br_plus": 2800.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2800.0,
+   "total_grade": "a"
+  },
+  "Southeast Industrial Area and Surrounding Communities": {
+   "rent_1br": 1637.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1888.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1894.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1764.0,
+   "total_grade": "a"
+  },
+  "Valley Ridge/Crestmont/Cougar Ridge/West Springs/Aspen Woods/Springbank Hill/Discovery Ridge": {
+   "rent_1br": 2166.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2598.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2660.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2495.0,
+   "total_grade": "a"
+  },
+  "Varsity": {
+   "rent_1br": 1572.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1836.0,
+   "rent_2br_grade": "a",
+   "total": 1754.0,
+   "total_grade": "b"
+  },
+  "Vista Heights/Skyline East/Pegasus/McCall/North Airways/South Airways/Mayland Heights/Mayland": {
+   "rent_2br": 1581.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1874.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1718.0,
+   "total_grade": "c"
+  },
+  "Wildwood/Spruce Cliff/Shaganappi/Westgate/Rosscarrock": {
+   "rent_1br": 1544.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1968.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1194.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1694.0,
+   "total_grade": "b"
+  },
+  "Willow Park/Acadia/Haysboro/Southwood": {
+   "studio": 1201.0,
+   "studio_grade": "b",
+   "rent_1br": 1467.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1529.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1629.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1510.0,
+   "total_grade": "a"
+  },
+  "Windsor Park/Meadowlark Park/Britannia/Elboya": {
+   "rent_1br": 1499.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1995.0,
+   "rent_2br_grade": "d",
+   "total": 1669.0,
+   "total_grade": "c"
+  },
+  "Winston Heights/Mountview/Tuxedo Park/Highland Park": {
+   "rent_1br": 1714.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1792.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2755.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1734.0,
+   "total_grade": "a"
+  }
+ },
+ "Edmonton": {
+  "Edmonton": {
+   "studio": 1108.0,
+   "studio_grade": "a",
+   "rent_1br": 1301.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1598.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1802.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1493.0,
+   "total_grade": "a"
+  },
+  "Beverly/Rundle Heights": {
+   "rent_1br": 1170.0,
+   "rent_1br_grade": "a",
+   "rent_3br_plus": 1473.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1232.0,
+   "total_grade": "c"
+  },
+  "Bonny Doon": {
+   "rent_1br": 1306.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1443.0,
+   "rent_2br_grade": "b",
+   "total": 1360.0,
+   "total_grade": "b"
+  },
+  "Britannia": {
+   "studio": 970.0,
+   "studio_grade": "a",
+   "rent_1br": 1102.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1269.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1480.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1202.0,
+   "total_grade": "b"
+  },
+  "Callingwood": {
+   "studio": 1140.0,
+   "studio_grade": "a",
+   "rent_1br": 1309.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1499.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1704.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1442.0,
+   "total_grade": "a"
+  },
+  "Capilano/Upper East Central": {
+   "rent_1br": 1040.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1383.0,
+   "rent_2br_grade": "b",
+   "total": 1414.0,
+   "total_grade": "b"
+  },
+  "Central McDougall": {
+   "studio": 942.0,
+   "studio_grade": "a",
+   "rent_1br": 1131.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1426.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1585.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1225.0,
+   "total_grade": "a"
+  },
+  "Central Millwoods": {
+   "rent_1br": 1243.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1377.0,
+   "rent_2br_grade": "a",
+   "total": 1378.0,
+   "total_grade": "a"
+  },
+  "Central South West": {
+   "studio": 1104.0,
+   "studio_grade": "a",
+   "rent_1br": 1316.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1518.0,
+   "rent_2br_grade": "a",
+   "total": 1412.0,
+   "total_grade": "a"
+  },
+  "Clairview": {
+   "rent_1br": 1135.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1325.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1588.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1289.0,
+   "total_grade": "a"
+  },
+  "Confederation Park": {
+   "studio": 1252.0,
+   "studio_grade": "a",
+   "rent_1br": 1389.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1616.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1797.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1592.0,
+   "total_grade": "a"
+  },
+  "Delton/Eastwood": {
+   "rent_1br": 1200.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1317.0,
+   "rent_2br_grade": "b",
+   "total": 1232.0,
+   "total_grade": "b"
+  },
+  "Downtown": {
+   "studio": 1219.0,
+   "studio_grade": "a",
+   "rent_1br": 1401.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1914.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2268.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1552.0,
+   "total_grade": "b"
+  },
+  "East Castle Downs": {
+   "studio": 1089.0,
+   "studio_grade": "a",
+   "rent_1br": 1378.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1578.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1649.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1514.0,
+   "total_grade": "a"
+  },
+  "Edmonton CMA Remainder": {
+   "rent_1br": 1405.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1606.0,
+   "rent_2br_grade": "a",
+   "total": 1680.0,
+   "total_grade": "a"
+  },
+  "Fort Saskatchewan": {
+   "rent_1br": 1416.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1535.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1747.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1569.0,
+   "total_grade": "a"
+  },
+  "Garneau": {
+   "studio": 1094.0,
+   "studio_grade": "b",
+   "rent_1br": 1231.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1544.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1678.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1329.0,
+   "total_grade": "a"
+  },
+  "Gateway Blvd West": {
+   "studio": 1109.0,
+   "studio_grade": "c",
+   "rent_1br": 1428.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1576.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1631.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1512.0,
+   "total_grade": "b"
+  },
+  "Genwood/West Jasper Place": {
+   "studio": 880.0,
+   "studio_grade": "c",
+   "rent_1br": 1088.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1322.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1432.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1214.0,
+   "total_grade": "b"
+  },
+  "Grandin": {
+   "studio": 1236.0,
+   "studio_grade": "a",
+   "rent_1br": 1408.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1950.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2969.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1576.0,
+   "total_grade": "b"
+  },
+  "Leduc": {
+   "rent_1br": 1338.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1448.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1715.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1482.0,
+   "total_grade": "a"
+  },
+  "Londonderry": {
+   "rent_1br": 1327.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1488.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1710.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1490.0,
+   "total_grade": "a"
+  },
+  "Lower East Central": {
+   "rent_1br": 1170.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1341.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1531.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1346.0,
+   "total_grade": "b"
+  },
+  "McCauley": {
+   "studio": 1133.0,
+   "studio_grade": "a",
+   "rent_1br": 1226.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1616.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1982.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1418.0,
+   "total_grade": "a"
+  },
+  "McLeod Park/Casselman": {
+   "rent_2br": 1470.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1740.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1539.0,
+   "total_grade": "b"
+  },
+  "North Central (East)": {
+   "rent_1br": 1061.0,
+   "rent_1br_grade": "c",
+   "rent_3br_plus": 1668.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1356.0,
+   "total_grade": "d"
+  },
+  "North Central (West)": {
+   "rent_1br": 1099.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1287.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1589.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1297.0,
+   "total_grade": "b"
+  },
+  "North East": {
+   "rent_1br": 1371.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1628.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1861.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1652.0,
+   "total_grade": "a"
+  },
+  "North Jasper Place": {
+   "rent_1br": 1113.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1303.0,
+   "rent_2br_grade": "b",
+   "total": 1161.0,
+   "total_grade": "b"
+  },
+  "North Millwoods": {
+   "rent_2br": 1608.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1564.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1572.0,
+   "total_grade": "b"
+  },
+  "North West Jasper Place": {
+   "rent_1br": 1304.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1577.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1652.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1473.0,
+   "total_grade": "b"
+  },
+  "Northmount/Evansdale": {
+   "rent_1br": 1061.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1269.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1381.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1156.0,
+   "total_grade": "a"
+  },
+  "Oliver": {
+   "studio": 1143.0,
+   "studio_grade": "a",
+   "rent_1br": 1332.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1702.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1923.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1433.0,
+   "total_grade": "a"
+  },
+  "Queen Mary Park": {
+   "studio": 940.0,
+   "studio_grade": "a",
+   "rent_1br": 1222.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1488.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1629.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1323.0,
+   "total_grade": "a"
+  },
+  "Riverbend/Whitemud Creek": {
+   "rent_1br": 1274.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1477.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1852.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1480.0,
+   "total_grade": "a"
+  },
+  "Sherwood Park": {
+   "rent_1br": 1576.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1940.0,
+   "rent_2br_grade": "a",
+   "total": 1867.0,
+   "total_grade": "a"
+  },
+  "South Jasper Place": {
+   "rent_1br": 1212.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1449.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1771.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1462.0,
+   "total_grade": "a"
+  },
+  "South Millwoods": {
+   "rent_1br": 1478.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1698.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1869.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1690.0,
+   "total_grade": "a"
+  },
+  "South West Jasper Place": {
+   "rent_1br": 1346.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1602.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1753.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1605.0,
+   "total_grade": "a"
+  },
+  "Southgate District": {
+   "rent_1br": 1252.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1470.0,
+   "rent_2br_grade": "c",
+   "total": 1427.0,
+   "total_grade": "c"
+  },
+  "Spruce Grove": {
+   "rent_1br": 1397.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1601.0,
+   "rent_2br_grade": "b",
+   "total": 1607.0,
+   "total_grade": "b"
+  },
+  "St. Albert": {
+   "rent_1br": 1659.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1937.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1943.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1875.0,
+   "total_grade": "b"
+  },
+  "Stony Plain": {
+   "rent_2br": 1521.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1791.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1638.0,
+   "total_grade": "c"
+  },
+  "Strathcona County Remainder": {
+   "rent_1br": 1678.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1860.0,
+   "rent_2br_grade": "b",
+   "total": 1843.0,
+   "total_grade": "b"
+  },
+  "Strathearn/Holyrood": {
+   "rent_1br": 1089.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1374.0,
+   "rent_2br_grade": "a",
+   "total": 1265.0,
+   "total_grade": "a"
+  },
+  "Terwillegar/Rural Southwest": {
+   "rent_1br": 1493.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1702.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1981.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1734.0,
+   "total_grade": "a"
+  },
+  "Thorncliffe/Aldergrove": {
+   "rent_1br": 1238.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1518.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1773.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1532.0,
+   "total_grade": "a"
+  },
+  "University": {
+   "studio": 1315.0,
+   "studio_grade": "b",
+   "rent_1br": 1383.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1739.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2024.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1540.0,
+   "total_grade": "a"
+  },
+  "West Castledowns": {
+   "rent_1br": 1348.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1570.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1674.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1543.0,
+   "total_grade": "a"
+  },
+  "West Central (North)": {
+   "rent_2br": 1331.0,
+   "rent_2br_grade": "d",
+   "total": 1395.0,
+   "total_grade": "c"
+  },
+  "West Central (South)": {
+   "rent_2br": 1510.0,
+   "rent_2br_grade": "d",
+   "rent_3br_plus": 1540.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1367.0,
+   "total_grade": "d"
+  },
+  "West Jasper Place/Rural": {
+   "rent_1br": 1528.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1783.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2094.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1766.0,
+   "total_grade": "a"
+  },
+  "Westwood": {
+   "rent_1br": 1154.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1257.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1626.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1135.0,
+   "total_grade": "b"
+  },
+  "Woodcroft/Inglewood": {
+   "studio": 993.0,
+   "studio_grade": "b",
+   "rent_1br": 1209.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1478.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2074.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1313.0,
+   "total_grade": "b"
+  }
+ },
+ "Ottawa": {
+  "Ottawa": {
+   "studio": 1332.0,
+   "studio_grade": "a",
+   "rent_1br": 1593.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1916.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2090.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1743.0,
+   "total_grade": "a"
+  },
+  "Alta Vista": {
+   "studio": 1292.0,
+   "studio_grade": "a",
+   "rent_1br": 1605.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1907.0,
+   "rent_2br_grade": "b",
+   "total": 1771.0,
+   "total_grade": "b"
+  },
+  "Arnprior": {
+   "rent_1br": 1286.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1633.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2299.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1547.0,
+   "total_grade": "a"
+  },
+  "Barrhaven and Rural Nepean": {
+   "rent_3br_plus": 1997.0,
+   "rent_3br_plus_grade": "a"
+  },
+  "Bayshore/Crystal Beach/West College": {
+   "rent_1br": 1629.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1799.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 2029.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1789.0,
+   "total_grade": "b"
+  },
+  "Beacon Hill/Cyrville": {
+   "rent_1br": 1713.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1847.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1795.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1764.0,
+   "total_grade": "b"
+  },
+  "Britannia/Lincoln Heights": {
+   "studio": 1237.0,
+   "studio_grade": "b",
+   "rent_1br": 1420.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1679.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2056.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1546.0,
+   "total_grade": "a"
+  },
+  "Carleton Place": {
+   "rent_1br": 1405.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 2211.0,
+   "rent_2br_grade": "a",
+   "total": 1988.0,
+   "total_grade": "a"
+  },
+  "Carlington": {
+   "studio": 1160.0,
+   "studio_grade": "a",
+   "rent_1br": 1367.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1556.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2068.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1425.0,
+   "total_grade": "a"
+  },
+  "Chinatown/Hintonburg": {
+   "studio": 1341.0,
+   "studio_grade": "b",
+   "rent_1br": 1726.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2213.0,
+   "rent_2br_grade": "b",
+   "total": 1807.0,
+   "total_grade": "b"
+  },
+  "Clarence-Rockland": {
+   "rent_1br": 950.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1464.0,
+   "rent_2br_grade": "c",
+   "total": 1406.0,
+   "total_grade": "c"
+  },
+  "Downtown": {
+   "studio": 1358.0,
+   "studio_grade": "a",
+   "rent_1br": 1601.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2021.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2413.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1672.0,
+   "total_grade": "a"
+  },
+  "Eastern Orl&#233;ans/Rural Eastern Ottawa": {
+   "rent_1br": 2004.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2465.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2766.0,
+   "rent_3br_plus_grade": "a",
+   "total": 2364.0,
+   "total_grade": "a"
+  },
+  "Glebe": {
+   "studio": 1357.0,
+   "studio_grade": "b",
+   "rent_1br": 1770.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1992.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2440.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1851.0,
+   "total_grade": "b"
+  },
+  "Gloucester/Western Orl&#233;ans": {
+   "studio": 1179.0,
+   "studio_grade": "a",
+   "rent_1br": 1494.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1921.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1814.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1748.0,
+   "total_grade": "b"
+  },
+  "Hampton Park": {
+   "rent_2br": 1983.0,
+   "rent_2br_grade": "c",
+   "total": 1889.0,
+   "total_grade": "c"
+  },
+  "Hunt Club/South Keys": {
+   "studio": 1007.0,
+   "studio_grade": "a",
+   "rent_1br": 1440.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1768.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2284.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1644.0,
+   "total_grade": "a"
+  },
+  "Iris/Queensway Terrace/Whitehaven": {
+   "studio": 1142.0,
+   "studio_grade": "a",
+   "rent_1br": 1370.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1635.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1928.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1562.0,
+   "total_grade": "a"
+  },
+  "Kanata/Stittsville": {
+   "studio": 1847.0,
+   "studio_grade": "a",
+   "rent_1br": 2109.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2527.0,
+   "rent_2br_grade": "a",
+   "total": 2334.0,
+   "total_grade": "a"
+  },
+  "Knoxdale/Merivale/East College": {
+   "studio": 1392.0,
+   "studio_grade": "a",
+   "rent_1br": 1517.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1800.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2123.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1828.0,
+   "total_grade": "a"
+  },
+  "Lowertown": {
+   "studio": 1402.0,
+   "studio_grade": "b",
+   "rent_1br": 1780.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2067.0,
+   "rent_2br_grade": "c",
+   "total": 1810.0,
+   "total_grade": "b"
+  },
+  "New Edinburgh/Manor Park/Rockcliffe Park": {
+   "studio": 1132.0,
+   "studio_grade": "a",
+   "rent_1br": 1354.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1650.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1654.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1529.0,
+   "total_grade": "a"
+  },
+  "North Grenville MU": {
+   "rent_2br": 1550.0,
+   "rent_2br_grade": "a",
+   "total": 1714.0,
+   "total_grade": "a"
+  },
+  "Old Ottawa South": {
+   "studio": 1319.0,
+   "studio_grade": "c",
+   "rent_1br": 1784.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2123.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2077.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1932.0,
+   "total_grade": "b"
+  },
+  "Overbrook/Castle Heights": {
+   "studio": 1168.0,
+   "studio_grade": "a",
+   "rent_1br": 1687.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2108.0,
+   "rent_2br_grade": "c",
+   "rent_3br_plus": 1608.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1822.0,
+   "total_grade": "b"
+  },
+  "Sandy Hill": {
+   "studio": 1342.0,
+   "studio_grade": "a",
+   "rent_1br": 1611.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 2158.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2824.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1838.0,
+   "total_grade": "b"
+  },
+  "Vanier": {
+   "studio": 1122.0,
+   "studio_grade": "b",
+   "rent_1br": 1407.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1518.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1721.0,
+   "rent_3br_plus_grade": "c",
+   "total": 1461.0,
+   "total_grade": "a"
+  },
+  "West Centretown/Fisher Park": {
+   "studio": 1327.0,
+   "studio_grade": "c",
+   "rent_1br": 1692.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 2028.0,
+   "rent_2br_grade": "c",
+   "total": 1763.0,
+   "total_grade": "d"
+  },
+  "Westboro North/Tunney&#39;s Pasture": {
+   "studio": 1461.0,
+   "studio_grade": "b",
+   "rent_1br": 1625.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2188.0,
+   "rent_2br_grade": "b",
+   "total": 1796.0,
+   "total_grade": "b"
+  },
+  "Westboro South": {
+   "studio": 1196.0,
+   "studio_grade": "a",
+   "rent_1br": 1384.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1649.0,
+   "rent_2br_grade": "b",
+   "total": 1484.0,
+   "total_grade": "a"
+  }
+ },
+ "Kitchener-Cambridge-Waterloo": {
+  "Kitchener - Cambridge - Waterloo": {
+   "studio": 1255.0,
+   "studio_grade": "b",
+   "rent_1br": 1546.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1816.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1861.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1716.0,
+   "total_grade": "a"
+  },
+  "Galt East": {
+   "rent_1br": 1693.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1969.0,
+   "rent_2br_grade": "c",
+   "total": 1942.0,
+   "total_grade": "c"
+  },
+  "Galt West": {
+   "rent_1br": 1416.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1568.0,
+   "rent_2br_grade": "a",
+   "total": 1504.0,
+   "total_grade": "a"
+  },
+  "Kitchener Central": {
+   "studio": 1274.0,
+   "studio_grade": "c",
+   "rent_1br": 1409.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1863.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2125.0,
+   "rent_3br_plus_grade": "d",
+   "total": 1650.0,
+   "total_grade": "a"
+  },
+  "Kitchener North-East": {
+   "studio": 1212.0,
+   "studio_grade": "c",
+   "rent_1br": 1528.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1548.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1698.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1565.0,
+   "total_grade": "b"
+  },
+  "Kitchener North-West": {
+   "rent_1br": 1702.0,
+   "rent_1br_grade": "d",
+   "rent_2br": 1653.0,
+   "rent_2br_grade": "d",
+   "total": 1647.0,
+   "total_grade": "c"
+  },
+  "Kitchener South-Central": {
+   "rent_1br": 1078.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1265.0,
+   "rent_2br_grade": "c",
+   "total": 1137.0,
+   "total_grade": "b"
+  },
+  "Kitchener South-East": {
+   "studio": 1342.0,
+   "studio_grade": "c",
+   "rent_1br": 1571.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1715.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 1695.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1676.0,
+   "total_grade": "a"
+  },
+  "Kitchener South-West": {
+   "studio": 1196.0,
+   "studio_grade": "b",
+   "rent_1br": 1577.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1897.0,
+   "rent_2br_grade": "a",
+   "rent_3br_plus": 2310.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1803.0,
+   "total_grade": "b"
+  },
+  "Preston Core": {
+   "rent_2br": 2120.0,
+   "rent_2br_grade": "c",
+   "total": 2005.0,
+   "total_grade": "c"
+  },
+  "Preston Outside Core": {
+   "rent_1br": 1912.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2014.0,
+   "rent_2br_grade": "a",
+   "total": 1977.0,
+   "total_grade": "a"
+  },
+  "Waterloo North-East": {
+   "rent_1br": 1742.0,
+   "rent_1br_grade": "c",
+   "rent_2br": 1739.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 2029.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1762.0,
+   "total_grade": "b"
+  },
+  "Waterloo North-West": {
+   "rent_1br": 1334.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1718.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1645.0,
+   "rent_3br_plus_grade": "b",
+   "total": 1637.0,
+   "total_grade": "b"
+  },
+  "Waterloo University": {
+   "rent_1br": 1832.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 2277.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1886.0,
+   "rent_3br_plus_grade": "d",
+   "total": 2039.0,
+   "total_grade": "b"
+  },
+  "Waterloo Uptown": {
+   "studio": 1112.0,
+   "studio_grade": "b",
+   "rent_1br": 1805.0,
+   "rent_1br_grade": "b",
+   "rent_2br": 1975.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1939.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1895.0,
+   "total_grade": "b"
+  },
+  "Woolwich &amp; North Dumfries": {
+   "rent_1br": 1205.0,
+   "rent_1br_grade": "a",
+   "rent_2br": 1364.0,
+   "rent_2br_grade": "b",
+   "rent_3br_plus": 1444.0,
+   "rent_3br_plus_grade": "a",
+   "total": 1305.0,
+   "total_grade": "a"
+  }
+ }
+}
