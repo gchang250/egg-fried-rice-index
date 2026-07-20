@@ -363,8 +363,8 @@ export default function CityPageContent({
                   amount={convert(salary, currency, rates)} sub={city.salary_data_source ?? undefined} />
               )}
               {city.tech_salary_cad != null && (
-                <LivingCard label="Median employment income"
-                  amount={convert(city.tech_salary_cad, currency, rates)} sub="Statistics Canada, ref. year 2020" />
+                <LivingCard label="Median household income"
+                  amount={convert(city.tech_salary_cad, currency, rates)} sub="Statistics Canada Census Profile 2021 (98-401-X2021029), ref. year 2020" />
               )}
               {disposable != null && (() => {
                 const isDeficit = disposable < 0

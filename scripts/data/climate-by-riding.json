@@ -1,0 +1,3089 @@
+{
+ "Nunavut": {
+  "climate": "January -23.3°C, July 11.1°C, 661 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kuujjuarapik A (1 km from this riding).",
+  "station": "KUUJJUARAPIK A",
+  "station_km": 1.1,
+  "jan_c": -23.28,
+  "jul_c": 11.11,
+  "precip_mm": 660.81
+ },
+ "Northwest Territories": {
+  "climate": "January -21.8°C, July 17.3°C, 452 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Fort Liard A (32 km from this riding).",
+  "station": "FORT LIARD A",
+  "station_km": 31.6,
+  "jan_c": -21.75,
+  "jul_c": 17.34,
+  "precip_mm": 451.7
+ },
+ "Yukon": {
+  "climate": "January -25.2°C, July 14.1°C, 417 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Beaver Creek A (9 km from this riding).",
+  "station": "BEAVER CREEK A",
+  "station_km": 9.1,
+  "jan_c": -25.21,
+  "jul_c": 14.08,
+  "precip_mm": 417.26
+ },
+ "West Vancouver—Sunshine Coast—Sea to Sky Country": {
+  "climate": "January 4.1°C, July 18.0°C, 1189 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Vancouver Int'L A (10 km from this riding).",
+  "station": "VANCOUVER INT'L A",
+  "station_km": 9.5,
+  "jan_c": 4.13,
+  "jul_c": 17.96,
+  "precip_mm": 1189.01
+ },
+ "Victoria": {
+  "climate": "January 5.7°C, July 16.4°C, 944 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station William Head (13 km from this riding).",
+  "station": "WILLIAM HEAD",
+  "station_km": 12.8,
+  "jan_c": 5.71,
+  "jul_c": 16.41,
+  "precip_mm": 944.11
+ },
+ "Vernon—Lake Country—Monashee": {
+  "climate": "January -5.1°C, July 15.6°C, 596 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Joe Rich Creek (0 km from this riding).",
+  "station": "JOE RICH CREEK",
+  "station_km": 0.3,
+  "jan_c": -5.12,
+  "jul_c": 15.6,
+  "precip_mm": 596.23
+ },
+ "Kamloops—Shuswap—Central Rockies": {
+  "climate": "January -2.8°C, July 21.5°C, 278 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kamloops A (7 km from this riding).",
+  "station": "KAMLOOPS A",
+  "station_km": 7.5,
+  "jan_c": -2.75,
+  "jul_c": 21.54,
+  "precip_mm": 277.63
+ },
+ "Fleetwood—Port Kells": {
+  "climate": "January 3.2°C, July 17.7°C, 1788 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Haney East (10 km from this riding).",
+  "station": "HANEY EAST",
+  "station_km": 9.7,
+  "jan_c": 3.21,
+  "jul_c": 17.71,
+  "precip_mm": 1787.76
+ },
+ "Esquimalt—Saanich—Sooke": {
+  "climate": "January 4.8°C, July 17.0°C, 908 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saanichton Cda (6 km from this riding).",
+  "station": "SAANICHTON CDA",
+  "station_km": 6.2,
+  "jan_c": 4.81,
+  "jul_c": 17.02,
+  "precip_mm": 908.22
+ },
+ "Delta": {
+  "climate": "January 4.0°C, July 18.3°C, 1262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Nature Park (5 km from this riding).",
+  "station": "RICHMOND NATURE PARK",
+  "station_km": 4.8,
+  "jan_c": 3.97,
+  "jul_c": 18.28,
+  "precip_mm": 1262.43
+ },
+ "Cowichan—Malahat—Langford": {
+  "climate": "January 4.0°C, July 16.3°C, 3656 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Nitinat River Hatchery (0 km from this riding).",
+  "station": "NITINAT RIVER HATCHERY",
+  "station_km": 0.3,
+  "jan_c": 3.95,
+  "jul_c": 16.27,
+  "precip_mm": 3656.37
+ },
+ "Courtenay—Alberni": {
+  "climate": "January 4.0°C, July 16.3°C, 3656 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Nitinat River Hatchery (0 km from this riding).",
+  "station": "NITINAT RIVER HATCHERY",
+  "station_km": 0.3,
+  "jan_c": 3.95,
+  "jul_c": 16.27,
+  "precip_mm": 3656.37
+ },
+ "Coquitlam—Port Coquitlam": {
+  "climate": "January 3.0°C, July 18.0°C, 2155 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Pitt Polder (3 km from this riding).",
+  "station": "PITT POLDER",
+  "station_km": 3.1,
+  "jan_c": 3.05,
+  "jul_c": 18.01,
+  "precip_mm": 2155.41
+ },
+ "Columbia—Kootenay—Southern Rockies": {
+  "climate": "January -1.8°C, July 20.4°C, 779 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Warfield (0 km from this riding).",
+  "station": "WARFIELD",
+  "station_km": 0.2,
+  "jan_c": -1.76,
+  "jul_c": 20.41,
+  "precip_mm": 779.01
+ },
+ "Cloverdale—Langley City": {
+  "climate": "January 3.2°C, July 17.7°C, 1788 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Haney East (11 km from this riding).",
+  "station": "HANEY EAST",
+  "station_km": 10.8,
+  "jan_c": 3.21,
+  "jul_c": 17.71,
+  "precip_mm": 1787.76
+ },
+ "Chilliwack—Hope": {
+  "climate": "January 3.4°C, July 18.5°C, 1754 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Agassiz Cda (2 km from this riding).",
+  "station": "AGASSIZ CDA",
+  "station_km": 1.7,
+  "jan_c": 3.39,
+  "jul_c": 18.46,
+  "precip_mm": 1754.11
+ },
+ "Cariboo—Prince George": {
+  "climate": "January -6.7°C, July 16.6°C, 558 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Prince George Stp (0 km from this riding).",
+  "station": "PRINCE GEORGE STP",
+  "station_km": 0.4,
+  "jan_c": -6.71,
+  "jul_c": 16.57,
+  "precip_mm": 558.06
+ },
+ "Burnaby North—Seymour": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (1 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 0.8,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "Burnaby Central": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (1 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 0.8,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "Abbotsford—South Langley": {
+  "climate": "January 3.6°C, July 18.1°C, 1538 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Abbotsford A (4 km from this riding).",
+  "station": "ABBOTSFORD A",
+  "station_km": 3.9,
+  "jan_c": 3.59,
+  "jul_c": 18.11,
+  "precip_mm": 1537.76
+ },
+ "Yellowhead": {
+  "climate": "January -10.1°C, July 15.7°C, 550 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Eckville South (3 km from this riding).",
+  "station": "ECKVILLE SOUTH",
+  "station_km": 2.9,
+  "jan_c": -10.12,
+  "jul_c": 15.7,
+  "precip_mm": 549.56
+ },
+ "St. Albert—Sturgeon River": {
+  "climate": "January -11.9°C, July 17.1°C, 455 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Fort Saskatchewan (2 km from this riding).",
+  "station": "FORT SASKATCHEWAN",
+  "station_km": 1.8,
+  "jan_c": -11.94,
+  "jul_c": 17.09,
+  "precip_mm": 454.61
+ },
+ "Sherwood Park—Fort Saskatchewan": {
+  "climate": "January -11.9°C, July 17.1°C, 455 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Fort Saskatchewan (2 km from this riding).",
+  "station": "FORT SASKATCHEWAN",
+  "station_km": 1.8,
+  "jan_c": -11.94,
+  "jul_c": 17.09,
+  "precip_mm": 454.61
+ },
+ "Red Deer": {
+  "climate": "January -11.6°C, July 15.9°C, 487 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Red Deer A (2 km from this riding).",
+  "station": "RED DEER A",
+  "station_km": 2.4,
+  "jan_c": -11.59,
+  "jul_c": 15.93,
+  "precip_mm": 486.98
+ },
+ "Ponoka—Didsbury": {
+  "climate": "January -11.6°C, July 15.9°C, 487 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Red Deer A (2 km from this riding).",
+  "station": "RED DEER A",
+  "station_km": 2.4,
+  "jan_c": -11.59,
+  "jul_c": 15.93,
+  "precip_mm": 486.98
+ },
+ "Peace River—Westlock": {
+  "climate": "January -14.9°C, July 16.3°C, 386 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Peace River A (3 km from this riding).",
+  "station": "PEACE RIVER A",
+  "station_km": 2.6,
+  "jan_c": -14.94,
+  "jul_c": 16.33,
+  "precip_mm": 386.34
+ },
+ "Parkland": {
+  "climate": "January -11.1°C, July 16.4°C, 508 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton Woodbend (4 km from this riding).",
+  "station": "EDMONTON WOODBEND",
+  "station_km": 4.3,
+  "jan_c": -11.08,
+  "jul_c": 16.4,
+  "precip_mm": 507.95
+ },
+ "Medicine Hat—Cardston—Warner": {
+  "climate": "January -6.0°C, July 18.2°C, 380 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Lethbridge A (7 km from this riding).",
+  "station": "LETHBRIDGE A",
+  "station_km": 7.2,
+  "jan_c": -6.01,
+  "jul_c": 18.22,
+  "precip_mm": 380.18
+ },
+ "Lethbridge": {
+  "climate": "January -6.8°C, July 17.4°C, 400 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Monarch (2 km from this riding).",
+  "station": "MONARCH",
+  "station_km": 2.0,
+  "jan_c": -6.82,
+  "jul_c": 17.41,
+  "precip_mm": 399.71
+ },
+ "Leduc—Wetaskiwin": {
+  "climate": "January -12.1°C, July 16.2°C, 446 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton Int'L A (3 km from this riding).",
+  "station": "EDMONTON INT'L A",
+  "station_km": 3.0,
+  "jan_c": -12.05,
+  "jul_c": 16.2,
+  "precip_mm": 446.08
+ },
+ "Lakeland": {
+  "climate": "January -10.7°C, July 16.7°C, 474 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Tofield North (4 km from this riding).",
+  "station": "TOFIELD NORTH",
+  "station_km": 3.7,
+  "jan_c": -10.65,
+  "jul_c": 16.73,
+  "precip_mm": 474.28
+ },
+ "Grande Prairie": {
+  "climate": "January -14.9°C, July 16.3°C, 386 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Peace River A (3 km from this riding).",
+  "station": "PEACE RIVER A",
+  "station_km": 2.6,
+  "jan_c": -14.94,
+  "jul_c": 16.33,
+  "precip_mm": 386.34
+ },
+ "Fort McMurray—Cold Lake": {
+  "climate": "January -14.4°C, July 16.2°C, 479 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St Lina (5 km from this riding).",
+  "station": "ST LINA",
+  "station_km": 5.3,
+  "jan_c": -14.39,
+  "jul_c": 16.16,
+  "precip_mm": 478.62
+ },
+ "Foothills": {
+  "climate": "January -6.8°C, July 17.4°C, 400 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Monarch (2 km from this riding).",
+  "station": "MONARCH",
+  "station_km": 2.0,
+  "jan_c": -6.82,
+  "jul_c": 17.41,
+  "precip_mm": 399.71
+ },
+ "Edmonton West": {
+  "climate": "January -11.1°C, July 16.4°C, 508 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton Woodbend (4 km from this riding).",
+  "station": "EDMONTON WOODBEND",
+  "station_km": 4.3,
+  "jan_c": -11.08,
+  "jul_c": 16.4,
+  "precip_mm": 507.95
+ },
+ "Edmonton Strathcona": {
+  "climate": "January -10.4°C, July 17.7°C, 456 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton City Centre A (4 km from this riding).",
+  "station": "EDMONTON CITY CENTRE A",
+  "station_km": 4.1,
+  "jan_c": -10.42,
+  "jul_c": 17.71,
+  "precip_mm": 455.72
+ },
+ "Edmonton Southeast": {
+  "climate": "January -10.4°C, July 17.7°C, 456 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton City Centre A (11 km from this riding).",
+  "station": "EDMONTON CITY CENTRE A",
+  "station_km": 11.0,
+  "jan_c": -10.42,
+  "jul_c": 17.71,
+  "precip_mm": 455.72
+ },
+ "Edmonton Riverbend": {
+  "climate": "January -12.1°C, July 16.2°C, 446 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton Int'L A (3 km from this riding).",
+  "station": "EDMONTON INT'L A",
+  "station_km": 3.0,
+  "jan_c": -12.05,
+  "jul_c": 16.2,
+  "precip_mm": 446.08
+ },
+ "Edmonton Northwest": {
+  "climate": "January -10.4°C, July 17.7°C, 456 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton City Centre A (3 km from this riding).",
+  "station": "EDMONTON CITY CENTRE A",
+  "station_km": 2.6,
+  "jan_c": -10.42,
+  "jul_c": 17.71,
+  "precip_mm": 455.72
+ },
+ "Edmonton Manning": {
+  "climate": "January -10.4°C, July 17.7°C, 456 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton City Centre A (5 km from this riding).",
+  "station": "EDMONTON CITY CENTRE A",
+  "station_km": 5.1,
+  "jan_c": -10.42,
+  "jul_c": 17.71,
+  "precip_mm": 455.72
+ },
+ "Edmonton Griesbach": {
+  "climate": "January -10.4°C, July 17.7°C, 456 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton City Centre A (1 km from this riding).",
+  "station": "EDMONTON CITY CENTRE A",
+  "station_km": 0.9,
+  "jan_c": -10.42,
+  "jul_c": 17.71,
+  "precip_mm": 455.72
+ },
+ "Edmonton Gateway": {
+  "climate": "January -12.1°C, July 16.2°C, 446 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton Int'L A (9 km from this riding).",
+  "station": "EDMONTON INT'L A",
+  "station_km": 8.9,
+  "jan_c": -12.05,
+  "jul_c": 16.2,
+  "precip_mm": 446.08
+ },
+ "Edmonton Centre": {
+  "climate": "January -10.4°C, July 17.7°C, 456 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Edmonton City Centre A (1 km from this riding).",
+  "station": "EDMONTON CITY CENTRE A",
+  "station_km": 0.9,
+  "jan_c": -10.42,
+  "jul_c": 17.71,
+  "precip_mm": 455.72
+ },
+ "Calgary Skyview": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (5 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 4.6,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary Signal Hill": {
+  "climate": "January -8.2°C, July 14.8°C, 470 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Springbank A (6 km from this riding).",
+  "station": "SPRINGBANK A",
+  "station_km": 5.6,
+  "jan_c": -8.18,
+  "jul_c": 14.8,
+  "precip_mm": 469.63
+ },
+ "Calgary Shepard": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (16 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 15.5,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary Nose Hill": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (2 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 1.9,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary Midnapore": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (13 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 13.4,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary McKnight": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (2 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 1.9,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary Heritage": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (14 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 14.0,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary East": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (4 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 4.1,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary Crowfoot": {
+  "climate": "January -8.2°C, July 14.8°C, 470 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Springbank A (5 km from this riding).",
+  "station": "SPRINGBANK A",
+  "station_km": 5.4,
+  "jan_c": -8.18,
+  "jul_c": 14.8,
+  "precip_mm": 469.63
+ },
+ "Calgary Confederation": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (4 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 3.7,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Calgary Centre": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (7 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 7.2,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Bow River": {
+  "climate": "January -7.1°C, July 16.5°C, 419 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Calgary Int'L A (8 km from this riding).",
+  "station": "CALGARY INT'L A",
+  "station_km": 7.6,
+  "jan_c": -7.09,
+  "jul_c": 16.51,
+  "precip_mm": 418.82
+ },
+ "Battle River—Crowfoot": {
+  "climate": "January -12.0°C, July 19.8°C, 312 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Empress (0 km from this riding).",
+  "station": "EMPRESS",
+  "station_km": 0.3,
+  "jan_c": -11.99,
+  "jul_c": 19.79,
+  "precip_mm": 311.56
+ },
+ "Airdrie—Cochrane": {
+  "climate": "January -8.2°C, July 14.8°C, 470 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Springbank A (7 km from this riding).",
+  "station": "SPRINGBANK A",
+  "station_km": 7.0,
+  "jan_c": -8.18,
+  "jul_c": 14.8,
+  "precip_mm": 469.63
+ },
+ "Yorkton—Melville": {
+  "climate": "January -14.9°C, July 19.2°C, 464 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Rocanville (3 km from this riding).",
+  "station": "ROCANVILLE",
+  "station_km": 2.6,
+  "jan_c": -14.9,
+  "jul_c": 19.23,
+  "precip_mm": 463.93
+ },
+ "Swift Current—Grasslands—Kindersley": {
+  "climate": "January -12.0°C, July 19.8°C, 312 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Empress (0 km from this riding).",
+  "station": "EMPRESS",
+  "station_km": 0.3,
+  "jan_c": -11.99,
+  "jul_c": 19.79,
+  "precip_mm": 311.56
+ },
+ "Souris—Moose Mountain": {
+  "climate": "January -14.9°C, July 19.2°C, 464 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Rocanville (3 km from this riding).",
+  "station": "ROCANVILLE",
+  "station_km": 2.6,
+  "jan_c": -14.9,
+  "jul_c": 19.23,
+  "precip_mm": 463.93
+ },
+ "Saskatoon West": {
+  "climate": "January -15.4°C, July 18.5°C, 354 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saskatoon Diefenbaker Int'L A (0 km from this riding).",
+  "station": "SASKATOON DIEFENBAKER INT'L A",
+  "station_km": 0.3,
+  "jan_c": -15.45,
+  "jul_c": 18.46,
+  "precip_mm": 353.74
+ },
+ "Saskatoon—University": {
+  "climate": "January -13.7°C, July 19.6°C, 364 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saskatoon Water Tp (0 km from this riding).",
+  "station": "SASKATOON WATER TP",
+  "station_km": 0.4,
+  "jan_c": -13.68,
+  "jul_c": 19.59,
+  "precip_mm": 364.5
+ },
+ "Saskatoon South": {
+  "climate": "January -13.7°C, July 19.6°C, 364 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saskatoon Water Tp (0 km from this riding).",
+  "station": "SASKATOON WATER TP",
+  "station_km": 0.4,
+  "jan_c": -13.68,
+  "jul_c": 19.59,
+  "precip_mm": 364.5
+ },
+ "Regina—Wascana": {
+  "climate": "January -14.7°C, July 18.9°C, 390 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Regina Int'L A (4 km from this riding).",
+  "station": "REGINA INT'L A",
+  "station_km": 4.0,
+  "jan_c": -14.68,
+  "jul_c": 18.91,
+  "precip_mm": 389.67
+ },
+ "Regina—Qu'Appelle": {
+  "climate": "January -14.7°C, July 18.9°C, 390 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Regina Int'L A (2 km from this riding).",
+  "station": "REGINA INT'L A",
+  "station_km": 2.3,
+  "jan_c": -14.68,
+  "jul_c": 18.91,
+  "precip_mm": 389.67
+ },
+ "Regina—Lewvan": {
+  "climate": "January -14.7°C, July 18.9°C, 390 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Regina Int'L A (2 km from this riding).",
+  "station": "REGINA INT'L A",
+  "station_km": 1.8,
+  "jan_c": -14.68,
+  "jul_c": 18.91,
+  "precip_mm": 389.67
+ },
+ "Prince Albert": {
+  "climate": "January -18.2°C, July 18.0°C, 447 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Aylsham (3 km from this riding).",
+  "station": "AYLSHAM",
+  "station_km": 3.0,
+  "jan_c": -18.19,
+  "jul_c": 17.97,
+  "precip_mm": 447.08
+ },
+ "Moose Jaw—Lake Centre—Lanigan": {
+  "climate": "January -13.1°C, July 18.9°C, 349 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Outlook Pfra (2 km from this riding).",
+  "station": "OUTLOOK PFRA",
+  "station_km": 1.7,
+  "jan_c": -13.11,
+  "jul_c": 18.9,
+  "precip_mm": 348.61
+ },
+ "Desnethé—Missinippi—Churchill River": {
+  "climate": "January -18.9°C, July 18.9°C, 458 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Flin Flon (0 km from this riding).",
+  "station": "FLIN FLON",
+  "station_km": 0.5,
+  "jan_c": -18.86,
+  "jul_c": 18.9,
+  "precip_mm": 457.6
+ },
+ "Pickering—Brooklin": {
+  "climate": "January -7.4°C, July 20.0°C, 921 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burketon Mclaughlin (12 km from this riding).",
+  "station": "BURKETON MCLAUGHLIN",
+  "station_km": 12.3,
+  "jan_c": -7.38,
+  "jul_c": 19.98,
+  "precip_mm": 920.55
+ },
+ "Peterborough": {
+  "climate": "January -8.5°C, July 19.6°C, 855 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Peterborough A (2 km from this riding).",
+  "station": "PETERBOROUGH A",
+  "station_km": 1.7,
+  "jan_c": -8.47,
+  "jul_c": 19.63,
+  "precip_mm": 855.32
+ },
+ "Perth—Wellington": {
+  "climate": "January -7.2°C, July 19.8°C, 1014 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Glen Allan (5 km from this riding).",
+  "station": "GLEN ALLAN",
+  "station_km": 5.3,
+  "jan_c": -7.2,
+  "jul_c": 19.83,
+  "precip_mm": 1014.47
+ },
+ "Parry Sound—Muskoka": {
+  "climate": "January -11.7°C, July 18.1°C, 1186 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Dwight (2 km from this riding).",
+  "station": "DWIGHT",
+  "station_km": 2.3,
+  "jan_c": -11.65,
+  "jul_c": 18.09,
+  "precip_mm": 1185.59
+ },
+ "Oxford": {
+  "climate": "January -6.5°C, July 20.4°C, 919 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Roseville (3 km from this riding).",
+  "station": "ROSEVILLE",
+  "station_km": 2.5,
+  "jan_c": -6.46,
+  "jul_c": 20.45,
+  "precip_mm": 918.73
+ },
+ "Ottawa West—Nepean": {
+  "climate": "January -10.2°C, July 21.2°C, 920 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Cda (1 km from this riding).",
+  "station": "OTTAWA CDA",
+  "station_km": 1.0,
+  "jan_c": -10.16,
+  "jul_c": 21.16,
+  "precip_mm": 919.51
+ },
+ "Ottawa—Vanier—Gloucester": {
+  "climate": "January -10.2°C, July 21.2°C, 920 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Cda (5 km from this riding).",
+  "station": "OTTAWA CDA",
+  "station_km": 4.8,
+  "jan_c": -10.16,
+  "jul_c": 21.16,
+  "precip_mm": 919.51
+ },
+ "Ottawa South": {
+  "climate": "January -10.3°C, July 21.0°C, 943 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Macdonald-Cartier Int'L A (2 km from this riding).",
+  "station": "OTTAWA MACDONALD-CARTIER INT'L A",
+  "station_km": 1.5,
+  "jan_c": -10.32,
+  "jul_c": 21.03,
+  "precip_mm": 943.38
+ },
+ "Ottawa Centre": {
+  "climate": "January -10.2°C, July 21.2°C, 920 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Cda (1 km from this riding).",
+  "station": "OTTAWA CDA",
+  "station_km": 1.0,
+  "jan_c": -10.16,
+  "jul_c": 21.16,
+  "precip_mm": 919.51
+ },
+ "Oshawa": {
+  "climate": "January -4.8°C, July 20.6°C, 872 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Oshawa Wpcp (3 km from this riding).",
+  "station": "OSHAWA WPCP",
+  "station_km": 2.9,
+  "jan_c": -4.76,
+  "jul_c": 20.55,
+  "precip_mm": 871.91
+ },
+ "Orléans": {
+  "climate": "January -11.7°C, July 19.5°C, 1006 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Angers (6 km from this riding).",
+  "station": "ANGERS",
+  "station_km": 6.1,
+  "jan_c": -11.65,
+  "jul_c": 19.51,
+  "precip_mm": 1006.5
+ },
+ "Oakville West": {
+  "climate": "January -5.5°C, July 20.8°C, 1004 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Millgrove (18 km from this riding).",
+  "station": "MILLGROVE",
+  "station_km": 18.2,
+  "jan_c": -5.51,
+  "jul_c": 20.77,
+  "precip_mm": 1004.47
+ },
+ "Oakville East": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (18 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 17.6,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Northumberland—Clarke": {
+  "climate": "January -5.6°C, July 20.0°C, 866 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Bowmanville Mostert (3 km from this riding).",
+  "station": "BOWMANVILLE MOSTERT",
+  "station_km": 3.0,
+  "jan_c": -5.64,
+  "jul_c": 20.02,
+  "precip_mm": 866.45
+ },
+ "Nipissing—Timiskaming": {
+  "climate": "January -11.7°C, July 18.1°C, 1186 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Dwight (5 km from this riding).",
+  "station": "DWIGHT",
+  "station_km": 4.7,
+  "jan_c": -11.65,
+  "jul_c": 18.09,
+  "precip_mm": 1185.59
+ },
+ "Niagara West": {
+  "climate": "January -3.6°C, July 21.9°C, 985 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Port Colborne (2 km from this riding).",
+  "station": "PORT COLBORNE",
+  "station_km": 2.5,
+  "jan_c": -3.65,
+  "jul_c": 21.86,
+  "precip_mm": 984.57
+ },
+ "Niagara South": {
+  "climate": "January -3.6°C, July 21.9°C, 985 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Port Colborne (2 km from this riding).",
+  "station": "PORT COLBORNE",
+  "station_km": 2.5,
+  "jan_c": -3.65,
+  "jul_c": 21.86,
+  "precip_mm": 984.57
+ },
+ "Niagara Falls—Niagara-on-the-Lake": {
+  "climate": "January -4.1°C, July 22.2°C, 947 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Niagara Falls Npcsh (0 km from this riding).",
+  "station": "NIAGARA FALLS NPCSH",
+  "station_km": 0.2,
+  "jan_c": -4.12,
+  "jul_c": 22.22,
+  "precip_mm": 947.49
+ },
+ "New Tecumseth—Gwillimbury": {
+  "climate": "January -6.5°C, July 21.0°C, 834 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Alliston Nelson (1 km from this riding).",
+  "station": "ALLISTON NELSON",
+  "station_km": 1.0,
+  "jan_c": -6.47,
+  "jul_c": 21.02,
+  "precip_mm": 834.37
+ },
+ "Newmarket—Aurora": {
+  "climate": "January -7.4°C, July 20.5°C, 858 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station King Smoke Tree (1 km from this riding).",
+  "station": "KING SMOKE TREE",
+  "station_km": 1.3,
+  "jan_c": -7.37,
+  "jul_c": 20.47,
+  "precip_mm": 857.58
+ },
+ "Nepean": {
+  "climate": "January -10.3°C, July 21.0°C, 943 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Macdonald-Cartier Int'L A (2 km from this riding).",
+  "station": "OTTAWA MACDONALD-CARTIER INT'L A",
+  "station_km": 2.1,
+  "jan_c": -10.32,
+  "jul_c": 21.03,
+  "precip_mm": 943.38
+ },
+ "Mississauga—Streetsville": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (8 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 7.9,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Mississauga—Malton": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (3 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 2.6,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Mississauga—Lakeshore": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (9 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 9.1,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Mississauga—Erin Mills": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (13 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 13.3,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Mississauga East—Cooksville": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (4 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 3.8,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Mississauga Centre": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (7 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 7.4,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Milton East—Halton Hills South": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (3 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 2.6,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Middlesex—London": {
+  "climate": "January -5.5°C, July 20.8°C, 1012 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station London Int'L Airport (1 km from this riding).",
+  "station": "LONDON INT'L AIRPORT",
+  "station_km": 1.5,
+  "jan_c": -5.55,
+  "jul_c": 20.77,
+  "precip_mm": 1011.54
+ },
+ "Vancouver Quadra": {
+  "climate": "January 4.1°C, July 18.0°C, 1189 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Vancouver Int'L A (2 km from this riding).",
+  "station": "VANCOUVER INT'L A",
+  "station_km": 2.3,
+  "jan_c": 4.13,
+  "jul_c": 17.96,
+  "precip_mm": 1189.01
+ },
+ "Vancouver Kingsway": {
+  "climate": "January 4.0°C, July 18.3°C, 1262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Nature Park (6 km from this riding).",
+  "station": "RICHMOND NATURE PARK",
+  "station_km": 6.1,
+  "jan_c": 3.97,
+  "jul_c": 18.28,
+  "precip_mm": 1262.43
+ },
+ "Vancouver Granville": {
+  "climate": "January 4.0°C, July 18.3°C, 1262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Nature Park (4 km from this riding).",
+  "station": "RICHMOND NATURE PARK",
+  "station_km": 3.7,
+  "jan_c": 3.97,
+  "jul_c": 18.28,
+  "precip_mm": 1262.43
+ },
+ "Vancouver Fraserview—South Burnaby": {
+  "climate": "January 4.0°C, July 18.3°C, 1262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Nature Park (4 km from this riding).",
+  "station": "RICHMOND NATURE PARK",
+  "station_km": 3.8,
+  "jan_c": 3.97,
+  "jul_c": 18.28,
+  "precip_mm": 1262.43
+ },
+ "Vancouver East": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (8 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 7.8,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "Vancouver Centre": {
+  "climate": "January 4.1°C, July 18.0°C, 1189 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Vancouver Int'L A (9 km from this riding).",
+  "station": "VANCOUVER INT'L A",
+  "station_km": 9.2,
+  "jan_c": 4.13,
+  "jul_c": 17.96,
+  "precip_mm": 1189.01
+ },
+ "Surrey Newton": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (13 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 13.0,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "Surrey Centre": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (7 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 7.0,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "South Surrey—White Rock": {
+  "climate": "January 3.2°C, July 17.7°C, 1788 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Haney East (14 km from this riding).",
+  "station": "HANEY EAST",
+  "station_km": 14.2,
+  "jan_c": 3.21,
+  "jul_c": 17.71,
+  "precip_mm": 1787.76
+ },
+ "Skeena—Bulkley Valley": {
+  "climate": "January -7.9°C, July 14.5°C, 1427 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Pleasant Camp (0 km from this riding).",
+  "station": "PLEASANT CAMP",
+  "station_km": 0.4,
+  "jan_c": -7.91,
+  "jul_c": 14.54,
+  "precip_mm": 1426.9
+ },
+ "Similkameen—South Okanagan—West Kootenay": {
+  "climate": "January -1.8°C, July 20.4°C, 779 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Warfield (0 km from this riding).",
+  "station": "WARFIELD",
+  "station_km": 0.2,
+  "jan_c": -1.76,
+  "jul_c": 20.41,
+  "precip_mm": 779.01
+ },
+ "Saanich—Gulf Islands": {
+  "climate": "January 4.3°C, July 18.1°C, 987 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saltspring St Mary'S L (4 km from this riding).",
+  "station": "SALTSPRING ST MARY'S L",
+  "station_km": 4.4,
+  "jan_c": 4.28,
+  "jul_c": 18.14,
+  "precip_mm": 986.96
+ },
+ "Richmond East—Steveston": {
+  "climate": "January 4.0°C, July 18.3°C, 1262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Nature Park (2 km from this riding).",
+  "station": "RICHMOND NATURE PARK",
+  "station_km": 1.5,
+  "jan_c": 3.97,
+  "jul_c": 18.28,
+  "precip_mm": 1262.43
+ },
+ "Richmond Centre—Marpole": {
+  "climate": "January 4.0°C, July 18.3°C, 1262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Nature Park (2 km from this riding).",
+  "station": "RICHMOND NATURE PARK",
+  "station_km": 1.5,
+  "jan_c": 3.97,
+  "jul_c": 18.28,
+  "precip_mm": 1262.43
+ },
+ "Prince George—Peace River—Northern Rockies": {
+  "climate": "January -6.7°C, July 16.6°C, 558 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Prince George Stp (0 km from this riding).",
+  "station": "PRINCE GEORGE STP",
+  "station_km": 0.4,
+  "jan_c": -6.71,
+  "jul_c": 16.57,
+  "precip_mm": 558.06
+ },
+ "Port Moody—Coquitlam": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (1 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 1.4,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "Pitt Meadows—Maple Ridge": {
+  "climate": "January 3.2°C, July 17.7°C, 1788 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Haney East (2 km from this riding).",
+  "station": "HANEY EAST",
+  "station_km": 2.3,
+  "jan_c": 3.21,
+  "jul_c": 17.71,
+  "precip_mm": 1787.76
+ },
+ "Okanagan Lake West—South Kelowna": {
+  "climate": "January -0.7°C, July 20.7°C, 345 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kelowna Pc Burnetts Nursery (1 km from this riding).",
+  "station": "KELOWNA PC BURNETTS NURSERY",
+  "station_km": 1.0,
+  "jan_c": -0.71,
+  "jul_c": 20.68,
+  "precip_mm": 344.52
+ },
+ "North Vancouver—Capilano": {
+  "climate": "January 2.1°C, July 17.0°C, 3860 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station N Van Seymour Hatchery (3 km from this riding).",
+  "station": "N VAN SEYMOUR HATCHERY",
+  "station_km": 3.2,
+  "jan_c": 2.11,
+  "jul_c": 16.96,
+  "precip_mm": 3859.7
+ },
+ "North Island—Powell River": {
+  "climate": "January 4.7°C, July 14.9°C, 3262 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Addenbroke Island (3 km from this riding).",
+  "station": "ADDENBROKE ISLAND",
+  "station_km": 3.0,
+  "jan_c": 4.65,
+  "jul_c": 14.87,
+  "precip_mm": 3262.22
+ },
+ "New Westminster—Burnaby—Maillardville": {
+  "climate": "January 3.6°C, July 17.0°C, 2010 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burnaby Simon Fraser U (4 km from this riding).",
+  "station": "BURNABY SIMON FRASER U",
+  "station_km": 3.7,
+  "jan_c": 3.61,
+  "jul_c": 16.97,
+  "precip_mm": 2009.94
+ },
+ "Nanaimo—Ladysmith": {
+  "climate": "January 2.8°C, July 17.2°C, 1138 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Coombs (8 km from this riding).",
+  "station": "COOMBS",
+  "station_km": 7.8,
+  "jan_c": 2.81,
+  "jul_c": 17.23,
+  "precip_mm": 1138.47
+ },
+ "Mission—Matsqui—Abbotsford": {
+  "climate": "January 3.4°C, July 18.5°C, 1754 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Agassiz Cda (2 km from this riding).",
+  "station": "AGASSIZ CDA",
+  "station_km": 1.7,
+  "jan_c": 3.39,
+  "jul_c": 18.46,
+  "precip_mm": 1754.11
+ },
+ "Langley Township—Fraser Heights": {
+  "climate": "January 3.2°C, July 17.7°C, 1788 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Haney East (2 km from this riding).",
+  "station": "HANEY EAST",
+  "station_km": 2.3,
+  "jan_c": 3.21,
+  "jul_c": 17.71,
+  "precip_mm": 1787.76
+ },
+ "Kelowna": {
+  "climate": "January -5.1°C, July 15.6°C, 596 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Joe Rich Creek (0 km from this riding).",
+  "station": "JOE RICH CREEK",
+  "station_km": 0.3,
+  "jan_c": -5.12,
+  "jul_c": 15.6,
+  "precip_mm": 596.23
+ },
+ "Kamloops—Thompson—Nicola": {
+  "climate": "January -2.8°C, July 21.5°C, 278 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kamloops A (7 km from this riding).",
+  "station": "KAMLOOPS A",
+  "station_km": 7.5,
+  "jan_c": -2.75,
+  "jul_c": 21.54,
+  "precip_mm": 277.63
+ },
+ "Markham—Unionville": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (1 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 1.3,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Markham—Thornhill": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (3 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 2.8,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Markham—Stouffville": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (7 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 7.0,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "London West": {
+  "climate": "January -5.6°C, July 21.2°C, 1024 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ilderton Bear Creek (8 km from this riding).",
+  "station": "ILDERTON BEAR CREEK",
+  "station_km": 7.9,
+  "jan_c": -5.61,
+  "jul_c": 21.22,
+  "precip_mm": 1023.57
+ },
+ "London—Fanshawe": {
+  "climate": "January -5.5°C, July 20.8°C, 1012 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station London Int'L Airport (1 km from this riding).",
+  "station": "LONDON INT'L AIRPORT",
+  "station_km": 1.5,
+  "jan_c": -5.55,
+  "jul_c": 20.77,
+  "precip_mm": 1011.54
+ },
+ "London Centre": {
+  "climate": "January -5.5°C, July 20.8°C, 1012 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station London Int'L Airport (5 km from this riding).",
+  "station": "LONDON INT'L AIRPORT",
+  "station_km": 5.4,
+  "jan_c": -5.55,
+  "jul_c": 20.77,
+  "precip_mm": 1011.54
+ },
+ "Leeds—Grenville—Thousand Islands—Rideau Lakes": {
+  "climate": "January -7.8°C, July 21.1°C, 987 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Brockville Pcc (1 km from this riding).",
+  "station": "BROCKVILLE PCC",
+  "station_km": 1.0,
+  "jan_c": -7.82,
+  "jul_c": 21.15,
+  "precip_mm": 986.76
+ },
+ "Lanark—Frontenac": {
+  "climate": "January -8.3°C, July 20.8°C, 978 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hartington Ihd (6 km from this riding).",
+  "station": "HARTINGTON IHD",
+  "station_km": 5.5,
+  "jan_c": -8.34,
+  "jul_c": 20.76,
+  "precip_mm": 977.67
+ },
+ "Kitchener South—Hespeler": {
+  "climate": "January -6.5°C, July 20.0°C, 916 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Waterloo Wellington A (1 km from this riding).",
+  "station": "WATERLOO WELLINGTON A",
+  "station_km": 0.5,
+  "jan_c": -6.47,
+  "jul_c": 20.03,
+  "precip_mm": 916.48
+ },
+ "Kitchener—Conestoga": {
+  "climate": "January -6.5°C, July 20.0°C, 916 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Waterloo Wellington A (1 km from this riding).",
+  "station": "WATERLOO WELLINGTON A",
+  "station_km": 0.5,
+  "jan_c": -6.47,
+  "jul_c": 20.03,
+  "precip_mm": 916.48
+ },
+ "Kitchener Centre": {
+  "climate": "January -6.5°C, July 20.0°C, 916 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Waterloo Wellington A (1 km from this riding).",
+  "station": "WATERLOO WELLINGTON A",
+  "station_km": 0.7,
+  "jan_c": -6.47,
+  "jul_c": 20.03,
+  "precip_mm": 916.48
+ },
+ "King—Vaughan": {
+  "climate": "January -7.4°C, July 20.5°C, 858 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station King Smoke Tree (1 km from this riding).",
+  "station": "KING SMOKE TREE",
+  "station_km": 1.3,
+  "jan_c": -7.37,
+  "jul_c": 20.47,
+  "precip_mm": 857.58
+ },
+ "Kingston and the Islands": {
+  "climate": "January -8.3°C, July 20.8°C, 978 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hartington Ihd (8 km from this riding).",
+  "station": "HARTINGTON IHD",
+  "station_km": 8.3,
+  "jan_c": -8.34,
+  "jul_c": 20.76,
+  "precip_mm": 977.67
+ },
+ "Kenora—Kiiwetinoong": {
+  "climate": "January -17.0°C, July 19.1°C, 631 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Indian Bay (4 km from this riding).",
+  "station": "INDIAN BAY",
+  "station_km": 4.0,
+  "jan_c": -16.97,
+  "jul_c": 19.08,
+  "precip_mm": 630.8
+ },
+ "Kapuskasing—Timmins—Mushkegowuk": {
+  "climate": "January -20.0°C, July 15.8°C, 704 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Moosonee Ua (18 km from this riding).",
+  "station": "MOOSONEE UA",
+  "station_km": 18.3,
+  "jan_c": -19.98,
+  "jul_c": 15.75,
+  "precip_mm": 703.56
+ },
+ "Kanata": {
+  "climate": "January -10.2°C, July 21.2°C, 920 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Cda (9 km from this riding).",
+  "station": "OTTAWA CDA",
+  "station_km": 9.1,
+  "jan_c": -10.16,
+  "jul_c": 21.16,
+  "precip_mm": 919.51
+ },
+ "Huron—Bruce": {
+  "climate": "January -6.8°C, July 19.6°C, 1087 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hanover (2 km from this riding).",
+  "station": "HANOVER",
+  "station_km": 1.6,
+  "jan_c": -6.82,
+  "jul_c": 19.63,
+  "precip_mm": 1087.12
+ },
+ "Humber River—Black Creek": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (8 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 8.3,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Hastings—Lennox and Addington—Tyendinaga": {
+  "climate": "January -11.6°C, July 19.4°C, 857 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Combermere (3 km from this riding).",
+  "station": "COMBERMERE",
+  "station_km": 2.7,
+  "jan_c": -11.56,
+  "jul_c": 19.43,
+  "precip_mm": 856.93
+ },
+ "Hamilton West—Ancaster—Dundas": {
+  "climate": "January -5.5°C, July 20.9°C, 930 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hamilton A (3 km from this riding).",
+  "station": "HAMILTON A",
+  "station_km": 3.3,
+  "jan_c": -5.5,
+  "jul_c": 20.85,
+  "precip_mm": 929.81
+ },
+ "Hamilton Mountain": {
+  "climate": "January -5.5°C, July 20.9°C, 930 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hamilton A (4 km from this riding).",
+  "station": "HAMILTON A",
+  "station_km": 3.6,
+  "jan_c": -5.5,
+  "jul_c": 20.85,
+  "precip_mm": 929.81
+ },
+ "Hamilton East—Stoney Creek": {
+  "climate": "January -5.5°C, July 20.9°C, 930 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hamilton A (9 km from this riding).",
+  "station": "HAMILTON A",
+  "station_km": 8.7,
+  "jan_c": -5.5,
+  "jul_c": 20.85,
+  "precip_mm": 929.81
+ },
+ "Hamilton Centre": {
+  "climate": "January -5.5°C, July 20.8°C, 1004 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Millgrove (6 km from this riding).",
+  "station": "MILLGROVE",
+  "station_km": 6.4,
+  "jan_c": -5.51,
+  "jul_c": 20.77,
+  "precip_mm": 1004.47
+ },
+ "Haliburton—Kawartha Lakes": {
+  "climate": "January -8.5°C, July 19.6°C, 855 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Peterborough A (2 km from this riding).",
+  "station": "PETERBOROUGH A",
+  "station_km": 1.7,
+  "jan_c": -8.47,
+  "jul_c": 19.63,
+  "precip_mm": 855.32
+ },
+ "Haldimand—Norfolk": {
+  "climate": "January -5.5°C, July 20.9°C, 930 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hamilton A (6 km from this riding).",
+  "station": "HAMILTON A",
+  "station_km": 6.0,
+  "jan_c": -5.5,
+  "jul_c": 20.85,
+  "precip_mm": 929.81
+ },
+ "Guelph": {
+  "climate": "January -6.5°C, July 20.0°C, 916 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Waterloo Wellington A (10 km from this riding).",
+  "station": "WATERLOO WELLINGTON A",
+  "station_km": 9.9,
+  "jan_c": -6.47,
+  "jul_c": 20.03,
+  "precip_mm": 916.48
+ },
+ "Flamborough—Glanbrook—Brant North": {
+  "climate": "January -5.5°C, July 20.9°C, 930 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hamilton A (3 km from this riding).",
+  "station": "HAMILTON A",
+  "station_km": 3.3,
+  "jan_c": -5.5,
+  "jul_c": 20.85,
+  "precip_mm": 929.81
+ },
+ "Etobicoke North": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (3 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 2.6,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Etobicoke—Lakeshore": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (7 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 6.8,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Etobicoke Centre": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (3 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 3.3,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Essex": {
+  "climate": "January -3.7°C, July 22.5°C, 900 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kingsville Moe (2 km from this riding).",
+  "station": "KINGSVILLE MOE",
+  "station_km": 2.5,
+  "jan_c": -3.71,
+  "jul_c": 22.54,
+  "precip_mm": 900.48
+ },
+ "Elgin—St. Thomas—London South": {
+  "climate": "January -5.7°C, July 21.0°C, 1046 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Culloden Easey (5 km from this riding).",
+  "station": "CULLODEN EASEY",
+  "station_km": 5.0,
+  "jan_c": -5.7,
+  "jul_c": 21.02,
+  "precip_mm": 1045.74
+ },
+ "Eglinton—Lawrence": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (4 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 4.5,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Dufferin—Caledon": {
+  "climate": "January -7.4°C, July 20.0°C, 946 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Fergus Shand Dam (7 km from this riding).",
+  "station": "FERGUS SHAND DAM",
+  "station_km": 6.8,
+  "jan_c": -7.36,
+  "jul_c": 19.98,
+  "precip_mm": 945.67
+ },
+ "Burlington": {
+  "climate": "January -5.5°C, July 20.8°C, 1004 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Millgrove (4 km from this riding).",
+  "station": "MILLGROVE",
+  "station_km": 4.5,
+  "jan_c": -5.51,
+  "jul_c": 20.77,
+  "precip_mm": 1004.47
+ },
+ "Bruce—Grey—Owen Sound": {
+  "climate": "January -6.8°C, July 19.6°C, 1087 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hanover (2 km from this riding).",
+  "station": "HANOVER",
+  "station_km": 1.6,
+  "jan_c": -6.82,
+  "jul_c": 19.63,
+  "precip_mm": 1087.12
+ },
+ "Brantford—Brant South—Six Nations": {
+  "climate": "January -5.5°C, July 20.9°C, 930 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Hamilton A (6 km from this riding).",
+  "station": "HAMILTON A",
+  "station_km": 6.0,
+  "jan_c": -5.5,
+  "jul_c": 20.85,
+  "precip_mm": 929.81
+ },
+ "Brampton West": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (2 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 2.3,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Brampton South": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (2 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 2.3,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Brampton North—Caledon": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (4 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 4.0,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Brampton East": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (5 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 4.8,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Brampton—Chinguacousy Park": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (4 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 4.3,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Brampton Centre": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (6 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 5.9,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "Bowmanville—Oshawa North": {
+  "climate": "January -7.4°C, July 20.0°C, 921 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burketon Mclaughlin (3 km from this riding).",
+  "station": "BURKETON MCLAUGHLIN",
+  "station_km": 2.7,
+  "jan_c": -7.38,
+  "jul_c": 19.98,
+  "precip_mm": 920.55
+ },
+ "Beaches—East York": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (7 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 6.7,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Bay of Quinte": {
+  "climate": "January -6.2°C, July 21.1°C, 946 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Cressy (3 km from this riding).",
+  "station": "CRESSY",
+  "station_km": 3.2,
+  "jan_c": -6.15,
+  "jul_c": 21.07,
+  "precip_mm": 945.79
+ },
+ "Barrie—Springwater—Oro-Medonte": {
+  "climate": "January -7.7°C, July 20.8°C, 933 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Barrie Wpcc (0 km from this riding).",
+  "station": "BARRIE WPCC",
+  "station_km": 0.1,
+  "jan_c": -7.68,
+  "jul_c": 20.79,
+  "precip_mm": 932.94
+ },
+ "Barrie South—Innisfil": {
+  "climate": "January -7.7°C, July 20.8°C, 933 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Barrie Wpcc (0 km from this riding).",
+  "station": "BARRIE WPCC",
+  "station_km": 0.1,
+  "jan_c": -7.68,
+  "jul_c": 20.79,
+  "precip_mm": 932.94
+ },
+ "Aurora—Oak Ridges—Richmond Hill": {
+  "climate": "January -7.4°C, July 20.5°C, 858 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station King Smoke Tree (1 km from this riding).",
+  "station": "KING SMOKE TREE",
+  "station_km": 1.4,
+  "jan_c": -7.37,
+  "jul_c": 20.47,
+  "precip_mm": 857.58
+ },
+ "Algonquin—Renfrew—Pembroke": {
+  "climate": "January -11.8°C, July 20.3°C, 859 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Chalk River Aecl (1 km from this riding).",
+  "station": "CHALK RIVER AECL",
+  "station_km": 1.1,
+  "jan_c": -11.77,
+  "jul_c": 20.27,
+  "precip_mm": 859.27
+ },
+ "Ajax": {
+  "climate": "January -4.8°C, July 20.6°C, 872 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Oshawa Wpcp (12 km from this riding).",
+  "station": "OSHAWA WPCP",
+  "station_km": 11.6,
+  "jan_c": -4.76,
+  "jul_c": 20.55,
+  "precip_mm": 871.91
+ },
+ "Vimy": {
+  "climate": "January -10.1°C, July 21.3°C, 1033 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Genevieve (6 km from this riding).",
+  "station": "STE GENEVIEVE",
+  "station_km": 6.3,
+  "jan_c": -10.13,
+  "jul_c": 21.26,
+  "precip_mm": 1032.73
+ },
+ "Ville-Marie—Le Sud-Ouest—Île-des-Soeurs": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (8 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 8.3,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Vaudreuil": {
+  "climate": "January -10.9°C, July 20.3°C, 1107 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Oka (5 km from this riding).",
+  "station": "OKA",
+  "station_km": 5.1,
+  "jan_c": -10.89,
+  "jul_c": 20.27,
+  "precip_mm": 1106.8
+ },
+ "Trois-Rivières": {
+  "climate": "January -12.1°C, July 20.0°C, 1123 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Trois Rivieres Aqueduc (0 km from this riding).",
+  "station": "TROIS RIVIERES AQUEDUC",
+  "station_km": 0.5,
+  "jan_c": -12.1,
+  "jul_c": 19.97,
+  "precip_mm": 1122.79
+ },
+ "Thérèse-De Blainville": {
+  "climate": "January -10.9°C, July 20.3°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Therese Ouest (1 km from this riding).",
+  "station": "STE THERESE OUEST",
+  "station_km": 0.6,
+  "jan_c": -10.87,
+  "jul_c": 20.31,
+  "precip_mm": 1093.58
+ },
+ "Terrebonne": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (1 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 0.5,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Sherbrooke": {
+  "climate": "January -10.6°C, July 19.6°C, 1146 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Bromptonville (5 km from this riding).",
+  "station": "BROMPTONVILLE",
+  "station_km": 4.9,
+  "jan_c": -10.64,
+  "jul_c": 19.61,
+  "precip_mm": 1145.77
+ },
+ "Shefford": {
+  "climate": "January -10.2°C, July 20.8°C, 1103 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Marieville (1 km from this riding).",
+  "station": "MARIEVILLE",
+  "station_km": 1.1,
+  "jan_c": -10.23,
+  "jul_c": 20.77,
+  "precip_mm": 1102.7
+ },
+ "Saint-Maurice—Champlain": {
+  "climate": "January -12.1°C, July 20.0°C, 1123 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Trois Rivieres Aqueduc (0 km from this riding).",
+  "station": "TROIS RIVIERES AQUEDUC",
+  "station_km": 0.5,
+  "jan_c": -12.1,
+  "jul_c": 19.97,
+  "precip_mm": 1122.79
+ },
+ "Saint-Léonard—Saint-Michel": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (13 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 12.6,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Saint-Laurent": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (1 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 0.6,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Saint-Jean": {
+  "climate": "January -9.7°C, July 20.6°C, 1016 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sabrevois (2 km from this riding).",
+  "station": "SABREVOIS",
+  "station_km": 2.2,
+  "jan_c": -9.74,
+  "jul_c": 20.58,
+  "precip_mm": 1016.45
+ },
+ "Carlton Trail—Eagle Creek": {
+  "climate": "January -14.8°C, July 18.2°C, 431 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ruddell (2 km from this riding).",
+  "station": "RUDDELL",
+  "station_km": 1.8,
+  "jan_c": -14.81,
+  "jul_c": 18.17,
+  "precip_mm": 430.98
+ },
+ "Battlefords—Lloydminster—Meadow Lake": {
+  "climate": "January -14.8°C, July 18.2°C, 431 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ruddell (2 km from this riding).",
+  "station": "RUDDELL",
+  "station_km": 1.8,
+  "jan_c": -14.81,
+  "jul_c": 18.17,
+  "precip_mm": 430.98
+ },
+ "Winnipeg West": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (0 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 0.3,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Winnipeg South Centre": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (5 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 4.9,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Winnipeg South": {
+  "climate": "January -17.2°C, July 19.4°C, 543 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Glenlea (10 km from this riding).",
+  "station": "GLENLEA",
+  "station_km": 9.8,
+  "jan_c": -17.19,
+  "jul_c": 19.39,
+  "precip_mm": 542.66
+ },
+ "Winnipeg North": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (2 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 1.8,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Winnipeg Centre": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (0 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 0.3,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Selkirk—Interlake—Eastman": {
+  "climate": "January -16.2°C, July 19.3°C, 526 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Delta Marsh Cs (0 km from this riding).",
+  "station": "DELTA MARSH CS",
+  "station_km": 0.2,
+  "jan_c": -16.23,
+  "jul_c": 19.33,
+  "precip_mm": 525.69
+ },
+ "St. Boniface—St. Vital": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (8 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 7.6,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Riding Mountain": {
+  "climate": "January -16.1°C, July 19.0°C, 558 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Langruth (2 km from this riding).",
+  "station": "LANGRUTH",
+  "station_km": 1.9,
+  "jan_c": -16.13,
+  "jul_c": 19.03,
+  "precip_mm": 557.53
+ },
+ "Provencher": {
+  "climate": "January -17.2°C, July 19.4°C, 543 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Glenlea (3 km from this riding).",
+  "station": "GLENLEA",
+  "station_km": 3.3,
+  "jan_c": -17.19,
+  "jul_c": 19.39,
+  "precip_mm": 542.66
+ },
+ "Portage—Lisgar": {
+  "climate": "January -16.2°C, July 19.3°C, 526 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Delta Marsh Cs (0 km from this riding).",
+  "station": "DELTA MARSH CS",
+  "station_km": 0.2,
+  "jan_c": -16.23,
+  "jul_c": 19.33,
+  "precip_mm": 525.69
+ },
+ "Kildonan—St. Paul": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (6 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 5.8,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Elmwood—Transcona": {
+  "climate": "January -16.4°C, July 19.7°C, 521 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Winnipeg Richardson Int'L A (8 km from this riding).",
+  "station": "WINNIPEG RICHARDSON INT'L A",
+  "station_km": 7.6,
+  "jan_c": -16.39,
+  "jul_c": 19.69,
+  "precip_mm": 521.06
+ },
+ "Churchill—Keewatinook Aski": {
+  "climate": "January -18.9°C, July 18.9°C, 458 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Flin Flon (0 km from this riding).",
+  "station": "FLIN FLON",
+  "station_km": 0.5,
+  "jan_c": -18.86,
+  "jul_c": 18.9,
+  "precip_mm": 457.6
+ },
+ "Brandon—Souris": {
+  "climate": "January -16.6°C, July 18.4°C, 474 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Brandon A (0 km from this riding).",
+  "station": "BRANDON A",
+  "station_km": 0.4,
+  "jan_c": -16.55,
+  "jul_c": 18.45,
+  "precip_mm": 474.22
+ },
+ "York South—Weston—Etobicoke": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (6 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 5.6,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "York—Durham": {
+  "climate": "January -7.4°C, July 20.0°C, 921 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Burketon Mclaughlin (3 km from this riding).",
+  "station": "BURKETON MCLAUGHLIN",
+  "station_km": 2.7,
+  "jan_c": -7.38,
+  "jul_c": 19.98,
+  "precip_mm": 920.55
+ },
+ "York Centre": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (8 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 8.0,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Windsor West": {
+  "climate": "January -3.8°C, July 23.0°C, 935 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Windsor A (0 km from this riding).",
+  "station": "WINDSOR A",
+  "station_km": 0.5,
+  "jan_c": -3.82,
+  "jul_c": 22.99,
+  "precip_mm": 934.58
+ },
+ "Windsor—Tecumseh—Lakeshore": {
+  "climate": "January -3.8°C, July 23.0°C, 935 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Windsor A (0 km from this riding).",
+  "station": "WINDSOR A",
+  "station_km": 0.5,
+  "jan_c": -3.82,
+  "jul_c": 22.99,
+  "precip_mm": 934.58
+ },
+ "Willowdale": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (7 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 6.9,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Whitby": {
+  "climate": "January -4.8°C, July 20.6°C, 872 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Oshawa Wpcp (4 km from this riding).",
+  "station": "OSHAWA WPCP",
+  "station_km": 4.2,
+  "jan_c": -4.76,
+  "jul_c": 20.55,
+  "precip_mm": 871.91
+ },
+ "Wellington—Halton Hills North": {
+  "climate": "January -6.3°C, July 20.0°C, 877 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Georgetown Wwtp (4 km from this riding).",
+  "station": "GEORGETOWN WWTP",
+  "station_km": 3.6,
+  "jan_c": -6.32,
+  "jul_c": 20.0,
+  "precip_mm": 877.36
+ },
+ "Waterloo": {
+  "climate": "January -6.5°C, July 20.0°C, 916 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Waterloo Wellington A (9 km from this riding).",
+  "station": "WATERLOO WELLINGTON A",
+  "station_km": 9.0,
+  "jan_c": -6.47,
+  "jul_c": 20.03,
+  "precip_mm": 916.48
+ },
+ "Vaughan—Woodbridge": {
+  "climate": "January -5.5°C, July 21.4°C, 786 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Lester B. Pearson Int'L A (8 km from this riding).",
+  "station": "TORONTO LESTER B. PEARSON INT'L A",
+  "station_km": 8.1,
+  "jan_c": -5.49,
+  "jul_c": 21.45,
+  "precip_mm": 785.85
+ },
+ "University—Rosedale": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (1 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 1.1,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Toronto—St. Paul's": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (1 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 1.2,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Toronto—Danforth": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (3 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 3.0,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Toronto Centre": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (1 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 1.1,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Thunder Bay—Superior North": {
+  "climate": "January -14.7°C, July 17.4°C, 761 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Flint (20 km from this riding).",
+  "station": "FLINT",
+  "station_km": 19.5,
+  "jan_c": -14.74,
+  "jul_c": 17.37,
+  "precip_mm": 760.77
+ },
+ "Thunder Bay—Rainy River": {
+  "climate": "January -15.3°C, July 19.0°C, 710 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Barwick (1 km from this riding).",
+  "station": "BARWICK",
+  "station_km": 0.6,
+  "jan_c": -15.3,
+  "jul_c": 19.0,
+  "precip_mm": 710.22
+ },
+ "Thornhill": {
+  "climate": "January -6.2°C, July 21.4°C, 895 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Richmond Hill (2 km from this riding).",
+  "station": "RICHMOND HILL",
+  "station_km": 1.7,
+  "jan_c": -6.21,
+  "jul_c": 21.39,
+  "precip_mm": 895.15
+ },
+ "Taiaiako'n—Parkdale—High Park": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (3 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 3.4,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Sudbury East—Manitoulin—Nickel Belt": {
+  "climate": "January -11.1°C, July 18.7°C, 890 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Massey (3 km from this riding).",
+  "station": "MASSEY",
+  "station_km": 3.1,
+  "jan_c": -11.1,
+  "jul_c": 18.73,
+  "precip_mm": 890.09
+ },
+ "Sudbury": {
+  "climate": "January -13.0°C, July 19.1°C, 903 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sudbury A (2 km from this riding).",
+  "station": "SUDBURY A",
+  "station_km": 1.7,
+  "jan_c": -12.98,
+  "jul_c": 19.12,
+  "precip_mm": 903.27
+ },
+ "Stormont—Dundas—Glengarry": {
+  "climate": "January -11.1°C, July 20.0°C, 1077 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Dalhousie Mills (1 km from this riding).",
+  "station": "DALHOUSIE MILLS",
+  "station_km": 1.1,
+  "jan_c": -11.09,
+  "jul_c": 20.01,
+  "precip_mm": 1077.23
+ },
+ "St. Catharines": {
+  "climate": "January -4.4°C, July 21.7°C, 946 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ridgeville (8 km from this riding).",
+  "station": "RIDGEVILLE",
+  "station_km": 8.1,
+  "jan_c": -4.39,
+  "jul_c": 21.7,
+  "precip_mm": 946.2
+ },
+ "Spadina—Harbourfront": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (2 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 2.3,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Simcoe North": {
+  "climate": "January -10.3°C, July 18.7°C, 1105 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Muskoka A (16 km from this riding).",
+  "station": "MUSKOKA A",
+  "station_km": 16.1,
+  "jan_c": -10.27,
+  "jul_c": 18.74,
+  "precip_mm": 1105.11
+ },
+ "Simcoe—Grey": {
+  "climate": "January -7.9°C, July 19.6°C, 826 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Cookstown (1 km from this riding).",
+  "station": "COOKSTOWN",
+  "station_km": 0.9,
+  "jan_c": -7.88,
+  "jul_c": 19.65,
+  "precip_mm": 826.3
+ },
+ "Scarborough—Woburn": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (12 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 12.1,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Scarborough Southwest": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (9 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 9.4,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Scarborough North": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (7 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 7.1,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Scarborough—Guildwood—Rouge Park": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (12 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 11.6,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Scarborough Centre—Don Valley East": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (8 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 8.3,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Scarborough—Agincourt": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (6 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 5.6,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Sault Ste. Marie—Algoma": {
+  "climate": "January -11.1°C, July 18.7°C, 890 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Massey (3 km from this riding).",
+  "station": "MASSEY",
+  "station_km": 3.1,
+  "jan_c": -11.1,
+  "jul_c": 18.73,
+  "precip_mm": 890.09
+ },
+ "Sarnia—Lambton—Bkejwanong": {
+  "climate": "January -4.8°C, July 21.1°C, 878 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sarnia Airport (9 km from this riding).",
+  "station": "SARNIA AIRPORT",
+  "station_km": 9.0,
+  "jan_c": -4.76,
+  "jul_c": 21.12,
+  "precip_mm": 878.22
+ },
+ "Richmond Hill South": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (1 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 1.3,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Prescott—Russell—Cumberland": {
+  "climate": "January -10.2°C, July 20.3°C, 1056 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St. Albert (3 km from this riding).",
+  "station": "ST. ALBERT",
+  "station_km": 3.2,
+  "jan_c": -10.16,
+  "jul_c": 20.33,
+  "precip_mm": 1055.58
+ },
+ "Saint-Hyacinthe—Bagot—Acton": {
+  "climate": "January -10.2°C, July 20.6°C, 1040 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Madeleine (0 km from this riding).",
+  "station": "STE MADELEINE",
+  "station_km": 0.5,
+  "jan_c": -10.19,
+  "jul_c": 20.61,
+  "precip_mm": 1039.7
+ },
+ "Rosemont—La Petite-Patrie": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (11 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 11.3,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Rivière-du-Nord": {
+  "climate": "January -10.9°C, July 20.3°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Therese Ouest (8 km from this riding).",
+  "station": "STE THERESE OUEST",
+  "station_km": 8.5,
+  "jan_c": -10.87,
+  "jul_c": 20.31,
+  "precip_mm": 1093.58
+ },
+ "Rivière-des-Mille-Îles": {
+  "climate": "January -10.9°C, July 20.3°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Therese Ouest (0 km from this riding).",
+  "station": "STE THERESE OUEST",
+  "station_km": 0.2,
+  "jan_c": -10.87,
+  "jul_c": 20.31,
+  "precip_mm": 1093.58
+ },
+ "Rimouski—La Matapédia": {
+  "climate": "January -12.6°C, July 17.1°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Grandes Bergeronnes (13 km from this riding).",
+  "station": "GRANDES BERGERONNES",
+  "station_km": 13.2,
+  "jan_c": -12.58,
+  "jul_c": 17.11,
+  "precip_mm": 1093.53
+ },
+ "Richmond—Arthabaska": {
+  "climate": "January -10.6°C, July 19.6°C, 1146 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Bromptonville (3 km from this riding).",
+  "station": "BROMPTONVILLE",
+  "station_km": 3.1,
+  "jan_c": -10.64,
+  "jul_c": 19.61,
+  "precip_mm": 1145.77
+ },
+ "Repentigny": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (1 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 0.6,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Québec Centre": {
+  "climate": "January -12.8°C, July 19.3°C, 1190 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Quebec/Jean Lesage Intl A (3 km from this riding).",
+  "station": "QUEBEC/JEAN LESAGE INTL A",
+  "station_km": 3.0,
+  "jan_c": -12.82,
+  "jul_c": 19.28,
+  "precip_mm": 1189.72
+ },
+ "Portneuf—Jacques-Cartier": {
+  "climate": "January -12.1°C, July 19.5°C, 1158 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Deschambault (2 km from this riding).",
+  "station": "DESCHAMBAULT",
+  "station_km": 2.0,
+  "jan_c": -12.13,
+  "jul_c": 19.51,
+  "precip_mm": 1158.09
+ },
+ "Pontiac—Kitigan Zibi": {
+  "climate": "January -11.8°C, July 20.3°C, 859 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Chalk River Aecl (1 km from this riding).",
+  "station": "CHALK RIVER AECL",
+  "station_km": 1.1,
+  "jan_c": -11.77,
+  "jul_c": 20.27,
+  "precip_mm": 859.27
+ },
+ "Pierrefonds—Dollard": {
+  "climate": "January -10.1°C, July 21.3°C, 1033 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Genevieve (1 km from this riding).",
+  "station": "STE GENEVIEVE",
+  "station_km": 1.3,
+  "jan_c": -10.13,
+  "jul_c": 21.26,
+  "precip_mm": 1032.73
+ },
+ "Pierre-Boucher—Les Patriotes—Verchères": {
+  "climate": "January -10.2°C, July 20.6°C, 1040 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Madeleine (0 km from this riding).",
+  "station": "STE MADELEINE",
+  "station_km": 0.5,
+  "jan_c": -10.19,
+  "jul_c": 20.61,
+  "precip_mm": 1039.7
+ },
+ "Papineau": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (11 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 10.6,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Outremont": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (9 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 9.4,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Notre-Dame-de-Grâce—Westmount": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (6 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 6.5,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Montmorency—Charlevoix": {
+  "climate": "January -12.0°C, July 19.3°C, 1179 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Lauzon (3 km from this riding).",
+  "station": "LAUZON",
+  "station_km": 2.6,
+  "jan_c": -12.02,
+  "jul_c": 19.3,
+  "precip_mm": 1178.71
+ },
+ "Montcalm": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (5 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 5.3,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Mont-Saint-Bruno—L’Acadie": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (1 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 1.2,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Mount Royal": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (5 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 5.1,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Mirabel": {
+  "climate": "January -10.9°C, July 20.3°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Therese Ouest (0 km from this riding).",
+  "station": "STE THERESE OUEST",
+  "station_km": 0.2,
+  "jan_c": -10.87,
+  "jul_c": 20.31,
+  "precip_mm": 1093.58
+ },
+ "Mégantic—L’Érable—Lotbinière": {
+  "climate": "January -12.1°C, July 19.5°C, 1158 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Deschambault (2 km from this riding).",
+  "station": "DESCHAMBAULT",
+  "station_km": 2.0,
+  "jan_c": -12.13,
+  "jul_c": 19.51,
+  "precip_mm": 1158.09
+ },
+ "Marc-Aurèle-Fortin": {
+  "climate": "January -10.9°C, July 20.3°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Therese Ouest (7 km from this riding).",
+  "station": "STE THERESE OUEST",
+  "station_km": 6.5,
+  "jan_c": -10.87,
+  "jul_c": 20.31,
+  "precip_mm": 1093.58
+ },
+ "Louis-Saint-Laurent—Akiawenhrahk": {
+  "climate": "January -12.8°C, July 19.3°C, 1190 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Quebec/Jean Lesage Intl A (1 km from this riding).",
+  "station": "QUEBEC/JEAN LESAGE INTL A",
+  "station_km": 0.8,
+  "jan_c": -12.82,
+  "jul_c": 19.28,
+  "precip_mm": 1189.72
+ },
+ "Louis-Hébert": {
+  "climate": "January -12.8°C, July 19.3°C, 1190 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Quebec/Jean Lesage Intl A (1 km from this riding).",
+  "station": "QUEBEC/JEAN LESAGE INTL A",
+  "station_km": 0.8,
+  "jan_c": -12.82,
+  "jul_c": 19.28,
+  "precip_mm": 1189.72
+ },
+ "Longueuil—Saint-Hubert": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (1 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 1.2,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Longueuil—Charles-LeMoyne": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (2 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 1.9,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Lévis—Lotbinière": {
+  "climate": "January -12.5°C, July 19.2°C, 1253 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Beausejour (2 km from this riding).",
+  "station": "BEAUSEJOUR",
+  "station_km": 1.9,
+  "jan_c": -12.53,
+  "jul_c": 19.18,
+  "precip_mm": 1252.55
+ },
+ "Les Pays-d'en-Haut": {
+  "climate": "January -11.5°C, July 19.8°C, 1068 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Mirabel Int'L A (7 km from this riding).",
+  "station": "MONTREAL/MIRABEL INT'L A",
+  "station_km": 6.8,
+  "jan_c": -11.52,
+  "jul_c": 19.84,
+  "precip_mm": 1067.7
+ },
+ "Laval—Les Îles": {
+  "climate": "January -10.1°C, July 21.3°C, 1033 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Genevieve (1 km from this riding).",
+  "station": "STE GENEVIEVE",
+  "station_km": 1.3,
+  "jan_c": -10.13,
+  "jul_c": 21.26,
+  "precip_mm": 1032.73
+ },
+ "Laurier—Sainte-Marie": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (8 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 8.2,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Laurentides—Labelle": {
+  "climate": "January -12.5°C, July 19.0°C, 1193 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St Hippolyte (11 km from this riding).",
+  "station": "ST HIPPOLYTE",
+  "station_km": 10.6,
+  "jan_c": -12.52,
+  "jul_c": 18.96,
+  "precip_mm": 1192.93
+ },
+ "LaSalle—Émard—Verdun": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (9 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 9.1,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Lac-Saint-Louis": {
+  "climate": "January -10.1°C, July 21.3°C, 1033 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Genevieve (2 km from this riding).",
+  "station": "STE GENEVIEVE",
+  "station_km": 2.0,
+  "jan_c": -10.13,
+  "jul_c": 21.26,
+  "precip_mm": 1032.73
+ },
+ "Lac-Saint-Jean": {
+  "climate": "January -16.2°C, July 18.2°C, 987 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Lac Ste Croix (2 km from this riding).",
+  "station": "LAC STE CROIX",
+  "station_km": 1.8,
+  "jan_c": -16.16,
+  "jul_c": 18.22,
+  "precip_mm": 986.77
+ },
+ "La Prairie—Atateken": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (5 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 5.4,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "La Pointe-de-l'Île": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (1 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 0.5,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Jonquière": {
+  "climate": "January -15.7°C, July 18.4°C, 931 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Bagotville A (0 km from this riding).",
+  "station": "BAGOTVILLE A",
+  "station_km": 0.5,
+  "jan_c": -15.65,
+  "jul_c": 18.35,
+  "precip_mm": 930.55
+ },
+ "Joliette—Manawan": {
+  "climate": "January -12.9°C, July 18.9°C, 1071 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Beatrix (3 km from this riding).",
+  "station": "STE BEATRIX",
+  "station_km": 2.6,
+  "jan_c": -12.87,
+  "jul_c": 18.92,
+  "precip_mm": 1071.14
+ },
+ "Hull—Aylmer": {
+  "climate": "January -10.2°C, July 21.2°C, 920 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Cda (4 km from this riding).",
+  "station": "OTTAWA CDA",
+  "station_km": 3.7,
+  "jan_c": -10.16,
+  "jul_c": 21.16,
+  "precip_mm": 919.51
+ },
+ "Honoré-Mercier": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (1 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 0.7,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Hochelaga—Rosemont-Est": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (9 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 8.6,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Gatineau": {
+  "climate": "January -11.7°C, July 19.5°C, 1006 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Angers (4 km from this riding).",
+  "station": "ANGERS",
+  "station_km": 3.6,
+  "jan_c": -11.65,
+  "jul_c": 19.51,
+  "precip_mm": 1006.5
+ },
+ "Gaspésie—Les Îles-de-la-Madeleine—Listuguj": {
+  "climate": "January -9.8°C, July 16.2°C, 1195 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Cap Des Rosiers (3 km from this riding).",
+  "station": "CAP DES ROSIERS",
+  "station_km": 3.3,
+  "jan_c": -9.79,
+  "jul_c": 16.2,
+  "precip_mm": 1195.09
+ },
+ "Drummond": {
+  "climate": "January -11.0°C, July 20.1°C, 1096 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St Nazaire (3 km from this riding).",
+  "station": "ST NAZAIRE",
+  "station_km": 3.4,
+  "jan_c": -11.0,
+  "jul_c": 20.06,
+  "precip_mm": 1096.13
+ },
+ "Dorval—Lachine—LaSalle": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (1 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 0.6,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Côte-Nord—Kawawachikamach—Nitassinan": {
+  "climate": "January -12.6°C, July 17.1°C, 1094 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Grandes Bergeronnes (13 km from this riding).",
+  "station": "GRANDES BERGERONNES",
+  "station_km": 13.2,
+  "jan_c": -12.58,
+  "jul_c": 17.11,
+  "precip_mm": 1093.53
+ },
+ "Côte-du-Sud—Rivière-du-Loup—Kataskomiq—Témiscouata": {
+  "climate": "January -13.7°C, July 17.2°C, 1201 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ste Lucie (4 km from this riding).",
+  "station": "STE LUCIE",
+  "station_km": 4.4,
+  "jan_c": -13.71,
+  "jul_c": 17.2,
+  "precip_mm": 1201.33
+ },
+ "Compton—Stanstead": {
+  "climate": "January -10.1°C, July 19.4°C, 1142 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Magog (1 km from this riding).",
+  "station": "MAGOG",
+  "station_km": 1.3,
+  "jan_c": -10.12,
+  "jul_c": 19.37,
+  "precip_mm": 1142.32
+ },
+ "Chicoutimi—Le Fjord": {
+  "climate": "January -15.7°C, July 18.4°C, 931 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Bagotville A (0 km from this riding).",
+  "station": "BAGOTVILLE A",
+  "station_km": 0.5,
+  "jan_c": -15.65,
+  "jul_c": 18.35,
+  "precip_mm": 930.55
+ },
+ "Châteauguay—Les Jardins-de-Napierville": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (5 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 5.5,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Charlesbourg—Haute-Saint-Charles": {
+  "climate": "January -12.8°C, July 19.3°C, 1190 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Quebec/Jean Lesage Intl A (7 km from this riding).",
+  "station": "QUEBEC/JEAN LESAGE INTL A",
+  "station_km": 6.8,
+  "jan_c": -12.82,
+  "jul_c": 19.28,
+  "precip_mm": 1189.72
+ },
+ "Brossard—Saint-Lambert": {
+  "climate": "January -10.3°C, July 20.6°C, 1011 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/St-Hubert A (5 km from this riding).",
+  "station": "MONTREAL/ST-HUBERT A",
+  "station_km": 4.8,
+  "jan_c": -10.35,
+  "jul_c": 20.58,
+  "precip_mm": 1010.55
+ },
+ "Brome—Missisquoi": {
+  "climate": "January -10.1°C, July 19.4°C, 1142 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Magog (1 km from this riding).",
+  "station": "MAGOG",
+  "station_km": 1.3,
+  "jan_c": -10.12,
+  "jul_c": 19.37,
+  "precip_mm": 1142.32
+ },
+ "Bourassa": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (12 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 12.1,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Berthier—Maskinongé": {
+  "climate": "January -10.0°C, July 21.1°C, 984 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Vercheres (2 km from this riding).",
+  "station": "VERCHERES",
+  "station_km": 2.1,
+  "jan_c": -10.04,
+  "jul_c": 21.11,
+  "precip_mm": 983.55
+ },
+ "Beloeil—Chambly": {
+  "climate": "January -10.2°C, July 20.8°C, 1103 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Marieville (1 km from this riding).",
+  "station": "MARIEVILLE",
+  "station_km": 1.1,
+  "jan_c": -10.23,
+  "jul_c": 20.77,
+  "precip_mm": 1102.7
+ },
+ "Bellechasse—Les Etchemins—Lévis": {
+  "climate": "January -12.5°C, July 19.2°C, 1253 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Beausejour (2 km from this riding).",
+  "station": "BEAUSEJOUR",
+  "station_km": 1.9,
+  "jan_c": -12.53,
+  "jul_c": 19.18,
+  "precip_mm": 1252.55
+ },
+ "Bécancour—Nicolet—Saurel—Alnôbak": {
+  "climate": "January -10.7°C, July 21.1°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sorel (3 km from this riding).",
+  "station": "SOREL",
+  "station_km": 2.6,
+  "jan_c": -10.71,
+  "jul_c": 21.11,
+  "precip_mm": 999.73
+ },
+ "Beauport—Limoilou": {
+  "climate": "January -12.0°C, July 19.3°C, 1179 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Lauzon (6 km from this riding).",
+  "station": "LAUZON",
+  "station_km": 5.8,
+  "jan_c": -12.02,
+  "jul_c": 19.3,
+  "precip_mm": 1178.71
+ },
+ "Beauharnois—Salaberry—Soulanges—Huntingdon": {
+  "climate": "January -11.1°C, July 20.0°C, 1077 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Dalhousie Mills (1 km from this riding).",
+  "station": "DALHOUSIE MILLS",
+  "station_km": 1.1,
+  "jan_c": -11.09,
+  "jul_c": 20.01,
+  "precip_mm": 1077.23
+ },
+ "Beauce": {
+  "climate": "January -12.2°C, July 18.3°C, 1120 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St Ephrem (4 km from this riding).",
+  "station": "ST EPHREM",
+  "station_km": 3.5,
+  "jan_c": -12.22,
+  "jul_c": 18.31,
+  "precip_mm": 1120.17
+ },
+ "Argenteuil—La Petite-Nation": {
+  "climate": "January -11.7°C, July 19.5°C, 1006 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Angers (4 km from this riding).",
+  "station": "ANGERS",
+  "station_km": 3.6,
+  "jan_c": -11.65,
+  "jul_c": 19.51,
+  "precip_mm": 1006.5
+ },
+ "Alfred-Pellan": {
+  "climate": "January -10.3°C, July 21.2°C, 988 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Riviere Des Prairies (2 km from this riding).",
+  "station": "RIVIERE DES PRAIRIES",
+  "station_km": 1.9,
+  "jan_c": -10.28,
+  "jul_c": 21.18,
+  "precip_mm": 987.95
+ },
+ "Don Valley West": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (3 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 3.5,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Don Valley North": {
+  "climate": "January -5.8°C, July 21.2°C, 853 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto Buttonville A (6 km from this riding).",
+  "station": "TORONTO BUTTONVILLE A",
+  "station_km": 5.6,
+  "jan_c": -5.83,
+  "jul_c": 21.17,
+  "precip_mm": 852.89
+ },
+ "Davenport": {
+  "climate": "January -3.7°C, July 22.3°C, 831 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Toronto (2 km from this riding).",
+  "station": "TORONTO",
+  "station_km": 2.1,
+  "jan_c": -3.74,
+  "jul_c": 22.34,
+  "precip_mm": 831.11
+ },
+ "Chatham-Kent—Leamington": {
+  "climate": "January -3.7°C, July 22.5°C, 900 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kingsville Moe (2 km from this riding).",
+  "station": "KINGSVILLE MOE",
+  "station_km": 2.5,
+  "jan_c": -3.71,
+  "jul_c": 22.54,
+  "precip_mm": 900.48
+ },
+ "Carleton": {
+  "climate": "January -10.3°C, July 21.0°C, 943 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Ottawa Macdonald-Cartier Int'L A (2 km from this riding).",
+  "station": "OTTAWA MACDONALD-CARTIER INT'L A",
+  "station_km": 1.5,
+  "jan_c": -10.32,
+  "jul_c": 21.03,
+  "precip_mm": 943.38
+ },
+ "Cambridge": {
+  "climate": "January -6.5°C, July 20.4°C, 919 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Roseville (3 km from this riding).",
+  "station": "ROSEVILLE",
+  "station_km": 2.6,
+  "jan_c": -6.46,
+  "jul_c": 20.45,
+  "precip_mm": 918.73
+ },
+ "Burlington North—Milton West": {
+  "climate": "January -5.5°C, July 20.8°C, 1004 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Millgrove (9 km from this riding).",
+  "station": "MILLGROVE",
+  "station_km": 8.7,
+  "jan_c": -5.51,
+  "jul_c": 20.77,
+  "precip_mm": 1004.47
+ },
+ "Ahuntsic-Cartierville": {
+  "climate": "January -9.7°C, July 21.2°C, 1000 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Montreal/Pierre Elliott Trudeau Intl A (4 km from this riding).",
+  "station": "MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A",
+  "station_km": 4.4,
+  "jan_c": -9.69,
+  "jul_c": 21.21,
+  "precip_mm": 1000.26
+ },
+ "Abitibi—Témiscamingue": {
+  "climate": "January -12.1°C, July 19.8°C, 895 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Rapide Des Joachims (12 km from this riding).",
+  "station": "RAPIDE DES JOACHIMS",
+  "station_km": 11.6,
+  "jan_c": -12.14,
+  "jul_c": 19.8,
+  "precip_mm": 894.69
+ },
+ "Abitibi—Baie-James—Nunavik—Eeyou": {
+  "climate": "January -23.3°C, July 11.1°C, 661 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Kuujjuarapik A (1 km from this riding).",
+  "station": "KUUJJUARAPIK A",
+  "station_km": 1.1,
+  "jan_c": -23.28,
+  "jul_c": 11.11,
+  "precip_mm": 660.81
+ },
+ "Tobique—Mactaquac": {
+  "climate": "January -12.6°C, July 18.9°C, 1047 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Aroostook (6 km from this riding).",
+  "station": "AROOSTOOK",
+  "station_km": 6.2,
+  "jan_c": -12.63,
+  "jul_c": 18.9,
+  "precip_mm": 1047.32
+ },
+ "Saint John—St. Croix": {
+  "climate": "January -8.5°C, July 19.2°C, 1170 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sussex (1 km from this riding).",
+  "station": "SUSSEX",
+  "station_km": 0.7,
+  "jan_c": -8.5,
+  "jul_c": 19.23,
+  "precip_mm": 1169.86
+ },
+ "Saint John—Kennebecasis": {
+  "climate": "January -7.9°C, July 17.1°C, 1295 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saint John A (0 km from this riding).",
+  "station": "SAINT JOHN A",
+  "station_km": 0.5,
+  "jan_c": -7.9,
+  "jul_c": 17.11,
+  "precip_mm": 1295.49
+ },
+ "Moncton—Dieppe": {
+  "climate": "January -8.8°C, July 18.8°C, 1200 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Moncton A (2 km from this riding).",
+  "station": "MONCTON A",
+  "station_km": 1.6,
+  "jan_c": -8.85,
+  "jul_c": 18.8,
+  "precip_mm": 1200.39
+ },
+ "Miramichi—Grand Lake": {
+  "climate": "January -9.4°C, July 19.2°C, 1078 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Fredericton A (1 km from this riding).",
+  "station": "FREDERICTON A",
+  "station_km": 1.2,
+  "jan_c": -9.41,
+  "jul_c": 19.25,
+  "precip_mm": 1077.65
+ },
+ "Madawaska—Restigouche": {
+  "climate": "January -13.4°C, July 17.3°C, 1119 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Mount Carleton (4 km from this riding).",
+  "station": "MOUNT CARLETON",
+  "station_km": 3.7,
+  "jan_c": -13.45,
+  "jul_c": 17.28,
+  "precip_mm": 1118.99
+ },
+ "Fundy Royal": {
+  "climate": "January -7.9°C, July 17.1°C, 1295 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Saint John A (0 km from this riding).",
+  "station": "SAINT JOHN A",
+  "station_km": 0.5,
+  "jan_c": -7.9,
+  "jul_c": 17.11,
+  "precip_mm": 1295.49
+ },
+ "Fredericton—Oromocto": {
+  "climate": "January -9.4°C, July 19.2°C, 1078 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Fredericton A (1 km from this riding).",
+  "station": "FREDERICTON A",
+  "station_km": 1.2,
+  "jan_c": -9.41,
+  "jul_c": 19.25,
+  "precip_mm": 1077.65
+ },
+ "Beauséjour": {
+  "climate": "January -8.8°C, July 18.8°C, 1200 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Moncton A (2 km from this riding).",
+  "station": "MONCTON A",
+  "station_km": 1.6,
+  "jan_c": -8.85,
+  "jul_c": 18.8,
+  "precip_mm": 1200.39
+ },
+ "Acadie—Bathurst": {
+  "climate": "January -12.6°C, July 17.9°C, 998 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Charlo A (22 km from this riding).",
+  "station": "CHARLO A",
+  "station_km": 21.9,
+  "jan_c": -12.58,
+  "jul_c": 17.91,
+  "precip_mm": 997.56
+ },
+ "Sydney—Glace Bay": {
+  "climate": "January -5.4°C, July 17.9°C, 1517 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sydney A (5 km from this riding).",
+  "station": "SYDNEY A",
+  "station_km": 4.7,
+  "jan_c": -5.39,
+  "jul_c": 17.91,
+  "precip_mm": 1517.23
+ },
+ "South Shore—St. Margarets": {
+  "climate": "January -5.7°C, July 17.8°C, 1382 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St Margaret'S Bay (1 km from this riding).",
+  "station": "ST MARGARET'S BAY",
+  "station_km": 1.0,
+  "jan_c": -5.74,
+  "jul_c": 17.76,
+  "precip_mm": 1381.6
+ },
+ "Sackville—Bedford—Preston": {
+  "climate": "January -5.9°C, July 18.8°C, 1396 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Halifax Stanfield Int'L A (3 km from this riding).",
+  "station": "HALIFAX STANFIELD INT'L A",
+  "station_km": 2.6,
+  "jan_c": -5.86,
+  "jul_c": 18.81,
+  "precip_mm": 1396.17
+ },
+ "Kings—Hants": {
+  "climate": "January -6.2°C, July 18.5°C, 1513 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Pockwock Lake (3 km from this riding).",
+  "station": "POCKWOCK LAKE",
+  "station_km": 2.7,
+  "jan_c": -6.17,
+  "jul_c": 18.48,
+  "precip_mm": 1513.15
+ },
+ "Halifax West": {
+  "climate": "January -5.7°C, July 17.8°C, 1382 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St Margaret'S Bay (1 km from this riding).",
+  "station": "ST MARGARET'S BAY",
+  "station_km": 1.0,
+  "jan_c": -5.74,
+  "jul_c": 17.76,
+  "precip_mm": 1381.6
+ },
+ "Halifax": {
+  "climate": "January -4.1°C, July 18.8°C, 1468 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Halifax Citadel (1 km from this riding).",
+  "station": "HALIFAX CITADEL",
+  "station_km": 1.2,
+  "jan_c": -4.14,
+  "jul_c": 18.76,
+  "precip_mm": 1468.06
+ },
+ "Dartmouth—Cole Harbour": {
+  "climate": "January -4.1°C, July 18.8°C, 1468 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Halifax Citadel (1 km from this riding).",
+  "station": "HALIFAX CITADEL",
+  "station_km": 1.2,
+  "jan_c": -4.14,
+  "jul_c": 18.76,
+  "precip_mm": 1468.06
+ },
+ "Cumberland—Colchester": {
+  "climate": "January -7.5°C, July 17.5°C, 1146 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sackville (2 km from this riding).",
+  "station": "SACKVILLE",
+  "station_km": 2.0,
+  "jan_c": -7.46,
+  "jul_c": 17.54,
+  "precip_mm": 1146.46
+ },
+ "Central Nova": {
+  "climate": "January -5.9°C, July 18.8°C, 1396 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Halifax Stanfield Int'L A (3 km from this riding).",
+  "station": "HALIFAX STANFIELD INT'L A",
+  "station_km": 2.6,
+  "jan_c": -5.86,
+  "jul_c": 18.81,
+  "precip_mm": 1396.17
+ },
+ "Cape Breton—Canso—Antigonish": {
+  "climate": "January -5.4°C, July 17.9°C, 1517 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sydney A (5 km from this riding).",
+  "station": "SYDNEY A",
+  "station_km": 4.7,
+  "jan_c": -5.39,
+  "jul_c": 17.91,
+  "precip_mm": 1517.23
+ },
+ "Acadie—Annapolis": {
+  "climate": "January -5.7°C, July 19.0°C, 1455 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Springfield (5 km from this riding).",
+  "station": "SPRINGFIELD",
+  "station_km": 4.7,
+  "jan_c": -5.74,
+  "jul_c": 19.01,
+  "precip_mm": 1454.99
+ },
+ "Malpeque": {
+  "climate": "January -7.7°C, July 18.7°C, 1158 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Charlottetown A (0 km from this riding).",
+  "station": "CHARLOTTETOWN A",
+  "station_km": 0.2,
+  "jan_c": -7.74,
+  "jul_c": 18.71,
+  "precip_mm": 1158.2
+ },
+ "Egmont": {
+  "climate": "January -8.2°C, July 18.6°C, 1053 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Alberton (4 km from this riding).",
+  "station": "ALBERTON",
+  "station_km": 3.8,
+  "jan_c": -8.2,
+  "jul_c": 18.65,
+  "precip_mm": 1053.07
+ },
+ "Charlottetown": {
+  "climate": "January -7.7°C, July 18.7°C, 1158 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Charlottetown A (0 km from this riding).",
+  "station": "CHARLOTTETOWN A",
+  "station_km": 0.2,
+  "jan_c": -7.74,
+  "jul_c": 18.71,
+  "precip_mm": 1158.2
+ },
+ "Cardigan": {
+  "climate": "January -6.9°C, July 18.4°C, 1170 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Monticello (2 km from this riding).",
+  "station": "MONTICELLO",
+  "station_km": 1.9,
+  "jan_c": -6.94,
+  "jul_c": 18.45,
+  "precip_mm": 1170.15
+ },
+ "Terra Nova—The Peninsulas": {
+  "climate": "January -5.9°C, July 15.7°C, 1043 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Musgrave Harbour (13 km from this riding).",
+  "station": "MUSGRAVE HARBOUR",
+  "station_km": 13.2,
+  "jan_c": -5.94,
+  "jul_c": 15.69,
+  "precip_mm": 1043.1
+ },
+ "St. John's East": {
+  "climate": "January -4.5°C, July 15.8°C, 1534 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St John'S A (7 km from this riding).",
+  "station": "ST JOHN'S A",
+  "station_km": 6.8,
+  "jan_c": -4.51,
+  "jul_c": 15.84,
+  "precip_mm": 1534.19
+ },
+ "Long Range Mountains": {
+  "climate": "January -5.0°C, July 14.0°C, 1653 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Isle Aux Morts (7 km from this riding).",
+  "station": "ISLE AUX MORTS",
+  "station_km": 7.0,
+  "jan_c": -5.04,
+  "jul_c": 14.02,
+  "precip_mm": 1653.08
+ },
+ "Labrador": {
+  "climate": "January -22.2°C, July 13.8°C, 840 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Wabush Lake A (14 km from this riding).",
+  "station": "WABUSH LAKE A",
+  "station_km": 13.7,
+  "jan_c": -22.23,
+  "jul_c": 13.76,
+  "precip_mm": 839.52
+ },
+ "Central Newfoundland": {
+  "climate": "January -7.8°C, July 15.5°C, 1002 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station Sops Arm White Bay (11 km from this riding).",
+  "station": "SOPS ARM WHITE BAY",
+  "station_km": 10.7,
+  "jan_c": -7.77,
+  "jul_c": 15.47,
+  "precip_mm": 1002.36
+ },
+ "Cape Spear": {
+  "climate": "January -4.5°C, July 15.8°C, 1534 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St John'S A (7 km from this riding).",
+  "station": "ST JOHN'S A",
+  "station_km": 6.8,
+  "jan_c": -4.51,
+  "jul_c": 15.84,
+  "precip_mm": 1534.19
+ },
+ "Avalon": {
+  "climate": "January -4.5°C, July 15.8°C, 1534 mm precipitation a year",
+  "climate_source": "Environment and Climate Change Canada, Canadian Climate Normals 1981-2010, station St John'S A (14 km from this riding).",
+  "station": "ST JOHN'S A",
+  "station_km": 13.9,
+  "jan_c": -4.51,
+  "jul_c": 15.84,
+  "precip_mm": 1534.19
+ }
+}

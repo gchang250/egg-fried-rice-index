@@ -66,19 +66,15 @@ const RENT_FINAL: Record<string, RentFinal> = Object.fromEntries(
     .map(r => [r.fed_num, r])
 )
 
-const INCOME_OVERRIDES: Record<string, number> = {
-  "Fort McMurray—Cold Lake": 6200,
-  "Lac-Saint-Jean": 2900,
-  "Beauce": 3100,
-  "Swift Current—Grasslands—Kindersley": 3250,
-  "Brandon—Souris": 3300,
-  "Miramichi—Grand Lake": 2950,
-  "Saint John—Kennebecasis": 3200,
-  "Halifax": 3900,
-  "Ottawa Centre": 4583,
-  "Brampton West": 3400,
-  "Vancouver Centre": 4333
-}
+// NOTE: an INCOME_OVERRIDES table used to hard-code monthly salary for 11 ridings
+// (e.g. Fort McMurray—Cold Lake 6200 vs the Census 5100). Those values traced to no
+// source -- they were round annual figures divided by 12 (55000/12, 52000/12,
+// 74400/12), deviated in both directions, and matched neither total nor employment
+// income -- yet every riding page attributed the number to the Census. They are gone.
+// Census Profile 2021 for the 2023 Representation Order (98-401-X2021029) is the
+// authoritative riding-level income source: CRA's Federal Electoral District
+// Statistics is discontinued (last edition = 2017 tax year, on the old 338-riding
+// boundaries), so no more current riding-level series exists for these 343 ridings.
 
 async function run() {
   const { data: existing, error } = await supabase
@@ -107,14 +103,11 @@ async function run() {
     const rf = RENT_FINAL[riding.fed_num]
     if (!rf) throw new Error(`no rent-final entry for ${riding.fed_num} (${riding.name})`)
 
-    const overrideSalary = INCOME_OVERRIDES[riding.name]
-    const median_monthly_salary_cad = overrideSalary != null 
-      ? overrideSalary 
-      : Math.round(riding.median_total_income_annual / 12)
+    const median_monthly_salary_cad = Math.round(riding.median_total_income_annual / 12)
 
-    const tech_salary_cad = overrideSalary != null
-      ? Math.round((riding.median_household_income_annual / riding.median_total_income_annual) * overrideSalary)
-      : Math.round(riding.median_household_income_annual / 12)
+    // Census median HOUSEHOLD income. Note the riding page must label this as
+    // household income -- it is not employment income.
+    const tech_salary_cad = Math.round(riding.median_household_income_annual / 12)
 
     const next = {
       median_rent_1br_cad: rf.median_rent_1br_cad,   // null where withheld
