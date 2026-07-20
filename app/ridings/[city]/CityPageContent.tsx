@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import NavBar from '@/app/components/NavBar'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
+import { FAMILY_RENT_MULTIPLIER } from '@/lib/rent-profile'
 
 export type HistoryPoint = {
   month: string
@@ -211,7 +212,7 @@ export default function CityPageContent({
 
   const rent = profile === 'single_renter'
     ? (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) : null)
-    : (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) * 1.65 : null)
+    : (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) * FAMILY_RENT_MULTIPLIER : null)
     
   const salary = profile === 'single_renter'
     ? (city.median_monthly_salary_cad != null ? Number(city.median_monthly_salary_cad) : null)

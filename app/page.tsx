@@ -7,6 +7,7 @@ import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import * as d3 from 'd3'
 import { getSanitizedHistogram } from '@/lib/histogram';
+import { FAMILY_RENT_MULTIPLIER } from '@/lib/rent-profile'
 
 /* ═══════════════════════════════════════════════════════════════════
    Types & helpers
@@ -125,7 +126,7 @@ export default function Home() {
       const isSingle = profile === 'single_renter'
       const rent = isSingle
         ? (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) : null)
-        : (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) * 1.65 : null)
+        : (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) * FAMILY_RENT_MULTIPLIER : null)
       const salary = isSingle
         ? (c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) : null)
         : (c.tech_salary_cad != null ? Number(c.tech_salary_cad) : c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) * 1.5 : null)

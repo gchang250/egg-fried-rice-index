@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, useMemo } from 'react'
 import * as d3 from 'd3'
 import { feature as topoFeature } from 'topojson-client'
 import { Search } from 'lucide-react'
+import { FAMILY_RENT_MULTIPLIER } from '@/lib/rent-profile'
 
 type City = {
   city: string
@@ -161,7 +162,7 @@ export default function Explore() {
         const isSingle = profile === 'single_renter'
         const rent = isSingle
           ? (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) : null)
-          : (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) * 1.65 : null)
+          : (c.median_rent_1br_cad != null ? Number(c.median_rent_1br_cad) * FAMILY_RENT_MULTIPLIER : null)
           
         const salary = isSingle
           ? (c.median_monthly_salary_cad != null ? Number(c.median_monthly_salary_cad) : null)
@@ -652,7 +653,7 @@ export default function Explore() {
     const isSingle = profile === 'single_renter'
     const rent = isSingle
       ? (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) : null)
-      : (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) * 1.65 : null)
+      : (city.median_rent_1br_cad != null ? Number(city.median_rent_1br_cad) * FAMILY_RENT_MULTIPLIER : null)
       
     const salary = isSingle
       ? (city.median_monthly_salary_cad != null ? Number(city.median_monthly_salary_cad) : null)
@@ -776,7 +777,7 @@ export default function Explore() {
           const isSingle = profile === 'single_renter'
           const rent = isSingle
             ? (selectedCity.median_rent_1br_cad != null ? Number(selectedCity.median_rent_1br_cad) : null)
-            : (selectedCity.median_rent_1br_cad != null ? Number(selectedCity.median_rent_1br_cad) * 1.65 : null)
+            : (selectedCity.median_rent_1br_cad != null ? Number(selectedCity.median_rent_1br_cad) * FAMILY_RENT_MULTIPLIER : null)
           const salary = isSingle
             ? (selectedCity.median_monthly_salary_cad != null ? Number(selectedCity.median_monthly_salary_cad) : null)
             : (selectedCity.tech_salary_cad != null ? Number(selectedCity.tech_salary_cad) : selectedCity.median_monthly_salary_cad != null ? Number(selectedCity.median_monthly_salary_cad) * 1.5 : null)

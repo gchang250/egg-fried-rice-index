@@ -6,6 +6,7 @@ import NavBar from '@/app/components/NavBar'
 import { supabase } from '@/lib/supabase'
 import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
+import { FAMILY_RENT_MULTIPLIER } from '@/lib/rent-profile'
 
 type CityRow = {
   city: string; country: string | null; region: string | null; flag: string | null
@@ -137,7 +138,7 @@ export default function CitiesPage() {
         const isSingle = profile === 'single_renter'
         const rent = isSingle
           ? Number(c.median_rent_1br_cad)
-          : Number(c.median_rent_1br_cad) * 1.65
+          : Number(c.median_rent_1br_cad) * FAMILY_RENT_MULTIPLIER
         const salary = isSingle
           ? Number(c.median_monthly_salary_cad)
           : (c.tech_salary_cad != null ? Number(c.tech_salary_cad) : Number(c.median_monthly_salary_cad) * 1.5)

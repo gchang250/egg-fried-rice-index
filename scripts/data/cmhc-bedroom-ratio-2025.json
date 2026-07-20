@@ -1,0 +1,206 @@
+{
+ "_meta": "Average 2-bedroom / 1-bedroom rent ratio, CMHC Rental Market Survey 2025. Adapted from Canada Mortgage and Housing Corporation; this does not constitute an endorsement by CMHC of this product.",
+ "_source_url": "https://assets.cmhc-schl.gc.ca/sites/cmhc/professional/housing-markets-data-and-research/housing-data-tables/rental-market/rental-market-report-data-tables/2025/rmr-canada-2025-en.xlsx",
+ "centres_matched": 39,
+ "ratio_median": 1.2106,
+ "ratio_mean": 1.212,
+ "ratio_min": 1.1059,
+ "ratio_max": 1.3262,
+ "by_centre": {
+  "Abbotsford-Mission": {
+   "rent_1br": 1278,
+   "rent_2br": 1592.0,
+   "ratio": 1.2457
+  },
+  "Barrie": {
+   "rent_1br": 1583,
+   "rent_2br": 1755.0,
+   "ratio": 1.1087
+  },
+  "Brantford": {
+   "rent_1br": 1448,
+   "rent_2br": 1619.0,
+   "ratio": 1.1181
+  },
+  "Calgary": {
+   "rent_1br": 1581,
+   "rent_2br": 1914.0,
+   "ratio": 1.2106
+  },
+  "Charlottetown": {
+   "rent_1br": 1066,
+   "rent_2br": 1300.0,
+   "ratio": 1.2195
+  },
+  "Chilliwack": {
+   "rent_1br": 1222,
+   "rent_2br": 1526.0,
+   "ratio": 1.2488
+  },
+  "Drummondville": {
+   "rent_1br": 904,
+   "rent_2br": 1045.0,
+   "ratio": 1.156
+  },
+  "Edmonton": {
+   "rent_1br": 1301,
+   "rent_2br": 1603.0,
+   "ratio": 1.2321
+  },
+  "Fredericton": {
+   "rent_1br": 1208,
+   "rent_2br": 1413.0,
+   "ratio": 1.1697
+  },
+  "Guelph": {
+   "rent_1br": 1627,
+   "rent_2br": 1802.0,
+   "ratio": 1.1076
+  },
+  "Halifax": {
+   "rent_1br": 1539,
+   "rent_2br": 1826.0,
+   "ratio": 1.1865
+  },
+  "Hamilton": {
+   "rent_1br": 1402,
+   "rent_2br": 1656.0,
+   "ratio": 1.1812
+  },
+  "Kamloops": {
+   "rent_1br": 1345,
+   "rent_2br": 1679.0,
+   "ratio": 1.2483
+  },
+  "Kelowna": {
+   "rent_1br": 1597,
+   "rent_2br": 2118.0,
+   "ratio": 1.3262
+  },
+  "Kingston": {
+   "rent_1br": 1503,
+   "rent_2br": 1764.0,
+   "ratio": 1.1737
+  },
+  "Kitchener-Cambridge-Waterloo": {
+   "rent_1br": 1546,
+   "rent_2br": 1832.0,
+   "ratio": 1.185
+  },
+  "Lethbridge": {
+   "rent_1br": 1370,
+   "rent_2br": 1706.0,
+   "ratio": 1.2453
+  },
+  "London": {
+   "rent_1br": 1371,
+   "rent_2br": 1651.0,
+   "ratio": 1.2042
+  },
+  "Moncton": {
+   "rent_1br": 1164,
+   "rent_2br": 1453.0,
+   "ratio": 1.2483
+  },
+  "Montréal": {
+   "rent_1br": 1131,
+   "rent_2br": 1346.0,
+   "ratio": 1.1901
+  },
+  "Nanaimo": {
+   "rent_1br": 1527,
+   "rent_2br": 1910.0,
+   "ratio": 1.2508
+  },
+  "Oshawa": {
+   "rent_1br": 1586,
+   "rent_2br": 1754.0,
+   "ratio": 1.1059
+  },
+  "Peterborough": {
+   "rent_1br": 1232,
+   "rent_2br": 1518.0,
+   "ratio": 1.2321
+  },
+  "Québec": {
+   "rent_1br": 1107,
+   "rent_2br": 1277.0,
+   "ratio": 1.1536
+  },
+  "Red Deer": {
+   "rent_1br": 1220,
+   "rent_2br": 1414.0,
+   "ratio": 1.159
+  },
+  "Regina": {
+   "rent_1br": 1240,
+   "rent_2br": 1473.0,
+   "ratio": 1.1879
+  },
+  "Saguenay": {
+   "rent_1br": 762,
+   "rent_2br": 985.0,
+   "ratio": 1.2927
+  },
+  "Saint John": {
+   "rent_1br": 1001,
+   "rent_2br": 1290.0,
+   "ratio": 1.2887
+  },
+  "Saskatoon": {
+   "rent_1br": 1281,
+   "rent_2br": 1548.0,
+   "ratio": 1.2084
+  },
+  "Sherbrooke": {
+   "rent_1br": 905,
+   "rent_2br": 1062.0,
+   "ratio": 1.1735
+  },
+  "St. Catharines-Niagara": {
+   "rent_1br": 1318,
+   "rent_2br": 1527.0,
+   "ratio": 1.1586
+  },
+  "St. John's": {
+   "rent_1br": 1064,
+   "rent_2br": 1361.0,
+   "ratio": 1.2791
+  },
+  "Thunder Bay": {
+   "rent_1br": 1173,
+   "rent_2br": 1495.0,
+   "ratio": 1.2745
+  },
+  "Toronto": {
+   "rent_1br": 1761,
+   "rent_2br": 2046.0,
+   "ratio": 1.1618
+  },
+  "Trois-Rivières": {
+   "rent_1br": 828,
+   "rent_2br": 1016.0,
+   "ratio": 1.2271
+  },
+  "Vancouver": {
+   "rent_1br": 1807,
+   "rent_2br": 2363.0,
+   "ratio": 1.3077
+  },
+  "Victoria": {
+   "rent_1br": 1624,
+   "rent_2br": 2120.0,
+   "ratio": 1.3054
+  },
+  "Windsor": {
+   "rent_1br": 1193,
+   "rent_2br": 1454.0,
+   "ratio": 1.2188
+  },
+  "Winnipeg": {
+   "rent_1br": 1232,
+   "rent_2br": 1571.0,
+   "ratio": 1.2752
+  }
+ }
+}
