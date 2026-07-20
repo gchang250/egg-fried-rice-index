@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Search, Building2, X } from 'lucide-react'
 import NavBar from '@/app/components/NavBar'
+import Footer from '@/app/components/Footer'
 import { supabase } from '@/lib/supabase'
 import { previewRent } from '@/lib/rent-preview'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
@@ -513,6 +514,7 @@ export default function CitiesPage() {
           })()}
         </section>
       </section>
+      <Footer />
     </main>
   )
 }

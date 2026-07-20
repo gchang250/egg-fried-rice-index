@@ -1,4 +1,5 @@
 import NavBar from '@/app/components/NavBar'
+import Footer from '@/app/components/Footer'
 
 const CARDS = [
   {
@@ -103,6 +104,7 @@ export default function AboutPage() {
           Browse ridings
         </a>
       </div>
+      <Footer />
     </main>
   )
 }

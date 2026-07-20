@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import NavBar from '@/app/components/NavBar'
+import Footer from '@/app/components/Footer'
 import { estimateMonthlyTakeHome } from '@/lib/canada-tax'
 import { FAMILY_RENT_MULTIPLIER } from '@/lib/rent-profile'
 
@@ -436,6 +437,7 @@ export default function CityPageContent({
         </div>
       </section>
 
+      <Footer />
     </main>
   )
 }

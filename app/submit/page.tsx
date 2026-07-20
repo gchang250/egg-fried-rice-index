@@ -4,6 +4,7 @@ import type { CSSProperties, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { MapPin, Tag, DollarSign, MessageSquare, Send, ArrowRight } from 'lucide-react'
 import NavBar from '@/app/components/NavBar'
+import Footer from '@/app/components/Footer'
 import { supabase } from '@/lib/supabase'
 
 type CityRow = { city: string; region: string | null }
@@ -135,6 +136,7 @@ export default function SubmitPage() {
           </div>
         </form>
       </div>
+      <Footer />
     </main>
   )
 }
