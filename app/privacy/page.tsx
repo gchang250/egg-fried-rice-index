@@ -13,45 +13,43 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: 'The short version',
     body: [
-      'CanPol Index is a free, informational website. You do not need an account, and we do not ask you for personal information to browse it. We do not sell data, run advertising, or track you across other websites.',
+      'CanPol Index is a free, informational website. You do not need an account, and we do not ask you for any personal information to use it. We do not use cookies, we do not sell or share data, and we do not run advertising or track you across other websites.',
     ],
   },
   {
-    title: 'What we collect',
+    title: 'Analytics',
     body: [
-      'Usage analytics. We use Vercel Analytics to understand aggregate traffic — which pages are visited and general, coarse information such as country and device type. This is collected in a privacy-preserving way: it does not use cookies to identify you and is not tied to your identity.',
-      'Server logs. Our hosting provider (Vercel) automatically records standard request information, such as IP address and browser user-agent, for security and reliability. These logs are handled by Vercel and are retained only for a limited period.',
-      'Information you choose to submit. If you use the "Submit" form to suggest a data correction or addition, we receive whatever you type into it. Please do not include sensitive personal information in that form.',
+      'We use Vercel Analytics and PostHog for one purpose only: to count how many people use the app and how many views each page gets. This is anonymous and aggregate. It does not use cookies, it does not identify you, and no personal or user information is stored.',
     ],
   },
   {
     title: 'What we do not collect',
     body: [
-      'We do not create user accounts for visitors, and we do not require your name, email, or any login to view any part of the site. We do not use advertising or cross-site tracking cookies, and we do not build profiles of individual visitors.',
+      'We do not create user accounts, and we do not require your name, email, or any login to view any part of the site. We do not use cookies. We do not run advertising, build profiles of visitors, or track you across other websites.',
     ],
   },
   {
     title: 'Service providers',
     body: [
-      'We rely on a small number of third parties to operate the site: Vercel (hosting and analytics) and Supabase (database). These providers process data on our behalf under their own privacy and security terms. We do not share your information with anyone for their own marketing.',
+      'We rely on a few third parties to run the site: Vercel (hosting and analytics), PostHog (analytics), and Supabase (the database that stores the public riding statistics). They process only what is needed to serve the site, and we do not share information about you with anyone for their own marketing.',
     ],
   },
   {
     title: 'The data shown on the site',
     body: [
-      'The riding statistics displayed here — rents, incomes, climate, safety, and election results — are aggregate figures published by Canadian government sources (Statistics Canada, Canada Mortgage and Housing Corporation, Environment and Climate Change Canada, and Elections Canada). They describe geographic areas, not individuals, and are not personal information about you.',
+      'The riding statistics displayed here (rents, incomes, climate, safety, and election results) are aggregate figures published by Canadian government sources: Statistics Canada, Canada Mortgage and Housing Corporation, Environment and Climate Change Canada, and Elections Canada. They describe geographic areas, not individuals, and are not personal information about you.',
     ],
   },
   {
     title: 'Your choices',
     body: [
-      'You can browse the entire site without providing any personal information. You can block analytics and cookies using your browser settings or extensions without affecting how the site works.',
+      'You can use the entire site without providing any personal information. Because the site uses no cookies and no cross-site tracking, there is nothing you need to opt out of, though you can still block analytics with your browser settings or an extension if you prefer.',
     ],
   },
   {
     title: 'Changes and contact',
     body: [
-      'We may update this policy as the site evolves; the "last updated" date above will always reflect the current version.',
+      'We may update this policy as the site evolves. The "last updated" date above will always reflect the current version.',
       'Questions about this policy or the data can be raised through the project’s public repository at github.com/gchang250/egg-fried-rice-index.',
     ],
   },

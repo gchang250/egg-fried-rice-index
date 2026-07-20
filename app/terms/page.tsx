@@ -19,7 +19,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: 'What the site is',
     body: [
-      'CanPol Index compares cost-of-living and socio-economic indicators — such as one-bedroom rent, income, taxes, and rent burden — across Canadian federal electoral ridings. It is provided for general information and research only.',
+      'CanPol Index compares cost-of-living and socio-economic indicators, such as one-bedroom rent, income, taxes, and rent burden, across Canadian federal electoral ridings. It is provided for general information and research only.',
       'Nothing on this site is financial, tax, legal, real-estate, or investment advice. Figures such as take-home pay and disposable income are simplified estimates that do not account for your individual circumstances. Do not rely on them for financial or relocation decisions; consult a qualified professional.',
     ],
   },
@@ -40,13 +40,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: 'Acceptable use',
     body: [
-      'You may view, share, and reference the site for personal, educational, and research purposes. You agree not to misuse the site — for example, by attempting to disrupt or overload it, gain unauthorized access, scrape it in a way that degrades service, or present its figures as official government statistics.',
-    ],
-  },
-  {
-    title: 'Submissions',
-    body: [
-      'If you submit a suggested correction or addition through the site, you confirm the information is accurate to the best of your knowledge and that you have the right to share it. You grant us permission to use, modify, and incorporate your submission into the site without obligation or compensation. We are not required to use or respond to any submission.',
+      'You may view, share, and reference the site for personal, educational, and research purposes. You agree not to misuse the site, for example by attempting to disrupt or overload it, gain unauthorized access, scrape it in a way that degrades service, or present its figures as official government statistics.',
     ],
   },
   {
